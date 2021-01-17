@@ -1,5 +1,5 @@
 module.exports = {
-	token: "NzYyOTY1OTQzNTI5NzY2OTEy.X3w1aA.CcMWUjtGxP0v2B5FsnFUKiILzbo",
+	token: "TOK3N",
     prefix: "d!",
 	footer: "DrakeBot | 2021",
 	api: {
