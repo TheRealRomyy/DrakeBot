@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**J'ai supprimé le surnom de tous les utilisateurs que je pouvait re-nommer !**",
+    "DESCRIPTION": "Supprimer le nickname de tous les membres du serveur",
+    "USAGE": "un-nickall",
+    "EXAMPLE": "un-nickall",
+    "CONFIRM": "**Etes vous sur de vouloir renommer tous les membres du serveur ?**"
+}

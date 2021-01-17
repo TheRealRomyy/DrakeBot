@@ -1,0 +1,17 @@
+{
+    "NOT_CORRECT": "**You have to do** `{{usage}}` **!**",
+    "OWNER_SEND": {
+        "title": "La command __{{cmd}}__ contient une erreur !",
+        "desc": "**__Erreur:__** \n {{error}}"
+    },
+    "SERVER_SEND": "**__This command contain an error__**\n A rapport was sent to the bot develloper... \n \n **Thanks to don't re-use this command !**",
+    "PERMISSION": "**You need to the following permission :** {{perm}}",
+    "PERMISSIONS": "**You need to the following permissions :** {{perms}}",
+    "BOT_PERMISSION": "**I need to the following permission :** {{perm}}",
+    "BOT_PERMISSIONS": "**I need to the following permissions :** {{perms}}",
+    "NFSW": "**You have to be in a NFSW channel for that !**",
+    "DISABLED": "**This command is currently disabled !**",
+    "COOLDOWN": "You have to wait **{{timeH}}** before re-use this command !",
+    "USER_BLACKLIST": "**You were blacklist for the bot. So, you can't use this command !** \n \nFor be un-blacklist, contact the bot owner : <@709481084286533773>",
+    "GUILD_BLACKLIST": "**Your server is blacklist for the bot. So, you can't use this command !** \n \nFor be un-blacklist, contact the bot owner : <@709481084286533773>"
+}

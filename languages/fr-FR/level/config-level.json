@@ -1,0 +1,11 @@
+{
+    "DESCRIPTION": "Configurer le système de niveau",
+    "EXAMPLE": "config-level",
+    "USAGE": "config-level",
+    "DISABLED": "Système de level **désactivé** !",
+    "CHANNEL_NOT_FOUND": "Le salon __{{channel}}__ n'existe pas !",
+    "SUCCES": "**Modifications prises en compte**",
+    "TITLE": "Système de niveau",
+    "INSTRUCTION_1": "**Veuillez marquer le message de level up** ```{user}: La personne qui a level UP \n{user.nickname}: Le surnom de la personne qui a level UP \n \n{level}: Son nouveau niveau \n{xp}: Sa quantitée d'éxpérience ```\n \nTapez `cancel` pour annuler !",
+    "INSTRUCTION_2": "**Dans quel salon voulez vous annoncer le level up ? Pour le salon oú le message a été envoyé tapez `current` !** \n \nTapez `cancel` pour annuler !"
+}

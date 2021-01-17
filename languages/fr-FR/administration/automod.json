@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Configurer l'auto-modération",
+    "USAGE": "automod",
+    "EXAMPLE": "automod",
+    "ENABLED": ":white_check_mark: **Activé**",
+    "DISABLED": ":x: **Désactivé**",
+    "TITLE": "Auto-modération",
+    "DESC": "***Cliquez sur une réaction pour activer/désactiver le plugin associé***",
+    "ONE": ":one: Anti-pub",
+    "TWO": ":two: Anti-insultes",
+    "THREE": ":three: Anti-full maj"
+}

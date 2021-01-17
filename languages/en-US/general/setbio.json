@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Set a description",
+    "USAGE": "setbio <bio>",
+    "EXAMPLE": "setbio I'm a kind guy",
+    "SUCCES": "**Your bio was succesfully update !**"
+}

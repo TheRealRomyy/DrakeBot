@@ -1,0 +1,7 @@
+{
+    "TITLE": "Top des richesses sur **{{guildName}}**",
+    "DESCRIPTION": "Voir les 10 joueurs les plus riches du serveurs",
+    "USAGE": "leaderboard-money",
+    "EXAMPLE": "leaderboard-money",
+    "NO_MEMBERS": "**Personne n'a d'argent sur ce serveur !**"
+}

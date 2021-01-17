@@ -1,0 +1,23 @@
+{
+    "NAME": "• Name",
+    "ID": "• ID",
+    "BOT": "• Bot",
+    "CREATE": "• Create",
+    "NICKNAME": "• Nickname",
+    "HR": "• Hightest role",
+    "JOIN": "• Join",
+    "ROLES": "• Roles ({{roleList}})",
+    "GAME": "• Game",
+    "MR": "And more...",
+    "NO_DESC": "Any description",
+    "NO_DESC_AUTHOR": "You has not set description. (``{{prefix}}setbio <bio>``)",
+    "STATUT": "• Status",
+    "STATUS_DND": "Do not distrub",
+    "STATUS_ONLINE": "Online",
+    "STATUS_OFFLINE": "Offline",
+    "STATUS_IDLE": "Idle",
+    "NO_GAME": "Don't play",
+    "DESCRIPTION": "Get info about someone",
+    "EXAMPLE": "userinfo @Rome",
+    "USAGE": "userinfo (user)"
+}

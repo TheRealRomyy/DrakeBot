@@ -1,0 +1,11 @@
+{
+    "DESCRIPTION": "Gérer l'économie de votre serveur",
+    "USAGE": "eco <give/remove/reset> <user> (amount)",
+    "EXAMPLE": "eco give @Rome 100",
+    "AMOUNT_REQUIRE": "Vous devez préciser un montant pour cette opération !",
+    "GIVE_SUCCES": "Vous avez bien donné **{{amount}}{{symbol}}** a **{{username}}** !",
+    "REMOVE_SUCCES": "Vous avez bien retiré **{{amount}}{{symbol}}** a **{{username}}** !",
+    "RESET_SUCCES": "Vous avez bien réinitialisé le compte de **{{username}}** !",
+    "NOT_ENOUGHT": "**{{username}}** n'a pas assez d'argent !",
+    "MAX_AMOUNT": "Vous ne pouvez pas donner plus de **{{amount}}** !"
+}

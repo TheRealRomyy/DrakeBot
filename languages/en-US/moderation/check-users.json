@@ -1,0 +1,9 @@
+{
+    "VERIFICATION_1": "Check links in status",
+    "VERIFICATION_2": "Check if user is blacklist",
+    "PUB_STATUS": "Has an ad in status",
+    "BLACKLIST": "Is blacklist on the bot",
+    "DESCRIPTION": "Check if members has links in his status",
+    "EXAMPLE": "check-users",
+    "USAGE": "check-users"
+}

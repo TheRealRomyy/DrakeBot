@@ -1,0 +1,7 @@
+{
+    "TITLE": "Top des niveaux sur **{{guildName}}**",
+    "DESCRIPTION": "Voir les 10 joueurs avec les niveaux les plus élevés du serveur",
+    "USAGE": "leaderboard-level",
+    "EXAMPLE": "leaderboard-level",
+    "NO_MEMBERS": "**Personne n'a parlé depuis l'arrivée du bot sur ce serveur !**"
+}

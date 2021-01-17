@@ -1,0 +1,8 @@
+{
+    "WARN_DM": "Hello **{{username}}**, \nYou were warn on `{{server}}` by `{{moderator}}` | Reason : {{reason}}",
+    "WARN": "{{username}} has been warn",
+    "CONFIRM": "**Do you want warn `{{user}}` for: `{{reason}}` ?**",
+    "USAGE": "warn <user> (reason)",
+    "EXAMPLE": "warn @Fan Badword",
+    "DESCRIPTION": "Warn someone"
+}

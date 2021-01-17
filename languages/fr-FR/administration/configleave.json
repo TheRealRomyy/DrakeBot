@@ -1,0 +1,11 @@
+{
+    "DESCRIPTION": "Configurer le système d'annonce de départ",
+    "EXAMPLE": "configleave",
+    "USAGE": "configleave",
+    "DISABLED": "Système d'annonce de départs **désactivé** !",
+    "CHANNEL_NOT_FOUND": "Le salon __{{channel}}__ n'existe pas !",
+    "SUCCES": "**Modifications prises en compte**",
+    "TITLE": "Système d'au revoir",
+    "INSTRUCTION_1": "**Veuillez marquer le message d'annonce de départ** ```{user}: La personne qui est partit \n \n{guild.name}: Le nom du serveur \n{guild.members}: Le nombre de membres sur le serveur```\n \nTapez `cancel` pour annuler !",
+    "INSTRUCTION_2": "**Dans quel salon voulez vous annoncer le départ d'un membre ?**\n \nTapez `cancel` pour annuler !"
+}

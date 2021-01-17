@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Buy an item",
+    "EXAMPLE": "buy 2",
+    "USAGE": "buy <item_id>",
+    "NOT_ENOUGHT": "**You have not enought money*",
+    "SUCCES": "You has been buy __{{item}}__ for **{{price}}{{symbol}}** !",
+    "ALREADY_BUY": "**You have already biy this item !**"
+}

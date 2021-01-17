@@ -1,0 +1,8 @@
+{
+    "CLEARED": "**{{amount}}** messages on été supprimés !",
+    "CLEARED_MEMBER": "**{{amount}}** messages de **{{username}}** ont été supprimés !",
+    "DESCRIPTION": "Supprimer un certain nombre de messages",
+    "USAGE": "clear <amount> (user)",
+    "EXAMPLE": "clear 5 @Ethan",
+    "NUKE_EXIST": "Pour supprimer tous les messages d'un salon, vous pouvez faire `{{prefix}}nuke`"
+}

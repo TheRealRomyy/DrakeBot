@@ -1,0 +1,10 @@
+{
+    "MUTE_DM": "Bonjour **{{username}}**, \nVous avez été rendu muet sur `{{server}}` par `{{moderator}}` pendant: `{{time}}` | Pour : {{reason}}",
+    "UNMUTE_DM": "Bonjour **{{username}}**, \nVous pouvez de nouveau parler sur `{{server}}` | Raison : {{reason}}",
+    "MUTE": "**{{username}}** a bien été rendu muet pendant `{{time}}`",
+    "CASE": "Mute | Case #{{count}}",
+    "CONFIRM": "**Etes vous sur de vouloir mute `{{username}}` pendant: `{{time}}`| Raison: `{{reason}}` ?**",
+    "DESCRIPTION": "Empécher un membre de parler pour une durée déterminée",
+    "EXAMPLE": "mute @Ethan 1h Publicité",
+    "USAGE": "mute <user> <time> (reason)"
+}

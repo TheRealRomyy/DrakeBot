@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**There is no more rewards for reach the level: `{{level}}` !**",
+    "NO_RANK": "**There is no role reward for the level: `{{level}}` !**",
+    "DESCRIPTION": "Remove a rank reward",
+    "EXAMPLE": "removerank-level 5",
+    "USAGE": "removerank-level <level>"
+}

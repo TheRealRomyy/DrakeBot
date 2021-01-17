@@ -1,0 +1,20 @@
+{
+    "TITLE": "**» Bots informations**",
+    "NAME": "• Name",
+    "ID": "• ID",
+    "STATS": "• Statistics",
+    "UPTIME": "• Uptime",
+    "COMMANDS": "• Commands",
+    "RAM": "• RAM",
+    "PROCESSOR": "• Processor",
+    "VERSIONS": "• Versions",
+    "PING": "• Latency",
+    "CREDITS": "• Crédits",
+    "THANKS_ICONS": "Thanks to the greats icons of {{icons8}} !",
+    "THANKS_ANDROZ": "Thanks to the open source bot \"Atlanta\" made by the genious {{androz}} !",
+    "THANKS_ETHAN": "Thanks to the bright tips of {{ethan}} !",
+    "THANKS_ZALGO": "Thank to {{mystere}} and {{jabac}} for the inspiration by there bot Zalgo !",
+    "DESCRIPTION": "Get some informations about the bot",
+    "EXAMPLE": "botinfos",
+    "USAGE": "botinfos"
+}

@@ -1,0 +1,9 @@
+{
+    "DESCRIPTION": "Payer quelqu'un",
+    "USAGE": "pay <user> <amount>",
+    "EXAMPLE": "pay @Rome 25",
+    "BOT": "L'utilisateur **{{bot}}** est un robot !",
+    "YOURSELF": "Vous ne pouvez pas vous payer vous même !",
+    "NOT_ENOUGHT_MONEY": "Vous n'avez pas assez d'argent !",
+    "SUCCES": "Vous avez bien envoyé **{{amount}}{{symbol}}** a **{{username}}** !"
+}

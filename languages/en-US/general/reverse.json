@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Reverse a text",
+    "USAGE": "reverse <text>",
+    "EXAMPLE": "reverse Hi !"
+}

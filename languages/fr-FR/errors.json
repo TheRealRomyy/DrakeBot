@@ -1,0 +1,17 @@
+{
+    "NOT_CORRECT": "**Vous devez faire** `{{usage}}` **!**",
+    "OWNER_SEND": {
+        "title": "La command __{{cmd}}__ contient une erreur !",
+        "desc": "**__Erreur:__** \n {{error}}"
+    },
+    "SERVER_SEND": "**__Cette command contient une erreur__**\n Un rapport va être envoyé au Développeur du bot... \n \n **Merci de ne pas ré-utiliser cette commande tant quelle bug !**",
+    "PERMISSION": "**Vous avez besoin de la permission :** {{perm}}",
+    "PERMISSIONS": "**Vous avez besoin des permissions :** {{perms}}",
+    "BOT_PERMISSION": "**J'ai besoin de la permission :** {{perm}}",
+    "BOT_PERMISSIONS": "**J'ai besoin des permissions :** {{perms}}",
+    "NFSW": "**Vous devez être dans un salon NFSW pour cela !**",
+    "DISABLED": "**Cette commande est actuellement désactivée !**",
+    "COOLDOWN": "Vous devez attendre **{{timeH}}** avant de refaire cette commande !",
+    "USER_BLACKLIST": "**Vous êtes sur la liste noir du bot. Vous ne pouvez donc pas éxécuter cette commande.** \n \nPour être supprimer de cette liste noire, veuillez contacter le développeur du bot : <@709481084286533773>",
+    "GUILD_BLACKLIST": "**Ce serveur est sur la liste noir du bot. Vous ne pouvez donc pas éxécuter cette commande.** \n \nPour que ce serveur soit supprimer de la liste noire, veuillez contacter le développeur du bot : <@709481084286533773>"
+}

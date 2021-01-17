@@ -1,0 +1,6 @@
+{
+    "TITLE": "📄 Liens de {{name}}",
+    "DESCRIPTION": "Obtenir un lien pour ajouter le bot",
+    "EXAMPLE": "addbot",
+    "USAGE": "addbot"
+}

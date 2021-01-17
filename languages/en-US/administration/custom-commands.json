@@ -1,0 +1,16 @@
+{
+    "DESCRIPTION": "Manage your personalized commands",
+    "USAGE": "custom-commands",
+    "EXAMPLE": "custom-commands",
+    "MENU": "**What do you want to do: see all commands : `list`, create a command : `create` or delete a command : `remove` \n \nType `cancel` for canceled !**",
+    "SWITCH_DEFAULT": "**You should have done: `create` , `list` our`remove` !**",
+    "LIST_TITLE": "List of personalized commands",
+    "NO_COMMANDS": "**There are no custom commands defined on this server. \n \nTo define make `{{prefix}}custom-commands`  then type`create`.**",
+    "MENU_CREATE": "**Please mark the name of your command. \n \nType `cancel` to cancel.**",
+    "MENU_CREATE_2": "**Now please mark what the bot will reply to. \n \nType `cancel` to cancel.**",
+    "ALREADY_EXIST": "**The command __{{cmd}}__ already exist!**",
+    "SUCCES_CREATE": "**Now when you do`{{cmd}}` the bot will reply** ```{{response}}``",
+    "MENU_DELETE": "**Please mark the name of the command to delete. \n \nType `cancel` to cancel.**",
+    "UNKNOWN_COMMAND": "**The command __{{cmd}}__ doesn't exist !**",
+    "SUCCES_DELETE": "**The command `{{cmd}}` has been deleted !**"
+}

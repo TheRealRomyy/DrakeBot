@@ -1,0 +1,10 @@
+{
+    "KICK_DM": "Hello **{{username}}**, \nYou were banned from `{{server}}` by `{{moderator}}` | Reason : {{reason}}",
+    "KICK": "{{username}} was banned",
+    "NOT_KICKABLE": "**I can't ban this member !**",
+    "LOG": "Ban by : {{moderator}} | Reason : {{reason}}",
+    "DESCRIPTION": "Ban someone",
+    "USAGE": "ban <user> (reason)",
+    "EXAMPLE": "ban @Ethan Spam",
+    "CONFIRM": "**Do you want to ban `{{user}}` for: `{{reason}}` ?**"
+}

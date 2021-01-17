@@ -1,0 +1,6 @@
+{
+    "PAT": "{{pater}} pat {{pated}} !",
+    "DESCRIPTION": "Pat someone",
+    "USAGE": "pat (user)",
+    "EXAMPLE": "pat @Mystere"
+}

@@ -1,0 +1,21 @@
+{
+    "WOODEN_SWORD": "Wooden sword",
+    "STONE_SWORD": "Stone sword",
+    "IRON_SWORD": "Iron sword",
+    "DIAMOND_SWORD": "Diamond sword",
+    "DEMONIC_SWORD": "Demonic sword",
+    "LEGENDARY_SWORD": "Legendary sword",
+    "MOB": "You will fight a mob while using: **{{weapon}}**",
+    "BOSS": "You will fight an boss while using: **{{weapon}}**",
+    "MOB_HP": "The mob as **{{mobHP}}lp** :heart:",
+    "MOB_DAMAGE": "You do it **{{damage}} damages** :crossed_sword:",
+    "MOB_DEAD": "**You has kill it!**",
+    "DAMAGES": "He has no **{{mobHP}}lp** :heart:",
+    "MOB_DAMAGES": "He do it **{{damage}} damages** :crossed_sword:",
+    "DEAD": "**You are dead !**",
+    "YOUR_HP": "You has now **{{lp}}lp** :heart:",
+    "COOLDOWN": "**Please wait `{{time}}` before re-fight !**",
+    "DESCRIPTION": "Fight a mob or a boss",
+    "USAGE": "fight",
+    "EXAMPLE": "fight"
+}

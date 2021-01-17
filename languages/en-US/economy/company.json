@@ -1,0 +1,10 @@
+{
+    "DESCRIPTION": "Manage and create your company",
+    "USAGE": "company <create/manage/claim>",
+    "EXAMPLE": "company create Microsoft",
+    "NOT_ENOUGHT": "You need {{require}} for that !",
+    "ALREADY_HAVE": "You have already create a company !",
+    "NAME_MISSING": "**Please specify a name for your company !**",
+    "DESC": "***Choose your activitie :*** \n \n💰 : **Money** \n👮 : **Security** \n🛒 : **Shopping** \n🍴 : **Fast food**",
+    "SUCCES": "Your company: `{{name}}` has been create in: `{{type}}` !"
+}

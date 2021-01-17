@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <body class="light">
+
+        <div class="head">
+            <%- include('includes/headStaff') %>
+        </div>
+
+        <div class="buttons">
+            <label class="switch-theme">
+                <input type="checkbox" id="switch" onclick="light()"/>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="staff">
+            <p>
+                <h1>Owner: </h1>
+    
+                <h2>
+                    <a target="_blank" href=https://discord.com/users/<%= users.get(config.owner[0]).id %>><%= users.get(config.owner[0]).username %></a> 
+                </h2>
+
+                <h1>Team: </h1>
+                
+                <h2>
+                    <a target="_blank" href=https://discord.com/users/<%= users.get(config.support[0]).id %>><%= users.get(config.support[0]).username %></a> (Support), <br>
+                    <a target="_blank" href=https://discord.com/users/<%= users.get(config.support[1]).id %>><%= users.get(config.support[1]).username %></a> (Support), <br> <br>
+                </h2>
+            </p>
+        </div>
+
+        <div class = "center">
+            <script type="text/javascript">
+                async function light() {
+    
+                    const body = document.body;
+    
+                    if(body.classList.contains('dark')){
+    
+                        body.classList.add('light')
+                        body.classList.remove('dark')
+    
+                    } else if(body.classList.contains('light')){
+    
+                        body.classList.add('dark')
+                        body.classList.remove('light')
+                    }
+    
+                };
+            </script>
+        </div>
+
+        <div class = "footer">
+            <%- include('includes/footer') %>
+        </div> 
+    </body>
+</html>

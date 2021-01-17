@@ -1,0 +1,9 @@
+{
+    "DESCRIPTION": "Set the suggest channel",
+    "EXAMPLE": "setsuggest #suggestions",
+    "USAGE": "setsuggest <channel>",
+    "SUCCES": "The suggest channel is now {{channel}} !",
+    "DISABLED": "Suggestions **disabled**",
+    "VOICE": "**This channel is a voice channel**",
+    "CHANNEL_NOT_FOUND": "**I don't find this channel !**"
+}

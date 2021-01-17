@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Enable the autorole",
+    "USAGE": "autorole <role>",
+    "EXAMPLE": "autorole @Members",
+    "DISABLED": "**Autorole disabled !**",
+    "ENABLED": "**New member was now given the role <@&{{role}}> !**",
+    "ROLE_NOT_FOUND": "The role __{{role}}__ doesn't exist !"
+}

@@ -1,0 +1,7 @@
+{
+    "SUCCES": "Le role: <@&{{rank}}> sera désormais attribué au niveau: `{{level}}` !",
+    "DESCRIPTION": "Ajouter un rôle qui sera automatiquement donné à un certain niveau",
+    "USAGE": "addrank-level <level> <rank>",
+    "EXAMPLE": "addrank-level 5 @Apprentit",
+    "TOO_LOW": "**Le rôle que vous avez séléctioné est plus haut que moi !**"
+}

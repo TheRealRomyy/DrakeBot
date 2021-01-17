@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Déposer de l'argent en banque",
+    "USAGE": "deposit <amount>",
+    "EXAMPLE": "deposit 100",
+    "NOT_ENOUGHT": "Vous n'avez pas assez d'argent !",
+    "SUCCES": "Vous avez bien déposé **{{amount}}{{symbol}}** a la banque !",
+    "MAX_AMOUNT": "Vous pouvez avoir maximum **10 000{{symbol}}** en banque !"
+}

@@ -1,0 +1,6 @@
+{
+    "PAT": "{{pater}} tapotte {{pated}} !",
+    "DESCRIPTION": "Tapoter quelqu'un",
+    "USAGE": "pat (user)",
+    "EXAMPLE": "pat @Mystere"
+}

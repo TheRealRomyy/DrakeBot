@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**:flag_fr: La langue est désormais le francais !**",
+    "DESCRIPTION": "Définir la langue du bot sur ce serveur",
+    "EXAMPLE": "setlang en",
+    "USAGE": "setlang <language>",
+    "ALREADY": "**Le bot est déjà en français sur ce serveur !**"
+}

@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**I have reset the nickname of all members when i can manage !**",
+    "DESCRIPTION": "Reset the nickname of all members of the server",
+    "USAGE": "un-nickall",
+    "EXAMPLE": "un-nickall",
+    "CONFIRM": "**Are you sure to rename all server's member ?**"
+}

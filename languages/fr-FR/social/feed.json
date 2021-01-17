@@ -1,0 +1,6 @@
+{
+    "FEED": "{{feeder}} nourrit {{feeded}} !",
+    "DESCRIPTION": "Nourrir quelqu'un",
+    "USAGE": "feed (user)",
+    "EXAMPLE": "feed @Fan"
+}

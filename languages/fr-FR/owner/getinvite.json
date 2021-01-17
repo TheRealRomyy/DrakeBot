@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "S'inviter sur un serveur sur lequel le bot est",
+    "EXAMPLE": "getinvite DrakeBot",
+    "USAGE": "getinvite <serveur>"
+}

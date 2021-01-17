@@ -1,0 +1,11 @@
+{
+    "DESCRIPTION": "Config the level systel",
+    "EXAMPLE": "config-level",
+    "USAGE": "config-level",
+    "DISABLED": "Level system **disabled** !",
+    "CHANNEL_NOT_FOUND": "The channel __{{channel}}__ doesn't exist !",
+    "SUCCES": "**Level system successfully update !**",
+    "TITLE": "Level System",
+    "INSTRUCTION_1": "**Please send the level UP message** ```{user}: The member who has level UP \n{user.nickname}: The nickname of the member who has level UP \n \n{level}: His new level \n{xp}: His exp amount ```\n \nType `cancel` to avort !",
+    "INSTRUCTION_2": "**And what is the channel ? For the channel who has level UP the member send `current` !** \n \nType `cancel` to avort !"
+}

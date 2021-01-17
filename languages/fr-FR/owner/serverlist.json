@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Voir tous les serveurs sur lesquelles le bot est",
+    "USAGE": "serverlist",
+    "EXAMPLE": "serverlist"
+}

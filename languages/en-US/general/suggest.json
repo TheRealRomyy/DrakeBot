@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Say a suggestion",
+    "EXAMPLE": "suggest Create a channel \"report member\"",
+    "USAGE": "suggest <suggestion>",
+    "DISABLED": "**Suggestions are disabled on this server.** \n \nYou can do  `{{toRun}}` for activate it.",
+    "TITLE": "💡 Suggestion",
+    "SUCCES": "**Your sugestion have been send !**"
+}

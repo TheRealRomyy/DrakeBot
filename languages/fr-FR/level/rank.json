@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Voir le niveau de quelqu'un",
+    "EXAMPLE": "rank @4ever",
+    "USAGE": "rank (user)",
+    "USER_IS_BOT": "**Les robots ne peuvent pas avoir d'experience !**"
+}

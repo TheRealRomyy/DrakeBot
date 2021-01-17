@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Ecrire une suggestion",
+    "EXAMPLE": "suggest Créer un salon \"suite de nombres\"",
+    "USAGE": "suggest <suggestion>",
+    "DISABLED": "**Les suggestions sont désactivés sur ce serveur.** \n \nVous pouvez faire `{{toRun}}` pour les activer.",
+    "TITLE": "💡 Suggestion",
+    "SUCCES": "**Votre suggestion a bien été envoyée !**"
+}

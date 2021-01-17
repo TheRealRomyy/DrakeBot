@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Executer une commande Ubuntu",
+    "USAGE": "execute <commande>",
+    "EXAMPLE": "execute cd /home/ubuntu && ls"
+}

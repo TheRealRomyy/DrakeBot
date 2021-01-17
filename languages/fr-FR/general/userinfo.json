@@ -1,0 +1,23 @@
+{
+    "NAME": "• Nom",
+    "ID": "• ID",
+    "BOT": "• Robot",
+    "CREATE": "• Crée",
+    "NICKNAME": "• Surnom",
+    "HR": "• Rôle le plus haut",
+    "JOIN": "• Rejoins",
+    "ROLES": "• Rôles ({{roleList}})",
+    "GAME": "• Jeu",
+    "MR": "Et encore plus...",
+    "NO_DESC": "Aucune description",
+    "NO_DESC_AUTHOR": "Vous n'avez pas définis de bio. (``{{prefix}}setbio <bio>``)",
+    "STATUT": "• Statut",
+    "STATUS_DND": "Ne pas déranger",
+    "STATUS_ONLINE": "En ligne",
+    "STATUS_OFFLINE": "Hors-ligne",
+    "STATUS_IDLE": "Inactif",
+    "NO_GAME": "Ne joue pas",
+    "DESCRIPTION": "Obtenir des informations sur quelqu'un",
+    "EXAMPLE": "userinfo @Rome",
+    "USAGE": "userinfo (user)"
+}

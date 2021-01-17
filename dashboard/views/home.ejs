@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    
+        <title>DrakeBot - Home</title>
+        <link rel="icon" type="image/ico" href="/img/logo.ico" />
+    
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <link rel="stylesheet" type="text/css" href="/css/home.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/switch.css"/>   
+    </head>
+    <body>
+
+        <div class="header">
+            <header>
+                <button class="boutonDeroulant" onclick="deroulerMenu()">Menu</button>
+
+                <!-- <label class="switch-theme">
+                    <input type="checkbox" id="switch" onclick="light()"/>
+                    <span class="slider round"></span>
+                </label> -->
+
+                <nav class="doitApparaitreApresCliqueSurBoutonDeroulant" id="d1">
+                    <ul>
+                        <li>
+                            <a href="/commands" class="doitApparaitre" onclick="deroulerMenu()">Commandes</a>
+                        </li>
+                        <li>
+                            <a href="/staff" class="doitApparaitre" onclick="deroulerMenu()">Staff</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://top.gg/bot/762965943529766912/vote" class="doitApparaitre" onclick="deroulerMenu()">Votes</a>
+                        </li>
+                        <li>
+                            <a href="https://discord.gg/nYa8UD9Tfv" target="_blank" class="doitApparaitre" onclick="deroulerMenu()">Support</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <div class="center">
+            <h1>DrakeBot</h1>
+            <h3>Déjà sur <%= serverCount %> serveurs avec <%= userCount %> membres</h3>
+            <button type="button" onclick="window.open('https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot','_blank');" class="add-link" style="font-size: 17px;">
+                <strong>Ajouter le bot</strong >
+            </button>
+        </div>
+
+        <div class="script">
+            <script src="js/light.js"></script>
+            <script src="js/deroulerMenu.js"></script>
+        </div>
+
+        <div class = "footer">
+            <%- include('includes/footer') %>
+        </div>
+    </body>
+</html>

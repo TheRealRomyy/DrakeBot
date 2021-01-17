@@ -1,0 +1,9 @@
+{
+    "VERIFICATION_1": "Vérification des liens en status",
+    "VERIFICATION_2": "Vérification de si l'utilisateur est blacklist",
+    "PUB_STATUS": "A une pub dans son status",
+    "BLACKLIST": "Est blacklist sur le bot",
+    "DESCRIPTION": "Verifier si des gens sur votre serveur ont des pubs en status",
+    "EXAMPLE": "check-users",
+    "USAGE": "check-users"
+}

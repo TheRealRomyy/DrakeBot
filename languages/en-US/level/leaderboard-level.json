@@ -1,0 +1,7 @@
+{
+    "TITLE": "Top of the level on **{{guildName}}**",
+    "DESCRIPTION": "See the leaderboard of levels on this server",
+    "USAGE": "leaderboard-level",
+    "EXAMPLE": "leaderboard-level",
+    "NO_MEMBERS": "**Nobody has some experience !**"
+}

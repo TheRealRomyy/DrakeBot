@@ -1,0 +1,12 @@
+{
+    "HELLO": "Hi **{{user}}** ! You can do **{{prefix}}help** yo have the command list !",
+    "INVALID_TIME": "You have to send a valid unit: `s`, `m`, `h` ou `d`",
+    "REMIND_TITLE": "Remind",
+    "PLEASE_WAIT": "***Please wait !***",
+    "YOURSELF": "**You can't use this command on yourself !**",
+    "SUPERIOR": "**You can't use the command on this person !**",
+    "NO_REASON": "Any reason provided...",
+    "FULL_MAJ": "There are TOO CAPITALS LETTERS in your message \n \nMessage: ```{{message}}```",
+    "PUB": "There are an ad in your message \n \nMessage: ```{{message}}```",
+    "BADWORD": "There are a badword in your message \n \nMessage: ```{{message}}```"
+}

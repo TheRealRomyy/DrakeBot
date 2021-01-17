@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**J'ai re-nommé tous les utilisateurs que je pouvait re-nommer !**",
+    "DESCRIPTION": "Changer le nickname de tous les membres du serveur",
+    "USAGE": "nickall <nickname>",
+    "EXAMPLE": "nickall Bob le poisson",
+    "CONFIRM": "**Etes vous sur de vouloir re-nommer tous les membres du serveur ?**"
+}

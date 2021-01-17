@@ -1,0 +1,6 @@
+{
+    "NONE": "**Il n'y a aucun membres bannis !**",
+    "DESCRIPTION": "Voir la liste des personnes bannies",
+    "EXAMPLE": "banlist",
+    "USAGE": "banlist"
+}

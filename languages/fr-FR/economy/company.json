@@ -1,0 +1,10 @@
+{
+    "DESCRIPTION": "Créer et gérer votre entreprise",
+    "USAGE": "company <create/manage/claim>",
+    "EXAMPLE": "company create Apple",
+    "NOT_ENOUGHT": "Il vous faut {{require}} pour cela !",
+    "ALREADY_HAVE": "Vous avez déjà créer une entreprise sur ce serveur !",
+    "NAME_MISSING": "**Veuillez spécifier un nom !**",
+    "DESC": "***Choisisez votre domaine d'activité :*** \n \n💰 : **Bourse** \n👮 : **Sécurité** \n🛒 : **Grande surface** \n🍴 : **Restauration**",
+    "SUCCES": "Votre entreprise: `{{name}}` a bien été créer dans le domaine: `{{type}}` !"
+}

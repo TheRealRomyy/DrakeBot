@@ -1,0 +1,9 @@
+{
+    "DESCRIPTION": "Configurer le système de bienvenue en message privé",
+    "EXAMPLE": "configdm",
+    "USAGE": "configdm",
+    "DISABLED": "Système de bienvenue en message privé **désactivé** !",
+    "SUCCES": "**Modifications prises en compte**",
+    "TITLE": "Système de bienvenue en message privés",
+    "INSTRUCTION_1": "**Veuillez marquer le message de bienvenue en message privés** ```{user}: La personne qui a rejoint \n \n{guild.name}: Le nom du serveur \n{guild.members}: Le nombre de membres ```\n \nTapez `cancel` pour annuler !"
+}

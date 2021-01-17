@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Dire un texte en utilisant des émojis nitro",
+    "EXAMPLE": "say Salut les copains {pepeNice}",
+    "USAGE": "say <content>"
+}

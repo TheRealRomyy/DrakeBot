@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "See all pseudos of someone",
+    "EXAMPLE": "user-names @Ethan",
+    "USAGE": "user-names (user)",
+    "NO_NAMES": "**{{username}}** has never change of pseudo !",
+    "TITLE": "Names of __{{username}}__",
+    "TOTAL_NAMES": "Total of names: **{{count}}**"
+}

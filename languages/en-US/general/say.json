@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Say a text with nitro emotes",
+    "EXAMPLE": "say Hey guys {pepeNice}",
+    "USAGE": "say <content>"
+}

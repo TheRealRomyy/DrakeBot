@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Récupérer des informations sur un objet",
+    "USAGE": "info <item_id>",
+    "EXAMPLE": "info 3",
+    "RESISTANCE": "Résistance",
+    "TITLE": "Informations sur __{{name}}__",
+    "DAMAGE": "Dégats",
+    "DEXTERITY": "Déxtérité",
+    "OWN": "Possédé",
+    "PRICE": "Prix",
+    "level": "niveau"
+}

@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**:flag_gb: The language is now english !**",
+    "DESCRIPTION": "Change the language of the bot",
+    "EXAMPLE": "setlang en",
+    "USAGE": "setlang <language>",
+    "ALREADY": "**Bot already in english on this server !**"
+}

@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Voir l'historique des pseudos de quelqu'un",
+    "EXAMPLE": "user-names @Ethan",
+    "USAGE": "user-names (user)",
+    "NO_NAMES": "**{{username}}** n'a jamais changé de pseudo !",
+    "TITLE": "Historique des pseudos de __{{username}}__",
+    "TOTAL_NAMES": "Total des anciens pseudos: **{{count}}**"
+}

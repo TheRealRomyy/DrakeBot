@@ -1,0 +1,7 @@
+{
+    "DESCRIPTION": "Renverser un texte",
+    "USAGE": "reverse <text>",
+    "EXAMPLE": "reverse Salutation",
+    "EVERYONE": "Votre message contient une mention **everyone** !",
+    "HERE": "Votre message contient une mention **here** !"
+}

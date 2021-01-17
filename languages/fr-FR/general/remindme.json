@@ -1,0 +1,7 @@
+{
+    "DESCRIPTION": "Mettre un rappel",
+    "USAGE": "remindme <temp> <content>",
+    "EXAMPLE": "remindme 1h Créer une commande d'aide",
+    "SUCCES": "**Je vous rappelerais dans ``{{time}}``:** ```{{msg}}```",
+    "CREATED": "Créer il y a {{time}}"
+}

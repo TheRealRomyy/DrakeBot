@@ -1,0 +1,7 @@
+{
+    "DESCRIPTION": "Delete all messages of a channel",
+    "EXAMPLE": "nuke",
+    "USAGE": "nuke",
+    "CONFIRM": "**Are you sure to nuke this channel ?**",
+    "SUCCES": "**This channel was nuke by <@{{author}}> !**"
+}

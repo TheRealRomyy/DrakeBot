@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Re-démarrer le bot ou une de ses commandes",
+    "USAGE": "reload <command>",
+    "EXAMPLE": "reload help"
+}

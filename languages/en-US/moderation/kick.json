@@ -1,0 +1,10 @@
+{
+    "KICK_DM": "Hello **{{username}}**, \nYou were kicked from `{{server}}` by `{{moderator}}` | Reason : {{reason}}",
+    "KICK": "{{username}} was kicked",
+    "NOT_KICKABLE": "**I can't kick this member !**",
+    "LOG": "Kick by : {{moderator}} | Reason : {{reason}}",
+    "DESCRIPTION": "Kick someone",
+    "USAGE": "kick <user> (reason)",
+    "EXAMPLE": "kick @Mystere Bad words",
+    "CONFIRM": "**Do you want to kick `{{user}}` for: `{{reason}}` ?**"
+}

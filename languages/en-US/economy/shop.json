@@ -1,0 +1,10 @@
+{
+    "TITLE": "Shop",
+    "SWORDS": "Swords",
+    "DEXTERITY": "Dexterity",
+    "DAMAGE": "Damages",
+    "tips": "You can do `{{prefix}}info <item_id>` to have more informations about an item.",
+    "DESCRIPTION": "Show the shop",
+    "EXAMPLE": "shop",
+    "USAGE": "shop"
+}

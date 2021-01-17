@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Deposit amount in the bank",
+    "USAGE": "deposit <amount>",
+    "EXAMPLE": "deposit 100",
+    "NOT_ENOUGHT": "You has not enought money !",
+    "SUCCES": "You have succesfully deposit **{{amount}}{{symbol}}** !",
+    "MAX_AMOUNT": "You can has more **10 000{{symbol}}** in bank !"
+}

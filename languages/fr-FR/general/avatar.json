@@ -1,0 +1,7 @@
+{
+    "TITLE": "Avatar de **{{user}}**",
+    "DESCRIPTION": "Obtenir l'avatar de quelqu'un",
+    "USAGE": "avatar (user)",
+    "EXAMPLE": "avatar @Rome",
+    "HERE": "Télécharger son avatar"
+}

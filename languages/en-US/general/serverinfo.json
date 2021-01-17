@@ -1,0 +1,19 @@
+{
+    "TITLE": "Informations of __{{guildName}}__",
+    "OWNER": "Owner",
+    "REGION": "Region",
+    "CREATE": "Create",
+    "CHANNELS": "Channels",
+    "TEXT_CHANNELS": "Text channels",
+    "VOICE_CHANNELS": "Voice channels",
+    "CATEGORIES": "Categories",
+    "MEMBERS": "Members",
+    "BOOSTS": "Boosts",
+    "LEVEL": "Level",
+    "EMOJIS": "Emojis",
+    "ROLELIST": "Rolelist ({{count}})",
+    "TOO": "Too much roles...",
+    "DESCRIPTION": "Get some informations about the server",
+    "EXAMPLE": "serverinfo",
+    "USAGE": "serverinfo"
+}

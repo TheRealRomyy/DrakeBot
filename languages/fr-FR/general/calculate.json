@@ -1,0 +1,7 @@
+{
+    "CALCUL": "Calcul",
+    "RESULT": "Résultat",
+    "DESCRIPTION": "Faire un calcule simple",
+    "EXAMPLE": "calc 5x5+1",
+    "USAGE": "calc <calcul>"
+}

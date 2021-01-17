@@ -1,0 +1,10 @@
+{
+    "KICK_DM": "Bonjour **{{username}}**, \nVous avez été éxpulsé de `{{server}}` par `{{moderator}}` | Raison : {{reason}}",
+    "KICK": "{{username}} a été expulsé(e)",
+    "NOT_KICKABLE": "**Je ne peux pas éxpulser cette personne !**",
+    "LOG": "Expulsé par : {{moderator}} | Raison : {{reason}}",
+    "DESCRIPTION": "Expulser quelqu'un",
+    "USAGE": "kick <user> (reason)",
+    "EXAMPLE": "kick @Ethan insulte",
+    "CONFIRM": "**Etes vous sur de vouloir éxpulser `{{user}}` pour: `{{reason}}` ?**"
+}

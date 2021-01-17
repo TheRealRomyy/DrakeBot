@@ -1,0 +1,11 @@
+{
+    "TITLE": "Shop",
+    "SWORDS": "Epées",
+    "ARMORS": "Armures",
+    "DEXTERITY": "Déxtéritée",
+    "DAMAGE": "Dégats",
+    "tips": "Vous pouvez faire `{{prefix}}info <item_id>` pour avoir plus d'informations sur un item.",
+    "DESCRIPTION": "Voir le shop",
+    "EXAMPLE": "shop",
+    "USAGE": "shop"
+}

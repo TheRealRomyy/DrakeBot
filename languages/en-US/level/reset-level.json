@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Reset the xp of someone or of the guild",
+    "SUCCES_MEMBER": "The xp of **{{username}}** has been reset !",
+    "EXAMPLE": "reset-level @Fan",
+    "USAGE": "reset-level (user)",
+    "SUCCES_GUILD": "The xp of all members of __{{guild}}__ was reset !",
+    "WANT?": "Do you want reset the xp of **{{toreset}}** ?"
+}

@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "See all names of a server",
+    "EXAMPLE": "server-names",
+    "USAGE": "server-names",
+    "NO_NAMES": "The guild **{{name}}** has never change of name !",
+    "TITLE": "All names of __{{name}}__",
+    "TOTAL_NAMES": "Total of names: **{{count}}**"
+}

@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Delete all sanctions of someone",
+    "SUCCES": "**All sanctions of `{{username}}` was deleted !**",
+    "EXAMPLE": "clear-sanctions @Spooky",
+    "USAGE": "clear-sanctions <user>"
+}

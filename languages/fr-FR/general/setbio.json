@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Se définir une courte déscription",
+    "USAGE": "setbio <bio>",
+    "EXAMPLE": "setbio Je suis un gars sympa",
+    "SUCCES": "**Votre bio a bien été mise a jour !**"
+}

@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Voir la monnaie de quelqu'un ou de vous même",
+    "USAGE": "money (user)",
+    "EXAMPLE": "money @Rome",
+    "BOT": "L'utilisateur **{{bot}}** est un robot !",
+    "TITLE": "Solde de {{username}}",
+    "MONEY": "Argent",
+    "BANKSOLD": "Compte en banque",
+    "GLOBAL": "Argent totale",
+    "INSTRUCTIONS": "**Veuillez marquer le type de solde que vous voulez voir: \n`bank`, `money` ou `global` \n \nTapez `cancel` pour annuler.**",
+    "INVALID": "**Vous auriez du marquer : `bank`, `money` ou `global` !**"
+}

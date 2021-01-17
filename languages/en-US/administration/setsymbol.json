@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Définir le symbole d'économie du bot",
+    "USAGE": "setymbol <symbol>",
+    "EXAMPLE": "setsymbol $",
+    "SUCCES": "**Le symbole d'économie sur ce serveur est maitenant** ``{{newSymbol}}`` **!**"
+}

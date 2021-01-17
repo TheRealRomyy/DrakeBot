@@ -1,0 +1,8 @@
+{
+    "BOT": "Latence du bot",
+    "VPS": "Latence du VPS",
+    "TITLE": "Pong !",
+    "DESCRIPTION": "Voir la latence du bot",
+    "USAGE": "ping",
+    "EXAMPLE": "ping"
+}

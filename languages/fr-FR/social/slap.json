@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Mettre une claque à quelqu'un",
+    "EXAMPLE": "slap @Rome",
+    "USAGE": "slap <user>",
+    "SLAP": "**{{slaper}}** a frappé **{{slaped}}**"
+}

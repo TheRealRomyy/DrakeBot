@@ -1,0 +1,8 @@
+{
+    "CLEARED": "**{{amount}}** messages was deleted !",
+    "CLEARED_MEMBER": "**{{amount}}** messages of **{{username}}** was deleted !",
+    "DESCRIPTION": "Delete an amount of messages",
+    "USAGE": "clear <amount> (user)",
+    "EXAMPLE": "clear 5 @Fan",
+    "NUKE_EXIST": "For delete all messages of a channel, you can do `{{prefix}}nuke`"
+}

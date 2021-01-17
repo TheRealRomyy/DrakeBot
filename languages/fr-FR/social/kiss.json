@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Embrasser quelqu'un",
+    "EXAMPLE": "kiss @Rome",
+    "USAGE": "kiss <user>",
+    "KISS": "**{{kisser}}** embrasse **{{kissed}}**"
+}

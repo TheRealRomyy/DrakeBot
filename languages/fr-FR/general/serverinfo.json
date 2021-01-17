@@ -1,0 +1,19 @@
+{
+    "TITLE": "Informations sur __{{guildName}}__",
+    "OWNER": "Fondateur",
+    "REGION": "Zone Géographique",
+    "CREATE": "Créer le",
+    "CHANNELS": "Salons",
+    "TEXT_CHANNELS": "Salons textuels",
+    "VOICE_CHANNELS": "Salons vocaux",
+    "CATEGORIES": "Catégories",
+    "MEMBERS": "Membres",
+    "BOOSTS": "Boosts",
+    "LEVEL": "Niveaux",
+    "EMOJIS": "Emojis",
+    "ROLELIST": "Liste des rôles ({{count}})",
+    "TOO": "Trop de rôles...",
+    "DESCRIPTION": "Obtenir des informations sur le serveur",
+    "EXAMPLE": "serverinfo",
+    "USAGE": "serverinfo"
+}

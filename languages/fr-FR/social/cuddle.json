@@ -1,0 +1,6 @@
+{
+    "CUDDLE": "{{cuddleer}} caresse {{cuddleed}} !",
+    "DESCRIPTION": "Caresser quelqu'un",
+    "USAGE": "cuddle (user)",
+    "EXAMPLE": "cuddle @4ever"
+}

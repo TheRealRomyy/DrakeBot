@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**I have set the nickname of all members when i can manage !**",
+    "DESCRIPTION": "Change the nickname of all members of the server",
+    "USAGE": "nickall <nickname>",
+    "EXAMPLE": "nickall Bob the Fish",
+    "CONFIRM": "**Do you want rename all server's member ?**"
+}

@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Réinitialiser le niveau de quelqu'un ou du serveur tout entier",
+    "SUCCES_MEMBER": "L'xp de **{{username}}** a bien été réinitialisée !",
+    "EXAMPLE": "reset-level @Fan",
+    "USAGE": "reset-level (user)",
+    "SUCCES_GUILD": "L'xp de tous les membres de __{{guild}}__ a été réinitialisée !",
+    "WANT?": "Voulez vous supprimer l'xp de **{{toreset}}** ?"
+}

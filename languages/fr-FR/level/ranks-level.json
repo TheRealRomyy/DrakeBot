@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Voir les récompenses de rôle sur ce serveur",
+    "EXAMPLE": "ranks-level",
+    "USAGE": "ranks-level",
+    "NO_RANK": "**Il n'y a aucunes récompenses définies sur ce serveur !** \n \nVous pouvez faire `{{prefix}}addrank-level <level> <rank>` pour en ajouter !"
+}

@@ -1,0 +1,11 @@
+{
+    "DESCRIPTION": "Config the goodbye plugin",
+    "EXAMPLE": "configleave",
+    "USAGE": "configleave",
+    "DISABLED": "Goodbye plugin **disabled** !",
+    "CHANNEL_NOT_FOUND": "The channel __{{channel}}__ doesn't exist !",
+    "SUCCES": "**Goodbye plugin successfully update !**",
+    "TITLE": "Goodbye plugin",
+    "INSTRUCTION_1": "**Please send the goodbye message** ```{user}: The member who has leave \n \n{guild.name}: The name of the server \n{guild.members}: The member count of this server ```\n \nType `cancel` to avort !",
+    "INSTRUCTION_2": "**And what is the channel ? \n \nType `cancel` to avort !"
+}

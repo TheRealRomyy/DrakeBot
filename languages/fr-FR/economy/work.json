@@ -1,0 +1,17 @@
+{
+    "DESCRIPTION": "Faites cette commande pour travailler",
+    "USAGE": "work",
+    "EXAMPLE": "work",
+    "COOLDOWN": "Veuillez attendre **{{time}}** avant de re-travailler !",
+    "20": "Vous avez travaillé a l'usine et gagné **20{{symbol}}** !",
+    "21": "Vous avez travaillé chez un fast food et gagné **21{{symbol}}** !",
+    "22": "Vous avez travaillé a la ferme de votre oncle cette matinée et gagné **22{{symbol}}**",
+    "23": "Vous avez aider la France en supprimant 10% du chomage. Bravo et merci ! vous avez gagné **23{{symbol}}** !",
+    "24": "Vous avez fais un cours en visioconférence ce matin et gagné **24{{symbol}}** !",
+    "25": "Vous avez été séléctioné pour participer a un jeu télévisé et gagné **25{{symbol}}** !",
+    "26": "Vous venez de répondre a un sondage et gagné **26{{symbol}}** !",
+    "27": "Vous avez vendu votre ancien clavier et gagné **27{{symbol}}** !",
+    "28": "Chance ! Vous avez trouvé **28{{symbol}}** par terre !",
+    "29": "Vous venez de gagner a une compétition de gym et gagné **29{{symbol}}** !",
+    "30": "Vous avez créer un jeux et vous venez de gagner **30{{symbol}}** !"
+}

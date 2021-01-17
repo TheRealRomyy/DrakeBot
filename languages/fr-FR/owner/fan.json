@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Commande personelle pour fan",
+    "EXAMPLE": "fan restart",
+    "USAGE": "fan <start/restart/stop>"
+}

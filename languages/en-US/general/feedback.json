@@ -1,0 +1,6 @@
+{
+    "SUCCES": "**Your feedback has been send**",
+    "DESCRIPTION": "Do an feedback about the bot to his developper",
+    "USAGE": "feedback <comments>",
+    "EXAMPLE": "feedback Very good bot !"
+}

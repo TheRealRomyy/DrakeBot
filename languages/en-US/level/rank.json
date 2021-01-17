@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "See someone level",
+    "EXAMPLE": "rank @4ever",
+    "USAGE": "rank (user)"
+}

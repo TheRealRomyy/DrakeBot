@@ -1,0 +1,9 @@
+{
+    "DESCRIPTION": "Définir le salon où iront les suggestions",
+    "EXAMPLE": "setsuggest #suggestions",
+    "USAGE": "setsuggest <channel>",
+    "SUCCES": "Les suggestions iront maintenant dans le salon {{channel}} !",
+    "DISABLED": "Suggestions **désactivés**",
+    "VOICE": "**Ce salon est un salon vocal**",
+    "CHANNEL_NOT_FOUND": "**Je ne trouve pas ce salon !**"
+}

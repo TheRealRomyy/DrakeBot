@@ -1,0 +1,5 @@
+{
+    "DESCRIPTION": "Exécuter du code JavaScript",
+    "USAGE": "eval <code>",
+    "EXAMPLE": "eval this.client.token"
+}

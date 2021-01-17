@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "See the role rewards on this server",
+    "EXAMPLE": "ranks-level",
+    "USAGE": "ranks-level",
+    "NO_RANK": "**There is no rank rewards here !** \n \nRun: `{{prefix}}addrank-level <level> <rank>` for add rank reward !"
+}

@@ -1,0 +1,8 @@
+{
+    "SUCCES": "You are now *AFK* for : **{{reason}}**",
+    "DELETED": "**{{username}} is come-back !**",
+    "AFK": "{{username}} is *AFK* for : **{{reason}}** !",
+    "DESCRIPTION": "Set you \"AFK\"",
+    "USAGE": "afk <reason>",
+    "EXAMPLE": "afk I sleep"
+}

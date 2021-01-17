@@ -1,0 +1,7 @@
+{
+    "SUCCES": "**Il n'y aura désomais plus de récompense attribuée aux membres qui seront au niveau: `{{level}}` !**",
+    "NO_RANK": "**Il n'y a pas de récompense pour le niveau: `{{level}}` !**",
+    "DESCRIPTION": "Retirer le rôle a donner pour un certain niveau",
+    "EXAMPLE": "removerank-level 5",
+    "USAGE": "removerank-level <level>"
+}

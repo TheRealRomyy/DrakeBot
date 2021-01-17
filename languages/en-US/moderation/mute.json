@@ -1,0 +1,11 @@
+{
+    "INVALID_TIME": "**Please specify a valid unit ! Units valids : `s`, `m`, `h` or `d`**",
+    "MUTE_DM": "Hello **{{username}}**, \nYou were muted on `{{server}}` by `{{moderator}}` for: `{{time}}` | Reason: {{reason}}",
+    "MUTE": "**{{username}}** was muted for `{{time}}`",
+    "UNMUTE_DM": "Hello **{{username}}**, \nYou can now speak on `{{server}}` | Reason : {{reason}}",
+    "CASE": "Mute | Case #{{count}}",
+    "CONFIRM": "**Do you want mute `{{username}}` for: `{{time}}`| Reason: `{{reason}}` ?**",
+    "DESCRIPTION": "Mute a member",
+    "EXAMPLE": "mute @Ethan 1h Ads",
+    "USAGE": "mute <user> <time> (reason)"
+}

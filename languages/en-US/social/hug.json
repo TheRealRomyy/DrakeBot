@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Do an hug to someone",
+    "EXAMPLE": "hug @Rome",
+    "USAGE": "hug <user>",
+    "HUG": "**{{huger}}** hug **{{huged}}**"
+}

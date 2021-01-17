@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Manage auto-moderation",
+    "USAGE": "automod",
+    "EXAMPLE": "automod",
+    "ENABLED": ":white_check_mark: **Enabled**",
+    "DISABLED": ":x: **Disabled**",
+    "TITLE": "Auto-moderation",
+    "DESC": "***Click on a reaction to disabled/enabled a plugin***",
+    "ONE": ":one: Anti-ad",
+    "TWO": ":two: Anti-bad words",
+    "THREE": ":three: Anti-full capital letters"
+}

@@ -1,0 +1,9 @@
+{
+    "DESCRIPTION": "Config the welcome direct message plugin",
+    "EXAMPLE": "configdm",
+    "USAGE": "configdm",
+    "DISABLED": "Welcome direct message plugin **disabled** !",
+    "SUCCES": "**Welcome direct message plugin successfully update !**",
+    "TITLE": "Welcome direct message plugin",
+    "INSTRUCTION_1": "**Please send the welcome direct message** ```{user}: The member who has join \n \n{guild.name}: The name of the server \n{guild.members}: The member count of this server ```\n \nType `cancel` to avort !"
+}
