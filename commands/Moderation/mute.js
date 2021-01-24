@@ -39,7 +39,7 @@ class Mute extends Command {
         // Chopper la position du member & check si elle est pas supérieure a la tienne + si le member est pas l'owner
         const memberPosition = member.roles.highest.position;
         const moderationPosition = message.member.roles.highest.position;
-        if(message.member.ownerID !== message.author.id && !(moderationPosition > memberPosition)) return message.drake("misc:SUPERIOR", {
+        if(moderationPosition < memberPosition) return message.drake("misc:SUPERIOR", {
             emoji: "error"
         });
 

@@ -28,7 +28,7 @@ class Nuke extends Command {
             newChannel.setPosition(position);
 
             return newChannel.send(message.drakeWS("moderation/nuke:SUCCES", {
-                emoji: "succes",
+                emoji: "nuke",
                 author: message.author
             }));
         };

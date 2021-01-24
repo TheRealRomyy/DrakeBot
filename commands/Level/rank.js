@@ -19,7 +19,7 @@ class Rank extends Command {
 
 	async run (message, args, data) {
 
-        const member = message.mention.members.first() || message.guild.member(this.client.users.cache.get(args[0])) || message.member;
+        const member = message.mentions.members.first() || message.guild.member(args[0]) || message.member;
         const user = member.user;
 
         if(user.bot) return message.drake("level/rank:USER_IS_BOT", {

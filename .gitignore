@@ -3,3 +3,9 @@ node_modules
 
 # Packages
 package-lock.json
+
+# Configuration
+config.js
+
+# Database file (Made by Mysteree)
+# database
