@@ -1,6 +1,6 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 
-module.exports = class {
+class GuildCreate {
 
 	constructor (client) {
 		this.client = client;
@@ -40,3 +40,5 @@ module.exports = class {
         guild.owner.send(thankEmbed);
 	};
 };
+
+module.exports = GuildCreate;

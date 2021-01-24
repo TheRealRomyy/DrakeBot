@@ -1,6 +1,6 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 
-module.exports = class {
+class GuildDelete {
 
 	constructor (client) {
 		this.client = client;
@@ -30,3 +30,5 @@ module.exports = class {
         });
 	};
 };
+
+module.exports = GuildDelete;
