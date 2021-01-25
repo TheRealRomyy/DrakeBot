@@ -1,5 +1,6 @@
 const loader = require('../database/loader.js')
 const checkUnmutes = require("../helpers/checkUnmutes.js");
+const CronJob = require("cron").CronJob;
 
 class Ready {
 
@@ -25,31 +26,29 @@ class Ready {
       // Send in the "status" channel a message.
       this.client.channels.cache.get("793262294493560893").send("<:online:750782471423000647> Bot is ready !");
 
-      // Set and clear the interval
-      var interval;
-      clearInterval(interval);
+      // Create all activites
+      let activities = [
+        `${this.client.guilds.cache.size} guilds | ✨`,
+        `💻 • v${this.client.cfg.version}`,
+        `${this.client.users.cache.size} users | 👤`,
+        `📚 • ${this.client.cmds.size} commandes`,
+        `🌐 • ${this.client.cfg.dashboard.name}`,
+        `📃 • ${this.client.cfg.prefix}help`
+      ];
 
-      //Update the game every 20s
-      interval = setInterval(() => {
-          
-        let activities = [
-          `${this.client.guilds.cache.size} guilds | ✨`,
-          `💻 • v${this.client.cfg.version}`,
-          `${this.client.users.cache.size} users | 👤`,
-          `📚 • ${this.client.cmds.size} commandes`,
-          `🌐 • ${this.client.cfg.dashboard.name}`,
-          `📃 • ${this.client.cfg.prefix}help`
-        ];
-        
+      // Load a scheduler who update status every 20 seconds
+		  const job = new CronJob("0/20 * * * * *", async () => {
         const activityname = activities[Math.floor(Math.random() * activities.length)];
         
         client.user.setPresence({
           activity: {
             name: activityname,
             type: "WATCHING"
-          }
-        });
-      }, 25000);
+          }});
+
+      }, null, true, "Europe/Paris");
+      
+		  job.start();
 	};
 };
 
