@@ -38,11 +38,6 @@ exports.Guild = (guildID, client) => {
                 message: ":tada: Congratulations to {user} to reach **level {level}** !",
                 rankRewards: [],
             },
-            messreac: {
-                enabled: true,
-                channel: null,
-                reaction: null
-            },
             welcomeDM: null,
             suggestions: null
         },
