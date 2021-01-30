@@ -25,7 +25,7 @@ module.exports = class {
 		};
 
 		// Check l'autorole
-		if(guildData.plugins.autorole.enabled) {
+		if(guildData.plugins.autorole.enabled && !guildData.plugins.captcha.enabled) {
 			member.roles.add(guildData.plugins.autorole.role).catch(() => {});
 		};
 
@@ -122,6 +122,11 @@ module.exports = class {
 				member.roles.remove(captchaRole);
 
 				captchaLogChannel.send(succesEmbed);
+
+				// Autorole
+				if(guildData.plugins.autorole.enabled) {
+					member.roles.add(guildData.plugins.autorole.role).catch(() => {});
+				};
 			} else {
 
 				msg.delete();
