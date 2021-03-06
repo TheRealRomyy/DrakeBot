@@ -43,7 +43,7 @@ class Userinfo extends Command {
         const embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
-        .setDescription(badges + (message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" ? "\n" + (message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji !== null ? message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji.name + " " : "") + message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].state : ""))
+        .setDescription(badges + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" ? "\n" + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji !== null ? user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji.name + " " : "") + user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].state : ""))
         .setColor("RANDOM")
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .addField(message.drakeWS("general/userinfo:NAME", {
