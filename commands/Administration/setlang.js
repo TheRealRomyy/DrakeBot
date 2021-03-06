@@ -24,15 +24,15 @@ class Setlang extends Command {
         });
 
 		if(!args[0] || !language) return message.drake("errors:NOT_CORRECT", {
-                usage: data.guild.prefix + "setlang <fr/en>",
-                emoji: "error"
-			});
+            usage: data.guild.prefix + "setlang <fr/en>",
+            emoji: "error"
+		});
+
+        if(language.name === "en-US") message.channel.send("**:flag_gb: The language is now english !**");
+        else if(language.name === "fr-FR") message.channel.send("**:flag_fr: La langue est désormais le français !**");
 
 		data.guild.language = language.name;
-		await data.guild.save();
-        
-        if(language.name === "en-US") return message.channel.send("**:flag_gb: The language is now english !**");
-        else if(language.name === "fr-FR") return message.channel.send("**:flag_fr: La langue est désormais le français !**");
+		return await data.guild.save();
     };
 };
 

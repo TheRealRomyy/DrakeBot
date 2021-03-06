@@ -54,7 +54,7 @@ class Withdraw extends Command {
             emoji: "error"
         });
 
-        data.member.bankSold -= amount;
+        data.member.banksold -= amount;
         data.member.money += amount;
 
         await data.member.save();

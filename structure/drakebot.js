@@ -19,7 +19,7 @@ class DrakeBot extends Client {
 		this.functions = require("../helpers/functions");
 		this.dashboard = require("../dashboard/app");
 		this.shop = require("../shop.js");
-		this.db = new (require('../database/base.js'))(this);
+		this.db = new (require('../database/postgres.js'))(this);
 
 		this.cmds = new Collection();
 		this.aliases = new Collection();
@@ -29,6 +29,12 @@ class DrakeBot extends Client {
 		this.serverAdds = 0;
 		this.serverRemoves = 0;
 		this.commandsRun = 0;
+
+		this.cache = {};
+		this.cache.guilds = new Collection();
+		this.cache.users = new Collection();
+		this.cache.members = new Collection();
+		this.cache.master = new Collection();
     };
 
 
@@ -38,7 +44,7 @@ class DrakeBot extends Client {
 		require("../helpers/extenders");
 
 		// Load the scheduled report with crown
-		const job = new CronJob("0 */60 * * * *", async () => {
+		const scheduler = new CronJob("0 */60 * * * *", async () => {
 			const dataClient = await this.db.findOrCreateClient();
 
 			const embed = new MessageEmbed()
@@ -53,7 +59,19 @@ class DrakeBot extends Client {
 
 			await this.channels.cache.get("793941589113700392").send(embed);
 		}, null, true, "Europe/Paris");
-		job.start();
+		scheduler.start();
+
+		// Load the everyday drakecoin change
+		const drakecoinChanger = new CronJob("0 0 0 * * *", async () => {
+			let price = this.functions.getDailyDrakecoinPrice();
+			let dataClient = this.db.findOrCreateClient(this);
+
+			this.channels.get("767372177775132703").send("📆 Aujourd'hui le Drakecoin est à **" + price + "$**");
+			dataClient.cours = price;
+
+			dataClient.save();
+		}, null, true, "Europe/Paris");
+		drakecoinChanger.start();
 
 		// Load the languages
         const languages = require("../helpers/lang");

@@ -1,6 +1,6 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 
-class GuildDelete {
+module.exports = class {
 
 	constructor (client) {
 		this.client = client;
@@ -18,7 +18,7 @@ class GuildDelete {
         .setTimestamp()
         .addField(":memo: • Name", guild.name, false)
         .addField("<:id:750780969270771893> • ID", guild.id, false)
-        .addField("<:ownerCrown:750714323047022693> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
+        .addField("<:owner:763412335569797141> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
         .addField("<:member:750717695653183588> • Members", guild.memberCount, false)
 
         const webhook = new WebhookClient('766786237021028404', 'gy_0mhG3FtjcNH9BhX9_4reTQiEAfx9Bih6U8E7o1ry6ZOLLbK7yxDu_KIfXcoNfsFKh');
@@ -30,5 +30,3 @@ class GuildDelete {
         });
 	};
 };
-
-module.exports = GuildDelete;

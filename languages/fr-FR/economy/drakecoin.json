@@ -1,0 +1,10 @@
+{
+    "EXAMPLE": "drakecoin invest 50",
+    "DESCRIPTION": "Investir, vendre ou voir le cours du drakecoin",
+    "USAGE": "drakecoin (sell/invest) (amount)",
+    "ACTUAL": "💰 Cours du drakecoin : {{cours}}",
+    "NOT_ENOUGHT_MONEY": "**Vous n'avez pas assez d'argent !**",
+    "SUCCES_INVEST": "Vous avez bien investis **{{quantity}}$** dans le drakecoin.",
+    "NOT_ENOUGHT_INVESISTEMENT": "**Vous n'avez pas investis autant d'argent dans le drakecoin !**",
+    "SUCCES_SELL": "Vous avez bien récupéré **{{quantity}}$** !"
+}

@@ -4,5 +4,6 @@
     "CONFIRM": "**Do you want warn `{{user}}` for: `{{reason}}` ?**",
     "USAGE": "warn <user> (reason)",
     "EXAMPLE": "warn @Fan Badword",
-    "DESCRIPTION": "Warn someone"
+    "DESCRIPTION": "Warn someone",
+    "WARN_BOT": "**You can't warn a bot !**"
 }

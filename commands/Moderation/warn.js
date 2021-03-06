@@ -34,6 +34,10 @@ class Warn extends Command {
             emoji: "error"
         });
 
+        if(member.user.bot) return message.drake("moderation/warn:WARN_BOT", {
+            emoji: "error"
+        });
+
         const memberPosition = member.roles.highest.position;
         const moderationPosition = message.member.roles.highest.position;
         if(moderationPosition < memberPosition) return message.drake("misc:SUPERIOR", {

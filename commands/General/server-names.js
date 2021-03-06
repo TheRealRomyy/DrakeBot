@@ -40,7 +40,7 @@ class Servernames extends Command {
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setTitle(message.drakeWS("general/server-names:TITLE", {
             emoji: "label",
-            name: guildData.name
+            name: message.guild.name
         }))
         .setColor(this.client.cfg.color.purple)
         .setDescription(message.drakeWS("general/server-names:TOTAL_NAMES", { count }) + " \n \n" + map);

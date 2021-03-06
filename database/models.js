@@ -55,6 +55,14 @@ exports.Guild = (guildID, client) => {
         [],
         // The custom commands
         [],
+
+        // The subscription status
+        {
+            premium: false,
+            since: null,
+            expires: null,
+            subs: []
+        },
     ];
 };
 
@@ -110,6 +118,9 @@ exports.User = (userID) => {
         null,
         // The reminds of the user
         [],
+
+        // Drakecoin owned amount
+        null,
     ];
 };
 
@@ -125,5 +136,10 @@ exports.Client = clientID => {
             guilds: [],
             users: []
         },
+
+        // The drakecoin
+        0,
+        // The "cours" (j'sais pas comment on dit en anglais) of the drakecoin
+        0,
     ];
 };

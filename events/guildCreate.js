@@ -1,6 +1,6 @@
 const { MessageEmbed, WebhookClient } = require("discord.js");
 
-class GuildCreate {
+module.exports = class {
 
 	constructor (client) {
 		this.client = client;
@@ -19,7 +19,7 @@ class GuildCreate {
         .setTimestamp()
         .addField(":memo: • Name", guild.name, false)
         .addField("<:id:750780969270771893> • ID", guild.id, false)
-        .addField("<:ownerCrown:750714323047022693> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
+        .addField("<:owner:763412335569797141> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
         .addField("<:member:750717695653183588> • Members", guild.memberCount, false)
         
         const thankEmbed = new MessageEmbed()
@@ -40,5 +40,3 @@ class GuildCreate {
         guild.owner.send(thankEmbed);
 	};
 };
-
-module.exports = GuildCreate;

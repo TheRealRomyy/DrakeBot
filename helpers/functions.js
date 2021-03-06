@@ -112,4 +112,20 @@ module.exports = {
 			return "<:online:750782471423000647>";
 		};
 	},
+
+	/**
+	 * Get daily drakecoin price
+	 * @return { int } drakecoin price (in percent)
+	*/
+
+	getDailyDrakecoinPrice() {
+		let price = this.getRandomInt(-1, 1);
+
+		if(price > 0) {
+			return price;
+		} else {
+			price = this.getRandomInt(-25, 25);
+			return price;
+		};
+	},
 };

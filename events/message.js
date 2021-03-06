@@ -104,12 +104,6 @@ class Message {
             });
         });
 
-        if(!data.guild.plugins.automod) data.guild.plugins.automod = {
-			antiPub: false,
-			antiBadwords: false,
-			antiMajs: false	
-		};
-
         if(data.guild.plugins.automod.antiMajs && !message.member.hasPermission("MANAGE_MESSAGES")) {
             let max = Math.round(message.content.length / 1.5);
             let count = 0;
@@ -315,13 +309,6 @@ class Message {
         };
 
         async function updateXp(msg, data){
-
-            if(!data.guild.plugins.levels) data.guild.plugins.levels = {
-                enabled: true,
-                channel: "current",
-                message: ":tada: Congratulations to {user} to reach **level {level}** !",
-                rankRewards: [],
-            };
 
             if(!data.guild.plugins.levels.enabled) return;
 

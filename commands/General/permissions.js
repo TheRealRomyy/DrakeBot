@@ -20,8 +20,8 @@ class Permissions extends Command {
 
     async run(message, args, data) {
 
-        const member = message.mentions.members.first() || message.member;
-        const mPermissions = message.channel.permissionsFor(member);
+        const memberOrRole = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.mentions.roles.first() || message.guild.roles.cache.get(args[0]) || message.member;
+        const mPermissions = message.channel.permissionsFor(memberOrRole);
         const total = {
             denied: 0,
             allowed: 0
@@ -42,7 +42,7 @@ class Permissions extends Command {
 
         const embed = new Discord.MessageEmbed()
         .setTitle(message.drakeWS("general/permissions:TITLE", {
-            username: member.user.username,
+            username: (memberOrRole.user ? memberOrRole.user.username : memberOrRole.name),
             channel: message.channel.name,
             emoji: "pushpin"
         }))

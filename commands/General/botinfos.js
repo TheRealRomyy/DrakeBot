@@ -27,7 +27,7 @@ class Botinfos extends Command {
 
         let ping = Math.round(client.ws.ping);
         let commandCount = client.cmds.size;
-        let classCount = "2";
+        let classCount = "6";
 
         let cpuUsage = null;
         let osVersion = null;
@@ -58,7 +58,7 @@ class Botinfos extends Command {
         .setFooter(client.cfg.footer)
         .addField(message.drakeWS("general/botinfos:NAME", { emoji: "label"} ), `\`\`\`${client.user.username} (#${client.user.discriminator})\`\`\``)
         .addField(message.drakeWS("general/botinfos:ID", { emoji: "id" } ), `\`\`\`${client.user.id}\`\`\``)
-        .addField(message.drakeWS("general/botinfos:STATS", { emoji: "stats"} ), `\`\`\`${client.guilds.cache.size} guils - ${client.users.cache.size} users\`\`\``)
+        .addField(message.drakeWS("general/botinfos:STATS", { emoji: "stats"} ), `\`\`\`${client.guilds.cache.size} guilds - ${client.users.cache.size} users\`\`\``)
         .addField(message.drakeWS("general/botinfos:UPTIME", { emoji: "hourglass"} ), `\`\`\`${uptime}\`\`\``)
         .addField(message.drakeWS("general/botinfos:COMMANDS", { emoji: "dev"} ), `\`\`\`${commandCount} ${message.drakeWS("common:COMMANDS")} - ${classCount} ${message.drakeWS("common:CATEGORIES")}\`\`\``)
         .addField(message.drakeWS("general/botinfos:RAM", { emoji: "ram"} ), `\`\`\`${realMemUsed} / ${totalMemory} Go (${memPercent}%)\`\`\``)

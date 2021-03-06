@@ -24,7 +24,7 @@ class Setbio extends Command {
             usage: data.guild.prefix + "setbio <bio>"
         });
 
-        data.user.desc = bio;
+        data.user.description = bio;
         await data.user.save();
 
         return message.drake("general/setbio:SUCCES", {

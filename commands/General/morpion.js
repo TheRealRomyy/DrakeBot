@@ -6,7 +6,7 @@ class Morpion extends Command {
         super(client, {
             name: "morpion",
             aliases: [],
-            enabled: true,
+            enabled: false,
             botPerms: [],
             dirname: __dirname,
             userPerms: [],

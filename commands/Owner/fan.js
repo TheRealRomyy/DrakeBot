@@ -18,7 +18,7 @@ class Fan extends Command {
 
     async run(message, args, data) {
 
-        if(message.author.id !== "524615583447384064" && message.author.id !== "709481084286533773") return;
+        if(message.author.id !== "751779180701548595" && message.author.id !== "709481084286533773") return;
 
         if(!args[0]) return message.drake("errors:NOT_CORRECT", {
             emoji: "error",

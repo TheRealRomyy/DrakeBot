@@ -1,5 +1,8 @@
 const Drake = require("./structure/drakebot");
-const client = new Drake(); 
+const client = new Drake({
+    partials: ["MESSAGE", "USER", "REACTION", "GUILD_MEMBER"],
+    fetchAllMembers: true
+}); 
 
 client.init();
 

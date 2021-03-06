@@ -1,0 +1,7 @@
+{
+    "EXAMPLE": "bots",
+    "USAGE": "bots",
+    "DESCRIPTION": "See all server's bot",
+    "TITLE": "Bots of __{{server}}__",
+    "LEGENDE": "Legende :\n <:verified:816600288744046593> **=** Bot certified by Discord \n () **=** Our comment about the bot"
+}

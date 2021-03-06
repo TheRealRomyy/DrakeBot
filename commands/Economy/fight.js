@@ -17,174 +17,143 @@ class Fight extends Command {
 
     async run(message, args, data) {
 
+        // Récupérer le client du constructeur
         let client = this.client;
 
-        //try {
-            const isInCooldown = data.member.cooldowns.fight;
-            if(isInCooldown){
-                if(isInCooldown > Date.now()) return message.drake("economy/fight:COOLDOWN", {
-                        time: message.time.convertMS(isInCooldown - Date.now()),
-                        emoji: "error"
-                });
-            }
+        // Créer l'historique du fight & le message
+        let log = null;
+        let msg = null;
 
-            let damageOfTheMob = 0;
-            let mobHP = client.functions.getRandomInt(5, 350);
+        // Check le cooldown
+        if(data.member.cooldowns.fight && data.member.cooldowns.fight > Date.now()) return message.drake("economy/fight:COOLDOWN", {
+            time: message.time.convertMS(data.member.cooldowns.fight - Date.now()),
+            emoji: "error"
+        });
 
-            let toFight = client.functions.getRandomInt(1, 25);
-            let lang = client.cfg.lang.find((l) => l.name === data.guild.language);
+        // Calculer les domages et points de vies du mob
+        let damageOfTheMob = 0;
+        let mobHP = client.functions.getRandomInt(5, 350);
 
-            if(!data.member.inventory) data.member.inventory = [];
+        // Récupérer la langue
+        let lang = client.cfg.lang.find((l) => l.name === data.guild.language);
 
-            let weapon = message.drakeWS("common:HAND");
-            let armor = message.drakeWS("common:HAND");
+        // Récupérer le nom de toutes les armes et calculer laquelle est utilisée
+        let weapon = message.drakeWS("common:HAND");
+        let armor = message.drakeWS("common:HAND");
 
-            if((data.member.inventory.map((i) => i.name)).includes("wooden_sword")) weapon = message.drakeWS("economy/fight:WOODEN_SWORD");
-            if((data.member.inventory.map((i) => i.name)).includes("stone_sword")) weapon = message.drakeWS("economy/fight:STONE_SWORD");
-            if((data.member.inventory.map((i) => i.name)).includes("iron_sword")) weapon = message.drakeWS("economy/fight:IRON_SWORD");
-            if((data.member.inventory.map((i) => i.name)).includes("diamond_sword")) weapon = message.drakeWS("economy/fight:DIAMOND_SWORD");
-            if((data.member.inventory.map((i) => i.name)).includes("demonic_sword")) weapon = message.drakeWS("economy/fight:DEMONIC_SWORD");
-            if((data.member.inventory.map((i) => i.name)).includes("legendary_sword")) weapon = message.drakeWS("economy/fight:LEGENDARY_SWORD");
+        if((data.member.inventory.map((i) => i.name)).includes("wooden_sword")) weapon = message.drakeWS("economy/fight:WOODEN_SWORD");
+        if((data.member.inventory.map((i) => i.name)).includes("stone_sword")) weapon = message.drakeWS("economy/fight:STONE_SWORD");
+        if((data.member.inventory.map((i) => i.name)).includes("iron_sword")) weapon = message.drakeWS("economy/fight:IRON_SWORD");
+        if((data.member.inventory.map((i) => i.name)).includes("diamond_sword")) weapon = message.drakeWS("economy/fight:DIAMOND_SWORD");
+        if((data.member.inventory.map((i) => i.name)).includes("demonic_sword")) weapon = message.drakeWS("economy/fight:DEMONIC_SWORD");
+        if((data.member.inventory.map((i) => i.name)).includes("legendary_sword")) weapon = message.drakeWS("economy/fight:LEGENDARY_SWORD");
 
-            if((data.member.inventory.map((i) => i.name)).includes("wooden_armor")) armor = message.drakeWS("economy/fight:WOODEN_ARMOR");
-            if((data.member.inventory.map((i) => i.name)).includes("stone_armor")) armor = message.drakeWS("economy/fight:STONE_ARMOR");
-            if((data.member.inventory.map((i) => i.name)).includes("iron_armor")) armor = message.drakeWS("economy/fight:IRON_ARMOR");
-            if((data.member.inventory.map((i) => i.name)).includes("diamond_armor")) armor = message.drakeWS("economy/fight:DIAMOND_ARMOR");
+        if((data.member.inventory.map((i) => i.name)).includes("wooden_armor")) armor = message.drakeWS("economy/fight:WOODEN_ARMOR");
+        if((data.member.inventory.map((i) => i.name)).includes("stone_armor")) armor = message.drakeWS("economy/fight:STONE_ARMOR");
+        if((data.member.inventory.map((i) => i.name)).includes("iron_armor")) armor = message.drakeWS("economy/fight:IRON_ARMOR");
+        if((data.member.inventory.map((i) => i.name)).includes("diamond_armor")) armor = message.drakeWS("economy/fight:DIAMOND_ARMOR");
 
-            let damage = weapon !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).damage : 5) : 5;
-            let lp = (armor !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (((data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance) ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance : 5) : 5) : 5) + 60;
+        // Calculer les domages et points de vies du joueur
+        let damage = weapon !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).damage : 5) : 5;
+        let lp = (armor !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (((data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance) ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance : 5) : 5) : 5) + 60;
 
-            if(toFight == 1) {
+        // Envoyer le message annoncant l'ennemi & ses pv
+        log = message.drakeWS("economy/fight:MOB", {
+            weapon
+        });
 
-                message.drake("economy/fight:BOSS", {
-                    emoji: "skeleton",
-                    weapon
-                });
+        msg = await message.channel.send(log);
 
-            } else {
 
-                message.drake("economy/fight:MOB", {
-                    emoji: "fight",
-                    weapon
-                });
+        sendMessage("\n" + message.drakeWS("economy/fight:MOB_HP", {
+            mobHP
+        }));
 
-                message.drake("economy/fight:MOB_HP", {
-                    mobHP
-                });
+        // Boucle tant que le mob est en vie
+        while(mobHP > 0 && lp > 0) {
+            await playerHitMob();
+            await mobHitPlayer();
+            await checkWin();
+        };
 
-                message.drake("economy/fight:MOB_DAMAGE", {
-                    damage
-                });
+        // Vérifier si il y a victoire ou défaite
+        async function checkWin() {
+            // Ni victoire ni défaite : les deux sont encore en vie
+            if(mobHP > 0 && lp > 0) return;
 
-                if(damage >= mobHP) {
-                    let toWin = client.functions.getRandomInt(20, 30) * (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).dexterite : 2);
-                    message.drake("economy/fight:MOB_DEAD", {
-                        emoji: "trophy",
-                        symbol: data.guild.symbol,
-                        amount: toWin.toString()
-                    });
-                    const toWait = Date.now() + 3600000;
-                    data.member.money += toWin;
-                    data.member.cooldowns.fight = toWait;
-                    return await data.member.save();
-                } else {
-                    hitMob(damage, mobHP, lp)
-                    if(mobHP > 0 && lp > 0) {
-                        message.drake("economy/fight:MOB_DAMAGE", {
-                            damage
-                        });
-                        hitMob(damage)
-                        if(mobHP > 0 && lp > 0) {
-                            message.drake("economy/fight:MOB_DAMAGE", {
-                                damage
-                            });
-                            mobHP -= damage;
+            if(lp > 0) { // Victoire du joueur :]
 
-                            if(mobHP <= 0) {
-                                let toWin = client.functions.getRandomInt(20, 30) * (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).dexterite : 2);
-                                message.drake("economy/fight:DAMAGES", {
-                                    mobHP: 0
-                                });
-                                message.drake("economy/fight:MOB_DEAD", {
-                                    emoji: "trophy",
-                                    symbol: data.guild.symbol,
-                                    amount: toWin.toString()
-                                });
-                                const toWait = Date.now() + 3600000;
-                                data.member.money += toWin;
-                                data.member.cooldowns.fight = toWait;
-                                return await data.member.save();
-                            }
+                // Calculer l'argent gagnée
+                let toWin = client.functions.getRandomInt(20, 30) * (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).dexterite : 2);
+                
+                // Envoyer un message de victoire
+                sendMessage(message.drakeWS("economy/fight:MOB_DEAD", {
+                    symbol: data.guild.symbol,
+                    amount: toWin.toString()
+                }));
 
-                            message.drake("economy/fight:DAMAGES", {
-                                mobHP
-                            });
+                // Définir un cooldown & le sauvegarder dans la db
+                const toWait = Date.now() + 3600000;
+                data.member.money += toWin;
+                data.member.cooldowns.fight = toWait;
 
-                            damageOfTheMob = lp;
-                            lp -= damageOfTheMob;
+                return await data.member.save();
+            
+            } else if(mobHP > 0) { // Défaite du joueur ]:
 
-                            message.drake("economy/fight:MOB_DAMAGES", {
-                                damage: lp
-                            });
+                // Envoyer un message annoncant la mort du joueur
+                sendMessage(message.drakeWS("economy/fight:DEAD"));
 
-                            message.drake("economy/fight:DEAD", {
-                                emoji: "skeleton"
-                            });
-                            const toWait = Date.now() + 3600000;
-                            data.member.cooldowns.fight = toWait;
-                            return await data.member.save();
-                        };
-                    };
-                };
+                // Définir un cooldown & le sauvegarder dans la db
+                const toWait = Date.now() + 3600000;
+                data.member.cooldowns.fight = toWait;
+                return await data.member.save();
             };
+        };
 
-            async function hitMob(degats) {
-                mobHP -= degats;
+        // Quand le mob tape le joueur
+        async function mobHitPlayer() {
 
-                if(mobHP <= 0) {
-                    let toWin = client.functions.getRandomInt(20, 30) * (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).dexterite : 2);
-                    message.drake("economy/fight:DAMAGES", {
-                        mobHP: 0
-                    });
-                    message.drake("economy/fight:MOB_DEAD", {
-                        emoji: "trophy",
-                        symbol: data.guild.symbol,
-                        amount: toWin.toString()
-                    });
-                    const toWait = Date.now() + 3600000;
-                    data.member.money += toWin;
-                    data.member.cooldowns.fight = toWait;
-                    return await data.member.save();
-                }
+            // Calculer les dégats du mob
+            damageOfTheMob = client.functions.getRandomInt(5, 65);
 
-                message.drake("economy/fight:DAMAGES", {
-                    mobHP
-                });
+            // Les soustraires au pv du joueur
+            lp -= damageOfTheMob;
 
-                damageOfTheMob = client.functions.getRandomInt(5, 65);
+            // Informer le joueur de l'attaque du mob
+            sendMessage(message.drakeWS("economy/fight:MOB_DAMAGES", {
+                damage: damageOfTheMob
+            }));
 
-                lp -= damageOfTheMob;
+            // Donner le nombre de points de vie restants du joueur
+            sendMessage(message.drakeWS("economy/fight:YOUR_HP", {
+                lp: lp > 0 ? lp : 0
+            }));
 
-                message.drake("economy/fight:MOB_DAMAGES", {
-                    damage: damageOfTheMob
-                });
+        };
 
-                if(lp <= 0) {
-                    message.drake("economy/fight:DEAD", {
-                        emoji: "skeleton"
-                    });
-                    const toWait = Date.now() + 3600000;
-                    data.member.cooldowns.fight = toWait;
-                    return await data.member.save();
-                } else {
-                    message.drake("economy/fight:YOUR_HP", {
-                        lp
-                    });
-                };
-            };
-        //} catch (error) {
-           // client.functions.sendErrorCmd(client, message, this.help.name, error);
-        //};
+        // Quand le joueur tape le mob
+        async function playerHitMob() {
+
+            // Envoyer le message donnant l'attaque du joueur
+            sendMessage(message.drakeWS("economy/fight:MOB_DAMAGE", {
+                damage
+            }));
+
+            // La soustraire au pv du mob
+            mobHP -= damage;
+
+            /// Donner le nombre de points de vie du mob
+            sendMessage(message.drakeWS("economy/fight:DAMAGES", {
+                mobHP
+            }));
+        };
+
+        // Envoyer un message
+        function sendMessage(mess) {
+            log += mess + "\n";
+            msg.edit(log);
+        };
     };
 };
 

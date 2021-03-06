@@ -1,4 +1,3 @@
-const loader = require('../database/loader.js')
 const checkUnmutes = require("../helpers/checkUnmutes.js");
 const CronJob = require("cron").CronJob;
 
@@ -21,7 +20,7 @@ class Ready {
       checkUnmutes.init(client);
 
       // Load the cache
-      await loader(client)
+      await client.db.loader(client)
 
       // Send in the "status" channel a message.
       this.client.channels.cache.get("793262294493560893").send("<:online:750782471423000647> Bot is ready !");

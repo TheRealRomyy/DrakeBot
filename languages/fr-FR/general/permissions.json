@@ -1,6 +1,6 @@
 {
     "TITLE": "Permissions de **{{username}}** dans #**{{channel}}**",
-    "DESCRIPTION": "Voir les permissions de quelqu'un",
+    "DESCRIPTION": "Voir les permissions de quelqu'un ou d'un rôle",
     "EXAMPLE": "permissions @Rome",
-    "USAGE": "permissions <user>"
+    "USAGE": "permissions <user/role>"
 }

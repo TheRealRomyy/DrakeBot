@@ -18,14 +18,14 @@
                 <h1>Owner: </h1>
     
                 <h2>
-                    <a target="_blank" href=https://discord.com/users/<%= users.get(config.owner[0]).id %>><%= users.get(config.owner[0]).username %></a> 
+                    <a target="_blank" href=https://discord.com/users/<%= config.owner[0] %>><%= users.get(config.owner[0]).username %></a> 
                 </h2>
 
-                <h1>Team: </h1>
+                <h1>Support & Moderation: </h1>
                 
                 <h2>
-                    <a target="_blank" href=https://discord.com/users/<%= users.get(config.support[0]).id %>><%= users.get(config.support[0]).username %></a> (Support), <br>
-                    <a target="_blank" href=https://discord.com/users/<%= users.get(config.support[1]).id %>><%= users.get(config.support[1]).username %></a> (Support), <br> <br>
+                    <a target="_blank" href=https://discord.com/users/<%= config.support[0] %>><%= users.get(config.support[0]).username %></a> (Support), <br>
+                    <a target="_blank" href=https://discord.com/users/<%= config.support[1] %>><%= users.get(config.support[1]).username %></a> (Support), <br> <br>
                 </h2>
             </p>
         </div>

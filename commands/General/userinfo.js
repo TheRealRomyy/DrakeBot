@@ -28,7 +28,7 @@ class Userinfo extends Command {
 
         const userData = await this.client.db.findOrCreateUser(user);
         
-        // J'ai enlevé les descriptions ça parce que useless
+        // J'ai enlevé les descriptions     ça parce que useless
         let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
         if(user.id === message.author.id) desc = desc === message.drakeWS("general/userinfo:NO_DESC") ? message.drakeWS("general/userinfo:NO_DESC_AUTHOR", { prefix: data.guild.prefix }) : desc;
 
@@ -43,7 +43,7 @@ class Userinfo extends Command {
         const embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
-        .setDescription(badges)
+        .setDescription(badges + (message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" ? "\n" + (message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji !== null ? message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji.name + " " : "") + message.author.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].state : ""))
         .setColor("RANDOM")
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .addField(message.drakeWS("general/userinfo:NAME", {
