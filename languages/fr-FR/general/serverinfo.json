@@ -2,7 +2,7 @@
     "TITLE": "Informations sur __{{guildName}}__",
     "OWNER": "Fondateur",
     "REGION": "Zone Géographique",
-    "CREATE": "Créer le",
+    "CREATE": "Crée le",
     "CHANNELS": "Salons",
     "TEXT_CHANNELS": "Salons textuels",
     "VOICE_CHANNELS": "Salons vocaux",
