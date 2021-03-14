@@ -33,7 +33,7 @@ module.exports = class {
         
         webhook.send({
             username: 'DrakeBot Stats',
-            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/766786674763759616/drake.png',
+            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/820754780816670740/drakebot.png',
             embeds: [create],
         });
         

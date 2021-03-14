@@ -35,7 +35,7 @@ class Feedback extends Command {
             
         webhook.send( {
             username: 'DrakeBot FeedBack',
-            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/766786674763759616/drake.png',
+            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/820754780816670740/drakebot.png',
             embeds: [embed],
         });
     
