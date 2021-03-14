@@ -12,6 +12,11 @@ module.exports = {
 		support: [ "591341484721307654", "524615583447384064", ],
 		owner: [ "709481084286533773", "654754795336237058", "547514927019982864" ]
 	},
+	bots: {
+		"762965943529766912": ":thumbsup:",
+		"710135804714024962": ":thumbsup:",
+		"662062221177913354": ":thumbsup:"
+	},
 	dashboard: {
 		port: 80,
 		ip: "IP",
@@ -50,7 +55,7 @@ module.exports = {
 	],
 	database: {
         user: 'USER PG',
-        host: "127.0.0.1",
+        host: "IP PG",
         database: "DATABASE PG",
         password: 'PASSWORD PG',
         port: 5432
