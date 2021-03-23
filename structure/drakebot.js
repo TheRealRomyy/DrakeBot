@@ -8,6 +8,7 @@ const moment = require("moment");
 
 const readdir = util.promisify(fs.readdir);
 
+// Create a class
 class DrakeBot extends Client {
 
     constructor(option) {
