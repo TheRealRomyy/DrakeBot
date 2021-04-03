@@ -1,4 +1,5 @@
 const checkUnmutes = require("../helpers/checkUnmutes.js");
+const checkVoters = require("../helpers/checkVoters.js");
 const CronJob = require("cron").CronJob;
 
 class Ready {
@@ -18,6 +19,9 @@ class Ready {
       
       // Load the "unmuter" file
       checkUnmutes.init(client);
+
+      // Load the "checkVoters" file
+      checkVoters.init(client);
 
       // Load the cache
       await client.db.loader(client)
