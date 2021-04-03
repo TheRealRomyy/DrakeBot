@@ -32,7 +32,7 @@ class Userinfo extends Command {
         let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
         if(user.id === message.author.id) desc = desc === message.drakeWS("general/userinfo:NO_DESC") ? message.drakeWS("general/userinfo:NO_DESC_AUTHOR", { prefix: data.guild.prefix }) : desc;
 
-        for (const [badge, value] of Object.entries(user.flags.serialize())) {
+        if(!user.bot) for (const [badge, value] of Object.entries(user.flags.serialize())) {
             if(value && client.emotes.badges[badge]) badges += client.emotes.badges[badge] + " ";
         };
 
@@ -41,7 +41,7 @@ class Userinfo extends Command {
         const st = user.presence.status;
 
         const embed = new MessageEmbed()
-        .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+        .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
         .setDescription(badges + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" ? "\n" + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji !== null ? user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji.name + " " : "") + user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].state : ""))
         .setColor("RANDOM")
