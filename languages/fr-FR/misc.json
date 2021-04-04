@@ -8,5 +8,6 @@
     "NO_REASON": "Aucune raison spécifiée...",
     "FULL_MAJ": "Il y avez TROP DE MAJUSCULES dans votre message \n \nMessage: ```{{message}}```",
     "PUB": "Il y avez une publicité dans votre message \n \nMessage: ```{{message}}```",
-    "BADWORD": "Il y avez un gros mots dans votre message \n \nMessage: ```{{message}}```"
+    "BADWORD": "Il y avez un gros mots dans votre message \n \nMessage: ```{{message}}```",
+    "FORTRESS_ENABLED": "Le mode forteresse est activé. Essayez de rejoindre plus tard ce serveur."
 }
