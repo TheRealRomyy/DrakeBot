@@ -1,0 +1,8 @@
+{
+    "CONFIRMATION": "**Do you want activate the fortress mod ?** \n\n`Nobody was able to join while this mod is activated !`",
+    "DESCRIPTION": "Enable a protection mod for your serrver",
+    "USAGE": "fortress",
+    "EXAMPLE": "fortress",
+    "SUCCES": "The fortress mod has been activated ! From now, nobody can join the server.",
+    "SUCCES_DISABLED": "The fortress mod has been disabled !"
+}

@@ -19,9 +19,16 @@ module.exports = class {
 		// Get le data du member
 		const memberData = await this.client.db.findOrCreateMember(member, guild);
 		
-		if(!guildData.plugins.autorole) guildData.plugins.autorole = {
-			enabled: false,
-			role: null
+		if(guildData.fortress) {
+			await member.send(member.guild.translate("moderation/kick:KICK_DM", {
+				emoji: "door",
+				username: member.user.tag,
+				server: guild.name,
+				moderator: this.client.user.tag,
+				reason: member.guild.translate("misc:FORTRESS_ENABLED")
+			})).catch(() => {});
+	
+			member.kick(member.guild.translate("misc:FORTRESS_ENABLED"))
 		};
 
 		// Check l'autorole
@@ -127,6 +134,19 @@ module.exports = class {
 				if(guildData.plugins.autorole.enabled) {
 					member.roles.add(guildData.plugins.autorole.role).catch(() => {});
 				};
+
+				// Welcome system
+				if(guildData.plugins.welcome.enabled) {
+					let welcomeChannel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
+
+					welcomeChannel.send(guildData.plugins.welcome.message
+						.replace("{user}", member.user)
+						.replace("{user.nickname}", member.user.username)
+						.replace("{inviter}", "Unknow")
+						.replace("{guild.name}", guild.name)
+						.replace("{guild.members}", guild.memberCount)
+					);
+				};
 			} else {
 
 				msg.delete();
@@ -145,14 +165,8 @@ module.exports = class {
 			}
 		}
 
-		if(!guildData.plugins.welcome) guildData.plugins.welcome = {
-			enabled: false,
-			channel: null,
-			message: null,
-		};
-
 		// Check le système de bienvenue
-		if(guildData.plugins.welcome.enabled) {
+		if(guildData.plugins.welcome.enabled && !guildData.plugins.captcha.enabled) {
 			let channel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
 
 			channel.send(guildData.plugins.welcome.message

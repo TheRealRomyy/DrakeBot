@@ -1,0 +1,8 @@
+{
+    "CONFIRMATION": "**Etes vous sur de vouloir activer le mode forteresse ?** \n\n`Plus personne ne pourra rejoindre le serveur jusqu'à sa désactivation`",
+    "DESCRIPTION": "Activer un mode de protection de votre serveur",
+    "USAGE": "fortress",
+    "EXAMPLE": "fortress",
+    "SUCCES": "Le mode forteresse a bien été activé ! Plus personne ne peut rejoindre le serveur.",
+    "SUCCES_DISABLED": "Le mode forteresse a bien été désactivé !"
+}
