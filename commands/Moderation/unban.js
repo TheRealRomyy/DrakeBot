@@ -48,20 +48,16 @@ class Unban extends Command {
             message.guild.members.unban(banUser.user, logReason);
         });
 
-        if(sendMessage) try {
-            user.send(message.drakeWS("moderation/unban:UNBAN_DM", {
+        if(sendMessage) user.send(message.drakeWS("moderation/unban:UNBAN_DM", {
                 reason, 
                 moderator: message.author.username,
                 user: user.username,
                 server: message.guild.name,
                 emoji: "unban"
-            }));
-        } catch(error) {
-            message.drake("moderation/unban:CANT_DM", {
+            })).catch(() => message.drake("moderation/unban:CANT_DM", {
                 emoji: "error",
                 user: user.username
-            });
-        };
+        }));
 
         const embed = new MessageEmbed()
         .setTitle(message.drakeWS("moderation/unban:UNBAN", {
