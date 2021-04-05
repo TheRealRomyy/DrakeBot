@@ -1,0 +1,9 @@
+{
+    "NOT_BAN": "**{{user}}** is not banned !",
+    "DESCRIPTION": "Unban someone. If youa dd --message, the user was notified for his unban.",
+    "USAGE": "unban <user> (reason) (--message)",
+    "EXAMPLE": "unban @Les_fourmis You are nice ^^ --message",
+    "UNBAN_DM": "Hello **{{user}}**,\nYou were unban from `{{server}}` by `{{moderator}}` | Reason : {{reason}}",
+    "CANT_DM": "I can't send message to **{{user}}** !",
+    "UNBAN": "{{username}} was unbanned"
+}

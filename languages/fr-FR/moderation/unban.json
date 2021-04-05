@@ -1,0 +1,9 @@
+{
+    "NOT_BAN": "**{{user}}** n'est pas bannit !",
+    "DESCRIPTION": "Débannir quelqu'un. Si vous rajoutez --message, la personne sera avertit de son débanissement.",
+    "USAGE": "unban <user> (reason) (--message)",
+    "EXAMPLE": "unban @Les_fourmis A purgé sa peine --message",
+    "UNBAN_DM": "Bonjour **{{user}}**,\nVous avez été débannis de `{{server}}` par `{{moderator}}` | Raison : {{reason}}",
+    "CANT_DM": "Je ne peut pas envoyer de messages à **{{user}}** !",
+    "UNBAN": "{{username}} a bien été débannit"
+}
