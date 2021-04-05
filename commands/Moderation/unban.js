@@ -53,7 +53,8 @@ class Unban extends Command {
                 reason, 
                 moderator: message.author,
                 user: user.username,
-                server: message.guild.name
+                server: message.guild.name,
+                emoji: "unban"
             }));
         } catch(error) {
             message.drake("moderation/unban:CANT_DM", {
