@@ -17,14 +17,19 @@ class Unban extends Command {
 
     async run(message, args, data) {
 
-        let user = message.mentions.users.first() || this.client.users.cache.get(args[0]);
-        if(!user) return message.drake("errors:NOT_CORRECT", {
+        if(!args[0]) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "unban <user> (reason) (--message)",
             emoji: "error"
         });
 
+        let user = message.mentions.users.first() || this.client.users.cache.get(args[0]);
+        if(!user) return message.drake("moderation/unban:NOT_BAN", {
+            user: user.username,
+            emoji: "error"
+        });
+
         let reason = args.slice(1).join(" ").replace("--message", "");
-        if(!reason) reason = message.drakeWS("misc:NO_REASON");
+        if(!reason || reason.trim() == "--message") reason = message.drakeWS("misc:NO_REASON");
 
         let sendMessage = message.content.includes("--message");
         let logReason = `${message.author.username} | ${reason}`;
