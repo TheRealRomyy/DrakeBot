@@ -51,7 +51,7 @@ class Unban extends Command {
         if(sendMessage) try {
             user.send(message.drakeWS("moderation/unban:UNBAN_DM", {
                 reason, 
-                moderator: message.author,
+                moderator: message.author.username,
                 user: user.username,
                 server: message.guild.name,
                 emoji: "unban"
