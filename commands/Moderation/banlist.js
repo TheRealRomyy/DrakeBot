@@ -33,7 +33,7 @@ class Banlist extends Command {
         `Ban members - ${banM}\n\n` +
         (await message.guild.fetchBans())
           .map(u => u)
-          .map((u, i) => `**${i + 1}** - ${u.user.username} - **${u.user.id}**`)
+          .map((u, i) => `**${i + 1}** - ${u.user.username} - **${u.user.id}**\nReason: \`${u.reason != null ? u.reason : message.drakeWS("misc:NO_REASON")}\``)
           .slice(0, 10)
           .join("\n \n");
 
@@ -73,7 +73,7 @@ class Banlist extends Command {
           `Ban members - ${banM}\n\n` +
           (await message.guild.fetchBans())
             .map(u => u)
-            .map((u, i) => `**${i + 1}** - ${u.user.username} - **${u.user.id}**`)
+            .map((u, i) => `**${i + 1}** - ${u.user.username} - **${u.user.id}**\nReason: \`${u.reason != null ? u.reason : message.drakeWS("misc:NO_REASON")}\``)
             .slice(i0, i1)
             .join("\n \n");
     
@@ -104,7 +104,7 @@ class Banlist extends Command {
           `Ban members - ${banM}\n\n` +
           (await message.guild.fetchBans())
             .map(u => u)
-            .map((u, i) => `**${i + 1}** - ${u.user.username} - **${u.user.id}**`)
+            .map((u, i) => `**${i + 1}** - ${u.user.username} - **${u.user.id}**\nReason: \`${u.reason != null ? u.reason : message.drakeWS("misc:NO_REASON")}\``)
             .slice(i0, i1)
             .join("\n \n");
     
