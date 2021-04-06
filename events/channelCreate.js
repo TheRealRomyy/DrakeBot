@@ -6,6 +6,8 @@ class ChannelCreate {
 
 	async run (channel) {
 
+        if(channel.type == "dm") return;
+
         // Récupérer le client
         const client = this.client;
 
