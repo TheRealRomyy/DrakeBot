@@ -1,11 +1,11 @@
 {
-    "DISABLED": "La vérification par captcha a bien été désactivée !",
+    "DISABLED": "La vÃ©rification par captcha a bien Ã©tÃ© dÃ©sactivÃ©e !",
     "BAD_FILL": "Captcha mal remplit",
     "NO_FILL": "Captcha non remplit",
-    "CAPTCHA": "{{mention}} Veuillez recopier le texte si dessous sans erreur pour vérifier que vous n'êtes pas un robot. Vous avez 2 minutes.",
-    "WAIT": "{{member}} a rejoins le serveur. Son compte a été créer le {{createDate}} ({{time}}).",
-    "FAIL": "{{member}} n'a pas réussi le captcha.",
+    "CAPTCHA": "{{mention}} Veuillez recopier le texte si dessous sans erreur pour vï¿½rifier que vous n'ï¿½tes pas un robot. Vous avez 2 minutes.",
+    "WAIT": "{{member}} a rejoins le serveur. Son compte a Ã©tÃ© crÃ©er le {{createDate}} ({{time}}).",
+    "FAIL": "{{member}} n'a pas rÃ©ussi le captcha.",
     "NO": "{{member}} n'a pas remplit le captcha",
-    "SUCCES": "{{member}} a passé la vérfication par captcha avec succès !",
-    "DESCRIPTION": "Active une vérification par captcha"
+    "SUCCES": "{{member}} a passÃ© la vÃ©rfication par captcha avec succÃ¨s !",
+    "DESCRIPTION": "Active une vÃ©rification par captcha"
 }
