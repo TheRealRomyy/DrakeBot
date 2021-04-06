@@ -1,6 +1,6 @@
 {
-    "DESCRIPTION": "Définir le préfix du bot sur ce serveur",
+    "DESCRIPTION": "Change the prefix of DrakeBot in your serveur",
     "USAGE": "setprefix <prefix>",
     "EXAMPLE": "setprefix ?",
-    "SUCCES": "**Le prefix du bot sur ce serveur est maitenant** ``{{newPrefix}}`` **!**"
+    "SUCCES": "**The prefix of DrakeBot is now** `{{newPrefix}}` **!**"
 }

@@ -1,11 +1,11 @@
 {
-    "DESCRIPTION": "Voler l'agent de quelqu'un ( si il n'est pas en banque )",
+    "DESCRIPTION": "Rob someone's money ( if he isn't in bank )",
     "USAGE": "rob <player>",
     "EXAMPLE": "rob @Mystère",
-    "COOLDOWN": "Veuillez attendre **{{time}}** avant de re-voler quelqu'un !",
-    "JAIL": ":police_car: Vous vous êtes fais attrapés ! \n \nVous devrez aller en prison pendant **{{time}}** !",
-    "ROB": "Vous avez volé **{{amount}}{{symbol}}** a **{{username}}** !",
-    "BOT": "L'utilisateur **{{bot}}** est un robot !",
-    "YOURSELF": "Vous ne pouvez pas vous voler vous même !",
-    "NOT_MONEY": "**{{username}}** n'a pas de compte en banque (**0{{symbol}}**)."
+    "COOLDOWN": "Please wait **{{time}}** before re-rob someone !",
+    "JAIL": ":police_car: You were catch by police. ! \n \nYou go to jail for **{{time}}** !",
+    "ROB": "You just rob **{{amount}}{{symbol}}** to **{{username}}** !",
+    "BOT": "The user **{{bot}}** is a bot !",
+    "YOURSELF": "You can't rob yourself !",
+    "NOT_MONEY": "**{{username}}** has'nt bank account (**0{{symbol}}**)."
 }

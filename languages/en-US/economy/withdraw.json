@@ -1,7 +1,7 @@
 {
-    "DESCRIPTION": "Retirer de l'argent de votre banque",
+    "DESCRIPTION": "Withdraw money of the bank",
     "USAGE": "withdraw <amount>",
     "EXAMPLE": "withdraw 56",
-    "NOT_ENOUGHT": "Vous n'avez pas assez d'argent en banque !",
-    "SUCCES": "Vous avez bien retiré **{{amount}}{{symbol}}** de votre banque !"
+    "NOT_ENOUGHT": "You has'nt enought money in bank",
+    "SUCCES": "You've been withdraw **{{amount}}{{symbol}}** of your bank !"
 }

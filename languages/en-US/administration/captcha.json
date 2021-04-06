@@ -1,11 +1,11 @@
 {
-    "DISABLED": "La vérification par captcha a bien été désactivée !",
-    "BAD_FILL": "Captcha mal remplit",
-    "NO_FILL": "Captcha non remplit",
-    "CAPTCHA": "{{mention}} Veuillez recopier le texte si dessous sans erreur pour v�rifier que vous n'�tes pas un robot. Vous avez 2 minutes.",
-    "WAIT": "{{member}} a rejoins le serveur. Son compte a été créer le {{createDate}} ({{time}}).",
-    "FAIL": "{{member}} n'a pas réussi le captcha.",
-    "NO": "{{member}} n'a pas remplit le captcha",
-    "SUCCES": "{{member}} a passé la vérfication par captcha avec succès !",
-    "DESCRIPTION": "Active une vérification par captcha"
+    "DISABLED": "Captcha verification has been disabled !",
+    "BAD_FILL": "Captcha bad filled",
+    "NO_FILL": "Captcha not filled",
+    "CAPTCHA": "{{mention}} Please copy the following code to verify you are not a robot. You have 2 minutes.",
+    "WAIT": "{{member}} has join the server. His account was created the {{createDate}} ({{time}}).",
+    "FAIL": "{{member}} failed the captcha.",
+    "NO": "{{member}} has'nt fill the captcha.",
+    "SUCCES": "{{member}} fill the captcha with souccess !",
+    "DESCRIPTION": "Enabled a captcha verification"
 }
