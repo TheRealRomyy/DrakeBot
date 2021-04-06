@@ -9,5 +9,9 @@
     "FULL_MAJ": "Il y avez TROP DE MAJUSCULES dans votre message \n \nMessage: ```{{message}}```",
     "PUB": "Il y avez une publicité dans votre message \n \nMessage: ```{{message}}```",
     "BADWORD": "Il y avez un gros mots dans votre message \n \nMessage: ```{{message}}```",
-    "FORTRESS_ENABLED": "Le mode forteresse est activé. Essayez de rejoindre plus tard ce serveur."
+    "FORTRESS_ENABLED": "Le mode forteresse est activé. Essayez de rejoindre plus tard ce serveur.",
+    "BAN_MSG": "**{{user}}** a bien été bannis",
+    "WARN_MSG": "**{{user}}** a bien été avertis",
+    "MUTE_MSG": "**{{user}}** a bien été réduit au silence",
+    "KICK_MSG": "**{{user}}** a bien été expulsé"
 }

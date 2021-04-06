@@ -79,14 +79,7 @@ class Kick extends Command {
 			memberData.sanctions.push(caseInfo);
 			memberData.save();
     
-            const embed = new MessageEmbed()
-            .setTitle(message.drakeWS("moderation/kick:KICK", {
-                username: member.user.tag,
-                emoji: "succes"
-            }))
-            .setColor(client.cfg.color.blue);
-            
-            return message.channel.send(embed);
+            return this.client.functions.sendSanctionMessage(message, "kick", member.user, reason)
         };
 
         let msg = await message.channel.send(message.drakeWS("moderation/kick:CONFIRM", {

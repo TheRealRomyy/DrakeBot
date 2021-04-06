@@ -9,5 +9,9 @@
     "FULL_MAJ": "There are TOO CAPITALS LETTERS in your message \n \nMessage: ```{{message}}```",
     "PUB": "There are an ad in your message \n \nMessage: ```{{message}}```",
     "BADWORD": "There are a badword in your message \n \nMessage: ```{{message}}```",
-    "FORTRESS_ENABLED": "The fortress mod is enabled. Retry to join the server later."
+    "FORTRESS_ENABLED": "The fortress mod is enabled. Retry to join the server later.",
+    "BAN_MSG": "**{{user}}** was banned",
+    "WARN_MSG": "**{{user}}** was warned",
+    "MUTE_MSG": "**{{user}}** was muted",
+    "KICK_MSG": "**{{user}}** was kicked"
 }

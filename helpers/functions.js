@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const cfg = require("../config.js");
 const moment = require("moment");
 const fetch = require('node-fetch');
 
@@ -127,5 +128,27 @@ module.exports = {
 			price = this.getRandomInt(-25, 25);
 			return price;
 		};
+	},
+
+	/**
+	 * Send a message when someone is sanctionned
+	 * @param { Object } user 
+	 * @param { String } type 
+	 * @param { String } reason 
+	 * @param { Number } duration 
+	*/
+
+	sendSanctionMessage(message, type, user, reason, duration) {
+		const embed = new MessageEmbed()
+		.setTitle(message.drakeWS(`misc:${type.toUpperCase()}_MSG`, {
+			user: user.tag,
+			emoji: "success2"
+		}))
+		.setFooter(cfg.footer)
+		.setColor(cfg.color.blue)
+		if(reason && reason !== message.drakeWS("misc:NO_REASON")) embed.setDescription(`\`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
+		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(`\`Duration:\` ${duration}`)
+
+		message.channel.send(embed)
 	},
 };

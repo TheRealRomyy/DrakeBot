@@ -72,14 +72,7 @@ class Warn extends Command {
             memberData.sanctions.push(caseInfo);
             memberData.save();
     
-            const embed = new MessageEmbed()
-            .setTitle(message.drakeWS("moderation/warn:WARN", {
-                username: member.user.tag,
-                emoji: "succes"
-            }))
-            .setColor(client.cfg.color.orange);
-            
-            return message.channel.send(embed);
+            return this.client.functions.sendSanctionMessage(message, "warn", member.user, reason)
         };
 
         let msg = await message.channel.send(message.drakeWS("moderation/warn:CONFIRM", {

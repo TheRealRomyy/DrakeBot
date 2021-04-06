@@ -77,15 +77,8 @@ class Ban extends Command {
                 
                 memberData.sanctions.push(caseInfo);
                 memberData.save();
-        
-                const embed = new MessageEmbed()
-                .setTitle(message.drakeWS("moderation/ban:BAN", {
-                    username: member.user.tag,
-                    emoji: "succes"
-                }))
-                .setColor(client.cfg.color.red);
                 
-                return message.channel.send(embed);
+                return this.client.functions.sendSanctionMessage(message, "ban", member.user, reason)
             }).catch((error) => {
                 client.functions.sendErrorCmd(client, message, this.help.name, error);
             });
@@ -108,7 +101,7 @@ class Ban extends Command {
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {
-                message.drake("common:CANCEL", { emoji: "succes "});
+                message.drake("common:CANCEL", { emoji: "succes"});
                 msg.delete().catch(() => {});
                 return message.delete().catch(() => {});
             }

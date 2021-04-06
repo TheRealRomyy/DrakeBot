@@ -98,15 +98,7 @@ class Mute extends Command {
             }));
 
             // Envoyer un message dans le salon comme quoi un mec c'est fait mute
-            const embed = new MessageEmbed()
-            .setTitle(message.drakeWS("moderation/mute:MUTE", {
-                username: member.user.tag,
-                time: time,
-                emoji: "succes"
-            }))
-            .setColor(client.cfg.color.purple);
-            
-            message.channel.send(embed)
+            this.client.functions.sendSanctionMessage(message, "mute", member.user, reason, time)
 
             // Ajouter +1 au case
             data.guild.cases++;
