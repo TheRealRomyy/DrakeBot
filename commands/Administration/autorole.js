@@ -57,10 +57,10 @@ class Autorole extends Command {
             
 			await data.guild.save();
             
-            return message.drake("administration/autorole:ENABLED", {
+            return message.channel.send(message.drakeWS("administration/autorole:ENABLED", {
                 emoji: "succes",
                 role: role.id
-            });
+            }), {"allowedMentions": { "users" : []}});
         };
     };
 };
