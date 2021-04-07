@@ -79,6 +79,12 @@ class Message {
         };
 
         message.guild.data = data.guild;
+
+        if(!data.guild.plugins.logs) data.guild.plugins.logs = {
+            mod: false,
+            messages: false
+        };
+        await data.guild.save()
         
 		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
             user: message.author.username,
@@ -121,6 +127,20 @@ class Message {
                     message: message.content,
                     emoji: "error"
                 })).catch(() => {});
+
+                data.guild.cases++;
+                await data.guild.save();
+    
+                const caseInfo = {
+                    moderator: this.client.user.id,
+                    date: Date.now(),
+                    type: "warn",
+                    case: data.guild.cases,
+                    reason: "Full Maj",
+                };
+                
+                data.member.sanctions.push(caseInfo);
+                await data.member.save();
             }; 
         };
 
@@ -136,6 +156,20 @@ class Message {
                     message: message.content,
                     emoji: "error"
                 })).catch(() => {}); 
+                
+                data.guild.cases++;
+                await data.guild.save();
+    
+                const caseInfo = {
+                    moderator: this.client.user.id,
+                    date: Date.now(),
+                    type: "warn",
+                    case: data.guild.cases,
+                    reason: "Full Maj",
+                };
+                
+                data.member.sanctions.push(caseInfo);
+                await data.member.save();
             }
         };
 
@@ -145,6 +179,20 @@ class Message {
                 message: message.content,
                 emoji: "error"
             })).catch(() => {});
+            
+            data.guild.cases++;
+            await data.guild.save();
+
+            const caseInfo = {
+                moderator: this.client.user.id,
+                date: Date.now(),
+                type: "warn",
+                case: data.guild.cases,
+                reason: "Full Maj",
+            };
+            
+            data.member.sanctions.push(caseInfo);
+            await data.member.save();
         };
 
         await updateXp(message, data);

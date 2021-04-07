@@ -77,8 +77,10 @@ class Ban extends Command {
                 
                 memberData.sanctions.push(caseInfo);
                 memberData.save();
+
+                if(data.guild.plugins.logs.mod) client.functions.sendModLog("ban", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
                 
-                return this.client.functions.sendSanctionMessage(message, "ban", member.user, reason)
+                return client.functions.sendSanctionMessage(message, "ban", member.user, reason)
             }).catch((error) => {
                 client.functions.sendErrorCmd(client, message, this.help.name, error);
             });

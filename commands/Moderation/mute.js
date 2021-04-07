@@ -98,7 +98,7 @@ class Mute extends Command {
             }));
 
             // Envoyer un message dans le salon comme quoi un mec c'est fait mute
-            this.client.functions.sendSanctionMessage(message, "mute", member.user, reason, time)
+            client.functions.sendSanctionMessage(message, "mute", member.user, reason, time)
 
             // Ajouter +1 au case
             data.guild.cases++;
@@ -118,6 +118,8 @@ class Mute extends Command {
             memberData.mute.endDate = Date.now() + ms(time);
             memberData.mute.case = data.guild.cases;
             memberData.sanctions.push(caseInfo);
+
+            if(data.guild.plugins.logs.mod) client.functions.sendModLog("mute", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason, time);
 
             await client.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
             

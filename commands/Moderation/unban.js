@@ -65,6 +65,8 @@ class Unban extends Command {
             emoji: "succes"
         }))
         .setColor(this.client.cfg.color.green);
+
+        if(data.guild.plugins.logs.mod) this.client.functions.sendModLog("unban", user, this.client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
         
         return message.channel.send(embed);
     };

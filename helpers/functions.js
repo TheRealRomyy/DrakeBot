@@ -163,8 +163,18 @@ module.exports = {
 	 * @param { Number } duration 
 	*/
 
-	sendModLog(type, user, channel, moderator, reason, duration) {
-		// FAIRE
+	sendModLog(type, user, channel, moderator, cases, reason, duration) {
+
+		const embed = new MessageEmbed()
+		.setTitle(`${emojis[type]} ${this.pretify(type)}${cases && cases !== null ? " #" + cases : ""}`)
+		.setAuthor(user.tag, user.displayAvatarURL({ dynamic: true }))
+		.addField("**Moderator:**", "`" + moderator.tag + "`")
+		.setFooter(`User ID: ${user.id}・${this.getDate()}`)
+		.setColor(type.includes("un") ? cfg.color.green : cfg.color.orange)
+		if(reason) embed.addField("**Reason:**", "`" + reason + "`")
+		if(duration) embed.addField("**Duration:**", "`" + duration + "`")
+
+		channel.send(embed);
 	},
 
 	/**
@@ -179,4 +189,15 @@ module.exports = {
 
 		return firstLetter + textWithoutLetter;
 	},
+
+	/**
+	 * Get the date
+	 * @return { String } date 
+	*/
+
+	getDate() {
+		const date = new Date();
+
+		return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+	}
 };

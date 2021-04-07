@@ -78,8 +78,10 @@ class Kick extends Command {
             
 			memberData.sanctions.push(caseInfo);
 			memberData.save();
+
+            if(data.guild.plugins.logs.mod) client.functions.sendModLog("kick", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
     
-            return this.client.functions.sendSanctionMessage(message, "kick", member.user, reason)
+            return client.functions.sendSanctionMessage(message, "kick", member.user, reason)
         };
 
         let msg = await message.channel.send(message.drakeWS("moderation/kick:CONFIRM", {

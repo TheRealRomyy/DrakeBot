@@ -14,6 +14,11 @@
         "custom": ":space_invader:",
         "level": "<:up:758302977764622377>"
     },
+    "log": {
+        "pin": ":pushpin:",
+        "delete": ":wastebasket:",
+        "edit": ":arrows_counterclockwise:"
+    },
     "bug": ":bug:",
     "unban": ":chains:",
     "baka": ":zany_face:",
@@ -53,6 +58,7 @@
     "ram": ":floppy_disk:",
     "owner": "<:owner:763412335569797141>",
     "map": ":map:",
+    "kick": ":door:",
     "status": {
         "dnd": "<:dnd:750782449168023612>",
         "online": "<:online:750782471423000647>",
