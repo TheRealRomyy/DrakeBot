@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const cfg = require("../config.js");
+const emojis = require("../emojis.json");
 const moment = require("moment");
 const fetch = require('node-fetch');
 
@@ -150,5 +151,32 @@ module.exports = {
 		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(`\`Duration:\` ${duration}`)
 
 		message.channel.send(embed)
+	},
+
+	/**
+	 * Send a message in the mod log channel when a moderationa action is done
+	 * @param { String } type 
+	 * @param { Object } user 
+	 * @param { Object } channel 
+	 * @param { String } moderator 
+	 * @param { String } reason 
+	 * @param { Number } duration 
+	*/
+
+	sendModLog(type, user, channel, moderator, reason, duration) {
+		// FAIRE
+	},
+
+	/**
+	 * Make a text more pretty
+	 * @param { String } text 
+	 * @return { String } text pretyfied
+	*/
+
+	pretify(text) {
+		let firstLetter = text[0].toUpperCase();
+		let textWithoutLetter = text.slice(1).toLowerCase();
+
+		return firstLetter + textWithoutLetter;
 	},
 };

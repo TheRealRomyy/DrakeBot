@@ -13,5 +13,11 @@
     "BAN_MSG": "**{{user}}** a bien été bannis",
     "WARN_MSG": "**{{user}}** a bien été avertis",
     "MUTE_MSG": "**{{user}}** a bien été réduit au silence",
-    "KICK_MSG": "**{{user}}** a bien été expulsé"
+    "KICK_MSG": "**{{user}}** a bien été expulsé",
+    "LOG_MSG_TITLE": "Message supprimé",
+    "MESSAGE_OF": "Message de: {{user}}",
+    "NO_TEXT": "Le message est une embed ou une image",
+    "LOG_MSG_TITLE_EDIT": "Message modifié",
+    "NEW_MSG": "**Nouveau message**",
+    "OLD_MSG": "**Ancien message**"
 }

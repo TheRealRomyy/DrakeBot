@@ -38,6 +38,10 @@ exports.Guild = (guildID, client) => {
                 message: ":tada: Congratulations to {user} to reach **level {level}** !",
                 rankRewards: [],
             },
+            logs: {
+                mod: false,
+                messages: false
+            },
             welcomeDM: null,
             suggestions: null
         },
@@ -63,6 +67,9 @@ exports.Guild = (guildID, client) => {
             expires: null,
             subs: []
         },
+
+        // The fortress mod
+        false
     ];
 };
 
@@ -136,10 +143,7 @@ exports.Client = clientID => {
             guilds: [],
             users: []
         },
-
-        // The drakecoin
-        0,
-        // The "cours" (j'sais pas comment on dit en anglais) of the drakecoin
-        0,
+        // The array of the voters
+        []
     ];
 };
