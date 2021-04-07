@@ -1,4 +1,4 @@
-const { MessageEmbed, WebhookClient } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = class {
 
@@ -29,14 +29,9 @@ module.exports = class {
         .setColor(this.client.cfg.color.green)
         .setDescription(`:flag_gb: You can change my prefix with \`d!setprefix <newPrefix>\` \nOr change my language with \`d!setlang <fr/en>\` \nYou can also see the list of my commands with \`d!help\` \nI'm on **${this.client.guilds.cache.size} guilds** with **${this.client.users.cache.size} users** !` + "\n \n" + `:flag_fr: Vous pouvez changer mon prefix avec \`d!setprefix <newPrefix>\` \nVous pouvez changer mon langage par défaut avec \`d!setlang <fr/en>\` \nEt vous pouvez aussi regarder la liste des commandes avec \`d!help\` \nJe suis sur **${this.client.guilds.cache.size} serveurs** avec **${this.client.users.cache.size} utilisateurs** !`)
 
-        const webhook = new WebhookClient('766786432017891348', 'SOgXc_zTwIY8EiS9jUK0G9uiiWZReyt3_UaXv2ZVFeMB7SYLXN-onnJXkHPAtP2fj16R');
+        const channel = this.client.channels.cache.get("766782498633678908");
         
-        webhook.send({
-            username: 'DrakeBot Stats',
-            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/820754780816670740/drakebot.png',
-            embeds: [create],
-        });
-        
+        channel.send(create);
         guild.owner.send(thankEmbed);
 	};
 };

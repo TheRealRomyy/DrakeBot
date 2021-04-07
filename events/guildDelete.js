@@ -1,4 +1,4 @@
-const { MessageEmbed, WebhookClient } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = class {
 
@@ -21,12 +21,8 @@ module.exports = class {
         .addField("<:owner:763412335569797141> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
         .addField("<:member:750717695653183588> • Members", guild.memberCount, false)
 
-        const webhook = new WebhookClient('766786237021028404', 'gy_0mhG3FtjcNH9BhX9_4reTQiEAfx9Bih6U8E7o1ry6ZOLLbK7yxDu_KIfXcoNfsFKh');
+        const channel = this.client.channels.cache.get("766782516908392498");
         
-        webhook.send( {
-            username: 'DrakeBot Stats',
-            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/820754780816670740/drakebot.png',
-            embeds: [del],
-        });
+        channel.send(del);
 	};
 };
