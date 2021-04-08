@@ -22,11 +22,15 @@ class Warn extends Command {
         const filter = (reaction, user) => {
             return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
         };
+
+        if(!args[0]) return message.drake("errors:NOT_CORRECT", {
+            usage: data.guild.prefix + "warn <user> (reason)",
+            emoji: "error"
+        });
         
         const member = message.mentions.members.first() || message.guild.member(args[0]);
 
-        if(!member) return message.drake("errors:NOT_CORRECT", {
-            usage: data.guild.prefix + "warn <user> (reason)",
+        if(!member) return message.drake("misc:MEMBER_NOT_FOUND", {
             emoji: "error"
         });
 
@@ -72,7 +76,14 @@ class Warn extends Command {
             memberData.sanctions.push(caseInfo);
             memberData.save();
 
-            if(data.guild.plugins.logs.mod) client.functions.sendModLog("warn", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
+            if(data.guild.plugins.logs.mod) {
+                if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
+                    data.guild.plugins.logs.mod = false;
+                    await data.guild.save()
+                };
+
+                client.functions.sendModLog("warn", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
+            };
     
             return client.functions.sendSanctionMessage(message, "warn", member.user, reason)
         };

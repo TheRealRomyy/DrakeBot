@@ -66,7 +66,14 @@ class Unban extends Command {
         }))
         .setColor(this.client.cfg.color.green);
 
-        if(data.guild.plugins.logs.mod) this.client.functions.sendModLog("unban", user, this.client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
+        if(data.guild.plugins.logs.mod) {
+            if(!this.client.channels.cache.get(data.guild.plugins.logs.mod)) {
+                data.guild.plugins.logs.mod = false;
+                await data.guild.save()
+            };
+
+            this.client.functions.sendModLog("unban", user, this.client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
+        };
         
         return message.channel.send(embed);
     };

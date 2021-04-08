@@ -19,5 +19,9 @@
     "NO_TEXT": "The message in an embed or an image",
     "LOG_MSG_TITLE_EDIT": "Message edit",
     "NEW_MSG": "**New message**",
-    "OLD_MSG": "**Old message**"
+    "OLD_MSG": "**Old message**",
+    "USER_NOT_FOUND": "**This user doesn't exist !**",
+    "MEMBER_NOT_FOUND": "**This user doesn't exist or isn't in this server !**",
+    "CHANNEL_NOT_FOUND": "**This channel doesn't exist !**",
+    "ROLE_NOT_FOUND": "**This role doesn't exist !**"
 }

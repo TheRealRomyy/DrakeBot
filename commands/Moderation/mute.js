@@ -22,12 +22,17 @@ class Mute extends Command {
         // Définir le client
         const client = this.client;
 
+        // Si y'a pas d'args 0
+        if(!args[0]) return message.drake("errors:NOT_CORRECT", {
+            usage: data.guild.prefix + "ban <user> (reason)",
+            emoji: "error"
+        });
+
         // Resolver le member
         const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
         // Si ya pas de member
-        if(!member) return message.drake("errors:NOT_CORRECT", {
-            usage: data.guild.prefix + "mute <user> <time> (reason)",
+        if(!member) return message.drake("misc:MEMBER_NOT_FOUND", {
             emoji: "error"
         });
 
@@ -119,7 +124,14 @@ class Mute extends Command {
             memberData.mute.case = data.guild.cases;
             memberData.sanctions.push(caseInfo);
 
-            if(data.guild.plugins.logs.mod) client.functions.sendModLog("mute", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason, time);
+            if(data.guild.plugins.logs.mod) {
+                if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
+                    data.guild.plugins.logs.mod = false;
+                    await data.guild.save()
+                };
+
+                client.functions.sendModLog("mute", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason, time);
+            };
 
             await client.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
             

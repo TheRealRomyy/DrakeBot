@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Manage the logs",
+    "USAGE": "setlog",
+    "EXAMPLE": "setlog",
+    "ENABLED": ":white_check_mark: **Enabled**",
+    "DISABLED": ":x: **Disabled**",
+    "TITLE": "DrakeBot - Logs",
+    "DESC": "***Click on a reaction to enabled/disabled the plugin***",
+    "ONE": ":one: Mods logs",
+    "TWO": ":two: Messages logs",
+    "INSTRUCTION": "**Please send the id (or mention) the log's channel.** "
+}

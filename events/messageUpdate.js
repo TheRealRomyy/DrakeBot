@@ -21,6 +21,10 @@ class MessageUpdate {
         };
 
         if(!guildData.plugins.logs.messages) return;
+        if(guildData.plugins.logs.messages && !this.client.channels.cache.get(guildData.plugins.logs.messages)) {
+            guildData.plugins.logs.mod = false;
+            await guildData.save()
+        };
 
         let channel = this.client.channels.cache.get(guildData.plugins.logs.messages);
 

@@ -19,5 +19,9 @@
     "NO_TEXT": "Le message est une embed ou une image",
     "LOG_MSG_TITLE_EDIT": "Message modifié",
     "NEW_MSG": "**Nouveau message**",
-    "OLD_MSG": "**Ancien message**"
+    "OLD_MSG": "**Ancien message**",
+    "USER_NOT_FOUND": "**Cet utilisateur n'existe pas !**",
+    "MEMBER_NOT_FOUND": "**Cet utilisateur n'existe pas ou n'est pas sur ce serveur !**",
+    "CHANNEL_NOT_FOUND": "**Ce salon n'existe pas !**",
+    "ROLE_NOT_FOUND": "**Ce rôle n'existe pas !**"
 }

@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Configurer les logs",
+    "USAGE": "setlog",
+    "EXAMPLE": "setlog",
+    "ENABLED": ":white_check_mark: **Activé**",
+    "DISABLED": ":x: **Désactivé**",
+    "TITLE": "DrakeBot - Logs",
+    "DESC": "***Cliquez sur une réaction pour activer/désactiver le plugin associé***",
+    "ONE": ":one: Logs modérateurs",
+    "TWO": ":two: Logs messages",
+    "INSTRUCTION": "**Veuillez envoyer l'id du salon (ou le mentionner) dans lequel arriveront les logs.** "
+}

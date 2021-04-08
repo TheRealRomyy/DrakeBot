@@ -60,7 +60,14 @@ module.exports = {
 					case: null
 				};
 
-				if(guildData.plugins.logs.mod) client.functions.sendModLog("unmute", member.user, guildData.plugins.logs.mod, client.user, guildData.cases, reason);
+				if(guildData.plugins.logs.mod) {
+					if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
+						guildData.plugins.logs.mod = false;
+						await guildData.save()
+					};
+		
+					client.functions.sendModLog("unmute", member.user, client.channels.cache.get(guildData.plugins.logs.mod), client.user, guildData.cases, reason);
+				};
 
 				client.mutedUsers.delete(`${memberData.id}${memberData.guildid}`);
 				await dataMember.save();

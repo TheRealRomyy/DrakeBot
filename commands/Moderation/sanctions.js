@@ -36,7 +36,7 @@ class Sanctions extends Command {
         .setFooter(this.client.cfg.footer);
 
         if(memberData.sanctions.length < 1) return message.drake("moderation/sanctions:NO_SANCTIONS", {
-            username: user.username,
+            username: "`" + user.username + "`",
             emoji: "error"
         });
         else memberData.sanctions.forEach((s) => {
