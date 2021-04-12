@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Scanner a role or your server",
+    "EXAMPLE": "scan @Admin",
+    "USAGE": "scan (role)",
+    "TOO_CHARS": "**There are too many peoples in this role (`{{size}} members`) !**",
+    "SCAN_OF": "Scan of {{guild}}",
+    "DESC_ROLE": "\n **Role :** {{role}} \nThere are **{{membersInRole}} members** in the role \n \n❯ {{mapMembers}}"
+}
