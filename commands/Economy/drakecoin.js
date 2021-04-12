@@ -6,7 +6,7 @@ class DrakeCoin extends Command {
         super(client, {
             name: "drakecoin",
             aliases: [],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: [],
             userPerms: [],

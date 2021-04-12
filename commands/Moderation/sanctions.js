@@ -18,11 +18,15 @@ class Sanctions extends Command {
 
     async run(message, args, data) {
 
-        const user = message.mentions.users.first() || this.client.users.cache.get(args[0]) || this.client.users.cache.find(u => u.username === args[0]);
-
-        if(!user) return message.drake("errors:NOT_CORRECT", {
+        if(!args[0]) return message.drake("errors:NOT_CORRECT", {
             emoji: "error",
             usage: data.guild.prefix + "sanctions <user>"
+        });
+
+        const user = message.mentions.users.first() || this.client.users.cache.get(args[0]) || this.client.users.cache.find(u => u.username === args[0]);
+
+        if(!user) return message.drake("misc:USER_NOT_FOUND", {
+            emoji: "error"
         });
 
         const memberData = await this.client.db.findOrCreateMember(user, message.guild);

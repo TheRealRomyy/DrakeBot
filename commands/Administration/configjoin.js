@@ -18,12 +18,6 @@ class ConfigJoin extends Command {
 
     async run(message, args, data) {
 
-        if(!data.guild.plugins.welcome) data.guild.plugins.welcome = {
-            enabled: false,
-            channel: null,
-            message: null,
-        };
-
        if(data.guild.plugins.welcome.enabled) {
 
             // Send message

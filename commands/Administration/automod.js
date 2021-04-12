@@ -23,16 +23,32 @@ class Automod extends Command {
 
         const enabled = message.drakeWS("administration/automod:ENABLED");
         const disabled = message.drakeWS("administration/automod:DISABLED");
-
-        if(!data.guild.plugins.automod) data.guild.plugins.automod = {
-            antiPub: false,
-            antiBadwords: false,
-			antiMajs: false	
-        };
         
         const opt = { max: 1, time: 50000, errors: [ "time" ] };
         let filter = (reaction, user) => {
             return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
+        };
+
+        //'⚙️'
+
+        if(typeof(data.guild.plugins.automod.antiPub) != "object") data.guild.plugins.automod = {
+            antiPub: {
+                enabled: false,
+                discord: true,
+                links: true,
+                ignoredChannels: [],
+                ignoredRoles: []
+            },
+            antiBadwords: {
+                enabled: false,
+                ignoredChannels: [],
+                ignoredRoles: []
+            },
+            antiMajs: {
+                enabled: false,
+                ignoredChannels: [],
+                ignoredRoles: [],
+            },
         };
 
         async function WaitForReaction(msg) {
@@ -52,9 +68,9 @@ class Automod extends Command {
 
         async function displayMain(msg) {
 
-            let isAntipubEnabled = data.guild.plugins.automod.antiPub;
-            let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords;
-            let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs;
+            let isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+            let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+            let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
 
             let embed = new MessageEmbed()
             .setTitle(message.drakeWS("administration/automod:TITLE"))
@@ -67,32 +83,32 @@ class Automod extends Command {
             .addField(message.drakeWS("administration/automod:THREE"),isAntifullMajsEnabled ? enabled : disabled)
     
             return msg.edit(embed);
-        }
+        };
 
         async function updateEmbed(type) {
 
-            let isAntipubEnabled = data.guild.plugins.automod.antiPub;
-            let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords;
-            let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs;
+            let isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+            let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+            let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
 
             let action = null;
 
             if(type === "pub") {
                 isAntipubEnabled ? action = disabled : action = enabled;
                 !isAntipubEnabled ? action = enabled : action = disabled;
-                isAntipubEnabled ? data.guild.plugins.automod.antiPub = false : data.guild.plugins.automod.antiPub = true;
+                isAntipubEnabled ? data.guild.plugins.automod.antiPub.enabled = false : data.guild.plugins.automod.antiPub.enabled = true;
             };
 
             if(type === "badwords") {
                 isAntiBadwordsEnabled ? action = disabled : action = enabled;
                 !isAntiBadwordsEnabled ? action = enabled : action = disabled;
-                isAntiBadwordsEnabled ? data.guild.plugins.automod.antiBadwords = false : data.guild.plugins.automod.antiBadwords = true;
+                isAntiBadwordsEnabled ? data.guild.plugins.automod.antiBadwords.enabled = false : data.guild.plugins.automod.antiBadwords.enabled = true;
             };
 
             if(type === "majs") {
                 isAntifullMajsEnabled ? action = disabled : action = enabled;
                 !isAntifullMajsEnabled ? action = enabled : action = disabled;
-                isAntifullMajsEnabled ? data.guild.plugins.automod.antiMajs = false : data.guild.plugins.automod.antiMajs = true;
+                isAntifullMajsEnabled ? data.guild.plugins.automod.antiMajs.enabled = false : data.guild.plugins.automod.antiMajs.enabled = true;
             };
 
             let embed = new MessageEmbed()
@@ -132,6 +148,7 @@ class Automod extends Command {
             await msg.react('1️⃣');
             await msg.react('2️⃣');
             await msg.react('3️⃣');
+            // await msg.react('⚙️');
     
             msg = await displayMain(msg);
     
@@ -144,7 +161,29 @@ class Automod extends Command {
         async function after() {
             const r = await WaitForReaction(msg);
             await switchCTV(r);
-        }
+        };
+
+        // async function gear() {
+        //     let count = 0;
+        //     let enabledPlugins = [];
+
+        //     data.guild.plugins.automod.forEach(plugin => {
+        //         if(!plugin.enabled) return;
+        //     });
+
+        //     let embed = new MessageEmbed()
+        //     .setTitle(message.drakeWS("administration/automod:TITLE_CONFIG"))
+        //     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
+        //     .setFooter(client.cfg.footer)
+        //     .setColor(client.cfg.color.blue)
+        //     .setDescription(message.drakeWS("administration/automod:DESC_CONFIG"))
+        //     enabledPlugins.forEach(plugin => {
+        //         count++;
+        //         embed.addField(`:${client.functions.numberLetterConverter("ntl", count)}: ${message.drakeWS("administration/automod:" + client.functions.convertNumber(count).toUpperCase())}`)
+        //     });
+
+        //     return msg.edit(embed);
+        // };  
     
         async function switchCTV(ctv) {
             switch(ctv) {
@@ -161,6 +200,9 @@ class Automod extends Command {
                     await updateEmbed("majs");
                     await after();
                     break;
+                // case '⚙️':
+                //     await gear();
+                //     break;
                 default:
                     return;
             }

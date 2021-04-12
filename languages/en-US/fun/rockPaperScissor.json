@@ -1,0 +1,18 @@
+{
+    "PLAY": "What do you want to play ? ```\n🌍 ➜ Rock \n📜 ➜ Paper \n✂️ ➜ Scissors```",
+    "ALSO_PAPER": "I also play **Paper** ! Equality !",
+    "ALSO_SCISSOR": "I also play **Scissors** ! Equality !",
+    "ALSO_ROCK": "I also play **Rock** ! Equality !",
+    "WIN_PAPER": "I play **Paper** ! You have loose !",
+    "LOSE_PAPER": "I play **Paper** ! You have win !",
+    "WIN_SCISSOR": "I play **Scissors** ! You have loose !",
+    "LOSE_SCISSOR": "I play **Scissors** ! You have win !",
+    "WIN_ROCK": "I play **Rock** ! You have loose !",
+    "LOSE_ROCK": "I play **Rock** ! You have win !",
+    "YOU_ROCK": "You have play **Rock** !",
+    "YOU_PAPER": "You have play **Paper** !",
+    "YOU_SCISSOR": "You have play **Scissor** !",
+    "DESCRIPTION": "Play to the famous \"Rock Paper Scissor\" game with the bot !",
+    "USAGE": "rockPaperScissor",
+    "EXAMPLE": "rockPaperScissor"
+}

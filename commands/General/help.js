@@ -233,8 +233,8 @@ class Help extends Command {
             const aliases = cmd.help.aliases != "" ? (cmd.help.aliases.lenght === 1 ? "``" + cmd.help.aliases[0] + "``" : cmd.help.aliases.map(a => "`" + a + "`").join(", ")) : message.drakeWS("common:ANY");
             let perms = cmd.settings.userPerms != "" ? (cmd.settings.userPerms.lenght === 1 ? "``" + cmd.settings.userPerms[0] : cmd.settings.userPerms.map(a => "`" + a + "`").join(", ")) : message.drakeWS("common:ANY(E)");
             
-            if(cmd.settings.restriction && cmd.settings.restriction.includes("MODERATOR")) perms = "``BOT MODERATOR``";
-            if(cmd.settings.restriction && cmd.settings.restriction.includes("OWNER")) perms = "``BOT OWNER``";
+            if(cmd.settings.restriction && cmd.settings.restriction.includes("MODERATOR")) perms = "`BOT MODERATOR`";
+            if(cmd.settings.restriction && cmd.settings.restriction.includes("OWNER")) perms = "`BOT OWNER`";
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))

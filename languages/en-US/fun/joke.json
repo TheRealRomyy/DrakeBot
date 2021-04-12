@@ -1,0 +1,6 @@
+{
+    "POWERED": "Powered by: {{api}}",
+    "DESCRIPTION": "Show a joke",
+    "EXAMPLE": "joke",
+    "USAGE": "joke"
+}

@@ -12,7 +12,8 @@
         "moderation": "<:moderation:765625237190475867>",
         "staff & support": "<:policeman:755851872371212449>",
         "custom": ":space_invader:",
-        "level": "<:up:758302977764622377>"
+        "level": "<:up:758302977764622377>",
+        "fun": ":partying_face:"
     },
     "log": {
         "pin": ":pushpin:",
@@ -21,6 +22,13 @@
     },
     "bug": ":bug:",
     "unban": ":chains:",
+    "congrats": "<a:congrats:757236972216385587>",
+    "scroll": ":scroll:",
+    "trophy": ":trophy:",
+    "cry": ":cry:",
+    "gem": ":gem:",
+    "scissor": ":scissors:",
+    "rock": ":rock:",
     "baka": ":zany_face:",
     "cuddle": ":open_hands:",
     "feed": ":apple:",
@@ -35,7 +43,6 @@
     "question": "<:question:755830255779971132>",
     "slap": ":raised_hand:",
     "hug": ":hugging:",
-    "trophy": ":trophy:",
     "skeleton": ":skull:",
     "fight": ":crossed_swords:",
     "boom": ":boom:",
