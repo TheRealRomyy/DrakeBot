@@ -24,7 +24,7 @@ class Kick extends Command {
         };
 
         if(!args[0]) return message.drake("errors:NOT_CORRECT", {
-            usage: data.guild.prefix + "ban <user> (reason)",
+            usage: data.guild.prefix + "kick <user> (reason)",
             emoji: "error"
         });
         

@@ -84,7 +84,6 @@ class Message {
             mod: false,
             messages: false
         };
-        await data.guild.save()
         
 		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
             user: message.author.username,
@@ -110,7 +109,7 @@ class Message {
             });
         });
 
-        if(data.guild.plugins.automod.antiMajs && !message.member.hasPermission("MANAGE_MESSAGES")) {
+        if(data.guild.plugins.automod.antiMajs.enabled && !message.member.hasPermission("MANAGE_MESSAGES")) {
             let max = Math.round(message.content.length / 1.5);
             let count = 0;
             let majs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -144,7 +143,7 @@ class Message {
             }; 
         };
 
-        if(data.guild.plugins.automod.antiBadwords && !message.member.hasPermission("MANAGE_MESSAGES")) {
+        if(data.guild.plugins.automod.antiBadwords.enabled && !message.member.hasPermission("MANAGE_MESSAGES")) {
             let infraction = false;
             await client.cfg.badwords.forEach((word) => {
                 if(message.content.includes(word)) infraction = true;
@@ -173,7 +172,7 @@ class Message {
             }
         };
 
-        if(data.guild.plugins.automod.antiPub && !message.member.hasPermission("MANAGE_MESSAGES") && (message.content.includes("http://") || message.content.includes("https://") || message.content.includes("discord.gg"))) {
+        if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES") && (message.content.includes("http://") || message.content.includes("https://") || message.content.includes("discord.gg"))) {
             message.delete();
             await message.author.send(message.drakeWS("misc:PUB", {
                 message: message.content,

@@ -199,5 +199,27 @@ module.exports = {
 		const date = new Date();
 
 		return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-	}
+	},
+
+	/**
+	 * Convert letter to number or number to letter
+	 * @param { String } type
+	 * @param { String } string
+	 * @return { String } conversion 
+	*/
+
+	numberLetterConverter(type, string) {
+		let letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
+		if(type === "ntl") {
+			if(isNaN(string) || parseInt(string) > 26 || 0 > parseInt(string)) return "Error";
+
+			return letters[parseInt(string) - 1];
+		} else if(type === "ltn") {
+
+			return letters.indexOf(string.toLowerCase()) + 1;
+		} else {
+			return "Error";
+		};
+	},
 };

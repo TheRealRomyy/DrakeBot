@@ -85,7 +85,6 @@ class Ban extends Command {
                 if(data.guild.plugins.logs.mod) {
                     if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
                         data.guild.plugins.logs.mod = false;
-                        await data.guild.save()
                     };
     
                     client.functions.sendModLog("ban", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
@@ -95,6 +94,8 @@ class Ban extends Command {
             }).catch((error) => {
                 client.functions.sendErrorCmd(client, message, this.help.name, error);
             });
+
+            await data.guild.save()
         };
 
         let msg = await message.channel.send(message.drakeWS("moderation/ban:CONFIRM", {
