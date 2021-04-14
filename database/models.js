@@ -18,9 +18,23 @@ exports.Guild = (guildID, client) => {
                 role: null
             },
             automod: {
-                antiPub: false,
-                antiBadwords: false,
-                antiMajs: false	
+                antiPub: {
+                    enabled: false,
+                    discord: true,
+                    links: true,
+                    ignoredChannels: [],
+                    ignoredRoles: []
+                },
+                antiBadwords: {
+                    enabled: false,
+                    ignoredChannels: [],
+                    ignoredRoles: []
+                },
+                antiMajs: {
+                    enabled: false,
+                    ignoredChannels: [],
+                    ignoredRoles: [],
+                },
             },
             welcome: {
                 enabled: false,
@@ -126,8 +140,8 @@ exports.User = (userID) => {
         // The reminds of the user
         [],
 
-        // Drakecoin owned amount
-        null,
+        // User records
+        [],
     ];
 };
 

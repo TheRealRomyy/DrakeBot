@@ -1,0 +1,7 @@
+{
+    "POWERED": "Propulsé par: {{api}}",
+    "JOKE": "Blague",
+    "DESCRIPTION": "Montrer une blague",
+    "EXAMPLE": "joke dark",
+    "USAGE": "joke (beauf/blondes/dev/global/dark/limit)"
+}

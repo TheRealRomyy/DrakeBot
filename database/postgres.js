@@ -49,7 +49,7 @@ module.exports = class Database {
         let gData = await this.pool.query(`SELECT * FROM guilds WHERE id='${guild.id}'`);
 
         if(gData.rows.length === 0){
-            await this.pool.query('INSERT INTO guilds (id, names, plugins, prefix, language, symbol, cases, companys, customcommands, premium) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', Guild(guild.id, this.client));
+            await this.pool.query('INSERT INTO guilds (id, names, plugins, prefix, language, symbol, cases, companys, customcommands, premium, fortress) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', Guild(guild.id, this.client));
             gData = await this.pool.query(`SELECT * FROM guilds WHERE id=$1`, [guild.id]);		
         };
 
@@ -83,7 +83,7 @@ module.exports = class Database {
         let gData = await this.pool.query(`SELECT * FROM users WHERE id='${user.id}'`);
 
         if(gData.rows.length === 0) {
-            await this.pool.query('INSERT INTO users (id, names, description, afk, reminds, drakecoin) values ($1, $2, $3, $4, $5, $6)', User(user.id));
+            await this.pool.query('INSERT INTO users (id, names, description, afk, reminds, record) values ($1, $2, $3, $4, $5, $6)', User(user.id));
             gData = await this.pool.query(`SELECT * FROM users WHERE id=$1`, [user.id]);
         };
 
@@ -114,7 +114,7 @@ module.exports = class Database {
         let gData = await this.pool.query(`SELECT * FROM master WHERE id='${this.client.user.id}'`);
 
         if(gData.rows.length === 0) {
-            await this.pool.query('INSERT INTO master (id, count, blacklist, drakecoin, cours) values ($1, $2, $3, $4, $5)', Client(this.client.user.id));
+            await this.pool.query('INSERT INTO master (id, count, blacklist, voter) values ($1, $2, $3, $4)', Client(this.client.user.id));
             gData = await this.pool.query(`SELECT * FROM master WHERE id=$1`, [this.client.user.id]);
         };
 

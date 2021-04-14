@@ -42,6 +42,8 @@ class Number extends Command {
 			const parsedNumber = parseInt(msg.content, 10);
 		
 			if (parsedNumber === number) {
+
+				let newRecord = false;
 		
 				message.drake("fun/number:GAME_STATS", {
 					winner: msg.author.toString(),
@@ -51,9 +53,46 @@ class Number extends Command {
 					participants: participants.map(p => `<@${p}>`).join("\n"),
 					emoji: "congrats"
 				});
+
+				if(data.user.record.length !== 0) {
+					data.user.record.forEach(record => {
+						if(record.type !== "number") return;
+	
+						if(record.time > time) {
+	
+							let recordInfo = {
+								type = "number",
+								time = time,
+								guild = message.guild.id,
+							};
+							
+							newRecord = true;
+							record = recordInfo;
+						};
+					});
+				} else {
+					let recordInfo = {
+						type = "number",
+						time = time,
+						guild = message.guild.id,
+					};
+
+					newRecord = true;
+					data.user.record.push(recordInfo);
+				};
+
+				if(newRecord) {
+					message.drake("fun/number:RECORD", {
+						emoji: "congrats",
+						time
+					});
+				};
+
 				delete currentGames[message.guild.id];
 				collector.stop(msg.author.username);
-			}
+				await data.user.save();
+			};
+
 			if (parseInt(msg.content) < number) message.drake("fun/number:BIG", { number: parsedNumber })
 			if (parseInt(msg.content) > number) message.drake("fun/number:SMALL", { number: parsedNumber })
 		});

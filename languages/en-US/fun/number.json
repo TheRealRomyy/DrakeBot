@@ -5,6 +5,7 @@
     "BIG": "My number is bigger than **{{number}}** !",
     "SMALL": "My number is smaller than **{{number}}** !",
     "DEFEAT": "Loose ! My number was **__{{number}}__** !",
+    "RECORD": "New personal record: **{{time}}**",
     "DESCRIPTION": "Try to find the number of the bot !",
     "USAGE": "number",
     "EXAMPLE": "number"

@@ -1,0 +1,18 @@
+{
+    "PLAY": "Que voulez vous jouer ? ```\n🌍 ➜ Pierre \n📜 ➜ Papier \n✂️ ➜ Ciseaux```",
+    "ALSO_PAPER": "J'ai aussi joué **Papier** ! Egalité !",
+    "ALSO_SCISSOR": "J'ai aussi joué **Ciseaux** ! Egalité !",
+    "ALSO_ROCK": "J'ai aussi joué **Pierre** ! Egalité !",
+    "WIN_PAPER": "J'ai joué **Papier** ! Vous avez perdu(e) !",
+    "LOSE_PAPER": "J'ai joué **Papier** ! Vous avez gagné(e) !",
+    "WIN_SCISSOR": "J'ai joué **Ciseaux** ! Vous avez perdu(e) !",
+    "LOSE_SCISSOR": "J'ai joué **Ciseaux** ! Vous avez gagné(e) !",
+    "WIN_ROCK": "J'ai joué **Pierre** ! Vous avez perdu(e) !",
+    "LOSE_ROCK": "J'ai joué **Pierre** ! Vous avez gagné(e) !",
+    "YOU_ROCK": "Vous avez joué **Pierre** !",
+    "YOU_PAPER": "Vous avez joué **Papier** !",
+    "YOU_SCISSOR": "Vous avez joué **Ciseaux** !",
+    "DESCRIPTION": "Jouer au jeu \"Pierre feuille Ciseaux\" avec le bot",
+    "USAGE": "rockPaperScissor",
+    "EXAMPLE": "rockPaperScissor"
+}

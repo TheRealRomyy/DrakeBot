@@ -1,6 +1,7 @@
 {
     "POWERED": "Powered by: {{api}}",
+    "JOKE": "Joke",
     "DESCRIPTION": "Show a joke",
-    "EXAMPLE": "joke",
-    "USAGE": "joke"
+    "EXAMPLE": "joke dark",
+    "USAGE": "joke (beauf/blondes/dev/global/dark/limit)"
 }
