@@ -1,0 +1,10 @@
+{
+    "DESCRIPTION": "Voir des informations sur un rôle",
+    "EXAMPLE": "roleinfo @Admin",
+    "USAGE": "roleinfo <role>",
+    "NOT_FOUND": "**Ce rôle n'existe pas !**",
+    "TITLE": "Informations du role __{{role}}__",
+    "COLOR": "Couleur",
+    "HOIST": "Affiché séparément",
+    "MENTIONNABLE": "Mentionnable"
+}

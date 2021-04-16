@@ -3,6 +3,12 @@
     "warn": "<:warn:755832370250121360>",
     "error": "<:error:772593327265546270>",
     "info": "<:info:757265224024719400>",
+    "medal": ":medal:",
+    "nfsw": ":underage:",
+    "role": "<:roleList:750781042041946122>",
+    "color": "<:atlanta_color:598170806413033472>",
+    "hoist": "<:up:758302977764622377>",
+    "mentionnable": "<:info:757265224024719400>",
     "categories": {
         "administration": "<:administration:774386182981025822>",
         "general": "<:general:772906945886814219>",
@@ -20,6 +26,13 @@
         "delete": ":wastebasket:",
         "edit": ":arrows_counterclockwise:"
     },
+    "channelsType": {
+        "text": "<:textChannel:750777761110556692>",
+        "voice": ":loud_sound:",
+        "news": ":newspaper:",
+        "stage": ":radio:"
+    },
+    "channel": "<:atlanta_channels:598166880271859712>",
     "bug": ":bug:",
     "unban": ":chains:",
     "congrats": "<a:congrats:757236972216385587>",

@@ -26,5 +26,11 @@
     "CATEGORIES": "Catégories",
     "NO": "Non",
     "YES": "Oui",
-    "TIPS": "**Astuce:**"
+    "TIPS": "**Astuce:**",
+    "TEXT": "Salon textuel",
+    "VOICE": "Salon vocal",
+    "NEWS": "Salon d'actualité",
+    "STORE": "Salon magasin",
+    "STAGE": "Salon radio",
+    "CATEGORY": "Catégorie"
 }

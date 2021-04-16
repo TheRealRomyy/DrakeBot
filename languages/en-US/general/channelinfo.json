@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "See informations about a channel",
+    "EXAMPLE": "channelinfo #general",
+    "USAGE": "channelinfo (channel)",
+    "TITLE": "Informations of __#{{channel}}__",
+    "NOT_FOUND": "**This channel doesn't exist or is a category !**",
+    "NO_TOPIC": "No topic or too long topic"
+}

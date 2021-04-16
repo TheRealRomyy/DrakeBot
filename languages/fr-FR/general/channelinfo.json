@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Voir des informations sur un salon",
+    "EXAMPLE": "channelinfo #general",
+    "USAGE": "channelinfo (channel)",
+    "TITLE": "Informations de __#{{channel}}__",
+    "NOT_FOUND": "**Ce salon n'existe pas ou est une catégorie !**",
+    "NO_TOPIC": "Pas de topic ou topic trop grand"
+}
