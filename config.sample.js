@@ -4,24 +4,27 @@ module.exports = {
 	footer: "DrakeBot | 2021",
 	api: {
 		dbl: {
-			token: "TOK3N DBL",
-			password: "PASSWORD DBL"
+			token: "TOK3N",
+			password: "PASSWORD"
 		},
+		joke: "TOK3N"
+
 	},
 	staff: {
-		support: [ "591341484721307654", "524615583447384064", ],
-		owner: [ "709481084286533773", "654754795336237058", "547514927019982864" ]
+		support: [],
+		owner: []
 	},
 	bots: {
 		"762965943529766912": ":thumbsup:",
 		"710135804714024962": ":thumbsup:",
-		"662062221177913354": ":thumbsup:"
+		"662062221177913354": ":thumbsup:",
+		"785141123567845397": ":thumbsup:"
 	},
 	dashboard: {
 		port: 80,
 		ip: "IP",
 		enabled: true,
-		name: "drakebot.xyz"
+		name: "NAME"
 	},
 	lang: [
 		{
@@ -54,10 +57,10 @@ module.exports = {
 		},
 	],
 	database: {
-        user: 'USER PG',
-        host: "IP PG",
-        database: "DATABASE PG",
-        password: 'PASSWORD PG',
+        user: 'USER',
+        host: "HOST",
+        database: "DATABASE",
+        password: 'PASSWORD',
         port: 5432
     },
     color: {
