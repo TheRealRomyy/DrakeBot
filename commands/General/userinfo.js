@@ -6,7 +6,7 @@ class Userinfo extends Command {
     constructor(client) {
         super(client, {
             name: "userinfo",
-            aliases: [ "ui", "whois" ],
+            aliases: [ "ui", "whois", "user" ],
             dirname: __dirname,
             enabled: true,
             botPerms: [ "EMBED_LINKS", "SEND_MESSAGES" ],

@@ -6,7 +6,7 @@ class Serverinfo extends Command {
     constructor(client) {
         super(client, {
             name: "serverinfo",
-            aliases: [ "si", "guildinfo" ],
+            aliases: [ "si", "guildinfo", "serveur", "server", "serveurinfo", "guild" ],
             dirname: __dirname,
             enabled: true,
             botPerms: [ "EMBED_LINKS", "SEND_MESSAGES" ],
