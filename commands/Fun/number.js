@@ -1,22 +1,25 @@
 const Command = require("../../structure/Commands.js");
 const { MessageCollector } = require("discord.js");
-const currentGames = {};
 
-class Number extends Command {
+class GuessTheNumber extends Command {
 
-	constructor(client) {
-		super(client, {
-			name: "number",
-			aliases: ["guessTheNumber"],
-			enabled: true,
-			dirname: __dirname,
-			botPerms: [],
-			userPerms: [],
-			restriction: []
-		});
-	};
+    constructor(client) {
+        super(client, {
+            name: "number",
+            aliases: ["gtn", "guessTheNumber"],
+            enabled: true,
+            botPerms: [],
+            userPerms: [],
+            dirname: __dirname,
+            restriction: []
+        });
+    };
 
 	async run(message, args, data) {
+
+		const currentGames = {};
+		const client = this.client;
+		
 		if(currentGames[message.guild.id]) return message.drake("fun/number:GAME_RUNNING", {
 			emoji: "error"
 		});
@@ -24,8 +27,8 @@ class Number extends Command {
 		const participants = [];
 		const number = Math.floor(Math.random() * 30);
 		
-		await message.drake("fun/number:START", {
-			username: message.author.username,
+		message.drake("fun/number:START", {
+			user: message.author.id,
 			emoji: "play"
 		});
 		
@@ -44,26 +47,31 @@ class Number extends Command {
 			if (parsedNumber === number) {
 
 				let newRecord = false;
+
+				const time = message.time.convertMS(Date.now() - gameCreatedAt);
 		
 				message.drake("fun/number:GAME_STATS", {
 					winner: msg.author.toString(),
 					number,
-					time: message.time.convertMS(Date.now()-gameCreatedAt),
+					time: time,
 					participantCount: participants.length,
 					participants: participants.map(p => `<@${p}>`).join("\n"),
 					emoji: "congrats"
 				});
 
-				if(data.user.record.length !== 0) {
-					data.user.record.forEach(record => {
+
+				const winnerData = await client.db.findOrCreateUser(msg.author);
+
+				if(winnerData.record.length != 0) {
+					winnerData.record.forEach(record => {
 						if(record.type !== "number") return;
 	
 						if(record.time > time) {
 	
 							let recordInfo = {
-								type = "number",
-								time = time,
-								guild = message.guild.id,
+								type: "number",
+								time: Date.now() - gameCreatedAt,
+								guild: message.guild.id,
 							};
 							
 							newRecord = true;
@@ -72,38 +80,39 @@ class Number extends Command {
 					});
 				} else {
 					let recordInfo = {
-						type = "number",
-						time = time,
-						guild = message.guild.id,
+						type: "number",
+						time: Date.now() - gameCreatedAt,
+						guild: message.guild.id,
 					};
 
 					newRecord = true;
-					data.user.record.push(recordInfo);
+					winnerData.record.push(recordInfo);
 				};
 
 				if(newRecord) {
 					message.drake("fun/number:RECORD", {
-						emoji: "congrats",
-						time
+						emoji: "trophy",
+						time,
+						user: msg.author.id
 					});
 				};
 
 				delete currentGames[message.guild.id];
 				collector.stop(msg.author.username);
-				await data.user.save();
+				await winnerData.save();
 			};
 
-			if (parseInt(msg.content) < number) message.drake("fun/number:BIG", { number: parsedNumber })
-			if (parseInt(msg.content) > number) message.drake("fun/number:SMALL", { number: parsedNumber })
+			if(parseInt(msg.content) < number) message.drake("fun/number:BIG", { number: parsedNumber })
+			if(parseInt(msg.content) > number) message.drake("fun/number:SMALL", { number: parsedNumber })
 		});
 		
 		collector.on("end", (_collected, reason) => {
-			if (reason === "time") {
+			if(reason === "time") {
 				delete currentGames[message.guild.id];
 				return message.drake("fun/number:DEFEAT", { number });
-			}
+			};
 		});
 	};
 };
 
-module.exports = Number;
+module.exports = GuessTheNumber;

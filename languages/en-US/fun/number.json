@@ -1,11 +1,11 @@
 {
-    "START": "Hi **{{username}}** ! I think to a number beetween 1 and 30. Try to find it !",
+    "START": "Hi <@{{user}}> ! I think to a number beetween 1 and 30. Try to find it !",
     "GAME_RUNNING": "**A game is already running on this server !**",
     "GAME_STATS": "» {{winner}} has found the number ! (**__{{number}}__**) \n \nThere is **{{participantCount}}** players : \n {{participants}} \n \nThe game was long of : ``{{time}}`` !",
     "BIG": "My number is bigger than **{{number}}** !",
     "SMALL": "My number is smaller than **{{number}}** !",
     "DEFEAT": "Loose ! My number was **__{{number}}__** !",
-    "RECORD": "New personal record: **{{time}}**",
+    "RECORD": "**<@{{user}}> has reach a new personnal record:** `{{time}}`",
     "DESCRIPTION": "Try to find the number of the bot !",
     "USAGE": "number",
     "EXAMPLE": "number"
