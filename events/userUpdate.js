@@ -6,7 +6,7 @@ module.exports = class {
 
 	async run (oldUser, newUser) {
 
-        // if(oldUser.avatar !== newUser.avatar) this.client.channels.cache.get('795147142011420722').send(newUser.displayAvatarURL({ dynamic:true, size: 1024}))
+        if(oldUser.avatar !== newUser.avatar) this.client.channels.cache.get('833126258757992459').send(newUser.displayAvatarURL({ dynamic: true }))
 		
 		if(oldUser.username !== newUser.username) {
 
