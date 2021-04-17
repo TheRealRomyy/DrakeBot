@@ -7,5 +7,6 @@ package-lock.json
 # Configuration
 config.js
 
-# Database file (Made by Mysteree)
-# database
+# Github files
+README.md 
+start.bat
