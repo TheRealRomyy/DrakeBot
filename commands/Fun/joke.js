@@ -42,7 +42,7 @@ class Joke extends Command {
         .setColor(this.client.cfg.color.blue)
         .setFooter(message.drakeWS("fun/joke:POWERED", {
             api: "Blagues API"
-        }) + `・(${message.drakeWS("fun/joke:JOKE")} ${type})`)
+        }) + `・(${message.drakeWS("fun/joke:" + type.toUpperCase())})`)
     
         return message.channel.send(embed);
     };

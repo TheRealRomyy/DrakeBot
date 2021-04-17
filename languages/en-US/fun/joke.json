@@ -3,5 +3,11 @@
     "JOKE": "Joke",
     "DESCRIPTION": "Show a joke",
     "EXAMPLE": "joke dark",
-    "USAGE": "joke (beauf/blondes/dev/global/dark/limit)"
+    "USAGE": "joke (beauf/blondes/dev/global/dark/limit)",
+    "DEV": "Dev jokes",
+    "GLOBAL": "Global jokes",
+    "DARK": "Dark jokes",
+    "LIMIT": "Limit jokes",
+    "BEAUF": "Beauf jokes",
+    "BLONDES": "Jokes about the blondes"
 }
