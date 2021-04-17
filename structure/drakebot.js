@@ -8,7 +8,6 @@ const moment = require("moment");
 
 const readdir = util.promisify(fs.readdir);
 
-// Create a class
 class DrakeBot extends Client {
 
     constructor(option) {
@@ -61,18 +60,6 @@ class DrakeBot extends Client {
 			await this.channels.cache.get("793941589113700392").send(embed);
 		}, null, true, "Europe/Paris");
 		scheduler.start();
-
-		// Load the everyday drakecoin change
-		const drakecoinChanger = new CronJob("0 0 0 * * *", async () => {
-			let price = this.functions.getDailyDrakecoinPrice();
-			let dataClient = this.db.findOrCreateClient(this);
-
-			this.channels.get("767372177775132703").send("📆 Aujourd'hui le Drakecoin est à **" + price + "$**");
-			dataClient.cours = price;
-
-			dataClient.save();
-		}, null, true, "Europe/Paris");
-		drakecoinChanger.start();
 
 		// Load the languages
         const languages = require("../helpers/lang");
