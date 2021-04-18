@@ -1,5 +1,5 @@
 {
-    "NOT_BAN": "**{{user}}** n'est pas bannit !",
+    "NOT_BAN": "**{{user}}** n'est pas banni(e) !",
     "DESCRIPTION": "Débannir quelqu'un. Si vous rajoutez --message, la personne sera avertit de son débanissement.",
     "USAGE": "unban <user> (reason) (--message)",
     "EXAMPLE": "unban @Les_fourmis A purgé sa peine --message",

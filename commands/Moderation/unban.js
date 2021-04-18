@@ -17,6 +17,8 @@ class Unban extends Command {
 
     async run(message, args, data) {
 
+        let stop = false;
+
         if(!args[0]) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "unban <user> (reason) (--message)",
             emoji: "error"
@@ -24,7 +26,7 @@ class Unban extends Command {
 
         let user = message.mentions.users.first() || this.client.users.cache.get(args[0]);
         if(!user) return message.drake("moderation/unban:NOT_BAN", {
-            user: user.username,
+            user: user ? user.username : message.drakeWS("common:THIS_PEOPLE"),
             emoji: "error"
         });
 
@@ -34,19 +36,27 @@ class Unban extends Command {
         let sendMessage = message.content.includes("--message");
         let logReason = `${message.author.username} | ${reason}`;
 
-        message.guild.fetchBans()
-        .then(bans=> {
-            if(bans.size == 0) return message.drake("moderation/unban:NOT_BAN", {
-                user: user.username,
-                emoji: "error"
-            });
+        await message.guild.fetchBans()
+        .then(bans => {
+            if(bans.size == 0) {
+                stop = true;
+                return message.drake("moderation/unban:NOT_BAN", {
+                    user: user.username,
+                    emoji: "error"
+                });
+            };
             let banUser = bans.find(b => b.user.id == user.id);
-            if(!banUser) return message.drake("moderation/unban:NOT_BAN", {
-                user: user.username,
-                emoji: "error"
-            });
+            if(!banUser) {
+                stop = true;
+                return message.drake("moderation/unban:NOT_BAN", {
+                    user: user.username,
+                    emoji: "error"
+                });
+            };
             message.guild.members.unban(banUser.user, logReason);
         });
+
+        if(stop) return; // Très dégeulasse mais flemme
 
         if(sendMessage) user.send(message.drakeWS("moderation/unban:UNBAN_DM", {
                 reason, 
@@ -59,13 +69,6 @@ class Unban extends Command {
                 user: user.username
         }));
 
-        const embed = new MessageEmbed()
-        .setTitle(message.drakeWS("moderation/unban:UNBAN", {
-            username: user.tag,
-            emoji: "succes"
-        }))
-        .setColor(this.client.cfg.color.green);
-
         if(data.guild.plugins.logs.mod) {
             if(!this.client.channels.cache.get(data.guild.plugins.logs.mod)) {
                 data.guild.plugins.logs.mod = false;
@@ -75,7 +78,7 @@ class Unban extends Command {
             this.client.functions.sendModLog("unban", user, this.client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
         };
         
-        return message.channel.send(embed);
+        return  this.client.functions.sendSanctionMessage(message, "unban", user, reason);
     };
 };
 
