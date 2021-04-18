@@ -15,6 +15,19 @@ class Message {
 
         const client = this.client;
 
+        if(message.author.bot || !message.guild || !message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return;
+
+        const data = {
+            user: await this.client.db.findOrCreateUser(message.author),
+            guild: await this.client.db.findOrCreateGuild(message.guild),
+            member: await this.client.db.findOrCreateMember(message.author.id, message.guild.id),
+
+            client: await this.client.db.findOrCreateClient(),
+            cfg: this.client.cfg,
+        };
+
+        message.guild.data = data.guild;
+
         message.__proto__.time = {
 
             convertMS(ms) {
@@ -67,18 +80,7 @@ class Message {
             }
         };
 
-        if(message.author.bot || !message.guild || !message.channel.permissionsFor(message.guild.me).has("SEND_MESSAGES")) return;
-
-        const data = {
-            user: await this.client.db.findOrCreateUser(message.author),
-            guild: await this.client.db.findOrCreateGuild(message.guild),
-            member: await this.client.db.findOrCreateMember(message.author.id, message.guild.id),
-
-            client: await this.client.db.findOrCreateClient(),
-            cfg: this.client.cfg,
-        };
-
-        message.guild.data = data.guild;
+        /* TEMP ZONE */
 
         if(!data.guild.plugins.logs) data.guild.plugins.logs = {
             mod: false,
@@ -86,6 +88,27 @@ class Message {
         };
 
         if(data.user.record === null) data.user.record = [];
+
+        if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
+            mute: {
+                enabled: false,
+                muteTime: null,
+                count: null,
+                in: null,
+            },
+            kick: {
+                enabled: false,
+                count: null,
+                in: null
+            },
+            ban: {
+                enabled: false,
+                count: null,
+                in: null
+            },
+        };
+
+        /* END TEMP ZONE */
         
 		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
             user: message.author.username,

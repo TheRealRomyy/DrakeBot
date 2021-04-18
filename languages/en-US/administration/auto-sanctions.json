@@ -1,0 +1,18 @@
+{
+    "DESCRIPTION": "Manage your auto sanctions",
+    "USAGE": "auto-sanctions",
+    "EXAMPLE": "auto-sanctions",
+    "TITLE": "Auto Sanctions",
+    "MUTE": ":one: Auto mute",
+    "KICK": ":two: Auto kick",
+    "BAN": ":three: Auto ban",
+    "DESC": "**Click on a reaction to manage a plugin**",
+    "INVALID_DATE": "**Time format invalid** Please use the following units: `d`, `d`, `m`, `y`. \n \nExample: `3d`",
+    "INVALID_COUNT": "**The specify number is invalid. Please specify a number beetween 1 and 100**",
+    "INSTRUCTION_MUTE": "**What is the duration of the mute** (Example: `4d`, `5h`, `3m`)\n \nType `cancel` to avort.",
+    "INSTRUCTION_COUNT": "**How many warns for this sanction ?** (Please specify a number beetween 1 and 100)\n \nType `cancel` to avort.",
+    "INSTRUCTION_IN": "**In how many time ?** (Example: `4d`, `5h`, `3m`)\n \nType `cancel` to avort.",
+    "IN": "In:",
+    "COUNT": "Warns:",
+    "MUTE_TIME": "Mute time:"
+}

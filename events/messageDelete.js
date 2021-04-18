@@ -19,7 +19,7 @@ class MessageDelete {
         };
 
         if(!guildData.plugins.logs.messages) return;
-        if(guildData.plugins.logs.messages && !this.client.channels.cache.get(guildData.plugins.logs.messages)) {
+        if(guildData.plugins.logs.messages && !( await this.client.channels.cache.get(guildData.plugins.logs.messages))) {
             guildData.plugins.logs.mod = false;
             await guildData.save()
         };
@@ -27,7 +27,7 @@ class MessageDelete {
         let channel = this.client.channels.cache.get(guildData.plugins.logs.messages);
 
         const embed = new MessageEmbed()
-		.setTitle(`${this.client.emotes.log["delete"]} ・ ${message.drakeWS("misc:LOG_MSG_TITLE")}`)
+		.setTitle(`${this.client.emotes.log["delete"]} ・ ${message.drakeWS("misc:LOG_MSG_TITLE").catch(() => {})}`)
 		.setColor(this.client.cfg.color.red)
         .setDescription(message.content ? message.content : message.drakeWS("misc:NO_TEXT", {
             emoji: "error"

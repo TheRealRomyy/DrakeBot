@@ -1,0 +1,18 @@
+{
+    "DESCRIPTION": "Configurer les sanctions automatiques",
+    "USAGE": "auto-sanctions",
+    "EXAMPLE": "auto-sanctions",
+    "TITLE": "Auto Sanctions",
+    "MUTE": ":one: Auto mute",
+    "KICK": ":two: Auto kick",
+    "BAN": ":three: Auto ban",
+    "DESC": "**Cliquez sur la réaction pour configurer le plugin associé**",
+    "INVALID_DATE": "**Format de temps invalide.** Veuillez utiliser les unités suivantes: `d`, `d`, `m`, `y`. \n \nExemple: `3d`",
+    "INVALID_COUNT": "**Le nombre spécifié est invalide. Veuillez spécifier un nombre entre 1 et 100**",
+    "INSTRUCTION_MUTE": "**Combien de temps durera le mute ?** (Exemple: `4d`, `5h`, `3m`)\n \nRépondez `cancel` pour annuler.",
+    "INSTRUCTION_COUNT": "**Combien d'avertissement faut-il pour cette sanction ?** (Veuillez spécifier un nombre entre 1 et 100)\n \nRépondez `cancel` pour annuler.",
+    "INSTRUCTION_IN": "**En combien de temps faut-il avoir ces avertissements pour être sanctionné ?** (Exemple: `4d`, `5h`, `3m`)\n \nRépondez `cancel` pour annuler.",
+    "IN": "En:",
+    "COUNT": "Avertissements:",
+    "MUTE_TIME": "Temps de mute:"
+}
