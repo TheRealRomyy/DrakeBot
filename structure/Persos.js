@@ -44,7 +44,9 @@ class Perso {
     };
 
     antonin() {
-        return this.message.channel.send("https://tenor.com/view/dragon-rawr-baby-dragon-gif-8180489");
+        let number = this.client.functions.getRandomInt(1, 100);
+        if(number < 50) this.message.channel.send("https://tenor.com/view/relax-calm-down-chillax-chill-out-ishaaron-ishaaron-mein-gif-14442942")
+        else this.message.channel.send("https://tenor.com/view/dragon-rawr-baby-dragon-gif-8180489");
     };
 };
 
