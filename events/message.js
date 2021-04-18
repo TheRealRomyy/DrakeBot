@@ -84,6 +84,8 @@ class Message {
             mod: false,
             messages: false
         };
+
+        if(data.user.record === null) data.user.record = [];
         
 		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
             user: message.author.username,
@@ -102,7 +104,7 @@ class Message {
 
         message.mentions.users.forEach(async (user) => {
             const mentionnedData = await client.db.findOrCreateUser(user);
-            if(mentionnedData.afk !== null) message.drake("general/afk:AFK", {
+            if(mentionnedData.afk !== null && !message.content.startsWith(this.client.cfg.prefix)) message.drake("general/afk:AFK", {
                     username: user.username,
                     reason: mentionnedData.afk,
                     emoji: "afk"
@@ -122,24 +124,7 @@ class Message {
     
             if(count >= max) {
                 message.delete();
-                await message.author.send(message.drakeWS("misc:FULL_MAJ", {
-                    message: message.content,
-                    emoji: "error"
-                })).catch(() => {});
-
-                data.guild.cases++;
-                await data.guild.save();
-    
-                const caseInfo = {
-                    moderator: this.client.user.id,
-                    date: Date.now(),
-                    type: "warn",
-                    case: data.guild.cases,
-                    reason: "Full Maj",
-                };
-                
-                data.member.sanctions.push(caseInfo);
-                await data.member.save();
+                client.functions.warn(message.member, message, client.user, data.guild, "Full Maj", data.member, client);
             }; 
         };
 
@@ -151,47 +136,13 @@ class Message {
 
             if(infraction == true) {
                 message.delete();
-                await message.author.send(message.drakeWS("misc:BADWORD", {
-                    message: message.content,
-                    emoji: "error"
-                })).catch(() => {}); 
-                
-                data.guild.cases++;
-                await data.guild.save();
-    
-                const caseInfo = {
-                    moderator: this.client.user.id,
-                    date: Date.now(),
-                    type: "warn",
-                    case: data.guild.cases,
-                    reason: "Full Maj",
-                };
-                
-                data.member.sanctions.push(caseInfo);
-                await data.member.save();
+                client.functions.warn(message.member, message, client.user, data.guild, "Badwords", data.member, client);
             }
         };
 
-        if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES") && (message.content.includes("http://") || message.content.includes("https://") || message.content.includes("discord.gg"))) {
+        if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES") && (message.content.includes("http://") || message.content.includes("https://") || message.content.includes("discord.gg") || message.content.includes(".gg/"))) {
             message.delete();
-            await message.author.send(message.drakeWS("misc:PUB", {
-                message: message.content,
-                emoji: "error"
-            })).catch(() => {});
-            
-            data.guild.cases++;
-            await data.guild.save();
-
-            const caseInfo = {
-                moderator: this.client.user.id,
-                date: Date.now(),
-                type: "warn",
-                case: data.guild.cases,
-                reason: "Full Maj",
-            };
-            
-            data.member.sanctions.push(caseInfo);
-            await data.member.save();
+            client.functions.warn(message.member, message, client.user, data.guild, "Pub", data.member, client);
         };
 
         await updateXp(message, data);

@@ -222,4 +222,62 @@ module.exports = {
 			return "Error";
 		};
 	},
+
+	/**
+	 * Cast number to number with letter
+	 * @param { Number } number
+	 * @return { String } number 
+	*/
+
+	convertNumber(number) {
+		if(number == "1") return "one";
+		if(number == "2") return "two";
+		if(number == "3") return "three";
+	},
+
+	/**
+	 * Warn an user
+	 * @param { Object } member 
+	 * @param { Object } message 
+	 * @param { Object } moderator 
+	 * @param { Object } guildData 
+	 * @param { String } reason 
+	 * @param { Object } memberData 
+	 * @param { Object } client 
+	*/
+
+	async warn(member, message, moderator, guildData, reason, memberData, client) {
+		await member.send(message.drakeWS("moderation/warn:WARN_DM", {
+			emoji: "warn",
+			username: member.user.username,
+			server: message.guild.name,
+			moderator: moderator.tag,
+			reason
+		})).catch(() => {});
+
+		guildData.cases++;
+		guildData.save();
+
+		const caseInfo = {
+			moderator: moderator.id,
+			date: Date.now(),
+			type: "warn",
+			case: guildData.cases,
+			reason: reason,
+		};
+		
+		memberData.sanctions.push(caseInfo);
+		memberData.save();
+
+		if(guildData.plugins.logs.mod) {
+			if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
+				guildData.plugins.logs.mod = false;
+				await guildData.save()
+			};
+
+			this.sendModLog("warn", member.user, client.channels.cache.get(guildData.plugins.logs.mod), message.author, guildData.cases, reason);
+		};
+
+		return this.sendSanctionMessage(message, "warn", member.user, reason)
+	},
 };
