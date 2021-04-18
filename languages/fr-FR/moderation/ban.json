@@ -2,7 +2,7 @@
     "BAN_DM": "Bonjour **{{username}}**, \nVous avez été bannis de `{{server}}` par `{{moderator}}` | Raison : {{reason}}",
     "BAN": "{{username}} a été banni(e)",
     "NOT_BANABLE": "**Je ne peux pas bannir cette personne !**",
-    "LOG": "{{moderator}} | Raison : {{reason}}",
+    "LOG": "{{moderator}} | {{reason}}",
     "DESCRIPTION": "Bannir quelqu'un",
     "USAGE": "ban <user> (reason)",
     "EXAMPLE": "ban @Mystere insultes graves",

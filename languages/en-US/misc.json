@@ -17,6 +17,7 @@
     "WARN_MSG": "was warned",
     "MUTE_MSG": "was muted",
     "KICK_MSG": "was kicked",
+    "UNBAN_MSG": "was unbaned",
     "LOG_MSG_TITLE": "Message delete",
     "MESSAGE_OF": "Message of: {{user}}",
     "NO_TEXT": "The message in an embed or an image",

@@ -296,32 +296,33 @@ module.exports = {
 		let warnOnTimeKick = 0;
 		let warnOnTimeMBan = 0;
 
-
 		if(autoSanctions.mute.enabled) {
 
-			data.member.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
-				if(sanction.date < (Date.now() + data.guild.plugins.autosanctions.mute.in)) warnOnTimeMute++;
+			memberData.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
+				if(sanction.date < (Date.now() + guildData.plugins.autosanctions.mute.in)) warnOnTimeMute++;
 			});
 
-			if(warnOnTimeMute === autoSanctions.mute.count) this.mute(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client, ms(autoSanctions.mute.muteTime));
+			if(warnOnTimeMute == autoSanctions.mute.count) this.mute(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client, ms(autoSanctions.mute.muteTime));
 		};
 
 		if(autoSanctions.kick.enabled) {
 
-			data.member.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
-				if(sanction.date < (Date.now() + data.guild.plugins.autosanctions.kick.in)) warnOnTimeKick++;
+			memberData.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
+				if(sanction.date < (Date.now() + guildData.plugins.autosanctions.kick.in)) warnOnTimeKick++;
 			});
 
-			if(warnOnTimeKick === autoSanctions.kick.count) this.kick(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
+			if(warnOnTimeKick == autoSanctions.kick.count) this.kick(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
 		};
 
 		if(autoSanctions.ban.enabled) {
 
-			data.member.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
-				if(sanction.date < (Date.now() + data.guild.plugins.autosanctions.ban.in)) warnOnTimeMBan++;
+			memberData.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
+				if(sanction.date < (Date.now() + guildData.plugins.autosanctions.ban.in)) warnOnTimeMBan++;
 			});
 
-			if(warnOnTimeMBan === autoSanctions.ban.count) this.ban(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
+			warnOnTimeMBan++;
+
+			if(warnOnTimeMBan == autoSanctions.ban.count) this.ban(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
 		};
 	},
 
