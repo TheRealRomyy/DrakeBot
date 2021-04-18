@@ -97,8 +97,8 @@ class GuessTheNumber extends Command {
 					});
 				};
 
-				delete currentGames[message.guild.id];
 				collector.stop(msg.author.username);
+				delete currentGames[message.guild.id];
 				await winnerData.save();
 			};
 

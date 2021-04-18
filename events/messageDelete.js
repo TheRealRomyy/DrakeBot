@@ -27,7 +27,7 @@ class MessageDelete {
         let channel = this.client.channels.cache.get(guildData.plugins.logs.messages);
 
         const embed = new MessageEmbed()
-		.setTitle(`${this.client.emotes.log["delete"]} ・ ${message.drakeWS("misc:LOG_MSG_TITLE").catch(() => {})}`)
+		.setTitle(`${this.client.emotes.log["delete"]} ・ ${message.drakeWS("misc:LOG_MSG_TITLE")}`)
 		.setColor(this.client.cfg.color.red)
         .setDescription(message.content ? message.content : message.drakeWS("misc:NO_TEXT", {
             emoji: "error"

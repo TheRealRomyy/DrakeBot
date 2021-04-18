@@ -82,7 +82,7 @@ class VoiceStateUpdate {
                 .setTitle("<:micro_off:817159014768836608> Log - Vocal")
                 .setColor(this.client.cfg.color.purple)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son micro (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son micro (dans `" + this.client.channels.cache.get(newState.channelID).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send(embed6);
                 break;

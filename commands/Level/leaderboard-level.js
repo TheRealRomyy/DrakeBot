@@ -39,6 +39,7 @@ class LeaderboardLevel extends Command {
         });
 
         members = members.filter(mem => count[mem.id] !== "ghost");
+        members = members.filter(mem => !isNaN(client.users.cache.get(mem.id)));
 
         const membersLeaderboard = members.map((m) => 
             "" + count[m.id] + ") **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + " (**" + m.exp + " exp**)" + "\n"
