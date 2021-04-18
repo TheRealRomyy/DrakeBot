@@ -66,79 +66,6 @@ class Mute extends Command {
         // Si ya pas la raison
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
-        async function mute() {
-
-            // Récupérer le role mute
-            let muteRole = message.guild.roles.cache.find(r => r.name === 'Drake - Mute');
-
-            if(!muteRole) {
-                muteRole = await message.guild.roles.create({
-                    data: {
-                        name: 'Drake - Mute',
-                        color: '#000',
-                        permissions: []
-                    }
-                });
-        
-                message.guild.channels.cache.forEach(async (channel, id) => {
-                    await channel.updateOverwrite(muteRole, {
-                        SEND_MESSAGES: false,
-                        ADD_REACTIONS: false,
-                        CONNECT: false
-                    });
-                });
-            };
-
-            // Ajouter le rôle au gars qu'on veut mute
-            await member.roles.add(muteRole);
-
-            // Envoyer un message au member qui c'est fait mute
-            member.send(message.drakeWS("moderation/mute:MUTE_DM", {
-                emoji: "mute",
-                username: member.user.username,
-                server: message.guild.name,
-                moderator: message.author.tag,
-                time: time,
-                reason: reason,
-            }));
-
-            // Envoyer un message dans le salon comme quoi un mec c'est fait mute
-            client.functions.sendSanctionMessage(message, "mute", member.user, reason, time)
-
-            // Ajouter +1 au case
-            data.guild.cases++;
-
-            // Modifier l'info de la case
-            const caseInfo = {
-                moderator: message.author.id,
-                date: Date.now(),
-                type: "mute",
-                case: data.guild.cases,
-                reason: reason,
-                time: time,
-            };
-
-            // Update le memberData
-            memberData.mute.muted = true;
-            memberData.mute.endDate = Date.now() + ms(time);
-            memberData.mute.case = data.guild.cases;
-            memberData.sanctions.push(caseInfo);
-
-            if(data.guild.plugins.logs.mod) {
-                if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
-                    data.guild.plugins.logs.mod = false;
-                    await data.guild.save()
-                };
-
-                client.functions.sendModLog("mute", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason, time);
-            };
-
-            await client.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
-            
-            await memberData.save();
-            await data.guild.save();
-        };
-
         // Envoyer un message de confirmation
         let waitMsg = await message.channel.send(message.drakeWS("moderation/mute:CONFIRM", {
             emoji: "question",
@@ -161,7 +88,7 @@ class Mute extends Command {
             let reaction = collected.first();
             let reactionName = reaction.emoji.name;
             if(reactionName == '👍') { 
-                mute();
+                client.functions.mute(member, message, message.author, data.guild, reason, memberData, client, time);
                 message.delete().catch(() => {});
                 return waitMsg.delete().catch(() => {});
             } else {

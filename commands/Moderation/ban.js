@@ -53,51 +53,6 @@ class Ban extends Command {
         let reason = args.slice(1).join(" ");
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
-        let logReason = message.drakeWS("moderation/ban:LOG", {
-            moderator: message.author.username,
-            reason
-        });
-
-        async function ban() {
-            await member.send(message.drakeWS("moderation/ban:BAN_DM", {
-                emoji: "ban",
-                username: member.user.username,
-                server: message.guild.name,
-                moderator: message.author.tag,
-                reason
-            })).catch(() => {});
-    
-            await message.guild.members.ban(member.user, { reason: logReason } ).then(() => {
-                data.guild.cases++;
-                data.guild.save();
-
-                const caseInfo = {
-                    moderator: message.author.id,
-                    date: Date.now(),
-                    type: "ban",
-                    case: data.guild.cases,
-                    reason: reason,
-                };
-                
-                memberData.sanctions.push(caseInfo);
-                memberData.save();
-
-                if(data.guild.plugins.logs.mod) {
-                    if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
-                        data.guild.plugins.logs.mod = false;
-                    };
-    
-                    client.functions.sendModLog("ban", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
-                };
-                
-                return client.functions.sendSanctionMessage(message, "ban", member.user, reason)
-            }).catch((error) => {
-                client.functions.sendErrorCmd(client, message, this.help.name, error);
-            });
-
-            await data.guild.save()
-        };
-
         let msg = await message.channel.send(message.drakeWS("moderation/ban:CONFIRM", {
             emoji: "question",
             user: member.user.tag,
@@ -111,7 +66,7 @@ class Ban extends Command {
             let reaction = collected.first();
             let reactionName = reaction.emoji.name;
             if(reactionName == '👍') { 
-                ban();
+                client.functions.ban(member, message, message.author, data.guild, reason, memberData, client);
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {

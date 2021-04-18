@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const cfg = require("../config.js");
 const emojis = require("../emojis.json");
+const ms = require("ms");
 const moment = require("moment");
 const fetch = require('node-fetch');
 
@@ -101,8 +102,8 @@ module.exports = {
 
 	/**
 	 * Get a color for the ping
-	 * @param {*} ms 
-	 * @return { string } emoji
+	 * @param { Number } ms 
+	 * @return { String } emoji
 	 */
 
 	getPingColor(ms) {
@@ -143,9 +144,9 @@ module.exports = {
 		const embed = new MessageEmbed()
 		.setAuthor(user.tag + " " + message.drakeWS(`misc:${type.toUpperCase()}_MSG`), user.displayAvatarURL({ dynamic: true }))
 		.setFooter(cfg.footer)
-		.setColor(type.includes("un") ? cfg.color.green : cfg.color.orange)
-		if(reason) embed.setDescription(`\`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
-		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(`\`Duration:\` ${duration}`)
+		.setColor(type.includes("un") ? cfg.color.green : (type == "warn" ? cfg.color.orange : (type == "ban" ? cfg.color.red : (type == "mute" ? cfg.color.purple : cfg.color.blue)))) // Franchement dégeulasse mais flemme
+		if(reason) embed.setDescription(emojis[type] + ` \`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
+		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(emojis[type] + ` \`Duration:\` ${duration}`)
 
 		message.channel.send(embed)
 	},
@@ -276,5 +277,237 @@ module.exports = {
 		};
 
 		return this.sendSanctionMessage(message, "warn", member.user, reason)
+	},
+
+	/**
+	 * Check auto sanctions
+	 * @param { Object } guildData 
+	 * @param { Object } member 
+	 * @param { Object } memberData 
+	 * @param { Object } message 
+	 * @param { Object } client 
+	*/
+
+	async checkAutoSanctions(guildData, member, memberData, message, client) {
+
+		const autoSanctions = guildData.plugins.autosanctions;
+
+		let warnOnTimeMute = 0;
+		let warnOnTimeKick = 0;
+		let warnOnTimeMBan = 0;
+
+
+		if(autoSanctions.mute.enabled) {
+
+			data.member.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
+				if(sanction.date < (Date.now() + data.guild.plugins.autosanctions.mute.in)) warnOnTimeMute++;
+			});
+
+			if(warnOnTimeMute === autoSanctions.mute.count) this.mute(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client, ms(autoSanctions.mute.muteTime));
+		};
+
+		if(autoSanctions.kick.enabled) {
+
+			data.member.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
+				if(sanction.date < (Date.now() + data.guild.plugins.autosanctions.kick.in)) warnOnTimeKick++;
+			});
+
+			if(warnOnTimeKick === autoSanctions.kick.count) this.kick(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
+		};
+
+		if(autoSanctions.ban.enabled) {
+
+			data.member.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
+				if(sanction.date < (Date.now() + data.guild.plugins.autosanctions.ban.in)) warnOnTimeMBan++;
+			});
+
+			if(warnOnTimeMBan === autoSanctions.ban.count) this.ban(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
+		};
+	},
+
+	/**
+	 * Mute an user
+	 * @param { Object } member 
+	 * @param { Object } message 
+	 * @param { Object } moderator 
+	 * @param { Object } guildData 
+	 * @param { String } reason 
+	 * @param { Object } memberData 
+	 * @param { Object } client 
+	 * @param { Number } time 
+	*/
+
+	async mute(member, message, moderator, guildData, reason, memberData, client, time) {
+		let muteRole = message.guild.roles.cache.find(r => r.name === 'Drake - Mute');
+
+		if(!muteRole) {
+			muteRole = await message.guild.roles.create({
+				data: {
+					name: 'Drake - Mute',
+					color: '#000',
+					permissions: []
+				}
+			});
+	
+			message.guild.channels.cache.forEach(async (channel, id) => {
+				await channel.updateOverwrite(muteRole, {
+					SEND_MESSAGES: false,
+					ADD_REACTIONS: false,
+					CONNECT: false
+				});
+			});
+		};
+
+		await member.roles.add(muteRole);
+
+		member.send(message.drakeWS("moderation/mute:MUTE_DM", {
+			emoji: "mute",
+			username: member.user.username,
+			server: message.guild.name,
+			moderator: moderator.tag,
+			time: time,
+			reason: reason,
+		}));
+
+		this.sendSanctionMessage(message, "mute", member.user, reason, time)
+
+		guildData.cases++;
+
+		const caseInfo = {
+			moderator: moderator.id,
+			date: Date.now(),
+			type: "mute",
+			case: guildData.cases,
+			reason: reason,
+			time: time,
+		};
+
+		memberData.mute.muted = true;
+		memberData.mute.endDate = Date.now() + ms(time);
+		memberData.mute.case = guildData.cases;
+		memberData.sanctions.push(caseInfo);
+
+		if(guildData.plugins.logs.mod) {
+			if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
+				guildData.plugins.logs.mod = false;
+				await guildData.save()
+			};
+
+			this.sendModLog("mute", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, time);
+		};
+
+		await client.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
+		
+		await memberData.save();
+		await guildData.save();
+	},
+
+	/**
+	 * Kick an user
+	 * @param { Object } member 
+	 * @param { Object } message 
+	 * @param { Object } moderator 
+	 * @param { Object } guildData 
+	 * @param { String } reason 
+	 * @param { Object } memberData 
+	 * @param { Object } client 
+	*/
+
+	async kick(member, message, moderator, guildData, reason, memberData, client) {
+		await member.send(message.drakeWS("moderation/kick:KICK_DM", {
+			emoji: "door",
+			username: member.user.username,
+			server: message.guild.name,
+			moderator: moderator.tag,
+			reason
+		})).catch(() => {});
+
+		await member.kick(message.drakeWS("moderation/kick:LOG", {
+			moderator: moderator.username,
+			reason
+		})).catch(() => {
+			return message.error("moderation/kick:NOT_KICKABLE");
+		});
+
+		guildData.cases++;
+		await guildData.save();
+
+		const caseInfo = {
+			moderator: moderator.id,
+			date: Date.now(),
+			type: "kick",
+			case: guildData.cases,
+			reason: reason,
+		};
+		
+		memberData.sanctions.push(caseInfo);
+		memberData.save();
+
+		if(guildData.plugins.logs.mod) {
+			if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
+				guildData.plugins.logs.mod = false;
+				await guildData.save()
+			};
+
+			this.sendModLog("kick", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
+		};
+
+		return this.sendSanctionMessage(message, "kick", member.user, reason)
+	},
+
+	/**
+	 *  Ban an user
+	 * @param { Object } member 
+	 * @param { Object } message 
+	 * @param { Object } moderator 
+	 * @param { Object } guildData 
+	 * @param { String } reason 
+	 * @param { Object } memberData 
+	 * @param { Object } client 
+	*/
+
+	async ban(member, message, moderator, guildData, reason, memberData, client) {
+		let logReason = message.drakeWS("moderation/ban:LOG", {
+            moderator: moderator.username,
+            reason
+        });
+
+		await member.send(message.drakeWS("moderation/ban:BAN_DM", {
+			emoji: "ban",
+			username: member.user.username,
+			server: message.guild.name,
+			moderator: moderator.tag,
+			reason
+		})).catch(() => {});
+
+		await message.guild.members.ban(member.user, { reason: logReason } ).then(() => {
+			guildData.cases++;
+			guildData.save();
+
+			const caseInfo = {
+				moderator: moderator.id,
+				date: Date.now(),
+				type: "ban",
+				case: guildData.cases,
+				reason: reason,
+			};
+			
+			memberData.sanctions.push(caseInfo);
+			memberData.save();
+
+			if(guildData.plugins.logs.mod) {
+				if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
+					guildData.plugins.logs.mod = false;
+				};
+
+				this.sendModLog("ban", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
+			};
+			
+			return this.sendSanctionMessage(message, "ban", member.user, reason)
+		}).catch((error) => {
+			this.sendErrorCmd(client, message, "ban", error);
+		});
+
+		await guildData.save()
 	},
 };

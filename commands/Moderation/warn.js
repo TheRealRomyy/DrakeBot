@@ -67,6 +67,7 @@ class Warn extends Command {
             let reactionName = reaction.emoji.name;
             if(reactionName == '👍') { 
                 client.functions.warn(member, message, message.author, data.guild, reason, memberData, client);
+                client.functions.checkAutoSanctions(data.guild, member, memberData, message, client);
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {

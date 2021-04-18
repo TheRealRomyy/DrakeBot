@@ -53,48 +53,6 @@ class Kick extends Command {
         let reason = args.slice(1).join(" ");
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
-        async function kick() {
-            await member.send(message.drakeWS("moderation/kick:KICK_DM", {
-                emoji: "door",
-                username: member.user.username,
-                server: message.guild.name,
-                moderator: message.author.tag,
-                reason
-            })).catch(() => {});
-    
-            await member.kick(message.drakeWS("moderation/kick:LOG", {
-                moderator: message.author.username,
-                reason
-            })).catch(() => {
-                return message.error("moderation/kick:NOT_KICKABLE");
-            });
-
-            data.guild.cases++;
-			data.guild.save();
-
-			const caseInfo = {
-				moderator: message.author.id,
-				date: Date.now(),
-				type: "kick",
-				case: data.guild.cases,
-				reason: reason,
-			};
-            
-			memberData.sanctions.push(caseInfo);
-			memberData.save();
-
-            if(data.guild.plugins.logs.mod) {
-                if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
-                    data.guild.plugins.logs.mod = false;
-                    await data.guild.save()
-                };
-
-                client.functions.sendModLog("kick", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
-            };
-    
-            return client.functions.sendSanctionMessage(message, "kick", member.user, reason)
-        };
-
         let msg = await message.channel.send(message.drakeWS("moderation/kick:CONFIRM", {
             emoji: "question",
             user: member.user.tag,
@@ -108,7 +66,7 @@ class Kick extends Command {
             let reaction = collected.first();
             let reactionName = reaction.emoji.name;
             if(reactionName == '👍') { 
-                kick();
+                client.functions.kick(member, message, message.author, data.guild, reason, memberData, client);
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {

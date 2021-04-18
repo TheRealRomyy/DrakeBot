@@ -1,7 +1,7 @@
 {
     "START": "Bonjour <@{{user}}> ! Je pense a un nombre entre 1 et 30. Essaie de le trouver !",
     "GAME_RUNNING": "**Une partie est déjà en cours !**",
-    "GAME_STATS": "» {{winner}} a trouvé le bon nombre ! (**__{{number}}__**) \n \nIl y avait **{{participantCount}}** participant : \n {{participants}} \n \nLa partie a durée ``{{time}}`` !",
+    "GAME_STATS": "» {{winner}} a trouvé le bon nombre ! (**__{{number}}__**) \n \nIl y avait **{{participantCount}}** participant(s) : \n {{participants}} \n \nLa partie a durée ``{{time}}`` !",
     "BIG": "Mon nombre est plus grand que **{{number}}** !",
     "SMALL": "Mon nombre est plus petit que **{{number}}** !",
     "DEFEAT": "Perdut ! Mon nombre était **__{{number}}__** !",

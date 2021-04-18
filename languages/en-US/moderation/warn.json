@@ -5,5 +5,6 @@
     "USAGE": "warn <user> (reason)",
     "EXAMPLE": "warn @Fan Badword",
     "DESCRIPTION": "Warn someone",
-    "WARN_BOT": "**You can't warn a bot !**"
+    "WARN_BOT": "**You can't warn a bot !**",
+    "TOO_WARNS": "Too warns..."
 }
