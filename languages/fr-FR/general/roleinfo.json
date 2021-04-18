@@ -6,5 +6,7 @@
     "TITLE": "Informations du role __{{role}}__",
     "COLOR": "Couleur",
     "HOIST": "Affiché séparément",
-    "MENTIONNABLE": "Mentionnable"
+    "MENTIONNABLE": "Mentionnable",
+    "MEMBER": "membre(s)",
+    "MEMBERS": "Membres dans ce rôle"
 }

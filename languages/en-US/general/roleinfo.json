@@ -6,5 +6,7 @@
     "TITLE": "Informations about the role __{{role}}__",
     "COLOR": "Color",
     "HOIST": "Hoist",
-    "MENTIONNABLE": "Mentionnable"
+    "MENTIONNABLE": "Mentionnable",
+    "MEMBER": "members",
+    "MEMBERS": "Members in this role"
 }
