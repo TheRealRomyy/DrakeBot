@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const Persos = require("../structure/Persos.js");
 const chalk = require("chalk");
 const moment = require("moment");
 
@@ -176,6 +177,11 @@ class Message {
 		const args = message.content.slice(prefix.length).trim().split(/ +/g);
 		const commandName = args.shift().toLowerCase();
         const cmd = client.cmds.get(commandName) || client.cmds.get(client.aliases.get(commandName));
+
+        if(message.content.includes("d!nath") || message.content.includes("d!bastien") || message.content.includes("d!thomas") || message.content.includes("d!oxam") || message.content.includes("d!antonin")) {
+            const Perso = new Persos(client, message);
+            return await Perso.run();
+        };
         
         if(!cmd) {
 			const customCommand = data.guild.customcommands.find((c) => c.name === commandName);

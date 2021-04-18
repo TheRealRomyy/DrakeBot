@@ -32,8 +32,11 @@ class MessageDelete {
         .setDescription(message.content ? message.content : message.drakeWS("misc:NO_TEXT", {
             emoji: "error"
         }))
-		.setFooter(message.drakeWS("misc:MESSAGE_OF", {
+		if(message.author !== null) embed.setFooter(message.drakeWS("misc:MESSAGE_OF", {
             user: message.author.tag
+        }));
+        else embed.setFooter(message.drakeWS("misc:MESSAGE_OF", {
+            user: this.client.user.tag
         }));
 
 		return channel.send(embed);
