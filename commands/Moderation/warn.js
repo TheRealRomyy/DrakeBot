@@ -53,41 +53,6 @@ class Warn extends Command {
         let reason = args.slice(1).join(" ");
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
-        async function warn() {
-            await member.send(message.drakeWS("moderation/warn:WARN_DM", {
-                emoji: "warn",
-                username: member.user.username,
-                server: message.guild.name,
-                moderator: message.author.tag,
-                reason
-            })).catch(() => {});
-
-            data.guild.cases++;
-            data.guild.save();
-
-            const caseInfo = {
-                moderator: message.author.id,
-                date: Date.now(),
-                type: "warn",
-                case: data.guild.cases,
-                reason: reason,
-            };
-            
-            memberData.sanctions.push(caseInfo);
-            memberData.save();
-
-            if(data.guild.plugins.logs.mod) {
-                if(!client.channels.cache.get(data.guild.plugins.logs.mod)) {
-                    data.guild.plugins.logs.mod = false;
-                    await data.guild.save()
-                };
-
-                client.functions.sendModLog("warn", member.user, client.channels.cache.get(data.guild.plugins.logs.mod), message.author, data.guild.cases, reason);
-            };
-    
-            return client.functions.sendSanctionMessage(message, "warn", member.user, reason)
-        };
-
         let msg = await message.channel.send(message.drakeWS("moderation/warn:CONFIRM", {
             emoji: "question",
             user: member.user.tag,
@@ -101,11 +66,11 @@ class Warn extends Command {
             let reaction = collected.first();
             let reactionName = reaction.emoji.name;
             if(reactionName == '👍') { 
-                warn();
+                client.functions.warn(member, message, message.author, data.guild, reason, memberData, client);
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {
-                message.drake("common:CANCEL", { emoji: "succes "});
+                message.drake("common:CANCEL", { emoji: "succes"});
                 msg.delete().catch(() => {});
                 return message.delete().catch(() => {});
             }
