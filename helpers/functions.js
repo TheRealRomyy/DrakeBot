@@ -141,13 +141,10 @@ module.exports = {
 
 	sendSanctionMessage(message, type, user, reason, duration) {
 		const embed = new MessageEmbed()
-		.setTitle(message.drakeWS(`misc:${type.toUpperCase()}_MSG`, {
-			user: user.tag,
-			emoji: "success2"
-		}))
+		.setAuthor(user.tag + " " + message.drakeWS(`misc:${type.toUpperCase()}_MSG`), user.displayAvatarURL({ dynamic: true }))
 		.setFooter(cfg.footer)
-		.setColor(cfg.color.blue)
-		if(reason && reason !== message.drakeWS("misc:NO_REASON")) embed.setDescription(`\`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
+		.setColor(type.includes("un") ? cfg.color.green : cfg.color.orange)
+		if(reason) embed.setDescription(`\`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
 		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(`\`Duration:\` ${duration}`)
 
 		message.channel.send(embed)
