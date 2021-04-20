@@ -28,7 +28,7 @@ class Userinfo extends Command {
 
         const userData = await this.client.db.findOrCreateUser(user);
         
-        // J'ai enlevé les descriptions     ça parce que useless
+        // J'ai enlevé les descriptions parce que useless
         let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
         if(user.id === message.author.id) desc = desc === message.drakeWS("general/userinfo:NO_DESC") ? message.drakeWS("general/userinfo:NO_DESC_AUTHOR", { prefix: data.guild.prefix }) : desc;
 
