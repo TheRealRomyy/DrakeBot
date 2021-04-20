@@ -32,7 +32,7 @@ class MessageUpdate {
         .setTitle(`${this.client.emotes.log["edit"]} ・ ${newMessage.drakeWS("misc:LOG_MSG_TITLE_EDIT")}`)
 		.setColor(this.client.cfg.color.blue)
 		.setFooter(newMessage.drakeWS("misc:MESSAGE_OF", {
-            user: oldMessage.author.tag
+            user: newMessage.author.tag
         }))
         .setDescription(newMessage.drakeWS("misc:OLD_MSG") + "```" + oldMessage.content + "```\n" + newMessage.drakeWS("misc:NEW_MSG") + "```" + newMessage.content + "```")
 
