@@ -1,0 +1,12 @@
+{
+    "DESCRIPTION": "Gérer le slowmode d'un channel",
+    "USAGE": "slowmode <time> (channel)",
+    "EXAMPLE": "slowmode 5m #general",
+    "TOO_LONG": "**La durée est trop longue ou trop petite (min: `0s`, max: `6h`)**",
+    "ERROR": "**Je ne peut pas modifier le slowmode parce que:** `{{error}}`",
+    "SUCCES": "**Le slowmode est maintenant de `{{time}}` dans {{channel}} !**",
+    "CHANNEL_NOT_HERE": "**Ce salon n'est pas sur ce serveur !**",
+    "SUCCES_DISABLED": "**Le slowmode est maintenant désactivé {{channel}} !**",
+    "ALREADY_DISABLED": "**Le slowmode est déjà désactivé !**",
+    "ALREADY_TIME": "**Le slowmode est déjà à `{{time}}` !**"
+}
