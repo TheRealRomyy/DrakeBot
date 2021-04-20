@@ -9,9 +9,6 @@
     "YOURSELF": "**Vous ne pouvez pas éxecuter cette commande sur vous-même !**",
     "SUPERIOR": "**Vous ne pouvez pas éxecuter cette commande sur cette personne !**",
     "NO_REASON": "Aucune raison spécifiée...",
-    "FULL_MAJ": "Il y avez TROP DE MAJUSCULES dans votre message \n \nMessage: ```{{message}}```",
-    "PUB": "Il y avez une publicité dans votre message \n \nMessage: ```{{message}}```",
-    "BADWORD": "Il y avez un gros mots dans votre message \n \nMessage: ```{{message}}```",
     "FORTRESS_ENABLED": "Le mode forteresse est activé. Essayez de rejoindre plus tard ce serveur.",
     "BAN_MSG": "a bien été bannit",
     "WARN_MSG": "a reçu un avertissement",
@@ -28,5 +25,8 @@
     "USER_NOT_FOUND": "**Cet utilisateur n'existe pas !**",
     "MEMBER_NOT_FOUND": "**Cet utilisateur n'existe pas ou n'est pas sur ce serveur !**",
     "CHANNEL_NOT_FOUND": "**Ce salon n'existe pas !**",
-    "ROLE_NOT_FOUND": "**Ce rôle n'existe pas !**"
+    "ROLE_NOT_FOUND": "**Ce rôle n'existe pas !**",
+    "FULLMAJ": "Message avec trop de majuscules",
+    "BADWORDS": "Message grossier ou contenant une insulte",
+    "PUB": "Message contenant de la publicité"
 }

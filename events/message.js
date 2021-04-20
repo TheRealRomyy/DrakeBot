@@ -154,7 +154,7 @@ class Message {
     
             if(count >= max) {
                 message.delete();
-                client.functions.warn(message.member, message, client.user, data.guild, "Full Maj", data.member, client);
+                client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:FULLMAJ"), data.member, client);
             }; 
         };
 
@@ -166,13 +166,13 @@ class Message {
 
             if(infraction == true) {
                 message.delete();
-                client.functions.warn(message.member, message, client.user, data.guild, "Badwords", data.member, client);
+                client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:BADWORDS"), data.member, client);
             }
         };
 
         if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES") && (message.content.includes("http://") || message.content.includes("https://") || message.content.includes("discord.gg") || message.content.includes(".gg/"))) {
             message.delete();
-            client.functions.warn(message.member, message, client.user, data.guild, "Pub", data.member, client);
+            client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
         };
 
         await updateXp(message, data);

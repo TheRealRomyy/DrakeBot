@@ -9,9 +9,6 @@
     "YOURSELF": "**You can't use this command on yourself !**",
     "SUPERIOR": "**You can't use the command on this person !**",
     "NO_REASON": "Any reason provided...",
-    "FULL_MAJ": "There are TOO CAPITALS LETTERS in your message \n \nMessage: ```{{message}}```",
-    "PUB": "There are an ad in your message \n \nMessage: ```{{message}}```",
-    "BADWORD": "There are a badword in your message \n \nMessage: ```{{message}}```",
     "FORTRESS_ENABLED": "The fortress mod is enabled. Retry to join the server later.",
     "BAN_MSG": "was banned",
     "WARN_MSG": "was warned",
@@ -28,5 +25,8 @@
     "USER_NOT_FOUND": "**This user doesn't exist !**",
     "MEMBER_NOT_FOUND": "**This user doesn't exist or isn't in this server !**",
     "CHANNEL_NOT_FOUND": "**This channel doesn't exist !**",
-    "ROLE_NOT_FOUND": "**This role doesn't exist !**"
+    "ROLE_NOT_FOUND": "**This role doesn't exist !**",
+    "FULLMAJ": "TOO CAPITALS LETTERS in message",
+    "BADWORDS": "Message includes a badword",
+    "PUB": "Message includes an ad"
 }
