@@ -108,7 +108,7 @@ class Message {
                 in: null
             },
         };
-
+        
         /* END TEMP ZONE */
         
 		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
@@ -221,10 +221,10 @@ class Message {
             if(cmd.settings.botPerms) {
                 let neededPerms = [];
 
-                if(!cmd.settings.botPerms.includes("EMBED_LINKS") && !message.channel.permissionsFor(message.guild.me).has("EMBED_LINKS")) neededPerms.push("EMBED_LINKS");
+                if(!cmd.settings.botPerms.includes("EMBED_LINKS") && !message.channel.permissionsFor(message.guild.me).has("EMBED_LINKS")) neededPerms.push(message.drakeWS("discord_errors:EMBED_LINKS"));
 
                 await cmd.settings.botPerms.forEach((perm) => {
-                    if(!message.channel.permissionsFor(message.guild.me).has(perm)) neededPerms.push(perm);
+                    if(!message.channel.permissionsFor(message.guild.me).has(perm)) neededPerms.push(message.drakeWS(`discord_errors:${perm.toUpperCase()}`));
                 });
 
                 if(neededPerms.length > 1) {
@@ -245,7 +245,7 @@ class Message {
                 let neededPerms = [];
 
                 await cmd.settings.userPerms.forEach((perm) => {
-                    if(!message.channel.permissionsFor(message.member).has(perm) && !client.cfg.staff.owner.includes(message.author.id)) neededPerms.push(perm);
+                    if(!message.channel.permissionsFor(message.member).has(perm) && !client.cfg.staff.owner.includes(message.author.id)) neededPerms.push(message.drakeWS(`discord_errors:${perm.toUpperCase()}`));
                 });
 
                 if(neededPerms.length > 1) {

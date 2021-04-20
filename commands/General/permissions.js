@@ -31,10 +31,10 @@ class Permissions extends Command {
         
         permissions.forEach((perm) => {
             if(!mPermissions.has(perm)){
-                text += `${perm} ❌\n`;
+                text += `${message.drakeWS(`discord_errors:${perm.toUpperCase()}`)} ❌\n`;
                 total.denied++;
             } else {
-                text += `${perm} ✅\n`;
+                text += `${message.drakeWS(`discord_errors:${perm.toUpperCase()}`)} ✅\n`;
                 total.allowed++;
             }
         });
@@ -46,7 +46,7 @@ class Permissions extends Command {
             channel: message.channel.name,
             emoji: "pushpin"
         }))
-        .setDescription(text)
+        .setDescription("```" + text + "```")
         .setColor("RANDOM")
         .setAuthor(message.author.username, message.author.displayAvatarURL( { dynamic: true }))
         .setFooter(this.client.cfg.footer)
