@@ -366,11 +366,11 @@ module.exports = {
 			username: member.user.username,
 			server: message.guild.name,
 			moderator: moderator.tag,
-			time: time,
+			time: message.time.convertMS(time),
 			reason: reason,
 		}));
 
-		this.sendSanctionMessage(message, "mute", member.user, reason, time)
+		this.sendSanctionMessage(message, "mute", member.user, reason, message.time.convertMS(time))
 
 		guildData.cases++;
 
@@ -380,11 +380,11 @@ module.exports = {
 			type: "mute",
 			case: guildData.cases,
 			reason: reason,
-			time: time,
+			time: ms(time),
 		};
 
 		memberData.mute.muted = true;
-		memberData.mute.endDate = Date.now() + ms(time);
+		memberData.mute.endDate = Date.now() + time;
 		memberData.mute.case = guildData.cases;
 		memberData.sanctions.push(caseInfo);
 
@@ -394,7 +394,7 @@ module.exports = {
 				await guildData.save()
 			};
 
-			this.sendModLog("mute", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, time);
+			this.sendModLog("mute", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, message.time.convertMS(time));
 		};
 
 		await client.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);

@@ -52,13 +52,15 @@ class Mute extends Command {
         const memberData = await this.client.db.findOrCreateMember(member, message.guild);
 
         // Récupérer le time avec l'args 1
-        const time = args[1];
+        let time = args[1];
 
         // Si y a pas de time
         if(!time || isNaN(ms(time))) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "mute <user> <time> (reason)",
             emoji: "error"
         });
+
+        time = ms(time);
 
         // Chopper la raison avec le message en le découpant de 2
         let reason = args.slice(2).join(" ");
@@ -70,7 +72,7 @@ class Mute extends Command {
         let waitMsg = await message.channel.send(message.drakeWS("moderation/mute:CONFIRM", {
             emoji: "question",
             username: member.user.username,
-            time: time,
+            time: message.time.convertMS(time),
             reason: reason
         }));
 
