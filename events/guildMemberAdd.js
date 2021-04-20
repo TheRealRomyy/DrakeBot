@@ -39,6 +39,8 @@ module.exports = class {
 		// Check le captcha
 		if(guildData.plugins.captcha.enabled) {
 
+			this.memberRoles = new Array();
+
 			if(guild.roles.cache.get(guildData.plugins.captcha.role) == "undefined") return;
 
 			if(member.user.bot) return;
@@ -80,6 +82,7 @@ module.exports = class {
 			const filter = (m) => m.author.id === member.id;
 			const opt = { max: 1, time: 120000, errors: [ "time" ] };
 
+
 			var captcha = captchagen.create();
 
 			captcha.text();
@@ -100,6 +103,12 @@ module.exports = class {
 			}), attachment);
 
 			captchaLogChannel.send(embed);
+
+			await member.roles.cache.forEach(role => {
+				if(role.id == captchaRole) return;
+				member.roles.remove(role.id).catch(() => {});
+				this.memberRoles.push(role.id);
+			});
 
 			let collected = await captchaChannel.awaitMessages(filter, opt).catch(() => {})
 
@@ -127,6 +136,12 @@ module.exports = class {
 				msg.delete();
 
 				member.roles.remove(captchaRole);
+
+				await this.memberRoles.forEach(role => {
+					member.roles.add(role).catch(() => {})
+				});
+
+				this.memberRoles = new Array();
 
 				captchaLogChannel.send(succesEmbed);
 
