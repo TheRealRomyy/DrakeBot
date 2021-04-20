@@ -36,8 +36,14 @@ class Message {
                 const absoluteMinutes = Math.floor((ms / (1000 * 60)) % 60);
                 const absoluteHours = Math.floor((ms / (1000 * 60 * 60)) % 24);
                 const absoluteDays = Math.floor(ms / (1000 * 60 * 60 * 24));
-        
-                const d = absoluteDays
+                const absoluteYears = Math.floor((ms / (1000 * 60 * 60 * 24)) * 365);
+                
+            const y = absoluteYears
+                ? absoluteYears === 1
+                    ? message.drakeWS("time:ONE_YEAR")
+                    : message.drakeWS("time:YEARS", { amount: absoluteYears })
+                : null;
+            const d = absoluteDays
                 ? absoluteDays === 1
                     ? message.drakeWS("time:ONE_DAY")
                     : message.drakeWS("time:DAYS", { amount: absoluteDays })
@@ -57,12 +63,19 @@ class Message {
                     ? message.drakeWS("time:ONE_SECOND")
                     : message.drakeWS("time:SECONDS", { amount: absoluteSeconds })
                 : null;
+            const ams = ms
+            ? ms === 1
+                ? message.drakeWS("time:ONE_MILISECOND")
+                : message.drakeWS("time:MILISECONDS", { amount: ms })
+            : null;
         
                 const absoluteTime = [];
+                if (y) absoluteTime.push(y);
                 if (d) absoluteTime.push(d);
                 if (h) absoluteTime.push(h);
                 if (m) absoluteTime.push(m);
                 if (s) absoluteTime.push(s);
+                if (absoluteTime.length === 0) absoluteTime.push(ams);
         
                 return absoluteTime.join(", ");
             },
