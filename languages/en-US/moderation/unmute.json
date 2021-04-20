@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Unmute someone",
+    "USAGE": "unmute <user> (reason)",
+    "EXAMPLE": "unmute @Rome fail",
+    "NOT_MUTE": "{{user}} **is'nt mute !**"
+}
