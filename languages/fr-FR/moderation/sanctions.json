@@ -1,6 +1,6 @@
 {
     "DESCRIPTION": "Voir toutes les sanctions de quelqu'un",
-    "NO_SANCTIONS": "**{{username}} n'a jamais recu de sanctions !**",
+    "NO_SANCTIONS": "**{{username}} n'a jamais reçu de sanctions !**",
     "TITLE": "Sanctions de {{username}}",
     "EXAMPLE": "sanctions @Clairstah",
     "USAGE": "sanctions <user>"
