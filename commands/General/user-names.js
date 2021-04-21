@@ -6,7 +6,7 @@ class Usernames extends Command {
     constructor(client) {
         super(client, {
             name: "user-names",
-            aliases: [ "usernames", "un" ],
+            aliases: [ "usernames", "un", "names" ],
             dirname: __dirname,
             enabled: true,
             botPerms: [ "EMBED_LINKS", "SEND_MESSAGES" ],
@@ -20,7 +20,7 @@ class Usernames extends Command {
 
         let user = message.mentions.users.first() || this.client.users.cache.get(args[0]) || message.author;
 
-        const userData = (message.author === user) ? data.user : await this.client.findOrCreateUser({ id: user.id }); 
+        const userData = (message.author === user) ? data.user : await this.client.db.findOrCreateUser(user); 
 
         if(!userData.names) userData.names = [];
         let usernames = userData.names;
@@ -36,7 +36,7 @@ class Usernames extends Command {
             return count.toString();
         };
 
-        let map = usernames.map((name) =>"**" + cop() + ")** " + name.name + " **>** " + this.client.functions.printDate(name.date)).join("\n ");
+        let map = usernames.map((name) =>"**" + cop() + ")** `" + name.name + "` **>** " + this.client.functions.printDate(name.date)).join("\n ");
 
         const embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))

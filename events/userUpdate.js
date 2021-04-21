@@ -18,6 +18,7 @@ module.exports = class {
 				name: oldUser.username,
 				date: Date.now()
 			};
+			
 			userData.names.push(object);
 
 			await userData.save();
