@@ -245,6 +245,11 @@ module.exports = {
 	*/
 
 	async warn(member, message, moderator, guildData, reason, memberData, client) {
+
+		let logReason = false;
+
+		if(reason === message.drakeWS("misc:PUB") || reason === message.drakeWS("misc:BADWORDS") || reason === message.drakeWS("misc:FULLMAJ")) logReason = true;
+
 		await member.send(message.drakeWS("moderation/warn:WARN_DM", {
 			emoji: "warn",
 			username: member.user.username,
@@ -273,7 +278,7 @@ module.exports = {
 				await guildData.save()
 			};
 
-			this.sendModLog("warn", member.user, client.channels.cache.get(guildData.plugins.logs.mod), message.author, guildData.cases, reason);
+			this.sendModLog("warn", member.user, client.channels.cache.get(guildData.plugins.logs.mod), message.author, guildData.cases, logReason ? reason + `\n(${message.content})`: reason);
 		};
 
 		return this.sendSanctionMessage(message, "warn", member.user, reason)
