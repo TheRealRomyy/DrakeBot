@@ -8,6 +8,8 @@ class MessageDelete {
 
     async run(message) {
 
+        if(!message.guild) return;
+
         let guildData = await this.client.db.findOrCreateGuild(message.guild);
 
         if(!guildData.plugins.logs) {
