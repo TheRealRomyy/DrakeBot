@@ -231,10 +231,10 @@ class Help extends Command {
             const example = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") !== "EXAMPLE" ? data.guild.prefix + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") : "`No example provided`";
             const description = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":DESCRIPTION") !== "DESCRIPTION" ? message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":DESCRIPTION") : "`No description provided`";
             const aliases = cmd.help.aliases != "" ? (cmd.help.aliases.lenght === 1 ? "``" + cmd.help.aliases[0] + "``" : cmd.help.aliases.map(a => "`" + a + "`").join(", ")) : message.drakeWS("common:ANY");
-            let perms = cmd.settings.userPerms != "" ? (cmd.settings.userPerms.lenght === 1 ? "``" + cmd.settings.userPerms[0] : cmd.settings.userPerms.map(a => "`" + a + "`").join(", ")) : message.drakeWS("common:ANY(E)");
+            let perms = cmd.settings.userPerms != "" ? (cmd.settings.userPerms.lenght === 1 ? "``" + message.drakeWS(`discord_errors:${cmd.settings.userPerms[0]}`) : cmd.settings.userPerms.map(a => "`" + message.drakeWS(`discord_errors:${a}`) + "`").join(", ")) : message.drakeWS("common:ANY(E)");
             
-            if(cmd.settings.restriction && cmd.settings.restriction.includes("MODERATOR")) perms = "`BOT MODERATOR`";
-            if(cmd.settings.restriction && cmd.settings.restriction.includes("OWNER")) perms = "`BOT OWNER`";
+            if(cmd.settings.restriction && cmd.settings.restriction.includes("MODERATOR")) perms = "`" + message.drakeWS("discord_errors:BOT_MODERATOR") + "`";
+            if(cmd.settings.restriction && cmd.settings.restriction.includes("OWNER")) perms = "`" + message.drakeWS("discord_errors:BOT_OWNER") + "`";
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))

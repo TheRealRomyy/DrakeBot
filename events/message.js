@@ -274,12 +274,12 @@ class Message {
 
                 if(rest.includes("OWNER") && !client.cfg.staff.owner.includes(message.author.id)) return message.drake("errors:PERMISSION", {
                     emoji: "error",
-                    perm: "`BOT OWNER`"
+                    perm: "`" + message.drakeWS("discord_errors:BOT_OWNER") + "`"
                 });
 
                 if(rest.includes("MODERATOR") && (!client.cfg.staff.support.includes(message.author.id) && !client.cfg.staff.owner.includes(message.author.id))) return message.drake("errors:PERMISSION", {
                     emoji: "error",
-                    perm: "`BOT MODERATOR`"
+                    perm: "`" + message.drakeWS("discord_errors:BOT_MODERATOR") + "`"
                 });
 
                 if(rest.includes("NFSW") && !message.channel.nfsw) return message.drake("errors:NFSW", {

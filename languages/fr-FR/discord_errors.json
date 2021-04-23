@@ -29,5 +29,7 @@
     "MANAGE_NICKNAMES": "Gérer les pseudos", 
     "MANAGE_ROLES": "Gérer les rôles", 
     "MANAGE_WEBHOOKS": "Gérer les webhooks", 
-    "MANAGE_EMOJIS": "Gérer les émojis"
+    "MANAGE_EMOJIS": "Gérer les émojis",
+    "BOT_OWNER": "Créateur du bot",
+    "BOT_MODERATOR": "Modérateur du bot"
 }

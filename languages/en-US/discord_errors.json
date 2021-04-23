@@ -29,5 +29,7 @@
     "MANAGE_NICKNAMES": "Manage nickname", 
     "MANAGE_ROLES": "Manage roles", 
     "MANAGE_WEBHOOKS": "Manage webhooks", 
-    "MANAGE_EMOJIS": "Manage emojis"
+    "MANAGE_EMOJIS": "Manage emojis",
+    "BOT_OWNER": "Bot owner",
+    "BOT_MODERATOR": "Bot moderator"
 }
