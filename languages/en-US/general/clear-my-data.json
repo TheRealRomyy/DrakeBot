@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Clear the data who is stored by the bot",
+    "EXAMPLE": "clear-my-data",
+    "USAGE": "clear-my-data",
+    "SUCCES": "**Your data has been clear !**"
+}

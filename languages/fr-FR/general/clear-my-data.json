@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "Effacer les données sauvegardés par le bot vous concernant",
+    "EXAMPLE": "clear-my-data",
+    "USAGE": "clear-my-data",
+    "SUCCES": "**Vos données sauvegardées par le bot ont bien été éffacés !**"
+}
