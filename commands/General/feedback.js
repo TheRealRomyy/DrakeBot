@@ -31,15 +31,9 @@ class Feedback extends Command {
         .setDescription(args.join(" "))
         .setTimestamp()
     
-        const webhook = new WebhookClient('766792411464204289', "77c5U8vGaz4r1cWecdM8bxgviYmeAtGAOD_NrfBjMmHICD6l0MJ5uECuRgLZtfSeFPlP");
-            
-        webhook.send( {
-            username: 'DrakeBot FeedBack',
-            avatarURL: 'https://cdn.discordapp.com/attachments/766782356266549258/820754780816670740/drakebot.png',
-            embeds: [embed],
-        });
+        this.client.channels.cache.get('766782480882860064').send(embed);
     
-        message.drake("general/feedback:SUCCES", {
+        return message.drake("general/feedback:SUCCES", {
             emoji: "succes"
         });
     };
