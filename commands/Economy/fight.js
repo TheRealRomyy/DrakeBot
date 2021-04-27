@@ -62,22 +62,26 @@ class Fight extends Command {
             weapon
         });
 
-        msg = await message.channel.send(log);
+        const waitMsg = message.drakeWS("misc:PLEASE_WAIT", {
+            emoji: "waiting"
+        });
+
+        msg = await message.channel.send(waitMsg);
 
 
-        sendMessage("\n" + message.drakeWS("economy/fight:MOB_HP", {
-            mobHP
-        }));
+        sendMessage("\n" + message.drakeWS("economy/fight:MOB_HP", { mobHP }));
 
         // Boucle tant que le mob est en vie
         while(mobHP > 0 && lp > 0) {
             await playerHitMob();
+            await checkWin();
             await mobHitPlayer();
             await checkWin();
         };
 
         // Vérifier si il y a victoire ou défaite
         async function checkWin() {
+
             // Ni victoire ni défaite : les deux sont encore en vie
             if(mobHP > 0 && lp > 0) return;
 
@@ -92,6 +96,8 @@ class Fight extends Command {
                     amount: toWin.toString()
                 }));
 
+                msg.edit(log);
+
                 // Définir un cooldown & le sauvegarder dans la db
                 const toWait = Date.now() + 3600000;
                 data.member.money += toWin;
@@ -103,6 +109,8 @@ class Fight extends Command {
 
                 // Envoyer un message annoncant la mort du joueur
                 sendMessage(message.drakeWS("economy/fight:DEAD"));
+
+                msg.edit(log);
 
                 // Définir un cooldown & le sauvegarder dans la db
                 const toWait = Date.now() + 3600000;
@@ -145,14 +153,13 @@ class Fight extends Command {
 
             /// Donner le nombre de points de vie du mob
             sendMessage(message.drakeWS("economy/fight:DAMAGES", {
-                mobHP
+                mobHP: mobHP > 0 ? mobHP : 0
             }));
         };
 
         // Envoyer un message
         function sendMessage(mess) {
             log += mess + "\n";
-            msg.edit(log);
         };
     };
 };
