@@ -205,6 +205,8 @@ class Message {
             };
 		} else {
 
+            // if(cmd.help.category === "Economy" && !client.cfg.staff.support.includes(message.author.id) && !client.cfg.staff.owner.includes(message.author.id)) return message.channel.send(`${client.emotes.status.idle} **L'économie est actuellement en maintenance !** \n \nRejoignez le support (https://discord.gg/mYDdTbx) pour savoir quand elle sera redisponible !`);
+
             // Check si l'user est blacklist
             if(data.client.blacklist.users.includes(message.author.id)) return message.drake("errors:USER_BLACKLIST", {
                 emoji: "error"
