@@ -77,7 +77,7 @@ module.exports = class Database {
     };
 
     async findOrCreateUser(user){
-        if(typeof user === "string") user = client.users.cache.get(user);
+        if(typeof user === "string") user = this.client.users.cache.get(user);
         if(this.client.cache.users.get(user.id)) return this.client.cache.users.get(user.id);
 
         let gData = await this.pool.query(`SELECT * FROM users WHERE id='${user.id}'`);
