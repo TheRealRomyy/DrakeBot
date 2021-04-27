@@ -49,7 +49,9 @@ class Execute extends Command {
 
             message.channel.send(data, {
                 code: "none"
-            }).then(m => msg.delete().catch(() => {}));
+            }).then(m => {
+               if(msg) msg.delete(); 
+            });
         });
     };
 };
