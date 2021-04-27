@@ -2,7 +2,7 @@
     "DESCRIPTION": "Rob someone's money ( if he isn't in bank )",
     "USAGE": "rob <player>",
     "EXAMPLE": "rob @Mystère",
-    "COOLDOWN": "Please wait **{{time}}** before re-rob someone !",
+    "COOLDOWN": "Please wait `{{time}}` before re-rob someone !",
     "JAIL": ":police_car: You were catch by police. ! \n \nYou go to jail for **{{time}}** !",
     "ROB": "You just rob **{{amount}}{{symbol}}** to **{{username}}** !",
     "BOT": "The user **{{bot}}** is a bot !",

@@ -2,7 +2,7 @@
     "DESCRIPTION": "Do this command to work",
     "USAGE": "work",
     "EXAMPLE": "work",
-    "COOLDOWN": "Please wait **{{time}}** before re-work !",
+    "COOLDOWN": "Please wait `{{time}}` before re-work !",
     "20": "You just work at factory and win **20{{symbol}}** !",
     "21": "You just work on a fast food and win **21{{symbol}}** !",
     "22": "You just work at your uncle's farm and win **22{{symbol}}**",

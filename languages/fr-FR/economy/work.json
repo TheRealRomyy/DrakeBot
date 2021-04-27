@@ -2,7 +2,7 @@
     "DESCRIPTION": "Faites cette commande pour travailler",
     "USAGE": "work",
     "EXAMPLE": "work",
-    "COOLDOWN": "Veuillez attendre **{{time}}** avant de re-travailler !",
+    "COOLDOWN": "Veuillez attendre `{{time}}` avant de re-travailler !",
     "20": "Vous avez travaillé a l'usine et gagné **20{{symbol}}** !",
     "21": "Vous avez travaillé chez un fast food et gagné **21{{symbol}}** !",
     "22": "Vous avez travaillé a la ferme de votre oncle cette matinée et gagné **22{{symbol}}**",
