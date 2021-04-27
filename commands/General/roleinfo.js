@@ -29,6 +29,12 @@ class RoleInfo extends Command {
             emoji: "error"
         });
 
+        let perms = [];
+
+        role.permissions.toArray().forEach(perm => {
+            perms.push(message.drakeWS(`discord_errors:` + perm.toUpperCase()));
+        });
+
         const embed = new MessageEmbed()
         .setTitle(message.drakeWS("general/roleinfo:TITLE", {
             role: role.name,
@@ -43,7 +49,7 @@ class RoleInfo extends Command {
         .addField(this.client.emotes["hoist"] + " " + message.drakeWS("general/roleinfo:HOIST"), role.hoist ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(this.client.emotes["mentionnable"] + " " + message.drakeWS("general/roleinfo:MENTIONNABLE"), role.mentionnable ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(this.client.emotes["man"] + " " + message.drakeWS("general/roleinfo:MEMBERS"), membersInRole + " " + message.drakeWS("general/roleinfo:MEMBER"), true)
-        .addField(this.client.emotes["pushpin"] + " Permissions", "`" + role.permissions.toArray().join("`, `") + "`", false)
+        .addField(this.client.emotes["pushpin"] + " Permissions", "`" + perms.join("`, `") + "`", false)
         
 
         return message.channel.send(embed);
