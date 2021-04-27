@@ -23,7 +23,8 @@ class ChannelCreate {
             const noVerifiedRole = guildData.plugins.captcha.role;
 
             channel.updateOverwrite(noVerifiedRole, {
-                VIEW_CHANNEL: false,
+                VIEW_CHANNEL: true,
+                SEND_MESSAGE: false,
             }).catch((err) => {});
         };
 	};
