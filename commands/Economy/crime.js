@@ -21,12 +21,10 @@ class Crime extends Command {
         let toWait = 0;
 
         const isInCooldown = data.member.cooldowns.crime;
-        if(isInCooldown){
-            if(isInCooldown > Date.now()) return message.drake("economy/crime:COOLDOWN", {
-                    time: message.time.convertMS(isInCooldown - Date.now()),
-                    emoji: "error"
-            });
-        }
+        if(isInCooldown && isInCooldown > Date.now()) return message.drake("economy/crime:COOLDOWN", {
+            time: message.time.convertMS(isInCooldown - Date.now()),
+            emoji: "error"
+        });
 
         const number = this.client.functions.getRandomInt(100, 130);
 
@@ -36,7 +34,8 @@ class Crime extends Command {
                 time: message.time.convertMS(toWait - Date.now())
             });
             data.member.cooldowns.crime = toWait;
-            return await data.member.save();
+            await data.member.save();
+            return;
         }
 
         const crimeMsg = message.drakeWS("economy/crime:" + number, {
@@ -54,7 +53,7 @@ class Crime extends Command {
         toWait = Date.now() + 1200000;
         data.member.cooldowns.crime = toWait;
         data.member.money += number;
-        return await data.member.save();
+        await data.member.save();
     };
 };
 

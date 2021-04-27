@@ -23,7 +23,7 @@ class Addbot extends Command {
             name: this.client.user.username
         }))
         .setColor("RANDOM")
-        .setDescription('\n ❯ [Support](https://discord.gg/z3Zd4hH) \n \n ❯ [Invite](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot)')
+        .setDescription('\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot)')
         .setFooter(this.client.cfg.footer)
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 

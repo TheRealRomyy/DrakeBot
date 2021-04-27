@@ -45,7 +45,6 @@ class Money extends Command {
         bankSold + data.guild.symbol, false)
         .addField(message.drakeWS("economy/money:GLOBAL"), 
         globalMoney + data.guild.symbol, false);
-        
 	
         return message.channel.send(embed);
     };

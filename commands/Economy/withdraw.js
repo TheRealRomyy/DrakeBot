@@ -30,8 +30,8 @@ class Withdraw extends Command {
                 emoji: "error"
             });
     
-            data.member.banksold -= amount;
-            data.member.money += amount;
+            data.member.banksold -= parseInt(amount);
+            data.member.money += parseInt(amount);
     
             await data.member.save();
     
@@ -54,8 +54,8 @@ class Withdraw extends Command {
             emoji: "error"
         });
 
-        data.member.banksold -= amount;
-        data.member.money += amount;
+        data.member.banksold -= parseInt(amount);
+        data.member.money += parseInt(amount);
 
         await data.member.save();
 

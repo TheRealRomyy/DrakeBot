@@ -28,12 +28,11 @@ class Rob extends Command {
         let toWait = 0;
 
         const isInCooldown = data.member.cooldowns.rob;
-        if(isInCooldown){
-            if(isInCooldown > Date.now()) return message.drake("economy/rob:COOLDOWN", {
-                    time: message.time.convertMS(isInCooldown - Date.now()),
-                    emoji: "error"
-            });
-        };
+        if(isInCooldown && isInCooldown > Date.now()) return message.drake("economy/rob:COOLDOWN", {
+            time: message.time.convertMS(isInCooldown - Date.now()),
+            emoji: "error"
+        });
+        
 
         if(member.user.bot) return message.drake("economy/rob:BOT", {
             emoji: "error",
@@ -61,8 +60,9 @@ class Rob extends Command {
                 time: message.time.convertMS(toWait - Date.now())
             });
             data.member.cooldowns.rob = toWait;
-            return await data.member.save();
-        }
+            await data.member.save();
+            return;
+        };
 
         if(memberData.money < number) {
             number = memberData.money;

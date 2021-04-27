@@ -19,12 +19,10 @@ class Work extends Command {
     async run(message, args, data) {
 
         const isInCooldown = data.member.cooldowns.work;
-        if(isInCooldown){
-            if(isInCooldown > Date.now()) return message.drake("economy/work:COOLDOWN", {
-                    time: message.time.convertMS(isInCooldown - Date.now()),
-                    emoji: "error"
-            });
-        }
+        if(isInCooldown && isInCooldown > Date.now()) return message.drake("economy/work:COOLDOWN", {
+            time: message.time.convertMS(isInCooldown - Date.now()),
+            emoji: "error"
+        });
 
         const number = this.client.functions.getRandomInt(20, 30);
 
@@ -41,9 +39,10 @@ class Work extends Command {
         message.channel.send(embed);
 
         const toWait = Date.now() + 600000;
+
         data.member.cooldowns.work = toWait;
         data.member.money += number;
-        return await data.member.save();
+        await data.member.save();
     };
 };
 
