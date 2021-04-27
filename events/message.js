@@ -94,7 +94,7 @@ class Message {
             messages: false
         };
 
-        if(data.user.record === null) data.user.record = [];
+        if(!Array.isArray(data.user.record)) data.user.record = new Array();
 
         if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
             mute: {
