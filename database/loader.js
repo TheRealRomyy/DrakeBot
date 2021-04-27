@@ -31,6 +31,8 @@ module.exports = async (client) => {
         })
     })
 
+    await console.log('Cached ' + client.cache.guilds.size + ' guilds')
+
     client.db.pool.query("SELECT * FROM users").then(users => {
         users.rows.forEach(async user => {
 
@@ -38,7 +40,7 @@ module.exports = async (client) => {
 
             class User {
                 id = user.id;
-            };
+            }
 
             user.save = async (data) => {
                 if (!data) data = await client.cache.users.get(user.id);
@@ -48,50 +50,56 @@ module.exports = async (client) => {
                 dGuild = dGuild.rows[0];
 
                 Object.keys(dGuild).forEach(async d => {
-                    if(dGuild[d] !== data[d]) {
+                    if (dGuild[d] !== data[d]) {
                         await client.db.pool.query(`UPDATE users SET ${d}=$1 WHERE id=$2`, [data[d], data.id]).catch(e => e);
                         dGuild[d] = data[d];
-                    };
-                });
+                    }
+                })
 
                 dGuild.save = data.save;
                 client.cache.users.set(user.id, dGuild);
-                return data;
-            };
+            }
 
             return client.cache.users.set(user.id, user);
-        });
-    });
+        })
+    })
+
+    await console.log('Cached ' + client.cache.users.size + ' users')
 
     client.db.pool.query("SELECT * FROM members").then(members => {
         members.rows.forEach(async user => {
 
-            if(!client.guilds.cache.get(user.guildid)) return;
+            const guild = client.guilds.cache.get(user.guildid);
+
+            if(!guild) return;
+            if(!guild.member(user.id)) return;
+
+            console.log(client.guilds.cache.get(user.guildid).member(user.id).user.username + " de " + client.guilds.cache.get(user.guildid).name)
 
             class Member {
                 id = user.id;
                 guild = user.guildid
-            };
+            }
 
             user.save = async (data) => {
-                if (!data) data = await client.cache.members.get(user.guildid + user.id);
-                if (!data) throw new Error("This member isn't in the cache.");
-
-                let dGuild = await client.db.pool.query("SELECT * FROM members WHERE id=$1 AND guildid=$2", [data.id, data.guildid]);
+                if(!data) data = await client.cache.members.get(guild.id + user.id);
+                if(!data) throw new Error("This member isn't in the cache.");
+        
+                let dGuild = await client.db.pool.query(`SELECT * FROM members WHERE id='${user.id}' AND guildid='${guild.id}'`);
                 dGuild = dGuild.rows[0];
-
+        
                 Object.keys(dGuild).forEach(async d => {
                     if(dGuild[d] !== data[d]) {
-                        await client.db.pool.query(`UPDATE members SET ${d}=$1 WHERE id=$2 AND guildid=$3`, [data[d], data.id, data.guildid]).catch(e => e);
+                        await client.db.pool.query(`UPDATE members SET ${d}=$1 WHERE id='${user.id}' AND guildid='${guild.id}'`, [data[d]]).catch(e => e);
                         dGuild[d] = data[d];
                     };
                 });
-
+        
                 dGuild.save = data.save;
-                client.cache.members.set(user.guildid + user.id, dGuild);
+                client.cache.members.set(guild.id + user.id, dGuild);
             };
 
             return client.cache.members.set(user.guildid + user.id, user);
-        });
-    });
-};
+        })
+    })
+}

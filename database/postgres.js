@@ -7,7 +7,7 @@ module.exports = class Database {
 
     constructor(client) {
         this.client = client;
-        this.loader = require("./loader.js");
+        // this.loader = require("./loader.js");
 
         this.pool = new Pool(this.client.cfg.database);
         this.pool.connect(error => {
