@@ -66,10 +66,6 @@ class GuessTheNumber extends Command {
 					winnerData.record.forEach(record => {
 						if(record.type !== "number") return;
 
-						console.log(record.time)
-						console.log(time)
-						console.log(record.time > time)
-
 						if(record.time > time) {
 
 							newRecord = true;
