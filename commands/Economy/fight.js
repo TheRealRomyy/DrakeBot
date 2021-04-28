@@ -78,7 +78,7 @@ class Fight extends Command {
             await playerHitMob();
             await checkWin();
             if(!isEnd) await mobHitPlayer();
-            await checkWin();
+            if(!isEnd) await checkWin();
         };
 
         // Vérifier si il y a victoire ou défaite
