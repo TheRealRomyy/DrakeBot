@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { MessageEmbed } = require("discord.js");
 
 class Fight extends Command {
 
@@ -23,6 +24,7 @@ class Fight extends Command {
         // Créer l'historique du fight & le message
         let log = null;
         let msg = null;
+        let isEnd = false;
 
         // Check le cooldown
         if(data.member.cooldowns.fight && data.member.cooldowns.fight > Date.now()) return message.drake("economy/fight:COOLDOWN", {
@@ -75,7 +77,7 @@ class Fight extends Command {
         while(mobHP > 0 && lp > 0) {
             await playerHitMob();
             await checkWin();
-            await mobHitPlayer();
+            if(!isEnd) await mobHitPlayer();
             await checkWin();
         };
 
@@ -84,6 +86,8 @@ class Fight extends Command {
 
             // Ni victoire ni défaite : les deux sont encore en vie
             if(mobHP > 0 && lp > 0) return;
+
+            isEnd = true;
 
             if(lp > 0) { // Victoire du joueur :]
 
