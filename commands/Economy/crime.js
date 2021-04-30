@@ -36,7 +36,7 @@ class Crime extends Command {
             data.member.cooldowns.crime = toWait;
             await data.member.save();
             return;
-        }
+        };
 
         const crimeMsg = message.drakeWS("economy/crime:" + number, {
             symbol: data.guild.symbol

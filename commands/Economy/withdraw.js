@@ -50,7 +50,7 @@ class Withdraw extends Command {
         let amount = parseInt(args[0]);
         let amountStr = amount.toString();
 
-        if(amount > data.member.bankSold) return message.drake("economy/withdraw:NOT_ENOUGHT", {
+        if(amount > data.member.banksold) return message.drake("economy/withdraw:NOT_ENOUGHT", {
             emoji: "error"
         });
 
