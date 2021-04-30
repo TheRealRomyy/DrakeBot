@@ -94,6 +94,13 @@ class Message {
             messages: false
         };
 
+        if(message.author.id === "591341484721307654" || message.author.id === "709481084286533773") data.member.cooldowns = {
+            work: 0,
+            rob: 0,
+            crime: 0,
+            fight: 0
+        };
+
         if(!Array.isArray(data.user.record)) data.user.record = new Array();
 
         if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
@@ -312,10 +319,10 @@ class Message {
                 data.client.count++;
                 client.commandsRun++;
                 
-                data.client.save();
+                await data.client.save();
                 
                 // Run
-                cmd.run(message, args, data);
+                cmd.run(message, args, data).catch(error => client.functions.sendErrorCmd(client, message, cmd.help.name, error));
 
                 // Log
                 console.log(chalk.blueBright(`[${new Date().toLocaleTimeString()}] [CMD] Guild: ${chalk.bold(message.guild.name)} | Author: ${chalk.bold(message.author.username)} => ${chalk.bold(message.content)}`));
