@@ -75,7 +75,7 @@ class Eco extends Command {
                 });
             case "reset":
                 memberData.money = 0;
-                memberData.bankSold = 0;
+                memberData.banksold = 0;
                 return message.drake("economy/eco:RESET_SUCCES", {
                     emoji: "succes",
                     username: member.user.username
