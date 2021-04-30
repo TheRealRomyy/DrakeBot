@@ -38,6 +38,11 @@ class Rank extends Command {
         const memberData = await this.client.db.findOrCreateMember(member, message.guild);
         const rankData = rank.data;
 
+        data.guild.plugins.levels.rankRewards.forEach(rank => {
+            if(rank.level <= memberData.level) member.roles.add(rank.rank).catch(() => {});
+            if(rank.level >= memberData.level) member.roles.remove(rank.rank).catch(() => {});
+        });
+
         let members = await this.client.db.fetchGuildMembers(message.guild.id);
 
         members.forEach((m) => {
