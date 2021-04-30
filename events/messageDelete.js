@@ -8,7 +8,7 @@ class MessageDelete {
 
     async run(message) {
 
-        if(!message || !message.guild || !message.drakeWS) return;
+        if(!message || !message.guild || !message.drakeWS ||!message.guild.data || !message.author) return;
 
         let guildData = await this.client.db.findOrCreateGuild(message.guild);
 

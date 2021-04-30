@@ -8,6 +8,8 @@ class MessageUpdate {
 
     async run(oldMessage, newMessage) {
 
+        if(!newMessage|| !newMessage.guild || !newMessage.drakeWS || !newMessage.guild.data || !newMessage.author) return;
+
         if(oldMessage.content === newMessage.content) return; // Pas un edit
 
         let guildData = await  this.client.db.findOrCreateGuild(newMessage.guild);
