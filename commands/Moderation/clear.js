@@ -28,7 +28,7 @@ class Clear extends Command {
             usage: data.guild.prefix + "clear <amount> (user)"
         });
 
-        await message.delete();
+        await message.delete().catch(() => {});
 
         const user = message.mentions.users.first() || this.client.users.cache.get(args[1]) || this.client.users.cache.find(u => u.username === args[1]);
 
