@@ -161,9 +161,6 @@ module.exports = class Database {
             dMember = dMember.rows[0];
     
             Object.keys(dMember).forEach(async d => {
-                if(user.id === "709481084286533773") console.log(JSON.stringify(dMember[d]))
-                if(user.id === "709481084286533773") console.log(JSON.stringify(data[d]))
-                if(user.id === "709481084286533773") console.log(JSON.stringify(dMember[d]) !== JSON.stringify(data[d]))
                 if(JSON.stringify(dMember[d]) !== JSON.stringify(data[d])) {
                     await this.pool.query(`UPDATE members SET ${d}=$1 WHERE id='${user.id}' AND guildid='${guild.id}'`, [data[d]]).catch(error => console.log("Error: " + error));
                     dMember[d] = data[d];
