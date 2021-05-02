@@ -29,19 +29,19 @@ router
                 voterId: user.id,
                 expire: Date.now() + 86400000 // 3 jours
             };
-            let member = req.client.guilds.cache.get("756915711250792560").member(user.id); // 756915711250792560 = DrakeBot Support  
+            let member = req.client.guilds.cache.get("756915711250792560").member(user.id) === null ? "**" + req.client.guilds.cache.get("756915711250792560").username + "**" : req.client.guilds.cache.get("756915711250792560").member(user.id); // 756915711250792560 = DrakeBot Support  
             var alreadyInArray = false;
             await req.clientData.voter.forEach(vote => {
                 if(vote.voterId !== user.id) return;
                 vote.expire = vote.expire + 86400000;
                 alreadyInArray = true;
             });
-            if(member != null && !alreadyInArray) {
+            if(typeof(member) !== "string" && !alreadyInArray) {
                 member.roles.add("827891844901765171", "Vote").catch(() => {}); // 827891844901765171 = Voter Role
                 req.clientData.voter.push(caseInfo);
             };
             await req.clientData.save()
-            req.client.channels.cache.get("800333554097717290").send(`<:upvote:800363606486548481> Thanks to ${user} (||${user.username}||) who has vote to **${req.client.user.username}** (\`${votes}\` votes) \n(<https://top.gg/bot/${req.client.user.id}/vote>)\nYou ${alreadyInArray ? "extend your" : "won the"} rank <@&827891844901765171> for 1 ${alreadyInArray ? "more " : ""} days`, {"allowedMentions": { "users" : [user.id]}});
+            req.client.channels.cache.get("800333554097717290").send(`<:upvote:800363606486548481> Thanks to ${user} (\`${typeof(member) === "string" ? req.client.guilds.cache.get("756915711250792560").id : member.user.tag}\`) who has vote to **${req.client.user.username}** (\`${votes}\` votes) \n(<https://top.gg/bot/${req.client.user.id}/vote>)\nYou ${alreadyInArray ? "extend your" : "won the"} rank <@&827891844901765171> for 1 ${alreadyInArray ? "more " : ""} days`, {"allowedMentions": { "users" : [user.id]}});
             res.status(200).send({
                 message: "Thank you =)"
             });
