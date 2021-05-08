@@ -24,6 +24,8 @@ class DrakeBot extends Client {
 		this.cmds = new Collection();
 		this.aliases = new Collection();
 		this.mutedUsers = new Collection();
+
+		this.snipe = {};
 		this.numberGame = {};
 		this.pool = this.db.pool;
 
