@@ -8,7 +8,15 @@ class MessageDelete {
 
     async run(message) {
 
-        if(!message || !message.guild || !message.drakeWS ||!message.guild.data || !message.author) return;
+        if(!message.author) return;
+
+        this.client.snipe[message.channel.id] = {
+            author: message.author.id,
+            text: message.content,
+            date: Date.now()
+        };
+
+        if(!message || !message.guild || !message.drakeWS ||!message.guild.data) return;
 
         let guildData = await this.client.db.findOrCreateGuild(message.guild);
 

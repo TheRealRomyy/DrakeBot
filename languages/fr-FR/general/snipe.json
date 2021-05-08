@@ -1,0 +1,7 @@
+{
+    "DESCRIPTION": "Connaitre le dernier message supprimé",
+    "USAGE": "snipe",
+    "EXAMPLE": "snipe",
+    "NO_TEXT": "**Aucun message trouvé**",
+    "MESSAGE_BUT_NO_TEXT": "Aucun message, sûrement une image ou une embed !"
+}

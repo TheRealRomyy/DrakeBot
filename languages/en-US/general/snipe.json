@@ -1,0 +1,7 @@
+{
+    "DESCRIPTION": "Know the last delete message",
+    "USAGE": "snipe",
+    "EXAMPLE": "snipe",
+    "NO_TEXT": "**Any message found**",
+    "MESSAGE_BUT_NO_TEXT": "Any messages, maybe an image or an embed !"
+}
