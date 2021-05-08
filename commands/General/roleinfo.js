@@ -23,16 +23,21 @@ class RoleInfo extends Command {
         });
 
         const role = message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
-        let membersInRole = role.members.size;
 
         if(!role) return message.drake("general/roleinfo:NOT_FOUND", {
             emoji: "error"
         });
 
-        let perms = [];
+        let membersInRole = role.members.size;
+        let perms = []
+        let everyonePerms = [];
 
         role.permissions.toArray().forEach(perm => {
             perms.push(message.drakeWS(`discord_errors:` + perm.toUpperCase()));
+        });
+
+        message.guild.roles.everyone.permissions.toArray().forEach(perm => {
+            everyonePerms.push(message.drakeWS(`discord_errors:` + perm.toUpperCase()));
         });
 
         const embed = new MessageEmbed()
@@ -49,7 +54,7 @@ class RoleInfo extends Command {
         .addField(this.client.emotes["hoist"] + " " + message.drakeWS("general/roleinfo:HOIST"), role.hoist ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(this.client.emotes["mentionnable"] + " " + message.drakeWS("general/roleinfo:MENTIONNABLE"), role.mentionnable ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(this.client.emotes["man"] + " " + message.drakeWS("general/roleinfo:MEMBERS"), membersInRole + " " + message.drakeWS("general/roleinfo:MEMBER"), true)
-        .addField(this.client.emotes["pushpin"] + " Permissions", "`" + perms.join("`, `") + "`", false)
+        .addField(this.client.emotes["pushpin"] + " Permissions • (" + perms.filter(perm => !everyonePerms.includes(perm)).length + ")", "`" + perms.filter(perm => !everyonePerms.includes(perm)).join("`, `") + "`", false)
         
 
         return message.channel.send(embed);
