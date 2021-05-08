@@ -3,5 +3,6 @@
     "DESCRIPTION": "Add a role who will given in a specific level",
     "USAGE": "addrank-level <level> <rank>",
     "EXAMPLE": "addrank-level 5 @Beginner",
-    "TOO_LOW": "**The role is highest than me !**"
+    "TOO_LOW": "**The role is highest than me !**",
+    "ROLE_NOT_FOUND": "**I dont find this role !**"
 }

@@ -25,6 +25,10 @@ class AddrankLevel extends Command {
         const level = args[0];
         const rank = message.mentions.roles.first() || message.guild.roles.cache.get(args[1]) || message.guild.roles.cache.find(x => x.name === args[1]);
 
+        if(!rank) return message.drake("level/addrank-level:ROLE_NOT_FOUND", {
+            emoji: "error",
+        });
+
         if(message.guild.members.cache.get(this.client.user.id).roles.highest.position <= rank.position) return message.drake("level/addrank-level:TOO_LOW", {
             emoji: "error"
         }); 
