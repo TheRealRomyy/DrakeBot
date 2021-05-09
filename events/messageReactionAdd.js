@@ -5,6 +5,8 @@ class MessageReactionAdd {
     };
 
     async run(reaction, user) {
+
+        if(!reaction) return;
         
         let message = reaction.message;
 
