@@ -33,7 +33,7 @@ class Suggest extends Command {
 
         const embed = new MessageEmbed()
         .setTitle(message.drakeWS("general/suggest:TITLE"))
-        .setColor(this.client.cfg.color.blue)
+        .setColor("ORANGE")
         .setThumbnail("https://cdn.discordapp.com/attachments/759728705730773022/767132300290031676/light.png")
         .setDescription(suggestion)
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
