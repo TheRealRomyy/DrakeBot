@@ -26,9 +26,9 @@ class Snipe extends Command {
         .setColor("#2f3136");
         
         if(sniped == null || sniped == "undefined") {
-            embed.setDescription(message.drakeWS("general/snipe:NO_TEXT", { 
+            return message.drake("general/snipe:NO_TEXT", { 
                 emoji: "error"
-            }));
+            });
         } else {
             let author = this.client.users.cache.get(sniped.author);
             embed.setAuthor(author.tag, author.displayAvatarURL({ dynamic:true }))
