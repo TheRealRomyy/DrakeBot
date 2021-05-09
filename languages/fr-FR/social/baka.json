@@ -1,5 +1,5 @@
 {
-    "BAKA": "{{bakaed}} est un baka !",
+    "BAKA": "{{bakaed}} est un(e) baka !",
     "DESCRIPTION": "Traiter quelqu'un de \"baka\" (idiot)",
     "USAGE": "baka (user)",
     "EXAMPLE": "baka @Ethan"
