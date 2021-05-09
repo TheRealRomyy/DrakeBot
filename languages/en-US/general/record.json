@@ -1,0 +1,6 @@
+{
+    "DESCRIPTION": "See your personal record",
+    "EXAMPLE": "record @4ever",
+    "USAGE": "record (user)",
+    "NO_RECORD": "**This user has'nt record !**"
+}
