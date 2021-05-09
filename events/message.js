@@ -86,43 +86,6 @@ class Message {
                 return moment.utc(date).startOf('hour').fromNow();
             }
         };
-
-        /* TEMP ZONE */
-
-        if(!data.guild.plugins.logs) data.guild.plugins.logs = {
-            mod: false,
-            messages: false
-        };
-
-        if(message.author.id === "591341484721307654" || message.author.id === "709481084286533773") data.member.cooldowns = {
-            work: 0,
-            rob: 0,
-            crime: 0,
-            fight: 0
-        };
-
-        if(!Array.isArray(data.user.record)) data.user.record = new Array();
-
-        if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
-            mute: {
-                enabled: false,
-                muteTime: null,
-                count: null,
-                in: null,
-            },
-            kick: {
-                enabled: false,
-                count: null,
-                in: null
-            },
-            ban: {
-                enabled: false,
-                count: null,
-                in: null
-            },
-        };
-        
-        /* END TEMP ZONE */
         
 		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
             user: message.author.username,
