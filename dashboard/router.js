@@ -41,7 +41,7 @@ router
                 req.clientData.voter.push(caseInfo);
             };
             await req.clientData.save()
-            req.client.channels.cache.get("800333554097717290").send(`<:upvote:800363606486548481> Thanks to ${user} (\`${typeof(member) === "string" ? req.client.guilds.cache.get("756915711250792560").id : member.user.tag}\`) who has vote to **${req.client.user.username}** (\`${votes}\` votes) \n(<https://top.gg/bot/${req.client.user.id}/vote>)\nYou ${alreadyInArray ? "extend your" : "won the"} rank <@&827891844901765171> for 1 ${alreadyInArray ? "more " : ""} days`, {"allowedMentions": { "users" : [user.id]}});
+            req.client.channels.cache.get("800333554097717290").send(`<:upvote:800363606486548481> Thanks to ${user} (\`${typeof(member) === "string" ? req.client.guilds.cache.get("756915711250792560").id : member.user.tag}\`) who has vote to **${req.client.user.username}** (\`${votes}\` votes) \n(<https://top.gg/bot/${req.client.user.id}/vote>)\nYou ${alreadyInArray ? "extend your" : "won the"} rank <@&827891844901765171> for 1 ${alreadyInArray ? "more" : ""} day`, {"allowedMentions": { "users" : [user.id]}});
             res.status(200).send({
                 message: "Thank you =)"
             });
