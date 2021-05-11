@@ -1,5 +1,8 @@
 {
     "EXAMPLE": "minecraft Skeppy",
     "USAGE": "minecraft <pseudo>",
-    "DESCRIPTION": "See someone minecraft account"
+    "DESCRIPTION": "See someone minecraft account",
+    "NO_UUID_FOUND": "**I don't find this pseudo !**",
+    "ACCOUNT_CREATED": "Account creation",
+    "DUMP": "{{user}} on witch do you want to go ? Type `cancel` to abort."
 }

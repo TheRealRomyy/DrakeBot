@@ -1,5 +1,8 @@
 {
     "EXAMPLE": "minecraft FuzeIII",
     "USAGE": "minecraft <pseudo>",
-    "DESCRIPTION": "Voir le compte minecraft de quelqu'un"
+    "DESCRIPTION": "Voir le compte minecraft de quelqu'un",
+    "NO_UUID_FOUND": "**Je ne trouve pas ce pseudo !**",
+    "ACCOUNT_CREATED": "Création du compte",
+    "DUMP": "{{user}} a quelle page voulez vous aller ? Dites `cancel` pour annuler."
 }
