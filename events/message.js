@@ -285,7 +285,7 @@ class Message {
                 await data.client.save();
                 
                 // Run
-                cmd.run(message, args, data).catch(error => client.functions.sendErrorCmd(client, message, cmd.help.name, error));
+                cmd.run(message, args, data)//.catch(error => client.functions.sendErrorCmd(client, message, cmd.help.name, error));
 
                 // Log
                 console.log(chalk.blueBright(`[${new Date().toLocaleTimeString()}] [CMD] Guild: ${chalk.bold(message.guild.name)} | Author: ${chalk.bold(message.author.username)} => ${chalk.bold(message.content)}`));
