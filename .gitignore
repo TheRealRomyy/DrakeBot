@@ -5,7 +5,7 @@ node_modules
 package-lock.json
 
 # Configuration
-config.js
+config.json
 
 # Github files
 README.md 
