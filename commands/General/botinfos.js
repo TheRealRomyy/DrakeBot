@@ -27,7 +27,8 @@ class Botinfos extends Command {
 
         let ping = Math.round(client.ws.ping);
         let commandCount = client.cmds.size;
-        let classCount = "6";
+        let classCount = await client.functions.getAllDirFiles("/root/DrakeBot/commands");
+        classCount = classCount.length.toString();
 
         let cpuUsage = null;
         let osVersion = null;
