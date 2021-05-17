@@ -1,7 +1,8 @@
 const { MessageEmbed } = require("discord.js");
-const cfg = require("../config.js");
+const cfg = require("../config.json");
 const emojis = require("../emojis.json");
 const ms = require("ms");
+const fs = require("fs")
 const moment = require("moment");
 const fetch = require('node-fetch');
 
@@ -515,5 +516,23 @@ module.exports = {
 		});
 
 		await guildData.save()
+	},
+
+	/**
+	 * Get all files of a dir (from https://coderrocketfuel.com/article/get-the-number-of-files-in-a-directory-using-node-js)
+	 * @param { String } dirPath 
+	 * @return { Array } files
+	*/
+
+	async getAllDirFiles(dirPath, arrayOfFiles) {
+		files = fs.readdirSync(dirPath);
+	  
+		arrayOfFiles = arrayOfFiles || [];
+	  
+		files.forEach(function(file) {
+			arrayOfFiles.push(file);
+		});
+	  
+		return arrayOfFiles;
 	},
 };
