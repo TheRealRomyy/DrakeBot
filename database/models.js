@@ -83,7 +83,10 @@ exports.Guild = (guildID, client) => {
         },
 
         // The fortress mod
-        false
+        false,
+
+        // The reaction roles array
+        []
     ];
 };
 
