@@ -32,7 +32,7 @@ module.exports = class {
 		};
 
 		// Check l'autorole
-		if(guildData.plugins.autorole.enabled && !guildData.plugins.captcha.enabled) {
+		if(guildData.plugins.autorole.enabled && !guildData.plugins.captcha.enabled && !member.user.bot) {
 			member.roles.add(guildData.plugins.autorole.role).catch(() => {});
 		};
 
