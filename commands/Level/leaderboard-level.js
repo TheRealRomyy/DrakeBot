@@ -27,14 +27,14 @@ class LeaderboardLevel extends Command {
         let members = await this.client.db.fetchGuildMembers(message.guild.id);
 
         members.forEach((m) => {
-            expCount[m.id] = m.exp;
+            expCount[m.id] = m.exptotal;
         });
 
         members = members.sort((a,b) => expCount[b.id] - expCount[a.id]);
 
         members.forEach((m) => {
             if(countVar > 10) return count[m.id] = "ghost"; 
-            if(m.exp === 0) return count[m.id] = "ghost"; 
+            if(m.exptotal === 0) return count[m.id] = "ghost"; 
             count[m.id] = countVar++;
         });
 
@@ -42,7 +42,7 @@ class LeaderboardLevel extends Command {
         members = members.filter(mem => !isNaN(client.users.cache.get(mem.id)));
 
         const membersLeaderboard = members.map((m) => 
-            "" + count[m.id] + ") **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + " (**" + m.exp + " exp**)" + "\n"
+            "" + count[m.id] + ") **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + " (**" + m.exptotal + " exp**)" + "\n"
         );
 
         if(membersLeaderboard == "") return message.drake("level/leaderboard-level:NO_MEMBERS", {

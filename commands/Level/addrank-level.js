@@ -7,7 +7,7 @@ class AddrankLevel extends Command {
             name: "addrank-level",
             aliases: [ "addranklevel", "addrank-lvl", "add-lvl"],
             dirname: __dirname,
-            enabled: false,
+            enabled: true,
             botPerms: [ "MANAGE_ROLES" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 3,

@@ -31,7 +31,6 @@ class Rank extends Command {
         const rank = new canvacord.Rank();
 
         let count = 1;
-        let toRemove = 0;
         let stop = false;
         let expCount = [];
 
@@ -56,10 +55,6 @@ class Rank extends Command {
             if(!stop) count++;
         });
 
-        for(let lvl = 0; lvl < memberData.level; lvl++) {
-            toRemove += ( 7 * (lvl * lvl) + 80 * lvl + 100);
-        };
-
         // Informations sur l'user
         rankData.username.name = user.username;
         rankData.discriminator.discrim = user.discriminator;
@@ -74,7 +69,7 @@ class Rank extends Command {
         };
 
         // Informations sur son level
-        rankData.currentXP.data = memberData.exp - toRemove;
+        rankData.currentXP.data = memberData.exp;
         rankData.requiredXP.data = 7 * (memberData.level * memberData.level) + 80 * memberData.level + 100;
 
         // Couleurs
@@ -89,6 +84,7 @@ class Rank extends Command {
             color: '#F3F3F3',
             displayText: "Rank"
         };
+        
         rankData.level = {
             display: true,
             data: memberData.level,

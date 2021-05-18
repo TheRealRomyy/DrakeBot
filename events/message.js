@@ -145,6 +145,8 @@ class Message {
             client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
         };
 
+        if(data.member.exptotal === null) data.member.exptotal = 0;
+
         await updateXp(message, data);
 
         const prefix = data.guild.prefix;
@@ -313,39 +315,31 @@ class Message {
             };
         };
 
-        async function updateXp(msg, data){
+        async function updateXp(msg, data) {
 
             if(!data.guild.plugins.levels.enabled) return;
 
-            let toRemove = 0;
-
-            for(let lvl = 0; lvl < data.member.level; lvl++) {
-                toRemove += ( 7 * (lvl * lvl) + 80 * lvl + 100);
-            };
-        
-            const points = data.member.exp - toRemove;
+            const actualExp = parseInt(data.member.exp);
             const level = parseInt(data.member.level);
         
-            const isInCooldown = xpCooldown[msg.author.id];
-            if(isInCooldown){
-                if(isInCooldown > Date.now()){
-                    return;
-                }
-            }
+            const cooldown = xpCooldown[msg.author.id];
+            if(cooldown && cooldown > Date.now()) return;
 
-            const toWait = Date.now() + 30000;
+            const toWait = Date.now() + 7500;
             xpCooldown[msg.author.id] = toWait; 
             
-            const won = Math.floor(Math.random() * ( Math.floor(5) - Math.ceil(2))) + Math.ceil(2);
-            const newXp = points + won;
+            const wonExp = Math.floor(Math.random() * ( Math.floor(5) - Math.ceil(2))) + Math.ceil(2);
+            const newExp = actualExp + wonExp;
 
-            const neededXp = 7 * (level * level) + 80 * level + 100;
+            const neededExp = 7 * (level * level) + 80 * level + 100;
 
-            data.member.exp += won;
+            data.member.exp += wonExp;
+            data.member.exptotal += wonExp;
         
-            if(newXp > neededXp) {
+            if(newExp >= neededExp) {
                 let channel = null;
-                data.member.level = parseInt(level+1, 10);
+                data.member.level = parseInt(level + 1, 10);
+                data.member.exp = 0;
                 if(data.guild.plugins.levels.channel == "current") channel = message.channel;
                 channel = message.guild.channels.cache.get(data.guild.plugins.levels.channel);
                 if(!channel) channel = message.channel;
@@ -353,14 +347,14 @@ class Message {
                     .replace(/{user}/g, message.author)
                     .replace(/{user.nickname}/g, message.guild.member(message.author).nickname !== null ? message.guild.member(message.author).nickname : message.author.username)
                     .replace(/{level}/g, parseInt(level+1, 10))
-                    .replace(/{xp}/g, data.member.exp);
+                    .replace(/{xp}/g, data.member.exptotal);
                 channel.send(tad);
                 if(data.guild.plugins.levels.rankRewards) {
                     const roleReward = data.guild.plugins.levels.rankRewards.find((r) => r.level == parseInt(level+1, 10))
                     if(roleReward) message.member.roles.add(roleReward.rank).catch(() => {});
                 };
             };
-            await data.member.save().catch(() => {});
+            await data.member.save().catch(error => console.log("Error: " + error));
         };
     };
 };

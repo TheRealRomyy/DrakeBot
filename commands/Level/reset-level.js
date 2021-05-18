@@ -67,6 +67,7 @@ class ResetLevel extends Command {
     
                 memberData.level = 0;
                 memberData.exp = 0;
+                memberData.exptotal = 0;
                 await memberData.save();
     
                 return message.drake("level/reset-level:SUCCES_MEMBER", {
@@ -83,10 +84,10 @@ class ResetLevel extends Command {
     
         } else {
     
-            waitMsg = await message.drake("level/reset-level:WANT?", {
+            waitMsg = await message.channel.send(message.drakeWS("level/reset-level:WANT?", {
                 emoji: "question",
-                toreset: "Guild: ``" + message.guild.name + "``"
-            });
+                toreset: "Guild: `" + message.guild.name + "`"
+            }));
     
             await waitMsg.react('👍');
             await waitMsg.react('👎');
@@ -103,6 +104,7 @@ class ResetLevel extends Command {
                     const memberData = await this.client.db.findOrCreateMember(m, message.guild);
                     memberData.level = 0;
                     memberData.exp = 0;
+                    memberData.exptotal = 0;
                     await memberData.save();
                 });
     

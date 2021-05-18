@@ -102,7 +102,7 @@ exports.Member = (userID, guildID) => {
         // The exp of the member
         0,
         // The level of the member
-        0,
+        1,
 
         // The inventory of the member
         [],
@@ -123,6 +123,9 @@ exports.Member = (userID, guildID) => {
             case: null,
             endDate: null
         },
+
+        // The total exp of the member
+        0
     ];
 };
 
