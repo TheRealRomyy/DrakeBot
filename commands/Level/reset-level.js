@@ -65,7 +65,7 @@ class ResetLevel extends Command {
     
                 const memberData = (member.id === message.author.id ? data.member : await this.client.db.findOrCreateMember(member, message.guild));
     
-                memberData.level = 0;
+                memberData.level = 1;
                 memberData.exp = 0;
                 memberData.exptotal = 0;
                 await memberData.save();
@@ -102,7 +102,7 @@ class ResetLevel extends Command {
     
                 await members.forEach(async (m) => {
                     const memberData = await this.client.db.findOrCreateMember(m, message.guild);
-                    memberData.level = 0;
+                    memberData.level = 1;
                     memberData.exp = 0;
                     memberData.exptotal = 0;
                     await memberData.save();
