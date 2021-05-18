@@ -5,7 +5,7 @@ class RemoverankLevel extends Command {
     constructor(client) {
         super(client, {
             name: "removerank-level",
-            aliases: ["removeranks-level", "rr", "removeranks-xp", "remove-rank-xp"],
+            aliases: ["removeranks-level", "rr-level", "removeranks-xp", "remove-rank-xp"],
             dirname: __dirname,
             enabled: true,
             botPerms: ["EMBED_LINKS"],

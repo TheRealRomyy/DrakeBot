@@ -147,6 +147,7 @@ class Message {
 
         if(data.member.exptotal === null) data.member.exptotal = 0;
         if(data.guild.reactionroles === null) data.guild.reactionroles = new Array();
+        if(data.guild.reactioncount === null) data.guild.reactioncount = 0;
 
         await updateXp(message, data);
 

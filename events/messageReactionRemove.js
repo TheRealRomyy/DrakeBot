@@ -1,4 +1,4 @@
-class MessageReactionAdd {
+class MessageReactionRemove {
 
     constructor(client) {
         this.client = client;
@@ -36,24 +36,11 @@ class MessageReactionAdd {
 
                 if(reactionRoleData.message === message.id && reactionRoleData.reaction === emoji.id || reactionRoleData.message === message.id && reactionRoleData.reaction === emoji.name) {
                     let role = message.guild.roles.cache.get(reactionRoleData.role);
-                    if(role) member.roles.add(role);
+                    if(role) member.roles.remove(role);
                 };
             };
-        };
-
-        if(message.guild.id === "756915711250792560" && message.channel.id === "767115893691252736" && user.id === "709481084286533773") { // DrakeBot | #Suggestions | Rome
-            if(emojiName !== "✅" && emojiName !== "❌" && emojiName !== "➖") return;
-            if(!message.embeds[0] || message.embeds[0] == "undefined") return;
-
-            const colorByName = {
-                "❌": "RED",
-                "✅": "GREEN",
-                "➖": "ORANGE"
-            };
-
-            message.edit(message.embeds[0].setColor(colorByName[emoji]));  
         };
     };
 };
 
-module.exports = MessageReactionAdd;
+module.exports = MessageReactionRemove;

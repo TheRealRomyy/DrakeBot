@@ -86,7 +86,9 @@ exports.Guild = (guildID, client) => {
         false,
 
         // The reaction roles array
-        []
+        [],
+        // The reactions count
+        0,
     ];
 };
 
