@@ -20,8 +20,8 @@ class Message {
 
         const data = {
             user: await this.client.db.findOrCreateUser(message.author),
+            member: await this.client.db.findOrCreateMember(message.author, message.guild),
             guild: await this.client.db.findOrCreateGuild(message.guild),
-            member: await this.client.db.findOrCreateMember(message.author.id, message.guild.id),
 
             client: await this.client.db.findOrCreateClient(),
             cfg: this.client.cfg,

@@ -96,6 +96,4 @@ module.exports = async (client) => {
             return client.cache.members.set(user.guildid + user.id, user);
         })
     })
-
-    await console.log(`Database Cache: All users (${client.cache.users.size} users), members (${client.cache.members.size} members) and guilds (${client.cache.guilds.size} guilds) are in cache !`);
 }
