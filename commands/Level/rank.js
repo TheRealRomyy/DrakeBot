@@ -45,7 +45,7 @@ class Rank extends Command {
         let members = await this.client.db.fetchGuildMembers(message.guild.id);
 
         members.forEach((m) => {
-            expCount[m.id] = m.exp;
+            expCount[m.id] = m.exptotal;
         });
 
         members = members.sort((a,b) => expCount[b.id] - expCount[a.id]);
