@@ -7,6 +7,8 @@ class MessageReactionRemove {
     async run (reaction, user) {
 
         const client = this.client;
+
+        if(!reaction || !user) return;
         
         if(user.bot) return;
         let message = reaction.message
