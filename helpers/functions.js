@@ -374,7 +374,7 @@ module.exports = {
 			moderator: moderator.tag,
 			time: message.time.convertMS(time),
 			reason: reason,
-		}));
+		})).catch(() => {});;
 
 		this.sendSanctionMessage(message, "mute", member.user, reason, message.time.convertMS(time))
 

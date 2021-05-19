@@ -52,7 +52,7 @@ module.exports = {
 					username: member.user.username,
 					server: member.guild.name,
 					reason: reason,
-				}));
+				})).catch(() => {});;
 
 				dataMember.mute = {
 					muted: false,
