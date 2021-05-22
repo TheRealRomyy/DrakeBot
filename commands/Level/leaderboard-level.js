@@ -42,7 +42,7 @@ class LeaderboardLevel extends Command {
         members = members.filter(mem => !isNaN(client.users.cache.get(mem.id)));
 
         const membersLeaderboard = members.map((m) => 
-            "" + count[m.id] + ") **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + " (**" + m.exptotal + " exp**)" + "\n"
+            (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + "\n"
         );
 
         if(membersLeaderboard == "") return message.drake("level/leaderboard-level:NO_MEMBERS", {
@@ -52,6 +52,7 @@ class LeaderboardLevel extends Command {
         const embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
+        .setThumbnail(message.guild.iconURL({ dynamic:true }))
         .setColor(this.client.cfg.color.yellow)
         .setDescription(membersLeaderboard)
         .setTitle(message.drakeWS("level/leaderboard-level:TITLE", {
@@ -59,6 +60,14 @@ class LeaderboardLevel extends Command {
         }));
 
         return message.channel.send(embed);
+
+        function isCountInPodium(count) {
+            let result = count;
+            if(count === 1) result = "🏆";
+            if(count === 2) result = "🥈";
+            if(count === 3) result = "🥉";
+            return result;
+        };
     };
 };
 
