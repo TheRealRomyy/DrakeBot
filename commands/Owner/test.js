@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands.js");
-const { MessageAttachment, MessageEmbed } = require("discord.js");
+const { MessageAttachment } = require("discord.js");
 const canvacord = require("canvacord");
 
 class Test extends Command {
@@ -19,12 +19,27 @@ class Test extends Command {
 
 	async run (message, args, data) {
 
-        const embed = new MessageEmbed()
-        .setAuthor("Author")
-        .addField("Première", "```Première```", true)
-        .addField("Deuxième", "```Deuxième```", true)
+		const user = message.mentions.users.first() || this.client.users.cache.get(args[0]) || message.author;
+    	const spotify = user.presence.activities.find(act => act.type === "LISTENING" && act.name === "Spotify"); 
 
-        return message.channel.send(embed);
+		if(spotify) {
+			let card = new canvacord.Spotify()
+			.setAuthor(spotify.state)
+			.setAlbum(spotify.assets.largeText || spotify.state)
+			.setEndTimestamp(spotify.timestamps.end)
+			.setStartTimestamp(spotify.timestamps.start)
+			.setTitle(spotify.details)
+			.setImage(spotify.assets.largeImageURL({
+				format: "png",
+				size: 1024
+			}));
+	
+			let spotifyData = await card.build()
+			const attachment = new MessageAttachment(spotifyData, `spotify-${user.id}.png`);
+			return message.channel.send(attachment);
+		} else {
+			return message.channel.send(`${user} n'écoute pas spotify actuellement !`);
+		};
 	};
 };
 
