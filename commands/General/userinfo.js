@@ -40,13 +40,12 @@ class Userinfo extends Command {
 
         const st = user.presence.status;
 
-        let plateforme = user.presence.clientStatus;
-        if (plateforme.mobile && plateforme.desktop) plateforme = "`💻` + `📱`";
-        else if (plateforme.mobile) plateforme = "`📱`";
-        else if (plateforme.desktop) plateforme = "`💻`";
-        else if (user.bot) plateforme = "`🤖`";
-        else if (user.presence.status === "offline") plateforme = null;
-        else plateforme = message.drakeWS("common:OTHER");
+        let plateforme = user.bot ? "`🤖`" : user.presence.clientStatus;
+        if (!user.bot && plateforme.mobile && plateforme.desktop) plateforme = "`💻` + `📱`";
+        else if (!user.bot && plateforme.mobile) plateforme = "`📱`";
+        else if (!user.bot && plateforme.desktop) plateforme = "`💻`";
+        else if (!user.bot && user.presence.status === "offline") plateforme = null;
+        else if (!user.bot) plateforme = message.drakeWS("common:OTHER");
         
 
         /* Show custom status : 
@@ -87,7 +86,7 @@ class Userinfo extends Command {
         .addField(message.drakeWS("general/userinfo:ROLES", {
             emoji: "roleList",
             roleList: member.roles.cache.size
-        }), (member.roles.size > 10 ? member.roles.cache.map((r) => r).slice(0, 9).join(", ")+" " + message.drakeWS("general/userinfo:MR") : member.roles.cache.map((r) => r).join(", ")), false)
+        }), (member.roles.size > 10 ? member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).slice(0, 9).join(", ")+" " + message.drakeWS("general/userinfo:MR") : member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).join(", ")), false)
 
         message.channel.send(embed);
     };
