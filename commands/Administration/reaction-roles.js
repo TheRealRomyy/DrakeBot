@@ -6,7 +6,7 @@ class ReactionRoles extends Command {
     constructor(client) {
         super(client, {
             name: "reaction-roles",
-            aliases: ["react-roles", "reactions-roles", "rr"],
+            aliases: ["react-roles", "reactions-roles", "rr", "reaction-role"],
             enabled: true,
             dirname: __dirname,
             botPerms: ["MANAGE_MESSAGES"],
