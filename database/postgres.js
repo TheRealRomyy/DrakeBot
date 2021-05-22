@@ -168,7 +168,7 @@ module.exports = class Database {
             });
 
             dMember.save = data.save;
-            await this.client.cache.members.set(guild.id + user.id, dMember);
+            this.client.cache.members.set(guild.id + user.id, dMember);
         };
 
         this.client.cache.members.set(guild.id + user.id, dbData.rows[0]);
