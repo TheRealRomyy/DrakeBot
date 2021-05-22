@@ -28,34 +28,44 @@ class Ban extends Command {
             emoji: "error"
         });
         
-        const member = message.mentions.members.first() || message.guild.member(client.users.cache.get(args[0]));
+        const user = message.mentions.users.first() || client.users.cache.get(args[0]);
 
-        if(!member) return message.drake("misc:MEMBER_NOT_FOUND", {
+        if(!user) return message.drake("misc:USER_NOT_FOUND", {
             emoji: "error"
         });
 
-        if(member.id === message.author.id) return message.drake("misc:YOURSELF", {
+        if(user.id === message.author.id) return message.drake("misc:YOURSELF", {
             emoji: "error"
         });
 
-        const memberPosition = member.roles.highest.position;
-        const moderationPosition = message.member.roles.highest.position;
-        if(moderationPosition < memberPosition) return message.drake("misc:SUPERIOR", {
-            emoji: "error"
-        });
-
-        if(!member.kickable) return message.drake("moderation/ban:NOT_BANABLE", {
-            emoji: "error"
-        });
-
-        const memberData = await client.db.findOrCreateMember(member, message.guild);
-
-        let reason = args.slice(1).join(" ");
+        let reason = args.slice(1).join(" ").replace("-f", "").trim();
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
+        const member = message.guild.member(user.id);
+        if(!member && !message.content.includes("-f")) return message.drake("moderation/ban:NOT_HERE", {
+            emoji: "error",
+            prefix: data.guild.prefix,
+            user: user.id,
+            reason: reason !== message.drakeWS("misc:NO_REASON") ? reason : "Spam"
+        });
+
+        if(member) {
+            const memberPosition = member.roles.highest.position;
+            const moderationPosition = message.member.roles.highest.position;
+            if(moderationPosition < memberPosition) return message.drake("misc:SUPERIOR", {
+                emoji: "error"
+            });
+
+            if(!member.kickable) return message.drake("moderation/ban:NOT_BANABLE", {
+                emoji: "error"
+            });
+        };
+
+        const memberData = member ? await client.db.findOrCreateMember(member, message.guild) : null;
+        
         let msg = await message.channel.send(message.drakeWS("moderation/ban:CONFIRM", {
             emoji: "question",
-            user: member.user.tag,
+            user: user.tag,
             reason: reason
         }));
 
@@ -66,7 +76,7 @@ class Ban extends Command {
             let reaction = collected.first();
             let reactionName = reaction.emoji.name;
             if(reactionName == '👍') { 
-                client.functions.ban(member, message, message.author, data.guild, reason, memberData, client);
+                client.functions.ban(user, message, message.author, data.guild, reason, memberData, client);
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {

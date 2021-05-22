@@ -474,21 +474,21 @@ module.exports = {
 	 * @param { Object } client 
 	*/
 
-	async ban(member, message, moderator, guildData, reason, memberData, client) {
+	async ban(user, message, moderator, guildData, reason, memberData, client) {
 		let logReason = message.drakeWS("moderation/ban:LOG", {
             moderator: moderator.username,
             reason
         });
 
-		await member.send(message.drakeWS("moderation/ban:BAN_DM", {
+		await user.send(message.drakeWS("moderation/ban:BAN_DM", {
 			emoji: "ban",
-			username: member.user.username,
+			username: user.username,
 			server: message.guild.name,
 			moderator: moderator.tag,
 			reason
 		})).catch(() => {});
 
-		await message.guild.members.ban(member.user, { reason: logReason } ).then(() => {
+		await message.guild.members.ban(user, { reason: logReason } ).then(() => {
 			guildData.cases++;
 			guildData.save();
 
@@ -500,18 +500,20 @@ module.exports = {
 				reason: reason,
 			};
 			
-			memberData.sanctions.push(caseInfo);
-			memberData.save();
+			if(memberData !== null) {
+				memberData.sanctions.push(caseInfo);
+				memberData.save();
+			};
 
 			if(guildData.plugins.logs.mod) {
 				if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
 					guildData.plugins.logs.mod = false;
 				};
 
-				this.sendModLog("ban", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
+				this.sendModLog("ban", user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
 			};
 			
-			return this.sendSanctionMessage(message, "ban", member.user, reason)
+			return this.sendSanctionMessage(message, "ban", user, reason)
 		}).catch((error) => {
 			this.sendErrorCmd(client, message, "ban", error);
 		});

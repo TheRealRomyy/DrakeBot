@@ -4,7 +4,8 @@
     "NOT_BANABLE": "**Je ne peux pas bannir cette personne !**",
     "LOG": "{{moderator}} | {{reason}}",
     "DESCRIPTION": "Bannir quelqu'un",
-    "USAGE": "ban <user> (reason)",
+    "NOT_HERE": "**Je ne peux pas bannir cette personne car elle ne se trouve pas sur ce serveur. Si vous voulez quand même la bannir ajoutez `-f` à votre commande.** \n\nPar exemple: `{{prefix}}ban {{user}} {{reason}} -f`",
+    "USAGE": "ban <user> (reason) (-f)",
     "EXAMPLE": "ban @Mystere insultes graves",
     "CONFIRM": "**Etes vous sur de vouloir bannir `{{user}}` pour: `{{reason}}` ?**"
 }

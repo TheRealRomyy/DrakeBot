@@ -4,7 +4,8 @@
     "NOT_KICKABLE": "**I can't ban this member !**",
     "LOG": "Ban by : {{moderator}} | Reason : {{reason}}",
     "DESCRIPTION": "Ban someone",
-    "USAGE": "ban <user> (reason)",
+    "NOT_HERE": "**I can't ban this user because he is not in this server. If you want to still ban it add `-f` to your commande.** \n\nFor example: `{{prefix}}ban {{user}} {{reason}} -f`",
+    "USAGE": "ban <user> (reason) (-f)",
     "EXAMPLE": "ban @Ethan Spam",
     "CONFIRM": "**Do you want to ban `{{user}}` for: `{{reason}}` ?**"
 }
