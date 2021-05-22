@@ -5,6 +5,7 @@ const ms = require("ms");
 const fs = require("fs")
 const moment = require("moment");
 const fetch = require('node-fetch');
+const { Headers } = require('node-fetch');
 
 module.exports = {
 
@@ -534,5 +535,30 @@ module.exports = {
 		});
 	  
 		return arrayOfFiles;
+	},
+
+	/**
+	 * Send server count to top.gg
+	 * @param { Number } serverCount 
+	*/
+
+	async sendServerCount(stats, token) {
+		return new Promise(async (resolve, reject) => {
+			const headers = new Headers();
+			headers.set('Authorization', token);
+
+			const response = await fetch("https://top.gg/api/bots/762965943529766912/stats", {
+				method: "POST",
+				headers,
+				body: JSON.stringify({
+					server_count: stats.serverCount,
+				}),
+			});
+
+			let responseBody = await response.json();
+
+			if(!response.ok) reject(responseBody);
+			else resolve(responseBody);
+		});
 	},
 };
