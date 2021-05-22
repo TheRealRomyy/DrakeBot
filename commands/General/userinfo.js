@@ -23,27 +23,43 @@ class Userinfo extends Command {
         const user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author;
         const member = await message.guild.members.fetch(user).catch(() => {});
 
-        let badges = "";
+        let badges = [];
         const animatedAvatar = user.avatarURL({ dynamic: true })
 
         const userData = await this.client.db.findOrCreateUser(user);
         
         // J'ai enlevé les descriptions parce que useless
-        let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
-        if(user.id === message.author.id) desc = desc === message.drakeWS("general/userinfo:NO_DESC") ? message.drakeWS("general/userinfo:NO_DESC_AUTHOR", { prefix: data.guild.prefix }) : desc;
+        // let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
+        // if(user.id === message.author.id) desc = desc === message.drakeWS("general/userinfo:NO_DESC") ? message.drakeWS("general/userinfo:NO_DESC_AUTHOR", { prefix: data.guild.prefix }) : desc;
 
         if(!user.bot) for (const [badge, value] of Object.entries(user.flags.serialize())) {
-            if(value && client.emotes.badges[badge]) badges += client.emotes.badges[badge] + " ";
+            if(value && client.emotes.badges[badge]) badges.push(client.emotes.badges[badge]);
         };
 
-        if(animatedAvatar !== user.avatarURL()) badges += client.emotes.badges["NITRO"] + " ";
+        if(animatedAvatar !== user.avatarURL()) badges.push(client.emotes.badges["NITRO"]);
 
         const st = user.presence.status;
+
+        let plateforme = user.presence.clientStatus;
+        if (plateforme.mobile && plateforme.desktop) plateforme = "`💻` + `📱`";
+        else if (plateforme.mobile) plateforme = "`📱`";
+        else if (plateforme.desktop) plateforme = "`💻`";
+        else if (user.bot) plateforme = "`🤖`";
+        else if (user.presence.status === "offline") plateforme = null;
+        else plateforme = message.drakeWS("common:OTHER");
+        
+
+        /* Show custom status : 
+        user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" 
+        ? "\n" + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji !== null 
+        ? user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji.name + " " 
+        : "") + user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].state 
+        : "")*/
 
         const embed = new MessageEmbed()
         .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
-        .setDescription(badges + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" ? "\n" + (user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji !== null ? user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].emoji.name + " " : "") + user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS")[0].state : ""))
+        .setDescription(`${message.drakeWS("common:BADGES")} ${badges.length === 0 ? "`" + message.drakeWS("common:ANY_BADGES") + "`" : (badges.length === 1 ? badges[0] : badges.join(", "))} \n${plateforme !== null ? message.drakeWS("common:SYSTEM") : ""} ${plateforme !== null ? plateforme : ""}`)
         .setColor("RANDOM")
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .addField(message.drakeWS("general/userinfo:NAME", {
@@ -52,15 +68,12 @@ class Userinfo extends Command {
         .addField(message.drakeWS("general/userinfo:ID", {
             emoji: "id"
         }), "||" + user.id + "||", true)
-        .addField(message.drakeWS("general/userinfo:BOT", {
-            emoji: "bot"
-        }), user.bot ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(message.drakeWS("general/userinfo:CREATE", {
             emoji: "calendar"
         }), this.client.functions.printDateFrom(user.createdAt), true)
-        .addField(message.drakeWS("general/userinfo:NICKNAME", {
-            emoji: "nickname"
-        }), member.nickname ? member.nickname : message.drakeWS("common:NO"), true)
+        .addField(message.drakeWS("general/userinfo:BOT", {
+            emoji: "bot"
+        }), user.bot ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(message.drakeWS("general/userinfo:JOIN", {
             emoji: "calendar2"
         }), this.client.functions.printDateFrom(member.joinedAt), true)
