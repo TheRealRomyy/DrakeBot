@@ -110,8 +110,8 @@ class Message {
 
         /* END TEMP ZONE */
         
-		if(message.content === "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
-            user: message.author,
+		if(message.content === `<@!${client.user.id}>` || message.content === `<@${client.user.id}>`) return message.drake("misc:HELLO", {
+            user: message.author.username,
             prefix: data.guild.prefix,
             emoji: "info"
         });
