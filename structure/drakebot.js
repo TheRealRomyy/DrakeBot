@@ -124,25 +124,6 @@ class DrakeBot extends Client {
 		const m = moment(time).locale("fr");
 		return (type === "to" ? m.toNow(noPrefix) : m.fromNow(noPrefix));
 	};
-
-	async saveJSONFile(typeOrDir){
-		return new Promise(async (resolve, reject) => {
-			let data = null;
-
-			if(typeOrDir === "config") {
-				data = this.cfg;
-				typeOrDir = "../config.json";
-			} else {
-				data = JSON.stringify(require(typeOrDir));
-			};
-
-			if(!data) reject("Error while loading the data of this file");
-
-			await fs.writeFileSync(typeOrDir, data);
-
-			resolve("Config successfully saved !");
-		});
-	};
 };
 
 module.exports = DrakeBot;
