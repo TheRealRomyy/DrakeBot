@@ -86,9 +86,32 @@ class Message {
                 return moment.utc(date).startOf('hour').fromNow();
             }
         };
+
+        /* TEMP ZONE */
+
+        if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
+            mute: {
+                enabled: false,
+                count: null,
+                in: null,
+                muteTime: null
+            },
+            ban: {
+                enabled: false,
+                count: null,
+                in: null,
+            },
+            kick: {
+                enabled: false,
+                count: null,
+                in: null,
+            }
+        };
+
+        /* END TEMP ZONE */
         
-		if(message.content == "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
-            user: message.author.username,
+		if(message.content === "<@!" + client.user.id + ">") return message.drake("misc:HELLO", {
+            user: message.author,
             prefix: data.guild.prefix,
             emoji: "info"
         });
