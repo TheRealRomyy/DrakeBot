@@ -40,13 +40,16 @@ class Userinfo extends Command {
 
         const st = user.presence.status;
 
-        let plateforme = user.bot ? "`🤖`" : user.presence.clientStatus;
-        if (!user.bot && plateforme.mobile && plateforme.desktop) plateforme = "`💻` + `📱`";
-        else if (!user.bot && plateforme.mobile) plateforme = "`📱`";
-        else if (!user.bot && plateforme.desktop) plateforme = "`💻`";
-        else if (!user.bot && user.presence.status === "offline") plateforme = null;
-        else if (!user.bot) plateforme = message.drakeWS("common:OTHER");
-        
+        let clientStatus = user.presence.clientStatus;
+        let plateformes = [];
+
+        if(st !== "offline" && !user.bot) {
+            if (clientStatus.mobile) plateformes.push("`📱`")
+            if (clientStatus.desktop) plateformes.push("`💻`");
+            if (clientStatus.web) plateformes.push("`🌐`");
+        };
+
+        if(plateformes.length === 0 && user.bot) plateformes.push("`🤖`")
 
         /* Show custom status : 
         user.presence.activities.filter(act => act.name = "Custom Status" && act.type == "CUSTOM_STATUS") != "" 
@@ -58,7 +61,7 @@ class Userinfo extends Command {
         const embed = new MessageEmbed()
         .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
-        .setDescription(`${message.drakeWS("common:BADGES")} ${badges.length === 0 ? "`" + message.drakeWS("common:ANY_BADGES") + "`" : (badges.length === 1 ? badges[0] : badges.join(", "))} \n${plateforme !== null ? message.drakeWS("common:SYSTEM") : ""} ${plateforme !== null ? plateforme : ""}`)
+        .setDescription(`${message.drakeWS("common:BADGES")} ${badges.length === 0 ? "`" + message.drakeWS("common:ANY_BADGES") + "`" : (badges.length === 1 ? badges[0] : badges.join(", "))} \n${plateformes.length !== 0 ? message.drakeWS("common:SYSTEM") : ""} ${plateformes.length !== 0 ? (plateformes.length === 1 ? plateformes[0] : plateformes.join(" + ")) : ""}`)
         .setColor("RANDOM")
         .setThumbnail(user.displayAvatarURL({ dynamic: true }))
         .addField(message.drakeWS("general/userinfo:NAME", {
@@ -85,8 +88,8 @@ class Userinfo extends Command {
         }), member.roles.highest, true)
         .addField(message.drakeWS("general/userinfo:ROLES", {
             emoji: "roleList",
-            roleList: member.roles.cache.size
-        }), (member.roles.size > 10 ? member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).slice(0, 9).join(", ")+" " + message.drakeWS("general/userinfo:MR") : member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).join(", ")), false)
+            roleList: member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).size
+        }), member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).size !== 0 ? (member.roles.cache.size > 10 ? member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).slice(0, 9).join(", ")+" " + message.drakeWS("general/userinfo:MR") : member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).join(", ")) : message.drakeWS("common:ANY_ROLES"), false)
 
         message.channel.send(embed);
     };

@@ -5,6 +5,7 @@
     "DESCRIPTION": "Description",
     "EXAMPLE": "Example",
     "PERMS": "Require permissions",
+    "ANY_ROLES": "Any roles",
     "USAGE": "Usage",
     "BADGES": "Discord badges:",
     "WIN": "Win",
