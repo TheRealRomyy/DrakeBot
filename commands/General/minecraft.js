@@ -53,7 +53,7 @@ class Minecraft extends Command {
                     .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setColor(client.cfg.color.blue)
                     .setFooter(client.cfg.footer)
-                    .setImage(`https://crafatar.com/renders/body/${uuid}`)
+                    .setImage(`https://crafatar.com/renders/body/${uuid}?overlay=true`)
                     .setThumbnail(`https://mc-heads.net/avatar/${uuid}`)
                     .setDescription(`**${i+1}** • **${res[0].name.replace("_", "\\_")}** \`${date}\`.`)
                     .setTimestamp();
@@ -93,7 +93,7 @@ class Minecraft extends Command {
                         })
                     })
                     .setFooter(client.cfg.footer)
-                    .setImage(`https://crafatar.com/renders/body/${uuid}`)
+                    .setImage(`https://crafatar.com/renders/body/${uuid}?overlay=true`)
                     .setThumbnail(`https://mc-heads.net/avatar/${uuid}`)
                     .setTitle("Minecraft Profile - " + pseudo);
             
