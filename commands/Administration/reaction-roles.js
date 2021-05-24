@@ -217,7 +217,7 @@ class ReactionRoles extends Command {
                 emoji: "roleList"
             }));
 
-            msg.edit(embed);
+            msg.edit(embed).catch(() => {});
 
             collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
 
