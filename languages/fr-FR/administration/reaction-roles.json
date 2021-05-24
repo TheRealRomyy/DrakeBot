@@ -15,7 +15,7 @@
     "INSTRUCTIONS_REMOVE": "**Veuillez entrer l'id du réaction-rôle que vous voulez supprimer** \n \nVous pouvez entrer `cancel` pour annuler",
     "EMOJI_NOT_FOUND": "**L'émoji __{{reaction}}__ n'existe pas !**",
     "ROLE_NOT_FOUND": "**Le role __{{role}}__ n'existe pas !**",
-    "ROLE_TO_HIGHT": "**Le role __{{role}}__ est plus haut que le bot !**",
+    "ROLE_TO_HIGHT": "**Le role __{{role}}__ est plus haut ou aussi haut que le plus haut rôle du bot !**",
     "INSTRUCTIONS_ADD_2": "**Veuillez entrer l'id du message dans lequel le réaction-role va opérer** \n \nVous pouvez entrer `cancel` pour annuler",
     "INSTRUCTIONS_ADD_3": "**Veuillez entrer l'émoji que vous voulez mettre sur le reaction-role** \n \nVous pouvez entrer `cancel` pour annuler",
     "INSTRUCTIONS_ADD_4": "**Veuillez entrer le rôle qui sera donné** \n \nVous pouvez entrer `cancel` pour annuler",

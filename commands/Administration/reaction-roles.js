@@ -247,7 +247,7 @@ class ReactionRoles extends Command {
                 return await start(false);
             };
 
-            if(roleR.position > message.guild.member(client.user).roles.highest.position) {
+            if(roleR.position >= message.guild.member(client.user).roles.highest.position) {
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
@@ -287,11 +287,12 @@ class ReactionRoles extends Command {
                 count: data.guild.reactioncount
             });
 
-            await data.guild.save();
-
             filter = (reaction, user) => {
-                return ['➕', '📜', '➖', '❌'].includes(reaction.emoji.name) && user.id === message.author.id;
+                return ['➕', '📜', '➖', '❌', '↩️'].includes(reaction.emoji.name) && user.id === message.author.id;
             };
+
+            await data.guild.save();
+            await afterHelp();
         }
 
         async function listReactionRole() {
