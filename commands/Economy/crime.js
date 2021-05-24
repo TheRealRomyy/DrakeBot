@@ -34,7 +34,7 @@ class Crime extends Command {
                 time: message.time.convertMS(toWait - Date.now())
             });
             data.member.cooldowns.crime = toWait;
-            await data.member.save();
+            await data.member.save(data.member);
             return;
         };
 
@@ -53,7 +53,7 @@ class Crime extends Command {
         toWait = Date.now() + 1200000;
         data.member.cooldowns.crime = toWait;
         data.member.money += number;
-        await data.member.save();
+        await data.member.save(data.member);
     };
 };
 

@@ -107,7 +107,7 @@ class Fight extends Command {
                 data.member.money += toWin;
                 data.member.cooldowns.fight = toWait;
 
-                return await data.member.save();
+                return await data.member.save(data.member);
             
             } else if(mobHP > 0) { // Défaite du joueur ]:
 
@@ -119,7 +119,7 @@ class Fight extends Command {
                 // Définir un cooldown & le sauvegarder dans la db
                 const toWait = Date.now() + 3600000;
                 data.member.cooldowns.fight = toWait;
-                return await data.member.save();
+                return await data.member.save(data.member);
             };
         };
 

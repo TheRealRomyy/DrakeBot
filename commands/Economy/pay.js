@@ -41,10 +41,10 @@ class Pay extends Command {
         const memberData = await this.client.db.findOrCreateMember(member, message.guild);
 
         data.member.money -= amount;
-        await data.member.save();
+        await data.member.save(data.member);
 
         memberData.money += amount;
-        await memberData.save();
+        await memberData.save(memberData);
 
         return message.drake("economy/pay:SUCCES", {
             username: member.user.username,

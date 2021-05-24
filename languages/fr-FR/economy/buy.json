@@ -1,6 +1,7 @@
 {
     "DESCRIPTION": "Acheter un objet",
     "EXAMPLE": "buy 2",
+    "NOT_EXIST": "**Cette objet n'existe pas !**",
     "USAGE": "buy <item_id>",
     "NOT_ENOUGHT": "**Vous n'avez pas assez d'argent !**",
     "SUCCES": "Vous avez bien acheté __{{item}}__ pour **{{price}}{{symbol}}** !",

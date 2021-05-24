@@ -42,7 +42,7 @@ class Work extends Command {
 
         data.member.cooldowns.work = toWait;
         data.member.money += number;
-        await data.member.save();
+        await data.member.save(data.member);
     };
 };
 

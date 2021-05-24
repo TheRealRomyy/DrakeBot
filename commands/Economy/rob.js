@@ -60,7 +60,7 @@ class Rob extends Command {
                 time: message.time.convertMS(toWait - Date.now())
             });
             data.member.cooldowns.rob = toWait;
-            await data.member.save();
+            await data.member.save(data.member);
             return;
         };
 
@@ -87,8 +87,8 @@ class Rob extends Command {
         data.member.cooldowns.rob = toWait;
         data.member.money += number;
         memberData.money -= number;
-        await data.member.save();
-        await memberData.save();
+        await data.member.save(data.member);
+        await memberData.save(memberData);
     };
 };
 

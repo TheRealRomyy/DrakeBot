@@ -35,7 +35,7 @@ class Eco extends Command {
 
         switch(type) {
             case "give": 
-                if(isNaN(args[2])) return message.drake("economy/eco:AMOUNT_REQUIRE", {
+                if(isNaN(args[2]) || parseInt(args[2]) < 0) return message.drake("economy/eco:AMOUNT_REQUIRE", {
                     emoji: "error"
                 });
                 amount = parseInt(args[2]);
@@ -47,7 +47,7 @@ class Eco extends Command {
                     amount: "1 000 000" + data.guild.symbol
                 });
                 memberData.money += amount;
-                await memberData.save();
+                await memberData.save(memberData);
                 return message.drake("economy/eco:GIVE_SUCCES", {
                     emoji: "succes",
                     username: member.user.username,
@@ -67,7 +67,7 @@ class Eco extends Command {
                     username: member.user.username
                 });
                 memberData.money -= amount;
-                await memberData.save();
+                await memberData.save(memberData);
                 return message.drake("economy/eco:REMOVE_SUCCES", {
                     emoji: "succes",
                     username: member.user.username,
@@ -77,7 +77,7 @@ class Eco extends Command {
             case "reset":
                 memberData.money = 0;
                 memberData.banksold = 0;
-                await memberData.save();
+                await memberData.save(memberData);
                 return message.drake("economy/eco:RESET_SUCCES", {
                     emoji: "succes",
                     username: member.user.username

@@ -26,6 +26,10 @@ class Buy extends Command {
         let itemId = args[0];
         let item = null;
 
+        if(itemId < 1 || itemId > this.client.shop.armor.length + this.client.shop.sword.length) return message.drake("economy/buy:NOT_EXIST", {
+            emoji: "error"
+        });
+
         if(itemId > 6) {
             item = this.client.shop.armor.find((ar) => ar.id === parseInt(itemId));
         } else {
@@ -46,7 +50,7 @@ class Buy extends Command {
 
         data.member.money -= item.price;
         data.member.inventory.push(item);
-        await data.member.save();
+        await data.member.save(data.member);
 
         return message.drake("economy/buy:SUCCES", {
             emoji: "succes",

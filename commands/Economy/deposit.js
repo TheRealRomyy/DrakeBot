@@ -38,7 +38,7 @@ class Deposit extends Command {
             data.member.money = 0;
             data.member.banksold += amount;
 
-            await data.member.save();
+            await data.member.save(data.member);
 
             return message.drake("economy/deposit:SUCCES", {
                 emoji: "succes",
@@ -67,7 +67,7 @@ class Deposit extends Command {
         data.member.money -= amount;
         data.member.banksold += amount;
 
-        await data.member.save();
+        await data.member.save(data.member);
 
         return message.drake("economy/deposit:SUCCES", {
             emoji: "succes",

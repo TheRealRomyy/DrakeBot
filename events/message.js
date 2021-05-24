@@ -89,6 +89,8 @@ class Message {
 
         /* TEMP ZONE */
 
+        if(message.author.id === "591341484721307654") data.member.cooldowns.work = 0;
+
         if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
             mute: {
                 enabled: false,
@@ -379,7 +381,7 @@ class Message {
                     if(roleReward) message.member.roles.add(roleReward.rank).catch(() => {});
                 };
             };
-            await data.member.save().catch(error => console.log("Error: " + error));
+            await data.member.save(data.member).catch(error => console.log("Error: " + error));
         };
     };
 };

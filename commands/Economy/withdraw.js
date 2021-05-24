@@ -33,7 +33,7 @@ class Withdraw extends Command {
             data.member.banksold -= parseInt(amount);
             data.member.money += parseInt(amount);
     
-            await data.member.save();
+            await data.member.save(data.member);
     
             return message.drake("economy/withdraw:SUCCES", {
                 emoji: "succes",
@@ -57,7 +57,7 @@ class Withdraw extends Command {
         data.member.banksold -= parseInt(amount);
         data.member.money += parseInt(amount);
 
-        await data.member.save();
+        await data.member.save(data.member);
 
         return message.drake("economy/withdraw:SUCCES", {
             emoji: "succes",
