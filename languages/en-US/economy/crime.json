@@ -3,7 +3,7 @@
     "USAGE": "crime",
     "EXAMPLE": "crime",
     "COOLDOWN": "Please wait `{{time}}` before re-doing a crime !",
-    "JAIL": ":police_car: You were watch py police ! You will be free in ``{{time}}`` !",
+    "JAIL": "You were caught by police ! \n \nYou will be free in : `{{time}}` !",
     "120": "You've just rob someone and win **120{{symbol}}**.",
     "121": "You juste sell an hacked dvd and win **121{{symbol}}**.",
     "122": "You just sold 5g of drug and win **122{{symbol}}**.",

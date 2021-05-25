@@ -3,7 +3,7 @@
     "USAGE": "rob <player>",
     "EXAMPLE": "rob @Mystère",
     "COOLDOWN": "Please wait `{{time}}` before re-rob someone !",
-    "JAIL": ":police_car: You were catch by police. ! \n \nYou go to jail for **{{time}}** !",
+    "JAIL": "You were caught by police ! \n \nYou will be free in : `{{time}}` !",
     "ROB": "You just rob **{{amount}}{{symbol}}** to **{{username}}** !",
     "BOT": "The user **{{bot}}** is a bot !",
     "YOURSELF": "You can't rob yourself !",

@@ -31,7 +31,8 @@ class Crime extends Command {
         if(number < 120 || number > 130) {
             toWait = Date.now() + 3600000;
             message.drake("economy/crime:JAIL", {
-                time: message.time.convertMS(toWait - Date.now())
+                time: message.time.convertMS(toWait - Date.now()),
+                emoji: "jail"
             });
             data.member.cooldowns.crime = toWait;
             await data.member.save(data.member);

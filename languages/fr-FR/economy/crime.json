@@ -3,7 +3,7 @@
     "USAGE": "crime",
     "EXAMPLE": "crime",
     "COOLDOWN": "Veuillez attendre `{{time}}` avant de re-commettre un crime !",
-    "JAIL": ":police_car: Vous vous êtes fait attrapé par la police ! Vous serez libéré dans ``{{time}}`` !",
+    "JAIL": "Vous vous êtes fais attrapés par la police ! \n \nVous devrez aller en prison pendant `{{time}}` !",
     "120": "Vous venez de voler quelqu'un et gagné **120{{symbol}}**. Honte à vous !",
     "121": "Vous avez vendu un dvd piraté et gagné **121{{symbol}}**. Honte à vous !",
     "122": "Vous avez vendu 5g de cocaïne **122{{symbol}}**. Honte à vous !",

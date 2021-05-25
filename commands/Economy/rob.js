@@ -32,7 +32,6 @@ class Rob extends Command {
             time: message.time.convertMS(isInCooldown - Date.now()),
             emoji: "error"
         });
-        
 
         if(member.user.bot) return message.drake("economy/rob:BOT", {
             emoji: "error",
@@ -48,7 +47,7 @@ class Rob extends Command {
 
         const memberData = await this.client.db.findOrCreateMember(member, message.guild);
 
-        if(!memberData.money || memberData.money === 0) return message.drake("economy/rob:NOT_MONEY", {
+        if(memberData.banksold === 0 && memberData.money === 0) return message.drake("economy/rob:NOT_MONEY", {
             emoji: "error",
             username: member.user.username,
             symbol: data.guild.symbol
@@ -57,7 +56,8 @@ class Rob extends Command {
         if(number < 120 || number > 130) {
             toWait = Date.now() + 3600000;
             message.drake("economy/rob:JAIL", {
-                time: message.time.convertMS(toWait - Date.now())
+                time: message.time.convertMS(toWait - Date.now()),
+                emoji: "jail"
             });
             data.member.cooldowns.rob = toWait;
             await data.member.save(data.member);
@@ -66,6 +66,11 @@ class Rob extends Command {
 
         if(memberData.money < number) {
             number = memberData.money;
+            numberStr = number.toString();
+        };
+
+        if(memberData.money === 0) {
+            number = number / 2;
             numberStr = number.toString();
         };
 
