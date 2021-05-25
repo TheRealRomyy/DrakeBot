@@ -130,10 +130,10 @@ class Shop extends Command {
 
             const itemId = parseInt(confMessage);
 
-            if(itemId < 1 || itemId > client.shop.armor.length + client.shop.sword.length) return message.drake("economy/buy:NOT_EXIST", {
+            if(itemId < 1 || itemId > client.shop.armor.length + client.shop.sword.length) return message.channel.send(message.drakeWS("economy/buy:NOT_EXIST", {
                 emoji: "error"
-            }).then(m => m.delete({
-                timeout: 5000
+            })).then(m => m.delete({
+                timeout: 3000
             }).catch(() => {}));
 
             let item = null;
@@ -204,10 +204,10 @@ class Shop extends Command {
 
             const itemId = parseInt(confMessage);
 
-            if(itemId < 1 || itemId > client.shop.armor.length + client.shop.sword.length) return message.drake("economy/buy:NOT_EXIST", {
+            if(itemId < 1 || itemId > client.shop.armor.length + client.shop.sword.length) return message.channel.send(message.drakeWS("economy/buy:NOT_EXIST", {
                 emoji: "error"
-            }).then(m => m.delete({
-                timeout: 5000
+            })).then(m => m.delete({
+                timeout: 3000
             }).catch(() => {}));
 
             let item = null;
