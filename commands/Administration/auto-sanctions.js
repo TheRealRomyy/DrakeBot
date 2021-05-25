@@ -24,6 +24,25 @@ class AutoSanctions extends Command {
         const enabled = message.drakeWS("administration/automod:ENABLED");
         const disabled = message.drakeWS("administration/automod:DISABLED");
 
+        if(!data.guild.plugins.autosanctions) data.guild.plugins.autosanctions = {
+            mute: {
+                enabled: false,
+                count: null,
+                in: null,
+                muteTime: null
+            },
+            ban: {
+                enabled: false,
+                count: null,
+                in: null,
+            },
+            kick: {
+                enabled: false,
+                count: null,
+                in: null,
+            }
+        };
+
         let filter = (reaction, user) => {
             return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
         };
