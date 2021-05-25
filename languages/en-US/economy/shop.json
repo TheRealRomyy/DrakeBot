@@ -3,8 +3,11 @@
     "SWORDS": "Swords",
     "DEXTERITY": "Dexterity",
     "DAMAGE": "Damages",
+    "DESC": "You can click on \"ℹ️\" to get informations about an item or on \"💵\" to buy an item",
     "tips": "You can do `{{prefix}}info <item_id>` to have more informations about an item.",
     "DESCRIPTION": "Show the shop",
+    "QUESTION_INFO": "**Please enter the id of the item you want to see.**\n \nType `cancel` to cancel.",
+    "QUESTION_NUY": "**Please enter the id of the item you want to buy.**\n \nType `cancel` to cancel.",
     "EXAMPLE": "shop",
     "USAGE": "shop"
 }

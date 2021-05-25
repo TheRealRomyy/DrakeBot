@@ -4,8 +4,12 @@
     "ARMORS": "Armures",
     "DEXTERITY": "Déxtéritée",
     "DAMAGE": "Dégats",
+    "DESC": "Vous pouvez cliquer sur \"ℹ️\" pour avoir des informations sur un item ou sur \"💵\" pour acheter un item",
     "tips": "Vous pouvez faire `{{prefix}}info <item_id>` pour avoir plus d'informations sur un item.",
     "DESCRIPTION": "Voir le shop",
+    "QUESTION_INFO": "**Veuillez enter l'id de l'item que vous souhaitez voir.**\n \nTapez `cancel` pour annuler.",
+    "QUESTION_BUY": "**Veuillez enter l'id de l'item que vous souhaitez acheter.**\n \nTapez `cancel` pour annuler.",
     "EXAMPLE": "shop",
+    "INVALID_ID": "**Cette identifiant est invalide ! Il doit être entre `{{minID}}` et `{{maxID}}` !**",
     "USAGE": "shop"
 }
