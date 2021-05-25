@@ -13,5 +13,16 @@
     "27": "Vous avez vendu votre ancien clavier et gagné **27{{symbol}}** !",
     "28": "Chance ! Vous avez trouvé **28{{symbol}}** par terre !",
     "29": "Vous venez de gagner a une compétition de gym et gagné **29{{symbol}}** !",
-    "30": "Vous avez créer un jeux et vous venez de gagner **30{{symbol}}** !"
+    "30": "Vous avez créer un jeux et vous venez de gagner **30{{symbol}}** !",
+    "WORK": "Vous travaillez en tant que **{{job}}** et gagnez **{{pay}}{{symbol}}**",
+    "DEVELOPPER": "Développeur",
+    "COOKER": "Cuisinier",
+    "POLICEMAN": "Policier",
+    "COACH": "Coach",
+    "ASTRONAUT": "Astronaute",
+    "CHEF": "Chef",
+    "DOCTOR": "Médecin",
+    "JOURNALIST": "Journaliste",
+    "FIREFIGHTER": "Pompier",
+    "DENTIST": "Dentiste"
 }
