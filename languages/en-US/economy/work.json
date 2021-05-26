@@ -14,7 +14,7 @@
     "28": "Luck ! You just find **28{{symbol}}** on the floor !",
     "29": "You just win a gym competition and win **29{{symbol}}** !",
     "30": "You just create a videogame and win **30{{symbol}}** !",
-    "WORK": "You work on **{{job}}** and win **{{pay}}{{symbol}}**",
+    "WORK": "You work on **{{job}}** and win **{{pay}}{{symbol}}**\nChance: `{{chance}}%`",
     "DEVELOPPER": "Developper",
     "COOKER": "Cooker",
     "POLICEMAN": "Policeman",
