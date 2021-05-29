@@ -19,7 +19,8 @@ class DrakeBot extends Client {
 		this.functions = require("../helpers/functions");
 		this.dashboard = require("../dashboard/app");
 		this.shop = require("../shop.js");
-		this.db = new (require('../database/postgres.js'))(this);
+		this.db = new (require("../database/postgres.js"))(this);
+		this.buttons = require("discord-buttons")(this);
 
 		this.cmds = new Collection();
 		this.aliases = new Collection();
@@ -43,8 +44,9 @@ class DrakeBot extends Client {
 
     async init() {
 
-		// Load the extenders
+		// Load the extenders & discord reply
 		require("../helpers/extenders");
+		require("discord-reply");
 
 		// Load the scheduled report with crown
 		const scheduler = new CronJob("0 */60 * * * *", async () => {
