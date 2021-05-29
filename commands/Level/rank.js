@@ -70,7 +70,7 @@ class Rank extends Command {
 
         // Informations sur son level
         rankData.currentXP.data = memberData.exp;
-        rankData.requiredXP.data = 7 * (memberData.level * memberData.level) + 80 * memberData.level + 100;
+        rankData.requiredXP.data = 5 * (memberData.level ^ 2) + (50 * memberData.level) + 100
 
         // Couleurs
         rankData.progressBar.bar.color = "#00C1FF";

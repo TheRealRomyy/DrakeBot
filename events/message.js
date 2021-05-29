@@ -333,7 +333,7 @@ class Message {
             const wonExp = Math.floor(Math.random() * ( Math.floor(5) - Math.ceil(2))) + Math.ceil(2);
             const newExp = actualExp + wonExp;
 
-            const neededExp = 7 * (level * level) + 80 * level + 100;
+            const neededExp = 5 * (level ^ 2) + (50 * level) + 100;
 
             data.member.exp += wonExp;
             data.member.exptotal += wonExp;

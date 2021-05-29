@@ -125,7 +125,7 @@ exports.Member = (userID, guildID) => {
         // The exp of the member
         0,
         // The level of the member
-        1,
+        0,
 
         // The inventory of the member
         [],
