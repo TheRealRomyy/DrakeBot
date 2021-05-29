@@ -64,7 +64,7 @@ class Rob extends Command {
             return;
         };
 
-        if(memberData.money < number) {
+        if(memberData.money < number && memberData.money !== 0) {
             number = memberData.money;
             numberStr = number.toString();
         };
