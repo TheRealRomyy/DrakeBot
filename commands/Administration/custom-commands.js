@@ -45,8 +45,8 @@ class CustomCommands extends Command {
 		collected.first().delete();
         msg.delete();
 
-        if(!data.guild.customCommands) {
-            data.guild.customCommands = [];
+        if(!data.guild.customcommands) {
+            data.guild.customcommands = [];
             await data.guild.save();
         }
         
@@ -150,7 +150,7 @@ class CustomCommands extends Command {
                     return message.delete().catch(() => {})
                 } else {
                     cmdName = confMessage.toLowerCase();
-                    if(!data.guild.customCommands.find((c) => c.name === cmdName)) return message.drake("administration/custom-commands:UNKNOWN_COMMAND", {
+                    if(!data.guild.customcommands.find((c) => c.name === cmdName)) return message.drake("administration/custom-commands:UNKNOWN_COMMAND", {
                         emoji: "error",
                         cmd: cmdName
                     });
