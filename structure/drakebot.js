@@ -20,7 +20,6 @@ class DrakeBot extends Client {
 		this.dashboard = require("../dashboard/app");
 		this.shop = require("../shop.js");
 		this.db = new (require("../database/postgres.js"))(this);
-		this.buttons = require("discord-buttons")(this);
 
 		this.cmds = new Collection();
 		this.aliases = new Collection();
@@ -44,9 +43,10 @@ class DrakeBot extends Client {
 
     async init() {
 
-		// Load the extenders & discord reply
+		// Load the extenders, discord reply & discord buttons
 		require("../helpers/extenders");
 		require("discord-reply");
+		require('discord-buttons')(this)
 
 		// Load the scheduled report with crown
 		const scheduler = new CronJob("0 */60 * * * *", async () => {

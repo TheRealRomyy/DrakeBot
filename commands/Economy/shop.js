@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands");
 const { MessageEmbed } = require("discord.js");
+const { MessageButton } = require("discord-buttons");
 
 class Shop extends Command {
 
@@ -19,6 +20,7 @@ class Shop extends Command {
     async run(message, args, data) {
 
         const client = this.client;
+        const localButtonsID = {};
 
         let msg = null;
         let shop = "";
@@ -27,23 +29,23 @@ class Shop extends Command {
         if(!data.member.inventory) data.member.inventory = [];
 
         const opt = { max: 1, time: 50000, errors: [ "time" ] };
-        let filter = (reaction, user) => {
-            return ['💵', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        let filter = (button) => button.clicker.user.id === message.author.id;
 
-        async function WaitForReaction() {
+        async function waitForButton() {
 
-            let reaction = null;
+            let button = null;
     
-            await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-                reaction = collected.first();
-                reaction.users.remove(message.author.id);
-            }).catch(collected => {
-                return cancel();
+            await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] })
+            .then(collected => {
+                button = collected.first();
+                if(!button) return cancel();
+                button.defer();
             });
+
+            await changeButtonStatus("non-dispo");
     
-            if(reaction == null) return;
-            return reaction.emoji.name;
+            if(button == null) return;
+            return button;
         };
 
         async function wait(first) {
@@ -64,12 +66,11 @@ class Shop extends Command {
         };
 
         async function after(type) {
-            filter = (reaction, user) => {
-                return ['💵', 'ℹ️'].includes(reaction.emoji.name) && user.id === message.author.id;
-            };
+            filter = (button) => button.clicker.user.id === message.author.id;
 
             await start(false, type);
-            const r = await WaitForReaction(msg);
+            await changeButtonStatus("dispo");
+            const r = await waitForButton();
             await switchCTV(r);
         };
 
@@ -258,31 +259,67 @@ class Shop extends Command {
             }).catch(() => {}));
         };
 
+        async function changeButtonStatus(status) {
+
+            let makeButtonAvailable = Boolean(status === "dispo");
+
+            let buyButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'green' : 'gray')
+            .setLabel('Buy 💵')
+            .setID(localButtonsID["buyButton"]);
+
+            let infoButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'blurple' : 'gray')
+            .setLabel('Info ℹ️')
+            .setID(localButtonsID["infoButton"]);
+
+            if(!makeButtonAvailable) {
+                buyButton.setDisabled(true);
+                infoButton.setDisabled(true);
+            };
+
+            await msg.edit({
+                buttons: [buyButton, infoButton]
+            });
+        };
+
         async function start(first, type) {
 
             let r = true;
     
             if(type !== "info") msg = await wait(first);
-    
-            await msg.react('💵');
-            await msg.react('ℹ️');
+
+            let buyButton = new MessageButton()
+            .setStyle('green')
+            .setLabel('Buy 💵')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}BUY`);
+
+            let infoButton = new MessageButton()
+            .setStyle('blurple')
+            .setLabel('Info ℹ️')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}INFO`);
+
+            localButtonsID["infoButton"] = infoButton.custom_id;
+            localButtonsID["buyButton"] = buyButton.custom_id;
     
             if(type !== "info") msg = await displayMain();
+
+            await msg.edit({
+                buttons: [buyButton, infoButton],
+            }).catch(() => {});
     
-            if(first) r = await WaitForReaction();
+            if(first) r = await waitForButton();
             return r;
         };
 
         async function switchCTV(ctv) {
-            switch(ctv) {
+            switch(ctv.id) {
                 
-                case '💵':
-                    await msg.reactions.removeAll()
+                case localButtonsID["buyButton"]:
                     await buy();
                     await after("buy");
                     break;
-                case 'ℹ️':
-                    await msg.reactions.removeAll()
+                case localButtonsID["infoButton"]:
                     await info();
                     await after("info");
                     break;
