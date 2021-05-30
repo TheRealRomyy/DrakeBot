@@ -563,4 +563,26 @@ module.exports = {
 			else resolve(responseBody);
 		});
 	},
+
+	/**
+	 * Get the bot prefix which is used
+	 * @param { Object } message 
+	 * @param { Object } data  
+	*/
+
+	async getPrefix (message, data) {
+		const prefixes = [
+			`<@!${message.client.user.id}> `,
+			`<@${message.client.user.id}> `,
+			message.client.user.username.toLowerCase(),
+			data.guild.prefix
+		];
+
+		let prefix = null;
+
+		prefixes.forEach((p) => {
+			if(message.content.startsWith(p) || message.content.toLowerCase().startsWith(p)) prefix = p;			
+		});
+		return prefix;
+	},
 };

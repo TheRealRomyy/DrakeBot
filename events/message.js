@@ -145,23 +145,27 @@ class Message {
             client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
         };
 
+        /* TEMP ZONE */
+
         if(data.member.exptotal === null) data.member.exptotal = 0;
         if(data.guild.reactionroles === null) data.guild.reactionroles = new Array();
         if(data.guild.reactioncount === null) data.guild.reactioncount = 0;
 
+        /* END TEMP ZONE */
+
         await updateXp(message, data);
-
-        const prefix = data.guild.prefix;
-        if(!message.content.startsWith(prefix) || message.content === prefix) return;
-
-		const args = message.content.slice(prefix.length).trim().split(/ +/g);
-		const commandName = args.shift().toLowerCase();
-        const cmd = client.cmds.get(commandName) || client.cmds.get(client.aliases.get(commandName));
 
         if(message.content.includes("d!nath") || message.content.includes("d!bastien") || message.content.includes("d!thomas") || message.content.includes("d!oxam") || message.content.includes("d!antonin")) {
             const Perso = new Persos(client, message);
             return await Perso.run();
         };
+
+        const prefix = await client.functions.getPrefix(message, data);
+        if(!prefix || message.content === prefix) return;
+
+		const args = message.content.slice(typeof prefix === "string" ? prefix.length : 0).trim().split(/ +/g);
+		const commandName = args.shift().toLowerCase();
+        const cmd = client.cmds.get(commandName) || client.cmds.get(client.aliases.get(commandName));
         
         if(!cmd) {
 			const customCommand = data.guild.customcommands.find((c) => c.name === commandName);
