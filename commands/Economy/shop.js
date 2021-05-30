@@ -111,7 +111,7 @@ class Shop extends Command {
             let confMessage = collected.first().content;
 
             if(confMessage === "cancel") {
-                await collected.first().delete().catch(() => {});
+                question.delete().catch(() => {});
                 return await start(false);
             };
 
@@ -185,7 +185,7 @@ class Shop extends Command {
             let confMessage = collected.first().content;
 
             if(confMessage === "cancel") {
-                await collected.first().delete().catch(() => {});
+                question.delete().catch(() => {});
                 return await start(false);
             };
 
@@ -280,7 +280,7 @@ class Shop extends Command {
 
             await msg.edit({
                 buttons: [buyButton, infoButton]
-            });
+            }).catch(() => {});
         };
 
         async function start(first, type) {
@@ -313,6 +313,7 @@ class Shop extends Command {
         };
 
         async function switchCTV(ctv) {
+            if(!ctv) return;
             switch(ctv.id) {
                 
                 case localButtonsID["buyButton"]:
