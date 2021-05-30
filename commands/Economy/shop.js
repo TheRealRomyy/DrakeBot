@@ -331,6 +331,7 @@ class Shop extends Command {
         async function cancel() {
             msg.delete().catch(() => {});
             message.delete().catch(() => {});
+            return;
         };
     
         const ctv = await start(true);

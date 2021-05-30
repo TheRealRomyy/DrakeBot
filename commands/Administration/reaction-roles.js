@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
+const { MessageButton } = require("discord-buttons");
 
 class ReactionRoles extends Command {
 
@@ -18,9 +19,9 @@ class ReactionRoles extends Command {
     async run(message, args, data) {
 
         const client = this.client;
+        const localButtonsID = {};
 
         let msg = null;
-        let retunHome = null;
         let IDofReact = null;
 
         let ChannelR = null;
@@ -28,9 +29,7 @@ class ReactionRoles extends Command {
         let reactionR = null;
         let roleR = null;
 
-        let filter = (reaction, user) => {
-            return ['➕', '📜', '➖', '❌', '↩️'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        let filter = (button) => button.clicker.user.id === message.author.id;
         const opt = { max: 1, time: 50000, errors: [ "time" ] };
         
         async function cancel() {
@@ -38,25 +37,28 @@ class ReactionRoles extends Command {
             message.delete().catch(() => {});
         };
 
-        async function WaitForReaction(msg) {
+        async function waitForButton() {
 
-            let reaction = null;
-
-            await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-                reaction = collected.first();
-            }).catch(collected => {
-                return cancel();
+            let button = null;
+    
+            await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] })
+            .then(collected => {
+                button = collected.first();
+                if(!button) return cancel();
+                button.defer();
             });
 
-            if(reaction == null) return;
-            return reaction.emoji.name;
+            await changeButtonStatus("non-dispo");
+    
+            if(button == null) return;
+            return button;
         };
 
         async function displayMain(msg) {
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
-            .setColor("RANDOM")
+            .setColor("BLUE")
             .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS"))
             .setFooter(client.cfg.footer)
 
@@ -287,9 +289,7 @@ class ReactionRoles extends Command {
                 count: data.guild.reactioncount
             });
 
-            filter = (reaction, user) => {
-                return ['➕', '📜', '➖', '❌', '↩️'].includes(reaction.emoji.name) && user.id === message.author.id;
-            };
+            filter = (button) => button.clicker.user.id === message.author.id;
 
             await data.guild.save();
             await afterHelp();
@@ -364,9 +364,7 @@ class ReactionRoles extends Command {
 
             msg.edit(embed);
 
-            filter = (reaction, user) => {
-                return ['➕', '📜', '➖', '❌', '↩️'].includes(reaction.emoji.name) && user.id === message.author.id;
-            };
+            filter = (button) => button.clicker.user.id === message.author.id;
 
             data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
 
@@ -389,54 +387,116 @@ class ReactionRoles extends Command {
             return msg.edit(embed);
         };
 
-        async function start(first) {
+        async function changeButtonStatus(status) {
 
-            filter = (reaction, user) => {
-                return ['➕', '📜', '➖', '❌', '↩️'].includes(reaction.emoji.name) && user.id === message.author.id;
+            let makeButtonAvailable = Boolean(status === "dispo");
+
+            let addButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'green' : 'gray')
+            .setLabel('Add ➕')
+            .setID(localButtonsID["addButton"]);
+
+            let listButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'blurple' : 'gray')
+            .setLabel('List 📜')
+            .setID(localButtonsID["listButton"]);
+
+            let removeButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'red' : 'gray')
+            .setLabel('Remove ➖')
+            .setID(localButtonsID["removeButton"]);
+
+            let closeButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'red' : 'gray')
+            .setLabel('Close ❌')
+            .setID(localButtonsID["closeButton"]);
+
+            if(!makeButtonAvailable) {
+                addButton.setDisabled(true);
+                listButton.setDisabled(true);
+                removeButton.setDisabled(true);
+                closeButton.setDisabled(true);
             };
 
-            if(first) msg = await wait(true);
-            if(first == false) msg = await wait(false);
+            await msg.edit({
+                buttons: [addButton, listButton, removeButton, closeButton]
+            });
+        };
 
-            await msg.react('➕');
-            await msg.react('📜');
-            await msg.react('➖');
-            await msg.react('❌');
+        async function start(first) {
+
+            filter = (button) => button.clicker.user.id === message.author.id;
+
+            if(first) msg = await wait(true);
+            if(first === false) msg = await wait(false);
+
+            let addButton = new MessageButton()
+            .setStyle('green')
+            .setLabel('Add ➕')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}ADD`);
+
+            let listButton = new MessageButton()
+            .setStyle('blurple')
+            .setLabel('List 📜')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}LIST`);
+
+            let removeButton = new MessageButton()
+            .setStyle('red')
+            .setLabel('Remove ➖')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}REMOVE`);
+
+            let closeButton = new MessageButton()
+            .setStyle('red')
+            .setLabel('Close ❌')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}CLOSE`);
+
+            localButtonsID["addButton"] = addButton.custom_id;
+            localButtonsID["listButton"] = listButton.custom_id;
+            localButtonsID["removeButton"] = removeButton.custom_id;
+            localButtonsID["closeButton"] = closeButton.custom_id;
 
             msg = await displayMain(msg);
 
-            const ThingToDo = await WaitForReaction(msg);
+            await msg.edit({
+                buttons: [addButton, listButton, removeButton, closeButton],
+            }).catch(() => {});
+
+            const ThingToDo = await waitForButton();
             if(first) return ThingToDo;
             await switchCTV(ThingToDo);
         };
 
         async function afterHelp() {
-            await msg.reactions.removeAll()
-            await msg.react('↩️')
-            retunHome = await WaitForReaction(msg);
-            if(retunHome == '↩️') {
-                await msg.reactions.removeAll()
+            let returnButton = new MessageButton()
+            .setStyle('blurple')
+            .setLabel('Return ↩️')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}RETURNHOME`);
+
+            await msg.edit({
+                button: returnButton,
+            }).catch(() => {});
+
+            const retunHome = await waitForButton();
+            if(retunHome.id === returnButton.custom_id) {
                 await start(false);
             };
         };
 
         async function switchCTV(ctv) {
 
-            switch(ctv) {
+            switch(ctv.id) {
                 
-                case '➕':
-                    await msg.reactions.removeAll()
+                case localButtonsID["addButton"]:
                     msg = await addReactionRole();
                     break;
-                case '📜':
+                case localButtonsID["listButton"]:
                     msg = await listReactionRole();
                     await afterHelp();
                     break;
-                case '➖':
-                    await msg.reactions.removeAll()
+                case localButtonsID["removeButton"]:
                     msg = await removeReactionRole();
                     break;
-                case '❌':
+                case localButtonsID["closeButton"]:
                     message.drake("common:CANCEL", {
                         emoji: "succes"
                     });

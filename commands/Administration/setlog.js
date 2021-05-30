@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
+const { MessageButton } = require("discord-buttons");
 
 class Setlog extends Command {
 
@@ -19,28 +20,30 @@ class Setlog extends Command {
     async run(message, args, data) {
 
         let client = this.client;
+        const localButtonsID = {};
+
         let msg = null;
 
         const enabled = message.drakeWS("administration/automod:ENABLED");
         const disabled = message.drakeWS("administration/automod:DISABLED");
         
-        let filter = (reaction, user) => {
-            return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        let filter = (button) => button.clicker.user.id === message.author.id;
 
-        async function WaitForReaction(msg) {
+        async function waitForButton() {
 
-            let reaction = null;
+            let button = null;
     
-            await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-                reaction = collected.first();
-                reaction.users.remove(message.author.id);
-            }).catch(collected => {
-                return cancel();
+            await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] })
+            .then(collected => {
+                button = collected.first();
+                if(!button) return cancel();
+                button.defer();
             });
+
+            await changeButtonStatus("non-dispo");
     
-            if(reaction == null) return;
-            return reaction.emoji.name;
+            if(button == null) return;
+            return button;
         };
 
         async function waitForMessage() {
@@ -71,9 +74,7 @@ class Setlog extends Command {
             collected.first().delete().catch(() => {});
             msg.delete().catch(() => {});
 
-            filter = (reaction, user) => {
-                return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
-            };
+            filter = (button) => button.clicker.user.id === message.author.id;
 
             return channel.id;
         };
@@ -146,35 +147,75 @@ class Setlog extends Command {
             return msg.edit(embed);
         };
 
+        async function changeButtonStatus(status) {
+
+            let makeButtonAvailable = Boolean(status === "dispo");
+
+            let modButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'green' : 'gray')
+            .setLabel('Mod 🚨')
+            .setID(localButtonsID["modButton"]);
+
+            let messageButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'blurple' : 'gray')
+            .setLabel('Message 📑')
+            .setID(localButtonsID["messageButton"]);
+
+            if(!makeButtonAvailable) {
+                modButton.setDisabled(true);
+                messageButton.setDisabled(true);
+            };
+
+            await msg.edit({
+                buttons: [modButton, messageButton]
+            });
+        };
+
         async function start(first) {
     
             if(first) msg = await wait(true);
             if(first == false) msg = await wait(false);
     
-            await msg.react('1️⃣');
-            await msg.react('2️⃣');
-    
+            let modButton = new MessageButton()
+            .setStyle('green')
+            .setLabel('Mod 🚨')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}MOD`);
+
+            let messageButton = new MessageButton()
+            .setStyle('blurple')
+            .setLabel('Message 📑')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}MESSAGE`);
+
+            localButtonsID["modButton"] = modButton.custom_id;
+            localButtonsID["messageButton"] = messageButton.custom_id;
+
             msg = await displayMain(msg);
+
+            await msg.edit({
+                buttons: [modButton, messageButton],
+            }).catch(() => {});
     
-            const r = await WaitForReaction(msg);
+            const r = await waitForButton(msg);
             if(first) return r;
             await switchCTV(r);
     
         };
     
         async function after() {
-            const r = await WaitForReaction(msg);
+            await changeButtonStatus("dispo");
+
+            const r = await waitForButton();
             await switchCTV(r);
         };
     
         async function switchCTV(ctv) {
-            switch(ctv) {
+            switch(ctv.id) {
                 
-                case '1️⃣':
+                case localButtonsID["modButton"]:
                     await updateEmbed("mod");
                     await after();
                     break;
-                case '2️⃣':
+                case localButtonsID["messageButton"]:
                     await updateEmbed("messages");
                     await after();
                     break;
@@ -184,8 +225,8 @@ class Setlog extends Command {
         };
     
         async function cancel() {
-            msg.delete();
-            message.delete();
+            msg.delete().catch(() => {});
+            message.delete().catch(() => {});
         };
     
         const ctv = await start(true);
