@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageButton } = require("discord-buttons");
 
 class Kick extends Command {
 
@@ -19,9 +19,8 @@ class Kick extends Command {
     async run(message, args, data) {
 
         let client = this.client;
-        const filter = (reaction, user) => {
-            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+
+        const filter = (button) => button.clicker.user.id === message.author.id;
 
         if(!args[0]) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "kick <user> (reason)",
@@ -59,23 +58,35 @@ class Kick extends Command {
             reason: reason
         }));
 
-        await msg.react('👍');
-        await msg.react('👎');
+        let yesButton = new MessageButton()
+        .setStyle('green')
+        .setLabel('Yes 👍')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}YES-KICK`);
+
+        let noButton = new MessageButton()
+        .setStyle('red')
+        .setLabel('No 👎')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-KICK`);
+
+        await msg.edit({
+            buttons: [yesButton, noButton],
+        }).catch(() => {});
         
-        await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-            let reaction = collected.first();
-            let reactionName = reaction.emoji.name;
-            if(reactionName == '👍') { 
+        await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
+            let button = collected.first();
+            if(!button) {
+                msg.delete().catch(() => {});
+                return message.delete().catch(() => {});
+            };
+            if(button.id === yesButton.custom_id) { 
                 client.functions.kick(member, message, message.author, data.guild, reason, memberData, client);
                 message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {
+                message.drake("common:CANCEL", { emoji: "succes"});
                 msg.delete().catch(() => {});
                 return message.delete().catch(() => {});
-            }
-        }).catch(collected => {
-            msg.delete().catch(() => {});
-            return message.delete().catch(() => {});
+            };
         });
     };  
 };

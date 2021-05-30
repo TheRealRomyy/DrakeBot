@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageButton } = require("discord-buttons");
 
 class Warn extends Command {
 
@@ -19,9 +19,8 @@ class Warn extends Command {
     async run(message, args, data) {
 
         let client = this.client;
-        const filter = (reaction, user) => {
-            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+
+        const filter = (button) => button.clicker.user.id === message.author.id;
 
         if(!args[0]) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "warn <user> (reason)",
@@ -59,13 +58,27 @@ class Warn extends Command {
             reason: reason
         }));
 
-        await msg.react('👍');
-        await msg.react('👎');
+        let yesButton = new MessageButton()
+        .setStyle('green')
+        .setLabel('Yes 👍')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}YES-WARN`);
+
+        let noButton = new MessageButton()
+        .setStyle('red')
+        .setLabel('No 👎')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-WARN`);
+
+        await msg.edit({
+            buttons: [yesButton, noButton],
+        }).catch(() => {});
         
-        await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-            let reaction = collected.first();
-            let reactionName = reaction.emoji.name;
-            if(reactionName == '👍') { 
+        await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
+            let button = collected.first();
+            if(!button) {
+                msg.delete().catch(() => {});
+                return message.delete().catch(() => {});
+            };
+            if(button.id === yesButton.custom_id) { 
                 client.functions.warn(member, message, message.author, data.guild, reason, memberData, client);
                 client.functions.checkAutoSanctions(data.guild, member, memberData, message, client);
                 message.delete().catch(() => {});
@@ -75,9 +88,6 @@ class Warn extends Command {
                 msg.delete().catch(() => {});
                 return message.delete().catch(() => {});
             }
-        }).catch(collected => {
-            msg.delete().catch(() => {});
-            return message.delete().catch(() => {});
         });
     };  
 };

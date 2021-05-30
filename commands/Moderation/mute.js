@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageButton } = require("discord-buttons");
 const ms = require("ms");
 
 class Mute extends Command {
@@ -77,19 +77,31 @@ class Mute extends Command {
         }));
 
         // Définir le filtre du collecteur
-        const filter = (reaction, user) => {
-            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        const filter = (button) => button.clicker.user.id === message.author.id;
 
         // Réagir au message
-        await waitMsg.react('👍');
-        await waitMsg.react('👎');
+        let yesButton = new MessageButton()
+        .setStyle('green')
+        .setLabel('Yes 👍')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}YES-MUTE`);
+
+        let noButton = new MessageButton()
+        .setStyle('red')
+        .setLabel('No 👎')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-MUTE`);
+
+        await waitMsg.edit({
+            buttons: [yesButton, noButton],
+        }).catch(() => {});
 
         // Définir le collecteur et ses réactions
-        await waitMsg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-            let reaction = collected.first();
-            let reactionName = reaction.emoji.name;
-            if(reactionName == '👍') { 
+        await waitMsg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
+            let button = collected.first();
+            if(!button) {
+                msg.delete().catch(() => {});
+                return message.delete().catch(() => {});
+            };
+            if(button.id === yesButton.custom_id) { 
                 client.functions.mute(member, message, message.author, data.guild, reason, memberData, client, time);
                 message.delete().catch(() => {});
                 return waitMsg.delete().catch(() => {});
@@ -99,9 +111,6 @@ class Mute extends Command {
                 });
                 return waitMsg.delete().catch(() => {});
             }
-        }).catch(collected => {
-            waitMsg.delete().catch(() => {});
-            return message.delete().catch(() => {});
         });
     };  
 };

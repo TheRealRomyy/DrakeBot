@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { MessageButton } = require("discord-buttons");
 
 class Nickall extends Command {
 
@@ -7,7 +8,7 @@ class Nickall extends Command {
             name: "nickall",
             aliases: [ "nick-all" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "MANAGE_NICKNAMES", "CHANGE_NICKNAME" ],
             userPerms: [ "MANAGE_NICKNAMES" ],
             cooldown: 10,
@@ -22,9 +23,7 @@ class Nickall extends Command {
             usage: data.guild.prefix + "nickall <nickname>"
         });
 
-        const filter = (reaction, user) => {
-            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        const filter = (button) => button.clicker.user.id === message.author.id;
 
         let nick = args.join(" ");
 
@@ -40,24 +39,36 @@ class Nickall extends Command {
             emoji: "question"
         }));
 
-        await msg.react('👍');
-        await msg.react('👎');
+        let yesButton = new MessageButton()
+        .setStyle('green')
+        .setLabel('Yes 👍')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}YES-NICKALL`);
+
+        let noButton = new MessageButton()
+        .setStyle('red')
+        .setLabel('No 👎')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-NICKALL`);
+
+        await msg.edit({
+            buttons: [yesButton, noButton],
+        }).catch(() => {});
         
-        await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-            let reaction = collected.first();
-            let reactionName = reaction.emoji.name;
-            if(reactionName == '👍') { 
+        await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
+            let button = collected.first();
+            if(!button) {
+                msg.delete().catch(() => {});
+                return message.delete().catch(() => {});
+            };
+            if(button.id === yesButton.custom_id) { 
                 nickAll();
                 return message.drake("moderation/nickall:SUCCES", {
                     emoji: "succes"
                 });
             } else {
+                message.drake("common:CANCEL", { emoji: "succes"});
                 msg.delete().catch(() => {});
                 return message.delete().catch(() => {});
-            }
-        }).catch(collected => {
-            msg.delete().catch(() => {});
-            return message.delete().catch(() => {});
+            };
         });
     };
 };

@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { MessageButton } = require("discord-buttons");
 
 class Nuke extends Command {
 
@@ -17,9 +18,7 @@ class Nuke extends Command {
 
     async run(message, args, data) {
                 
-        const filter = (reaction, user) => {
-            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        const filter = (button) => button.clicker.user.id === message.author.id;
 
         async function nuke() {
             const position = message.channel.position;
@@ -37,25 +36,37 @@ class Nuke extends Command {
             emoji: "question"
         }));
 
-        await msg.react('👍');
-        await msg.react('👎');
+        let yesButton = new MessageButton()
+        .setStyle('green')
+        .setLabel('Yes 👍')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}YES-NUKE`);
+
+        let noButton = new MessageButton()
+        .setStyle('red')
+        .setLabel('No 👎')
+        .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-NUKE`);
+
+        await msg.edit({
+            buttons: [yesButton, noButton],
+        }).catch(() => {});
         
-        await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-            let reaction = collected.first();
-            let reactionName = reaction.emoji.name;
-            if(reactionName == '👍') { 
+        await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
+            let button = collected.first();
+            if(!button) {
+                msg.delete().catch(() => {});
+                return message.delete().catch(() => {});
+            };
+            if(button.id === yesButton.custom_id) { 
                 return nuke();
             } else {
                 return cancel();
             }
-        }).catch(collected => {
-            return cancel();
         });
 
         async function cancel() {
-            console.log("Cancel")
-            msg.delete();
-            message.delete();
+            message.drake("common:CANCEL", { emoji: "succes"});
+            msg.delete().catch(() => {});
+            message.delete().catch(() => {});
         };
     };
 };
