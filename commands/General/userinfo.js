@@ -76,22 +76,25 @@ class Userinfo extends Command {
         .addField(message.drakeWS("general/userinfo:BOT", {
             emoji: "bot"
         }), user.bot ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
-        .addField(message.drakeWS("general/userinfo:JOIN", {
-            emoji: "calendar2"
-        }), this.client.functions.printDateFrom(member.joinedAt), true)
-        .addField(this.client.emotes.status[st] + message.drakeWS("general/userinfo:STATUT"), message.drakeWS("general/userinfo:STATUS_" + st.toUpperCase()), true)
-        .addField(message.drakeWS("general/userinfo:GAME", {
-            emoji: "play"
-        }), (user.presence.activity ? user.presence.activity.name : message.drakeWS("general/userinfo:NO_GAME")), true)
-        .addField(message.drakeWS("general/userinfo:HR", {
-            emoji: "up"
-        }), member.roles.highest, true)
-        .addField(message.drakeWS("general/userinfo:ROLES", {
-            emoji: "roleList",
-            roleList: member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).size
-        }), member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).size !== 0 ? (member.roles.cache.size > 10 ? member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).slice(0, 9).join(", ")+" " + message.drakeWS("general/userinfo:MR") : member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).join(", ")) : message.drakeWS("common:ANY_ROLES"), false)
+        
+        if(member) {
+            embed.addField(message.drakeWS("general/userinfo:JOIN", {
+                emoji: "calendar2"
+            }), this.client.functions.printDateFrom(member.joinedAt), true)
+            .addField(this.client.emotes.status[st] + message.drakeWS("general/userinfo:STATUT"), message.drakeWS("general/userinfo:STATUS_" + st.toUpperCase()), true)
+            // .addField(message.drakeWS("general/userinfo:GAME", {
+            //     emoji: "play"
+            // }), (user.presence.activity ? user.presence.activity.name : message.drakeWS("general/userinfo:NO_GAME")), true)
+            .addField(message.drakeWS("general/userinfo:HR", {
+                emoji: "up"
+            }), member.roles.highest, true)
+            .addField(message.drakeWS("general/userinfo:ROLES", {
+                emoji: "roleList",
+                roleList: member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).size
+            }), member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).size !== 0 ? (member.roles.cache.size > 10 ? member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).slice(0, 9).join(", ")+" " + message.drakeWS("general/userinfo:MR") : member.roles.cache.filter(role => role.id !== message.guild.roles.everyone.id).map((r) => r).join(", ")) : message.drakeWS("common:ANY_ROLES"), false)
+        };
 
-        message.channel.send(embed);
+        return message.channel.send(embed);
     };
 };
 
