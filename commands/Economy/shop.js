@@ -1,6 +1,6 @@
 const Command = require("../../structure/Commands");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton } = require("discord-buttons");
+const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Shop extends Command {
 
@@ -278,8 +278,10 @@ class Shop extends Command {
                 infoButton.setDisabled(true);
             };
 
+            let group1 = new MessageActionRow().addComponents([ buyButton, infoButton ]);
+
             await msg.edit({
-                buttons: [buyButton, infoButton]
+                components: [group1]
             }).catch(() => {});
         };
 
@@ -304,8 +306,10 @@ class Shop extends Command {
     
             if(type !== "info") msg = await displayMain();
 
+            let group1 = new MessageActionRow().addComponents([ buyButton, infoButton ]);
+
             await msg.edit({
-                buttons: [buyButton, infoButton],
+                components: [group1]
             }).catch(() => {});
     
             if(first) r = await waitForButton();

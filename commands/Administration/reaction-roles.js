@@ -1,6 +1,6 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton } = require("discord-buttons");
+const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class ReactionRoles extends Command {
 
@@ -418,9 +418,11 @@ class ReactionRoles extends Command {
                 closeButton.setDisabled(true);
             };
 
+            let group1 = new MessageActionRow().addComponents([ addButton, listButton, removeButton, closeButton ]);
+
             await msg.edit({
-                buttons: [addButton, listButton, removeButton, closeButton]
-            });
+                components: [group1]
+            }).catch(() => {});
         };
 
         async function start(first) {
@@ -457,8 +459,10 @@ class ReactionRoles extends Command {
 
             msg = await displayMain(msg);
 
+            let group1 = new MessageActionRow().addComponents([ addButton, listButton, removeButton, closeButton ]);
+
             await msg.edit({
-                buttons: [addButton, listButton, removeButton, closeButton],
+                components: [group1]
             }).catch(() => {});
 
             const ThingToDo = await waitForButton();
@@ -472,8 +476,10 @@ class ReactionRoles extends Command {
             .setLabel('Return ↩️')
             .setID(`${message.guild.id}${message.author.id}${Date.now()}RETURNHOME`);
 
+            let group1 = new MessageActionRow().addComponents([ returnButton ]);
+
             await msg.edit({
-                button: returnButton,
+                components: [group1]
             }).catch(() => {});
 
             const retunHome = await waitForButton();
@@ -483,7 +489,7 @@ class ReactionRoles extends Command {
         };
 
         async function switchCTV(ctv) {
-
+            if(!ctv) return;
             switch(ctv.id) {
                 
                 case localButtonsID["addButton"]:

@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
+const { MessageButton, MessageActionRow } = require("discord-buttons");
 const ms = require("ms");
 
 class AutoSanctions extends Command {
@@ -19,6 +20,8 @@ class AutoSanctions extends Command {
     async run(message, args, data) {
 
         let client = this.client;
+        const localButtonsID = {};
+
         let msg = null;
 
         const enabled = message.drakeWS("administration/automod:ENABLED");
@@ -43,24 +46,24 @@ class AutoSanctions extends Command {
             }
         };
 
-        let filter = (reaction, user) => {
-            return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
+        let filter = (button) => button.clicker.user.id === message.author.id;
         const opt = { max: 1, time: 90000, errors: [ "time" ] };
 
-        async function WaitForReaction(msg) {
+        async function waitForButton() {
 
-            let reaction = null;
+            let button = null;
     
-            await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-                reaction = collected.first();
-                reaction.users.remove(message.author.id);
-            }).catch(collected => {
-                return cancel();
+            await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] })
+            .then(collected => {
+                button = collected.first();
+                if(!button) return cancel();
+                button.defer();
             });
+
+            await changeButtonStatus("non-dispo");
     
-            if(reaction == null) return;
-            return reaction.emoji.name;
+            if(button == null) return;
+            return button;
         };
 
         async function wait() {
@@ -96,30 +99,87 @@ class AutoSanctions extends Command {
             return msg.edit(embed);
         };
 
+        async function changeButtonStatus(status) {
+
+            let makeButtonAvailable = Boolean(status === "dispo");
+
+            let muteButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'blurple' : 'gray')
+            .setLabel('Mute 🔇')
+            .setID(localButtonsID["muteButton"]);
+
+            let kickButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'green' : 'gray')
+            .setLabel('Kick 🚪')
+            .setID(localButtonsID["kickButton"]);
+
+            let banButton = new MessageButton()
+            .setStyle(makeButtonAvailable ? 'red' : 'gray')
+            .setLabel('Ban 🔨')
+            .setID(localButtonsID["banButton"]);
+
+            if(!makeButtonAvailable) {
+                muteButton.setDisabled(true);
+                kickButton.setDisabled(true);
+                banButton.setDisabled(true);
+            };
+
+            let group1 = new MessageActionRow().addComponents([ muteButton, kickButton, banButton ]);
+
+            await msg.edit({
+                components: [group1]
+            }).catch(() => {});
+        };
+
         async function start() {
 
             await wait()
     
-            await msg.react('1️⃣');
-            await msg.react('2️⃣');
-            await msg.react('3️⃣');
-    
+            filter = (button) => button.clicker.user.id === message.author.id;
+
+            let muteButton = new MessageButton()
+            .setStyle('blurple')
+            .setLabel('Mute 🔇')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}MUTE-BUTTON`);
+
+            let kickButton = new MessageButton()
+            .setStyle('green')
+            .setLabel('Kick 🚪')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}KICK-BUTTON`);
+
+            let banButton = new MessageButton()
+            .setStyle('red')
+            .setLabel('Ban 🔨')
+            .setID(`${message.guild.id}${message.author.id}${Date.now()}BAN-BUTTON`);
+
+            localButtonsID["muteButton"] = muteButton.custom_id;
+            localButtonsID["kickButton"] = kickButton.custom_id;
+            localButtonsID["banButton"] = banButton.custom_id;
+
             msg = await displayMain();
+
+            let group1 = new MessageActionRow().addComponents([ muteButton, kickButton, banButton ]);
+
+            await msg.edit({
+                components: [group1]
+            }).catch(() => {});
     
-            const r = await WaitForReaction(msg);
+            const r = await waitForButton();
             await switchCTV(r);
         };
 
 
         async function after() {
-            const r = await WaitForReaction(msg);
+            await changeButtonStatus("dispo");
+            const r = await waitForButton();
             await switchCTV(r);
         };
 
         async function switchCTV(ctv) {
-            switch(ctv) {
+            if(!ctv) return;
+            switch(ctv.id) {
                 
-                case '1️⃣':
+                case localButtonsID["muteButton"]:
                     let isAutoMuteEnabled = data.guild.plugins.autosanctions.mute.enabled;
                     if(!isAutoMuteEnabled) await manage("mute");
                     else data.guild.plugins.autosanctions.mute = {
@@ -132,7 +192,7 @@ class AutoSanctions extends Command {
                     await displayMain("mute");
                     await after();
                     break;
-                case '2️⃣':
+                case localButtonsID["kickButton"]:
                     let isAutoKickEnabled = data.guild.plugins.autosanctions.kick.enabled;
                     if(!isAutoKickEnabled) await manage("kick");
                     else data.guild.plugins.autosanctions.kick = {
@@ -144,7 +204,7 @@ class AutoSanctions extends Command {
                     await displayMain("kick");
                     await after();
                     break;
-                case '3️⃣':
+                case localButtonsID["banButton"]:
                     let isAutoBanEnabled = data.guild.plugins.autosanctions.ban.enabled;
                     if(!isAutoBanEnabled) await manage("ban");
                     else data.guild.plugins.autosanctions.ban = {
@@ -249,14 +309,12 @@ class AutoSanctions extends Command {
                 in: ms(inVar)
             };
 
-            filter = (reaction, user) => {
-                return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
-            };
+            filter = (button) => button.clicker.user.id === message.author.id;
         };
     
         async function cancel() {
-            msg.delete();
-            message.delete();
+            msg.delete().catch(() => {});
+            message.delete().catch(() => {});
         };
 
         const ctv = await start();

@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton } = require("discord-buttons");
+const { MessageButton, MessageActionRow } = require("discord-buttons");
 const ms = require("ms");
 
 class Mute extends Command {
@@ -90,8 +90,10 @@ class Mute extends Command {
         .setLabel('No 👎')
         .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-MUTE`);
 
-        await waitMsg.edit({
-            buttons: [yesButton, noButton],
+        let group1 = new MessageActionRow().addComponents([ yesButton, noButton ]);
+
+        await msg.edit({
+            components: [group1]
         }).catch(() => {});
 
         // Définir le collecteur et ses réactions

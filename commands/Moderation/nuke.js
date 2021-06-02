@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton } = require("discord-buttons");
+const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Nuke extends Command {
 
@@ -46,8 +46,10 @@ class Nuke extends Command {
         .setLabel('No 👎')
         .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-NUKE`);
 
+        let group1 = new MessageActionRow().addComponents([ yesButton, noButton ]);
+
         await msg.edit({
-            buttons: [yesButton, noButton],
+            components: [group1]
         }).catch(() => {});
         
         await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {

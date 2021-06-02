@@ -1,6 +1,6 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton } = require("discord-buttons");
+const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Setlog extends Command {
 
@@ -166,9 +166,11 @@ class Setlog extends Command {
                 messageButton.setDisabled(true);
             };
 
+            let group1 = new MessageActionRow().addComponents([ modButton, messageButton ]);
+
             await msg.edit({
-                buttons: [modButton, messageButton]
-            });
+                components: [group1]
+            }).catch(() => {});
         };
 
         async function start(first) {
@@ -191,8 +193,10 @@ class Setlog extends Command {
 
             msg = await displayMain(msg);
 
+            let group1 = new MessageActionRow().addComponents([ modButton, messageButton ]);
+
             await msg.edit({
-                buttons: [modButton, messageButton],
+                components: [group1]
             }).catch(() => {});
     
             const r = await waitForButton(msg);
