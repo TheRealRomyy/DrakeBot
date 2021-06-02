@@ -1,0 +1,22 @@
+{
+    "DESCRIPTION": "Construire une embed",
+    "USAGE": "build-embed",
+    "EXAMPLE": "build-embed",
+    "MENU": "🏗️ **__Menu de création d'embed__** \n \n \n🖼️ ● Ajouter une **image** \n📌 ● Ajouter un **titre** \n📄 ● Ajouter une **description** \n🔗 ● Ajouter un **lien** \n📃 ● Ajouter un **footer** \n🖌️ ● Ajouter un **thumbnail** \n🎨 ● Ajouter une **couleur** \n📝 ● Ajouter un **auteur** \n🕐 ● Ajouter un **timestamp** \n \n \n❌ ● Annuler la création d'embed \n✅ ● Envoyer l'embed via **{{botName}}**",
+    "WICH_IMAGE": "Quelle image ?",
+    "INVALID_IMAGE": "**Image invalide**",
+    "SENT": "**Votre embed a bien été envoyée dans {{channel}} !**",
+    "WICH_TITLE": "Quel titre ?",
+    "INVALID_TITLE": "**Titre invalide !**",
+    "WICH_DESCRIPTION": "Quelle description ?",
+    "WICH_FOOTER": "Quel footer ?",
+    "WICH_LINK": "Quel lien ?",
+    "WICH_THUMBNAIL": "Quelle thumbnail ?",
+    "WICH_COLOR": "Quelle couleur ?",
+    "WICH_AUTHOR_NAME": "Quel nom d'auteur ?",
+    "WICH_AUTHOR_IMAGE": "Quelle image d'auteur ? \n \nMarquez `no` si vous n'en voulez pas.",
+    "INVALID_LINK": "**Lien invalide !**",
+    "INVALID_THUMBNAIL": "**Thumbnail invalide !**",
+    "INVALID_COLOR": "**Couleur invalide !** ( Pour avoir une couleur sous le format html vous pouvez aller sur le site https://htmlcolorcodes.com/fr/ )",
+    "INVALID_AUTHOR_IMAGE": "**Image d'auteur invalide !**"
+}

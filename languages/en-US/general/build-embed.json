@@ -1,0 +1,22 @@
+{
+    "DESCRIPTION": "Build an embed",
+    "USAGE": "build-embed",
+    "EXAMPLE": "build-embed",
+    "MENU": "🏗️ **__Build embed menu__** \n \n \n🖼️ ● Add an **image** \n📌 ● Add a **title** \n📄 ● Add a **description** \n🔗 ● Add a **link** \n📃 ● Add a **footer** \n🖌️ ● Add a **thumbnail** \n🎨 ● Add a **color** \n📝 ● Add an **author** \n🕐 ● Add a **timestamp** \n \n \n❌ ● Cancel the embed creation \n✅ ● Send the embed with **{{botName}}**",
+    "WICH_IMAGE": "Wich image ?",
+    "INVALID_IMAGE": "**Image invalid**",
+    "SENT": "**Your embed has been sent in {{channel}} !**",
+    "WICH_TITLE": "Wich title ?",
+    "INVALID_TITLE": "**Title invalid**",
+    "WICH_DESCRIPTION": "Wich description ?",
+    "WICH_FOOTER": "Wich footer ?",
+    "WICH_LINK": "Wich link ?",
+    "WICH_THUMBNAIL": "Wich thumbnail ?",
+    "WICH_COLOR": "Wich color ?",
+    "WICH_AUTHOR_NAME": "Wich author name ?",
+    "WICH_AUTHOR_IMAGE": "Wich author image ? \n \nType `no` if you don't want an auhor image.",
+    "INVALID_LINK": "**Invalid link !**",
+    "INVALID_THUMBNAIL": "**Invalid thumbnail !**",
+    "INVALID_COLOR": "**Invalid color !** ( To get a valid one, go to https://htmlcolorcodes.com )",
+    "INVALID_AUTHOR_IMAGE": "**Invalid image author !**"
+}
