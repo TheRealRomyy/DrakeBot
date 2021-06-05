@@ -52,6 +52,7 @@ class LeaderboardMoney extends Command {
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.yellow)
+        .setThumbnail(message.guild.iconURL({ dynamic:true }))
         .setDescription(membersLeaderboard)
         .setTitle(message.guild.translate("economy/leaderboard-money:TITLE", {
             guildName: message.guild.name
