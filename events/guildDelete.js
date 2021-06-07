@@ -4,25 +4,28 @@ module.exports = class {
 
 	constructor (client) {
 		this.client = client;
-	}
+	};
 
 	async run (guild) {
 
-        this.client.serverRemoves++;
+                // Send stats on top.gg
+                client.functions.sendServerCount(this.client);
 
-        const del = new MessageEmbed()
-        .setTitle("<:remove:766787477175533591> **Server Removed**")
-        .setThumbnail(guild.iconURL({ dynamic: true}))
-        .setFooter(this.client.cfg.footer)
-        .setColor(this.client.cfg.color.red)
-        .setTimestamp()
-        .addField(":memo: • Name", guild.name, false)
-        .addField("<:id:750780969270771893> • ID", guild.id, false)
-        .addField("<:owner:763412335569797141> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
-        .addField("<:member:750717695653183588> • Members", guild.memberCount, false)
+                this.client.serverRemoves++;
 
-        const channel = this.client.channels.cache.get("766782516908392498");
-        
-        channel.send(del);
+                const del = new MessageEmbed()
+                .setTitle("<:remove:766787477175533591> **Server Removed**")
+                .setThumbnail(guild.iconURL({ dynamic: true}))
+                .setFooter(this.client.cfg.footer)
+                .setColor(this.client.cfg.color.red)
+                .setTimestamp()
+                .addField(":memo: • Name", guild.name, false)
+                .addField("<:id:750780969270771893> • ID", guild.id, false)
+                .addField("<:owner:763412335569797141> • Owner", guild.owner.user.username + " (||" + guild.owner.id + "||)", false)
+                .addField("<:member:750717695653183588> • Members", guild.memberCount, false)
+
+                const channel = this.client.channels.cache.get("766782516908392498");
+                
+                channel.send(del);
 	};
 };

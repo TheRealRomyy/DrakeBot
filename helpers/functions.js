@@ -544,24 +544,24 @@ module.exports = {
 	 * @param { Number } serverCount 
 	*/
 
-	async sendServerCount(stats, token) {
-		return new Promise(async (resolve, reject) => {
-			const headers = new Headers();
-			headers.set('Authorization', token);
+	async sendServerCount(client) {
+		const headers =  { 
+			"content-type": "application/json", 
+			"Authorization": client.cfg.api.dbl.token 
+		};
 
-			const response = await fetch("https://top.gg/api/bots/762965943529766912/stats", {
-				method: "POST",
-				headers,
-				body: JSON.stringify({
-					server_count: stats.serverCount,
-				}),
-			});
-
-			let responseBody = await response.json();
-
-			if(!response.ok) reject(responseBody);
-			else resolve(responseBody);
+		const res = await fetch("https://top.gg/api/bots/stats", {
+			method: "POST",
+			headers,
+			body: JSON.stringify({
+				server_count: client.guilds.cache.size,
+			}),
 		});
+
+		const json = await res.json();
+
+		if (!res.error) console.log("Top.gg: Stats successfully posted.");
+		else console.lo("Top.gg: Stats cannot be posted. Error: " + json.error);
 	},
 
 	/**

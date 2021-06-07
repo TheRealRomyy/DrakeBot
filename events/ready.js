@@ -2,8 +2,6 @@ const checkUnmutes = require("../helpers/checkUnmutes.js");
 const checkVoters = require("../helpers/checkVoters.js");
 const loader = require("../database/loader.js");
 
-const Topgg = require('@top-gg/sdk');
-
 const CronJob = require("cron").CronJob;
 
 class Ready {
@@ -15,7 +13,6 @@ class Ready {
 	async run() {
 
       const client = this.client;
-      const api = new Topgg.Api(this.client.cfg.api.dbl.token);
 
       console.log(`================= \n${this.client.user.username} is ready ! (${this.client.user.id}) \nAt ${this.client.guilds.cache.size} guilds \n=================`);
 
@@ -28,15 +25,14 @@ class Ready {
       // Load the "checkVoters" file
       checkVoters.init(client);
 
-      // await client.functions.sendServerCount({
-      //   serverCount: this.client.guilds.cache.size
-      // }, this.client.cfg.api.dbl.token);
+      // Send stats on top.gg
+      client.functions.sendServerCount(this.client);
 
       // Load the cache
       await loader(client);
       setTimeout(async function() {
         await console.log(`Database Cache: All users (${client.cache.users.size} users), members (${client.cache.members.size} members) and guilds (${client.cache.guilds.size} guilds) are in cache !`);
-      }, 3000);
+      }, 1500);
  
 
       // Send in the "status" channel a message.
@@ -51,14 +47,6 @@ class Ready {
         `🌐 • ${this.client.cfg.dashboard.name}`,
         `📃 • ${this.client.cfg.prefix}help`
       ];
-
-      const updateServerCount = new CronJob("*/30   * * * *", async () => { // Every 30 minutes
-
-        await api.postStats({
-          serverCount: this.client.guilds.cache.size,
-        });
-
-      }, null, true, "Europe/Paris");
 
       // Load a scheduler who update status every 20 seconds
 		  const botActivities = new CronJob("0/20 * * * * *", async () => {
@@ -100,7 +88,6 @@ class Ready {
       }, null, true, "Europe/Paris");
         
       botActivities.start();
-      updateServerCount.start();
       pikaploufColor.start();
 	  };
 };
