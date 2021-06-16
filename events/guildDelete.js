@@ -9,7 +9,7 @@ module.exports = class {
 	async run (guild) {
 
                 // Send stats on top.gg
-                client.functions.sendServerCount(this.client);
+                this.client.functions.sendServerCount(this.client);
 
                 this.client.serverRemoves++;
 
