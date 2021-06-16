@@ -19,6 +19,12 @@ router
     .get("/commands", async function(req, res) {
         res.render("commands");
     })
+    .get('/web', async function (req, res) {
+        res.json({
+            serverCount: req.client.guilds.cache.size,
+            userCount: req.client.users.cache.size
+        });
+    })
     .use("/vote", router.post("/", async (req, res) => {
         if(req.headers.authorization === req.client.cfg.api.dbl.password){
             const user = await req.client.users.fetch(req.body.user);
