@@ -20,10 +20,14 @@ router
         res.render("commands");
     })
     .get('/web', async function (req, res) {
-        res.json({
-            serverCount: req.client.guilds.cache.size,
-            userCount: req.client.users.cache.size
-        });
+        if(req.headers.authorization === "Bearer mouchou") {
+            res.json({
+                serverCount: req.client.guilds.cache.size,
+                userCount: req.client.users.cache.size
+            });
+        } else {
+            res.status(403, "Invalid Authorization");
+        };
     })
     .use("/vote", router.post("/", async (req, res) => {
         if(req.headers.authorization === req.client.cfg.api.dbl.password){
