@@ -23,7 +23,15 @@ router
         if(req.headers.authorization === "Bearer mouchou") {
             res.json({
                 serverCount: req.client.guilds.cache.size,
-                userCount: req.client.users.cache.size
+                userCount: req.client.users.cache.size,
+                owner: {
+                    id: req.client.cfg.staff.owner[0],
+                    name: req.client.users.cache.get(req.client.cfg.staff.owner[0]).username
+                },
+                support: [{
+                    id: req.client.cfg.staff.support[0],
+                    name: req.client.users.cache.get(req.client.cfg.staff.support[0]).username
+                }]
             });
         } else {
             res.status(403, "Invalid Authorization");
