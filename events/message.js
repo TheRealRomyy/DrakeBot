@@ -140,9 +140,11 @@ class Message {
             }
         };
 
-        if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES") && (message.content.includes("http://") || message.content.includes("https://") || message.content.includes("discord.gg") || message.content.includes(".gg/"))) {
-            message.delete();
-            client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
+        if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES")) {
+            if(message.content.toLowerCase().includes('.gg/'.toLowerCase() || 'discordapp.com/invite/'.toLowerCase())) {
+                message.delete();
+                client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
+            };
         };
 
         /* TEMP ZONE */
