@@ -26,11 +26,13 @@ router
                 userCount: req.client.users.cache.size,
                 owner: {
                     id: req.client.cfg.staff.owner[0],
-                    name: req.client.users.cache.get(req.client.cfg.staff.owner[0]).username
+                    name: req.client.users.cache.get(req.client.cfg.staff.owner[0]).username,
+                    avatar: req.client.users.cache.get(req.client.cfg.staff.owner[0]).displayAvatarURL({dynamic:true})
                 },
                 support: [{
                     id: req.client.cfg.staff.support[0],
-                    name: req.client.users.cache.get(req.client.cfg.staff.support[0]).username
+                    name: req.client.users.cache.get(req.client.cfg.staff.support[0]).username,
+                    avatar: req.client.users.cache.get(req.client.cfg.staff.support[0]).displayAvatarURL({dynamic:true})
                 }]
             });
         } else {
