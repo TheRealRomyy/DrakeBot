@@ -261,7 +261,7 @@ module.exports = {
 		})).catch(() => {});
 
 		guildData.cases++;
-		guildData.save();
+		guildData.save(guildData);
 
 		const caseInfo = {
 			moderator: moderator.id,
@@ -272,12 +272,12 @@ module.exports = {
 		};
 		
 		memberData.sanctions.push(caseInfo);
-		memberData.save();
+		memberData.save(memberData);
 
 		if(guildData.plugins.logs.mod) {
 			if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
 				guildData.plugins.logs.mod = false;
-				await guildData.save()
+				await guildData.save(guildData)
 			};
 
 			this.sendModLog("warn", member.user, client.channels.cache.get(guildData.plugins.logs.mod), message.author, guildData.cases, logReason ? reason + `\n(${message.content})`: reason);
@@ -398,7 +398,7 @@ module.exports = {
 		if(guildData.plugins.logs.mod) {
 			if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
 				guildData.plugins.logs.mod = false;
-				await guildData.save()
+				await guildData.save(guildData)
 			};
 
 			this.sendModLog("mute", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, message.time.convertMS(time));
@@ -406,8 +406,8 @@ module.exports = {
 
 		await client.mutedUsers.set(`${member.id}${message.guild.id}`, memberData);
 		
-		await memberData.save();
-		await guildData.save();
+		await memberData.save(memberData);
+		await guildData.save(guildData);
 	},
 
 	/**
@@ -438,7 +438,7 @@ module.exports = {
 		});
 
 		guildData.cases++;
-		await guildData.save();
+		await guildData.save(guildData);
 
 		const caseInfo = {
 			moderator: moderator.id,
@@ -449,12 +449,12 @@ module.exports = {
 		};
 		
 		memberData.sanctions.push(caseInfo);
-		memberData.save();
+		memberData.save(memberData);
 
 		if(guildData.plugins.logs.mod) {
 			if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
 				guildData.plugins.logs.mod = false;
-				await guildData.save()
+				await guildData.save(guildData)
 			};
 
 			this.sendModLog("kick", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
@@ -490,7 +490,7 @@ module.exports = {
 
 		await message.guild.members.ban(user, { reason: logReason } ).then(() => {
 			guildData.cases++;
-			guildData.save();
+			guildData.save(guildData);
 
 			const caseInfo = {
 				moderator: moderator.id,
@@ -502,7 +502,7 @@ module.exports = {
 			
 			if(memberData !== null) {
 				memberData.sanctions.push(caseInfo);
-				memberData.save();
+				memberData.save(memberData);
 			};
 
 			if(guildData.plugins.logs.mod) {
@@ -518,7 +518,7 @@ module.exports = {
 			this.sendErrorCmd(client, message, "ban", error);
 		});
 
-		await guildData.save()
+		await guildData.save(guildData)
 	},
 
 	/**
