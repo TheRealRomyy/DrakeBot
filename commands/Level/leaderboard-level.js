@@ -19,6 +19,7 @@ class LeaderboardLevel extends Command {
     async run(message, args, data) {
 
         let client = this.client;
+        const full = Boolean(args[0] === "full");
 
         let countVar = 1;
         let expCount = [];
@@ -42,7 +43,7 @@ class LeaderboardLevel extends Command {
         members = members.filter(mem => !isNaN(client.users.cache.get(mem.id)));
 
         const membersLeaderboard = members.map((m) => 
-            (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + "\n"
+            (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + ( full ? ` (**${expCount[m.id]} exp**)` : "") + "\n"
         );
 
         if(membersLeaderboard == "") return message.drake("level/leaderboard-level:NO_MEMBERS", {
