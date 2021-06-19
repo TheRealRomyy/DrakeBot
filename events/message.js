@@ -157,6 +157,12 @@ class Message {
 
         await updateXp(message, data);
 
+        if(message.content === "@someone") {
+            const randomUser = message.guild.members.cache.random(1)[0];
+            
+            message.channel.send("<@" + randomUser.user.id + ">", {"allowedMentions": { "users" : []}})
+        };
+
         if(message.content.includes("d!nath") || message.content.includes("d!bastien") || message.content.includes("d!thomas") || message.content.includes("d!oxam") || message.content.includes("d!antonin")) {
             const Perso = new Persos(client, message);
             return await Perso.run();
