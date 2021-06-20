@@ -158,9 +158,14 @@ class Message {
         await updateXp(message, data);
 
         if(message.content === "@someone") {
-            const randomUser = message.guild.members.cache.random(1)[0];
+            const randomUser = message.guild.members.cache.random(1)[0].user;
+
+            const someoneEmbed = new MessageEmbed()
+            .setFooter("ID: " + randomUser.id)
+            .setColor(client.cfg.color.blue)
+            .setAuthor(randomUser.tag, randomUser.displayAvatarURL({dynamic:true}))
             
-            message.channel.send("<@" + randomUser.user.id + ">", {"allowedMentions": { "users" : []}})
+            message.channel.send(someoneEmbed)
         };
 
         if(message.content.includes("d!nath") || message.content.includes("d!bastien") || message.content.includes("d!thomas") || message.content.includes("d!oxam") || message.content.includes("d!antonin")) {
