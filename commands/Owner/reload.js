@@ -24,7 +24,7 @@ class Reload extends Command {
 
         let client = this.client;
 
-        await message.delete();
+        await message.delete().catch(() => {});
 
         if(args[0]) {
 
@@ -35,14 +35,8 @@ class Reload extends Command {
                 console.log(chalk.green(`Languages: ${chalk.bold("reloaded")}`));
                 return message.channel.send(client.emotes.succes + " **Languages reloaded !**").then(m => m.delete({
                     timeout: 3000
-                }));
+                }).catch(() => {}));
             };
-
-            if(args[0] === "dashboard") {
-                return message.channel.send(client.emotes.succes + " **Dashboard reloaded !**").then(m => m.delete({
-                    timeout: 3000
-                }));
-            }
             
             if(args[0] === "commands") {
                 client.cmds.forEach(async (cmd) => {
@@ -52,20 +46,20 @@ class Reload extends Command {
 
                 return message.channel.send(client.emotes.succes + " **All commands reloaded !**").then(m => m.delete({
                     timeout: 3000
-                }));
+                }).catch(() => {}));
             };
 
             const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
             if(!cmd) return message.channel.send(client.emotes.error + " **La commande __" + args[0] + "__ n'existe pas !**").then(m => m.delete({
                 timeout: 3000
-            }));
+            }).catch(() => {}));
             
             await client.unloadCommand(cmd.settings.location, cmd.help.name);
             await client.loadCommand(cmd.settings.location, cmd.help.name);
     
             return message.channel.send(client.emotes.succes + " **Command __" + cmd.help.name + "__ reloaded !**").then(m => m.delete({
                 timeout: 3000
-            }));
+            }).catch(() => {}));
 
         } else {
 
@@ -73,7 +67,7 @@ class Reload extends Command {
 
             await message.channel.send(client.emotes.succes + " **Bot reload !**").then(m => m.delete({
                 timeout: 200
-            }));
+            }).catch(() => {}));
 
             await this.client.channels.cache.get("793262294493560893").send("<:idle:750782527626543136> Bot is reconnecting...");
 
