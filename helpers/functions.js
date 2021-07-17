@@ -503,6 +503,8 @@ module.exports = {
 			if(memberData !== null) {
 				memberData.sanctions.push(caseInfo);
 				memberData.save(memberData);
+			} else {
+				console.error("Memberdata == null");
 			};
 
 			if(guildData.plugins.logs.mod) {
