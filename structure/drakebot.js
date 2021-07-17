@@ -46,7 +46,7 @@ class DrakeBot extends Client {
 		// Load the extenders, discord reply & discord buttons
 		require("../helpers/extenders");
 		require("discord-reply");
-		require('discord-buttons')(this)
+		require("discord-buttons")(this);
 
 		// Load the scheduled report with crown
 		const scheduler = new CronJob("0 */60 * * * *", async () => {
@@ -102,7 +102,7 @@ class DrakeBot extends Client {
 				this.aliases.set(alias, props.help.name);
 			});
 		} catch (e) {
-			return console.log((chalk.red`Command: '${chalk.bold(commandName)}' can't be load: ${e}`));
+			return console.error((chalk.red`Command: '${chalk.bold(commandName)}' can't be load: ${e}`));
 		};
 	};
 	
