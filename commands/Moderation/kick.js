@@ -22,7 +22,7 @@ class Kick extends Command {
 
         const filter = (button) => button.clicker.user.id === message.author.id;
 
-        if(!args[0]) return message.drake("errors:NOT_CORRECT", {
+        if(!args[0] && !message.mentions.users.first()) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "kick <user> (reason)",
             emoji: "error"
         });

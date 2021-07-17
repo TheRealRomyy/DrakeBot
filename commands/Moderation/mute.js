@@ -23,7 +23,7 @@ class Mute extends Command {
         const client = this.client;
 
         // Si y'a pas d'args 0
-        if(!args[0]) return message.drake("errors:NOT_CORRECT", {
+        if(!args[0] && !message.mentions.users.first()) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "ban <user> (reason)",
             emoji: "error"
         });
