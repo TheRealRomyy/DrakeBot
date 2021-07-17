@@ -37,7 +37,7 @@ class Setlog extends Command {
             .then(collected => {
                 button = collected.first();
                 if(!button) return cancel();
-                button.defer();
+                button.reply.defer();
             });
 
             await changeButtonStatus("non-dispo");
@@ -79,7 +79,7 @@ class Setlog extends Command {
             return channel.id;
         };
 
-        async function displayMain(msg) {
+        async function displayMain(msg, returnEmbed) {
 
             let isModLogEnabled = data.guild.plugins.logs.mod;
             let isMessagesLogsEnabled = data.guild.plugins.logs.messages;
@@ -92,8 +92,11 @@ class Setlog extends Command {
             .setDescription(message.drakeWS("administration/setlog:DESC"))
             .addField(message.drakeWS("administration/setlog:ONE"), isModLogEnabled ? client.channels.cache.get(isModLogEnabled) : disabled)
             .addField(message.drakeWS("administration/setlog:TWO"), isMessagesLogsEnabled ? client.channels.cache.get(isMessagesLogsEnabled) : disabled)
-    
-            return msg.edit(embed);
+            
+            if(returnEmbed) return embed;
+            else return msg.edit({
+                embed: embed
+            });
         };
 
         async function updateEmbed(type) {
@@ -129,7 +132,9 @@ class Setlog extends Command {
             .addField(message.drakeWS("administration/setlog:TWO"), type === "messages" ? action : ( isMessagesLogsEnabled ? client.channels.cache.get(isMessagesLogsEnabled) : disabled))
 
             await data.guild.save();
-            return msg.edit(embed);
+            return msg.edit({
+                embed: embed
+            });
         };
 
         async function wait(first) {
@@ -144,7 +149,9 @@ class Setlog extends Command {
             }));
     
             if(first) return message.channel.send(embed);
-            return msg.edit(embed);
+            return msg.edit({
+                embed: embed
+            });
         };
 
         async function changeButtonStatus(status) {
@@ -169,7 +176,8 @@ class Setlog extends Command {
             let group1 = new MessageActionRow().addComponents([ modButton, messageButton ]);
 
             await msg.edit({
-                components: [group1]
+                components: [group1],
+                embed: msg.embeds[0]
             }).catch(() => {});
         };
 
@@ -191,12 +199,13 @@ class Setlog extends Command {
             localButtonsID["modButton"] = modButton.custom_id;
             localButtonsID["messageButton"] = messageButton.custom_id;
 
-            msg = await displayMain(msg);
+            const embed = await displayMain(msg, true);
 
             let group1 = new MessageActionRow().addComponents([ modButton, messageButton ]);
 
             await msg.edit({
-                components: [group1]
+                components: [group1],
+                embed: embed
             }).catch(() => {});
     
             const r = await waitForButton(msg);

@@ -29,9 +29,10 @@ class ReactionRoles extends Command {
         let reactionR = null;
         let roleR = null;
 
+
         let filter = (button) => button.clicker.user.id === message.author.id;
         const opt = { max: 1, time: 50000, errors: [ "time" ] };
-        
+
         async function cancel() {
             msg.delete().catch(() => {});
             message.delete().catch(() => {});
@@ -40,21 +41,21 @@ class ReactionRoles extends Command {
         async function waitForButton() {
 
             let button = null;
-    
+
             await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] })
             .then(collected => {
                 button = collected.first();
                 if(!button) return cancel();
-                button.defer();
+                button.reply.defer();
             });
 
             await changeButtonStatus("non-dispo");
-    
+
             if(button == null) return;
             return button;
         };
 
-        async function displayMain(msg) {
+        async function displayMain(msg, returnEmbed) {
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
@@ -62,7 +63,10 @@ class ReactionRoles extends Command {
             .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS"))
             .setFooter(client.cfg.footer)
 
-            return msg.edit(embed);
+            if(returnEmbed) return embed;
+            else return msg.edit({
+                embed: embed
+            });
         };
 
         async function addReactionRole() {
@@ -81,13 +85,15 @@ class ReactionRoles extends Command {
             }));
 
             // Début Channel
-            msg.edit(embed);
+            msg.edit({
+                embed: embed
+            });
 
             let collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-
             if(!collected || !collected.first()) return cancel();
-            
+
             let confChannel = collected.first();
+
             let confMessage = collected.first().content;
 
             if(confMessage == "cancel") {
@@ -97,22 +103,27 @@ class ReactionRoles extends Command {
             };
 
             ChannelR = confChannel.mentions.channels.first() || message.guild.channels.cache.get(confChannel.content) || message.guild.channels.cache.find((ch) => ch.name === confChannel.content || `#${ch.name}` === confChannel.content);
+
             if(!ChannelR) {
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+
                 message.channel.send(message.drakeWS("administration/reaction-roles:CHANNEL_NOT_FOUND", {
                     emoji: "error",
                     channel: confMessage
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 await msg.reactions.removeAll()
                 return await start(false);
             };
 
             collected.first().delete().catch(() => {});
             // Fin channel
+
+
 
             // Début Message ID
             embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
@@ -122,7 +133,11 @@ class ReactionRoles extends Command {
                 emoji: "id",
             }));
 
-            msg.edit(embed);
+
+
+            msg.edit({
+                embed: embed
+            });
 
             collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
 
@@ -134,42 +149,50 @@ class ReactionRoles extends Command {
                 await msg.reactions.removeAll()
                 await collected.first().delete();
                 return await start(false);
-            }
+            };
 
             if(isNaN(confMessage)) {
+
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+
                 message.channel.send(message.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", {
                     emoji: "error",
                     message: confMessage
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 await msg.reactions.removeAll()
                 return await start(false);
-            }
+            };
 
             messageIDR = await client.channels.cache.get(ChannelR.id).messages.fetch(confMessage).catch(() => {});
+
             if(!messageIDR) {
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+
                 message.channel.send(message.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", {
                     emoji: "error",
                     message: confMessage
+
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 await msg.reactions.removeAll()
                 return await start(false);
-            }
+            };
 
             collected.first().delete().catch(() => {});
             // Fin Message ID
 
-            // Début Emoji
 
+
+            // Début Emoji
             embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
                 step: "3"
             }))
@@ -177,10 +200,11 @@ class ReactionRoles extends Command {
                 emoji: "smile",
             }));
 
-            msg.edit(embed);
+            msg.edit({
+                embed: embed
+            });
 
             collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-
             if(!collected || !collected.first()) return cancel();
 
             confMessage = collected.first().content;
@@ -189,18 +213,20 @@ class ReactionRoles extends Command {
                 await msg.reactions.removeAll()
                 await collected.first().delete();
                 return await start(false);
-            }
+            };
 
             await message.react(confMessage).catch(() => {
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+                
                 message.channel.send(message.drakeWS("administration/reaction-roles:EMOJI_NOT_FOUND", {
                     emoji: "error",
                     reaction: confMessage
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 return start(false);
             });
 
@@ -210,8 +236,9 @@ class ReactionRoles extends Command {
             collected.first().delete().catch(() => {});
             // Fin Emoji
 
-            // Début role
 
+
+            // Début role
             embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
                 step: "4"
             }))
@@ -219,7 +246,9 @@ class ReactionRoles extends Command {
                 emoji: "roleList"
             }));
 
-            msg.edit(embed).catch(() => {});
+            msg.edit({
+                embed: embed
+            }).catch(() => {});
 
             collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
 
@@ -234,17 +263,19 @@ class ReactionRoles extends Command {
             };
 
             roleR = message.guild.roles.cache.get(confMessage) || collected.first().mentions.roles.first();
-            
+
             if(!roleR) {
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+
                 message.channel.send(message.drakeWS("administration/reaction-roles:ROLE_NOT_FOUND", {
                     emoji: "error",
                     role: confMessage
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 await msg.reactions.removeAll()
                 return await start(false);
             };
@@ -253,31 +284,41 @@ class ReactionRoles extends Command {
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+
                 message.channel.send(message.drakeWS("administration/reaction-roles:ROLE_TO_HIGHT", {
                     emoji: "error",
                     role: roleR.name
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 await msg.reactions.removeAll()
                 return await start(false);
             };
+
+
 
             collected.first().delete().catch(() => {});
             // Fin rôle
 
             // Début finit
-            embed.setTitle(client.emotes["succes"])
-            embed.setDescription(message.drakeWS("administration/reaction-roles:FINISH_ADD", {
+            const newEmbed = new MessageEmbed()
+            .setTitle(client.emotes["succes"])
+            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+            .setFooter(client.cfg.footer)
+            .setColor(client.cfg.color.blue)
+            .setDescription(message.drakeWS("administration/reaction-roles:FINISH_ADD", {
                 channel: ChannelR.id,
                 messageID: messageIDR,
                 reaction: reactionR,
                 role: roleR.id,
             }));
 
-            msg.edit(embed);
-            // Fin finit
+            msg.edit({
+                embed: newEmbed
+            });
 
+            // Fin finit
             messageIDR.react(reactionR);
             
             data.guild.reactioncount++;
@@ -292,7 +333,7 @@ class ReactionRoles extends Command {
             filter = (button) => button.clicker.user.id === message.author.id;
 
             await data.guild.save();
-            await afterHelp();
+            await afterHelp(newEmbed);
         }
 
         async function listReactionRole() {
@@ -308,8 +349,11 @@ class ReactionRoles extends Command {
                         prefix: data.guild.prefix
             })));
 
-            
-            return msg.edit(embed);
+            await msg.edit({
+                embed: embed
+            });
+
+            afterHelp(embed);
         };
 
         async function removeReactionRole() {
@@ -326,10 +370,11 @@ class ReactionRoles extends Command {
             }));
 
             // Début Suppression
-            msg.edit(embed);
+            await msg.edit({
+                embed: embed
+            });
 
             let collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-
             if(!collected || !collected.first()) return cancel();
             
             let confMessage = collected.first().content;
@@ -338,38 +383,48 @@ class ReactionRoles extends Command {
                 await msg.reactions.removeAll()
                 await collected.first().delete();
                 return await start(false);
-            }
+            };
 
             IDofReact = confMessage;
+
             if(!IDofReact || isNaN(IDofReact) || !data.guild.reactionroles.filter((rr) => rr.id === parseInt(IDofReact))) {
+
                 collected.first().delete({
                     timeout: 5000
                 }).catch(() => {});
+
                 message.channel.send(message.drakeWS("administration/reaction-roles:ID_NOT_EXIST", {
                     emoji: "error",
                     id: confMessage
                 })).then(m => m.delete({
                     timeout: 5000
                 }).catch(() => {}));
+
                 await msg.reactions.removeAll()
                 return await start(false);
             };
 
             collected.first().delete();
 
-            embed.setDescription(message.drakeWS("administration/reaction-roles:FINISH_REMOVE", {
+            const newEmbed = new MessageEmbed()
+            .setTitle(client.emotes["succes"])
+            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+            .setFooter(client.cfg.footer)
+            .setColor(client.cfg.color.purple)
+            .setDescription(message.drakeWS("administration/reaction-roles:FINISH_REMOVE", {
                 id: confMessage
             }));
-            embed.setTitle(client.emotes["succes"]);
 
-            msg.edit(embed);
+            await msg.edit({
+                embed: newEmbed
+            });
 
             filter = (button) => button.clicker.user.id === message.author.id;
 
             data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
 
             await data.guild.save();
-            await afterHelp();	
+            afterHelp(newEmbed);	
         };
 
         async function wait(first) {
@@ -384,7 +439,9 @@ class ReactionRoles extends Command {
             }));
 
             if(first) return message.channel.send(embed);
-            return msg.edit(embed);
+            return msg.edit({
+                embed: embed
+            });
         };
 
         async function changeButtonStatus(status) {
@@ -421,16 +478,17 @@ class ReactionRoles extends Command {
             let group1 = new MessageActionRow().addComponents([ addButton, listButton, removeButton, closeButton ]);
 
             await msg.edit({
-                components: [group1]
+                components: [group1],
+                embed: msg.embeds[0]
             }).catch(() => {});
+
         };
 
         async function start(first) {
 
             filter = (button) => button.clicker.user.id === message.author.id;
 
-            if(first) msg = await wait(true);
-            if(first === false) msg = await wait(false);
+            msg = await wait(first);
 
             let addButton = new MessageButton()
             .setStyle('green')
@@ -457,12 +515,13 @@ class ReactionRoles extends Command {
             localButtonsID["removeButton"] = removeButton.custom_id;
             localButtonsID["closeButton"] = closeButton.custom_id;
 
-            msg = await displayMain(msg);
+            const embed = await displayMain(msg, true);
 
             let group1 = new MessageActionRow().addComponents([ addButton, listButton, removeButton, closeButton ]);
 
             await msg.edit({
-                components: [group1]
+                components: [group1],
+                embed: embed
             }).catch(() => {});
 
             const ThingToDo = await waitForButton();
@@ -470,7 +529,8 @@ class ReactionRoles extends Command {
             await switchCTV(ThingToDo);
         };
 
-        async function afterHelp() {
+        async function afterHelp(previousEmbed) {
+
             let returnButton = new MessageButton()
             .setStyle('blurple')
             .setLabel('Return ↩️')
@@ -478,8 +538,9 @@ class ReactionRoles extends Command {
 
             let group1 = new MessageActionRow().addComponents([ returnButton ]);
 
-            await msg.edit({
-                components: [group1]
+            msg = await msg.edit({
+                components: [group1],
+                embed: previousEmbed
             }).catch(() => {});
 
             const retunHome = await waitForButton();
@@ -491,13 +552,12 @@ class ReactionRoles extends Command {
         async function switchCTV(ctv) {
             if(!ctv) return;
             switch(ctv.id) {
-                
+
                 case localButtonsID["addButton"]:
                     msg = await addReactionRole();
                     break;
                 case localButtonsID["listButton"]:
                     msg = await listReactionRole();
-                    await afterHelp();
                     break;
                 case localButtonsID["removeButton"]:
                     msg = await removeReactionRole();

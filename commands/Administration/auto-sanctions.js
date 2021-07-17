@@ -57,7 +57,7 @@ class AutoSanctions extends Command {
             .then(collected => {
                 button = collected.first();
                 if(!button) return cancel();
-                button.defer();
+                button.reply.defer();
             });
 
             await changeButtonStatus("non-dispo");
@@ -80,7 +80,7 @@ class AutoSanctions extends Command {
             msg = await message.channel.send(embed);
         };
 
-        async function displayMain() {
+        async function displayMain(returnEmbed) {
 
             let isAutoMuteEnabled = data.guild.plugins.autosanctions.mute.enabled;
             let isAutoKickEnabled = data.guild.plugins.autosanctions.kick.enabled;
@@ -96,7 +96,10 @@ class AutoSanctions extends Command {
             .addField(message.drakeWS("administration/auto-sanctions:KICK"), isAutoKickEnabled ? `**${message.drakeWS("administration/auto-sanctions:COUNT")}** \`${data.guild.plugins.autosanctions.kick.count}\`\n**${message.drakeWS("administration/auto-sanctions:IN")}** \`${message.time.convertMS(data.guild.plugins.autosanctions.kick.in)}\`` : disabled)
             .addField(message.drakeWS("administration/auto-sanctions:BAN"), isAutoBanEnabled ? `**${message.drakeWS("administration/auto-sanctions:COUNT")}** \`${data.guild.plugins.autosanctions.ban.count}\`\n**${message.drakeWS("administration/auto-sanctions:IN")}** \`${message.time.convertMS(data.guild.plugins.autosanctions.ban.in)}\`` : disabled)
     
-            return msg.edit(embed);
+            if(returnEmbed) return embed;
+            else return msg.edit({
+                embed: embed
+            });
         };
 
         async function changeButtonStatus(status) {
@@ -127,8 +130,9 @@ class AutoSanctions extends Command {
             let group1 = new MessageActionRow().addComponents([ muteButton, kickButton, banButton ]);
 
             await msg.edit({
-                components: [group1]
-            }).catch(() => {});
+                components: [group1],
+                embed: msg.embeds[0]
+            }).catch(console.error);
         };
 
         async function start() {
@@ -156,13 +160,14 @@ class AutoSanctions extends Command {
             localButtonsID["kickButton"] = kickButton.custom_id;
             localButtonsID["banButton"] = banButton.custom_id;
 
-            msg = await displayMain();
+            const embed = await displayMain(true);
 
             let group1 = new MessageActionRow().addComponents([ muteButton, kickButton, banButton ]);
 
             await msg.edit({
-                components: [group1]
-            }).catch(() => {});
+                components: [group1],
+                embed: embed
+            }).catch(console.error);
     
             const r = await waitForButton();
             await switchCTV(r);
@@ -189,7 +194,7 @@ class AutoSanctions extends Command {
                         in: null
                     };
                     await data.guild.save();
-                    await displayMain("mute");
+                    await displayMain();
                     await after();
                     break;
                 case localButtonsID["kickButton"]:
@@ -201,7 +206,7 @@ class AutoSanctions extends Command {
                         in: null
                     };
                     await data.guild.save();
-                    await displayMain("kick");
+                    await displayMain();
                     await after();
                     break;
                 case localButtonsID["banButton"]:
@@ -213,7 +218,7 @@ class AutoSanctions extends Command {
                         in: null
                     };
                     await data.guild.save();
-                    await displayMain("ban");
+                    await displayMain();
                     await after();
                     break;
                 default:
