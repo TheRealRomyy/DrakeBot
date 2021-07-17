@@ -222,10 +222,10 @@ class Help extends Command {
             const cmdName = args[0].toLowerCase();
             const cmd = client.cmds.get(cmdName) || client.cmds.get(client.aliases.get(cmdName));
 
-            if(!cmd ) return message.drake("general/help:CMD_NOT_FOUND", {
+            if(!cmd ) return message.channel.send(message.drakeWS("general/help:CMD_NOT_FOUND", {
                 cmd: cmdName,
                 emoji: "error"
-            });
+            }), {"allowedMentions": { "users": []}});
 
             const usage = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") !== "USAGE" ? data.guild.prefix + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") : "`No usage provided`";
             const example = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") !== "EXAMPLE" ? data.guild.prefix + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") : "`No example provided`";
