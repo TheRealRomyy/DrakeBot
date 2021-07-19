@@ -63,7 +63,7 @@ class Mute extends Command {
         time = ms(time);
 
         // Chopper la raison avec le message en le découpant de 2
-        let reason = args.slice(2).join(" ");
+        let reason = args.slice(message.mentions.users.first() ? (args[0].includes(user.id) ? 1 : 0) : 1).join(" ").trim();
 
         // Si ya pas la raison
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
