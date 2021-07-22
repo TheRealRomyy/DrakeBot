@@ -6,7 +6,7 @@ module.exports = class {
 
 	async run() {
 
-        this.client.channels.cache.get("793262294493560893").send("<:dnd:750782449168023612> Bot is disconnecting...");
+        this.client.channels.cache.get("793262294493560893").send("<:dnd:750782449168023612> Bot disconnected");
 
 	};
 };

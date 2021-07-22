@@ -63,13 +63,11 @@ class Reload extends Command {
 
         } else {
 
-            await this.client.channels.cache.get("793262294493560893").send("<:dnd:750782449168023612> Bot disconnect.");
-
             await message.channel.send(client.emotes.succes + " **Bot reload !**").then(m => m.delete({
                 timeout: 200
             }).catch(() => {}));
 
-            await this.client.channels.cache.get("793262294493560893").send("<:idle:750782527626543136> Bot is reconnecting...");
+            client.emit("reconnecting");
 
             const { exec } = require("child_process");
 

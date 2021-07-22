@@ -27,9 +27,8 @@ class Execute extends Command {
             usage: data.guild.prefix + "exec <content>"
         });
 
-        if((message.content.includes("token") || message.content.includes("config.js")) && message.author.id !== "709481084286533773") return message.reply(client.emotes.error + " **Nan ! Ca commence mal enculé !**");
         if(message.content.includes("speedtest")) msg = await message.channel.send(this.client.emotes["waiting"]);
-        if(message.content.includes("reboot") || message.content.includes("pm2 stop all") || message.content.includes("pm2 stop DrakeBot")) this.client.channels.cache.get("793262294493560893").send("<:dnd:750782449168023612> Bot disconnect.");
+        if(message.content.includes("reboot") || message.content.includes("pm2 stop all") || message.content.includes("pm2 stop DrakeBot")) this.client.emit("disconnect");
 
 	    await exec(content, async (error, data, getter) => {
 
