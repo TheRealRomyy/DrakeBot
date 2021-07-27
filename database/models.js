@@ -107,6 +107,91 @@ exports.Guild = (guildID, client) => {
         [],
         // The reactions count
         0,
+
+        // The antiraid system
+        {
+            channelCreate: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            channelDelete: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            emojiCreate: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            emojiDelete: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            roleCreate: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            roleDelete: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            webHookUpdate: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            guildBanAdd: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            guildMemberRemove: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any"
+            },
+            antispam: {
+                enabled: false,
+                ignoredRoles: [],
+                ignoredChannels: [],
+                limit: 3,
+                time: 5000,
+                sanction: "any",
+                muteTime: null
+            },
+        }
     ];
 };
 

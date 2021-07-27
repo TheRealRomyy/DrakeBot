@@ -20,6 +20,7 @@ class DrakeBot extends Client {
 		this.dashboard = require("../dashboard/app");
 		this.shop = require("../shop.js");
 		this.db = new (require("../database/postgres.js"))(this);
+		this.antiraid = new (require("../antiraid/Manager"))(this)
 
 		this.cmds = new Collection();
 		this.aliases = new Collection();
