@@ -31,7 +31,7 @@ module.exports = {
 
             dataClient.voter.forEach(vote => {
                 if(vote.expire <= Date.now()) {
-                    let member = client.guilds.cache.get("756915711250792560").member(vote.voterId); // 756915711250792560 = DrakeBot Support
+                    let member = client.guilds.cache.get("756915711250792560").members.cache.get(vote.voterId); // 756915711250792560 = DrakeBot Support
                     if(member != null) member.roles.remove("827891844901765171", "Auto remove").catch(() => {}); // 827891844901765171 = Voter Role
                     dataClient.voter = dataClient.voter.filter((voteDel) => voteDel.voterId !== vote.voterId);
                 }

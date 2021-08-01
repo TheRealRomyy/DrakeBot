@@ -5,7 +5,7 @@ module.exports = class {
 
 	constructor (client) {
 		this.client = client;
-	}
+	};
 
 	async run (member) {
 
@@ -20,13 +20,15 @@ module.exports = class {
 		const memberData = await this.client.db.findOrCreateMember(member, guild);
 		
 		if(guildData.fortress) {
-			await member.send(member.guild.translate("moderation/kick:KICK_DM", {
-				emoji: "door",
-				username: member.user.tag,
-				server: guild.name,
-				moderator: this.client.user.tag,
-				reason: member.guild.translate("misc:FORTRESS_ENABLED")
-			})).catch(() => {});
+			await member.send({
+				content: member.guild.translate("moderation/kick:KICK_DM", {
+					emoji: "door",
+					username: member.user.tag,
+					server: guild.name,
+					moderator: this.client.user.tag,
+					reason: member.guild.translate("misc:FORTRESS_ENABLED")
+				})
+			}).catch(() => {});
 	
 			member.kick(member.guild.translate("misc:FORTRESS_ENABLED"))
 		};
@@ -79,9 +81,12 @@ module.exports = class {
 				member: member.user.tag
 			}));
 
-			const filter = (m) => m.author.id === member.id;
-			const opt = { max: 1, time: 120000, errors: [ "time" ] };
-
+			const opt = { 
+				filter: (m) => m.author.id === member.id,
+				max: 1, 
+				time: 120000, 
+				errors: [ "time" ] 
+			};
 
 			var captcha = captchagen.create();
 
@@ -98,11 +103,16 @@ module.exports = class {
 
 			member.roles.add(captchaRole).catch(() => {});
 
-			let msg = await captchaChannel.send(member.guild.translate("administration/captcha:CAPTCHA", {
-				mention: "<@" + member.user.id + ">"
-			}), attachment);
+			let msg = await captchaChannel.send({
+				content: member.guild.translate("administration/captcha:CAPTCHA", {
+					mention: "<@" + member.user.id + ">"
+				}), 
+				files: [attachment]
+			});
 
-			captchaLogChannel.send(embed);
+			captchaLogChannel.send({
+				embeds: [embed]
+			});
 
 			await member.roles.cache.forEach(role => {
 				if(role.id == captchaRole) return;
@@ -110,22 +120,26 @@ module.exports = class {
 				this.memberRoles.push(role.id);
 			});
 
-			let collected = await captchaChannel.awaitMessages(filter, opt).catch(() => {})
+			let collected = await captchaChannel.awaitMessages(opt).catch(() => {})
 
 			if(!collected || !collected.first()) {
 				msg.delete();
 
-				await member.send(member.guild.translate("moderation/kick:KICK_DM", {
-					emoji: "door",
-					username: member.user.tag,
-					server: guild.name,
-					moderator: this.client.user.tag,
-					reason: member.guild.translate("administration/captcha:NO_FILL")
-				})).catch(() => {});
+				await member.send({
+					content: member.guild.translate("moderation/kick:KICK_DM", {
+						emoji: "door",
+						username: member.user.tag,
+						server: guild.name,
+						moderator: this.client.user.tag,
+						reason: member.guild.translate("administration/captcha:NO_FILL")
+					})
+				}).catch(() => {});
 
 				member.kick(member.guild.translate("administration/captcha:NO_FILL"))
 
-				return captchaLogChannel.send(noEmbed);
+				return captchaLogChannel.send({
+					embeds: [noEmbed]
+				});
 			}
 
 			let confMessage = collected.first().content;
@@ -143,7 +157,9 @@ module.exports = class {
 
 				this.memberRoles = new Array();
 
-				captchaLogChannel.send(succesEmbed);
+				captchaLogChannel.send({
+					embeds: [succesEmbed]
+				});
 
 				// Autorole
 				if(guildData.plugins.autorole.enabled) {
@@ -154,54 +170,61 @@ module.exports = class {
 				if(guildData.plugins.welcome.enabled) {
 					let welcomeChannel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
 
-					welcomeChannel.send(guildData.plugins.welcome.message
-						.replace("{user}", member.user)
-						.replace("{user.nickname}", member.user.username)
-						.replace("{inviter}", "Unknow")
-						.replace("{guild.name}", guild.name)
-						.replace("{guild.members}", guild.memberCount)
-					);
+					welcomeChannel.send({
+						content: guildData.plugins.welcome.message
+							.replace("{user}", member.user)
+							.replace("{user.nickname}", member.user.username)
+							.replace("{inviter}", "Unknow")
+							.replace("{guild.name}", guild.name)
+							.replace("{guild.members}", guild.memberCount)
+					});
 				};
 			} else {
 
 				msg.delete();
 
-				await member.send(member.guild.translate("moderation/kick:KICK_DM", {
-					emoji: "door",
-					username: member.user.tag,
-					server: guild.name,
-					moderator: this.client.user.tag,
-					reason: member.guild.translate("administration/captcha:BAD_FILL")
-				})).catch(() => {});
+				await member.send({
+					content: member.guild.translate("moderation/kick:KICK_DM", {
+						emoji: "door",
+						username: member.user.tag,
+						server: guild.name,
+						moderator: this.client.user.tag,
+						reason: member.guild.translate("administration/captcha:BAD_FILL")
+					})
+				}).catch(() => {});
 
 				member.kick(member.guild.translate("administration/captcha:BAD_FILL"));
 
-				captchaLogChannel.send(failEmbed);
-			}
-		}
+				captchaLogChannel.send({
+					embeds: [failEmbed]
+				});
+			};
+		};
 
 		// Check le système de bienvenue
 		if(guildData.plugins.welcome.enabled && !guildData.plugins.captcha.enabled) {
 			let channel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
 
-			channel.send(guildData.plugins.welcome.message
-				.replace("{user}", member.user)
-				.replace("{user.nickname}", member.user.username)
-				.replace("{inviter}", "Unknow")
-				.replace("{guild.name}", guild.name)
-				.replace("{guild.members}", guild.memberCount)
-			);
+			channel.send({
+				content: guildData.plugins.welcome.message
+					.replace("{user}", member.user)
+					.replace("{user.nickname}", member.user.username)
+					.replace("{inviter}", "Unknow")
+					.replace("{guild.name}", guild.name)
+					.replace("{guild.members}", guild.memberCount)
+			});
 		};
 
 		if(!guildData.plugins.welcomeDM) guildData.plugins.welcomeDM = null;
 
 		// Check le système de bienvenue en message privés
 		if(guildData.plugins.welcomeDM !== null) {
-			member.send(guildData.plugins.welcomeDM
-				.replace("{user}", member.user)
-				.replace("{guild.name}", guild.name)
-				.replace("{guild.members}", guild.memberCount)
-			).catch(() => {});
+			member.send({
+				content: guildData.plugins.welcomeDM
+					.replace("{user}", member.user)
+					.replace("{guild.name}", guild.name)
+					.replace("{guild.members}", guild.memberCount)
+			}).catch(() => {});
 		};
 	};
 };

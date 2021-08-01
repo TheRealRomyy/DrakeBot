@@ -53,7 +53,9 @@ class MessageReactionAdd {
                 "➖": "ORANGE"
             };
 
-            message.edit(message.embeds[0].setColor(colorByName[emoji]));  
+            message.edit({
+                embeds: [message.embeds[0].setColor(colorByName[emoji])]
+            });  
         };
     };
 };

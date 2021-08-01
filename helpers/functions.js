@@ -75,7 +75,9 @@ module.exports = {
         .setAuthor(message.author.username, message.author.displayAvatarURL( { dynamic: true }))
         .setColor(client.cfg.color.red)
 
-        devDM.send(embed)
+        devDM.send({
+			embeds: [embed]
+		})
     },
 
 	/**
@@ -150,7 +152,9 @@ module.exports = {
 		if(reason) embed.setDescription(emojis[type] + ` \`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
 		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(emojis[type] + ` \`Duration:\` ${duration}`)
 
-		message.channel.send(embed)
+		message.channel.send({
+			embeds: [embed]
+		})
 	},
 
 	/**
@@ -174,7 +178,9 @@ module.exports = {
 		if(reason) embed.addField("**Reason:**", "`" + reason + "`")
 		if(duration) embed.addField("**Duration:**", "`" + duration + "`")
 
-		channel.send(embed);
+		channel.send({
+			embeds: [embed]
+		});
 	},
 
 	/**
@@ -563,7 +569,7 @@ module.exports = {
 		const json = await res.json();
 
 		if (!res.error) console.log("Top.gg: Stats successfully posted.");
-		else console.lo("Top.gg: Stats cannot be posted. Error: " + json.error);
+		else console.error("Top.gg: Stats cannot be posted. Error: " + json.error);
 	},
 
 	/**

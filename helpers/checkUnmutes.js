@@ -17,7 +17,7 @@ module.exports = {
 		});
 
 		setInterval(async () => {
-			client.mutedUsers.array().filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
+			Array.from(client.mutedUsers.values()).filter((m) => m.mute.endDate <= Date.now()).forEach(async (memberData) => {
 				const guild = client.guilds.cache.get(memberData.guildid);
 				if(!guild) return;
 
@@ -47,12 +47,14 @@ module.exports = {
 				member.roles.remove(muteRole);
 
 				const reason = guild.translate("common:TIMEOUT");
-				member.send(guild.translate("moderation/mute:UNMUTE_DM", {
-					emoji: "unmute",
-					username: member.user.username,
-					server: member.guild.name,
-					reason: reason,
-				})).catch(() => {});;
+				member.send({
+					content: guild.translate("moderation/mute:UNMUTE_DM", {
+						emoji: "unmute",
+						username: member.user.username,
+						server: member.guild.name,
+						reason: reason,
+					})
+				}).catch(() => {});;
 
 				dataMember.mute = {
 					muted: false,

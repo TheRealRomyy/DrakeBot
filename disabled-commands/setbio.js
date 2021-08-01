@@ -7,7 +7,7 @@ class Setbio extends Command {
             name: "setbio",
             aliases: [ "set-bio", "setdesc", "set-desc" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 10,

@@ -22,11 +22,12 @@ module.exports = class {
         // Check le goodbye plugin
         if(guildData.plugins.leave.enabled) {
             let channel = this.client.channels.cache.get(guildData.plugins.leave.channel);
-            channel.send(guildData.plugins.leave.message
-                .replace("{user}", member.user.username)
-                .replace("{guild.name}", guild.name)
-                .replace("{guild.members}", guild.memberCount)
-            );
+            channel.send({
+                content: guildData.plugins.leave.message
+                    .replace("{user}", member.user.username)
+                    .replace("{guild.name}", guild.name)
+                    .replace("{guild.members}", guild.memberCount)
+                });
         };
     };
 };

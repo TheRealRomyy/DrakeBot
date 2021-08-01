@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class Reverse extends Command {
 
@@ -11,7 +12,19 @@ class Reverse extends Command {
             botPerms: [ "SEND_MESSAGES" ],
             userPerms: [],
             cooldown: 3,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Reverse a text",
+                options: [
+                    {
+                        name: "text",
+                        type: ApplicationCommandOptionTypes.STRING,
+                        required: true,
+                        description: "The text you want to reverse"
+                    }
+                ]
+            }
         });
     };
 
@@ -35,7 +48,35 @@ class Reverse extends Command {
             emoji: "error"
         });
 
-        return message.channel.send(texteFinal);
+        return message.channel.send({
+            content: texteFinal
+        });
+    };
+
+    async runInteraction(interaction, data) {
+
+        let i1 = 0
+        let texteFinal = ""
+        var texte = interaction.options.getString("text");
+        for(i1 = texte.length - 1; i1 >- 1; i1--) texteFinal += texte[i1];
+
+        if(texteFinal.includes("@here")) return interaction.reply({
+            content: interaction.drakeWS("general/reverse:HERE", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        if(texteFinal.includes("@everyone")) return interaction.reply({
+            content: interaction.drakeWS("general/reverse:EVERYONE", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        return interaction.reply({
+            content: texteFinal
+        });
     };
 };
 

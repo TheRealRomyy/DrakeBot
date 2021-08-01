@@ -28,11 +28,11 @@ class Eval extends Command {
        
         
         message.channel.send({
-            content: Formatters.codeBlock(output)
+            content: Formatters.codeBlock("js", output)
         })}).catch((err) => {
             err = err.toString();
             message.channel.send({
-                content: err
+                content: Formatters.codeBlock("js", err)
             });
         });
     };
