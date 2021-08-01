@@ -142,22 +142,24 @@ class DrakeBot extends Client {
                 };
             };
         } catch(error) {
-            const guild = this.guilds.cache.get(guildID);
-            const guildOwner = this.users.cache.get(guild.ownerId);
+            if(error.code === "50001") {
+                const guild = this.guilds.cache.get(guildID);
+                const guildOwner = this.users.cache.get(guild.ownerId);
 
-            const invite = "https://discord.com/api/oauth2/authorize?client_id=762965943529766912&permissions=8&redirect_uri=https%3A%2F%2Fdrakebot.xyz&scope=bot%20applications.commands";
-            guild.leave();
+                const invite = "https://discord.com/api/oauth2/authorize?client_id=762965943529766912&permissions=8&redirect_uri=https%3A%2F%2Fdrakebot.xyz&scope=bot%20applications.commands";
+                guild.leave();
 
-            try {
-                guildOwner.send({
-                    content: "I just leaved your server `" + guild.name + "` because he doesn't allow me to use slashs commands. Please re-add me with this link : " + invite
-                });
-            } catch(err) {
-                const channel = guild.channels.cache.find(channel => channel.type === 'text' && channel.permissionsFor(guild.me).has('SEND_MESSAGES'));
-                channel.send({
-                    content: "I just leaved your server `" + guild.name + "` because he doesn't allow me to use slashs commands. Please re-add me with this link : " + invite
-                });
-            };
+                try {
+                    guildOwner.send({
+                        content: "I just leaved your server `" + guild.name + "` because he doesn't allow me to use slashs commands. Please re-add me with this link : " + invite
+                    });
+                } catch(err) {
+                    const channel = guild.channels.cache.find(channel => channel.type === 'text' && channel.permissionsFor(guild.me).has('SEND_MESSAGES'));
+                    channel.send({
+                        content: "I just leaved your server `" + guild.name + "` because he doesn't allow me to use slashs commands. Please re-add me with this link : " + invite
+                    });
+                };
+            } else console.error;
         };
     };
 
