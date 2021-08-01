@@ -258,13 +258,15 @@ module.exports = {
 
 		if(reason === message.drakeWS("misc:PUB") || reason === message.drakeWS("misc:BADWORDS") || reason === message.drakeWS("misc:FULLMAJ")) logReason = true;
 
-		await member.send(message.drakeWS("moderation/warn:WARN_DM", {
-			emoji: "warn",
-			username: member.user.username,
-			server: message.guild.name,
-			moderator: moderator.tag,
-			reason
-		})).catch(() => {});
+		await member.send({
+			content: message.drakeWS("moderation/warn:WARN_DM", {
+				emoji: "warn",
+				username: member.user.username,
+				server: message.guild.name,
+				moderator: moderator.tag,
+				reason
+			})
+		}).catch(() => {});
 
 		guildData.cases++;
 		guildData.save(guildData);
@@ -356,15 +358,14 @@ module.exports = {
 
 		if(!muteRole) {
 			muteRole = await message.guild.roles.create({
-				data: {
-					name: 'Drake - Mute',
-					color: '#000',
-					permissions: []
-				}
+				name: 'Drake - Mute',
+				color: '#000',
+				permissions: [],
+				reason: "Setup mute DrakeBot"
 			});
 	
 			message.guild.channels.cache.forEach(async (channel, id) => {
-				await channel.updateOverwrite(muteRole, {
+				await channel.permissionOverwrites.edit(muteRole, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false,
 					CONNECT: false
@@ -374,14 +375,16 @@ module.exports = {
 
 		await member.roles.add(muteRole);
 
-		member.send(message.drakeWS("moderation/mute:MUTE_DM", {
-			emoji: "mute",
-			username: member.user.username,
-			server: message.guild.name,
-			moderator: moderator.tag,
-			time: message.time.convertMS(time),
-			reason: reason,
-		})).catch(() => {});;
+		member.send({
+			content: message.drakeWS("moderation/mute:MUTE_DM", {
+				emoji: "mute",
+				username: member.user.username,
+				server: message.guild.name,
+				moderator: moderator.tag,
+				time: message.time.convertMS(time),
+				reason: reason,
+			})
+		}).catch(() => {});;
 
 		this.sendSanctionMessage(message, "mute", member.user, reason, message.time.convertMS(time))
 
@@ -428,19 +431,23 @@ module.exports = {
 	*/
 
 	async kick(member, message, moderator, guildData, reason, memberData, client) {
-		await member.send(message.drakeWS("moderation/kick:KICK_DM", {
-			emoji: "door",
-			username: member.user.username,
-			server: message.guild.name,
-			moderator: moderator.tag,
-			reason
-		})).catch(() => {});
+		await member.send({
+			content: message.drakeWS("moderation/kick:KICK_DM", {
+				emoji: "door",
+				username: member.user.username,
+				server: message.guild.name,
+				moderator: moderator.tag,
+				reason
+			})
+		}).catch(() => {});
 
 		await member.kick(message.drakeWS("moderation/kick:LOG", {
 			moderator: moderator.username,
 			reason
 		})).catch(() => {
-			return message.error("moderation/kick:NOT_KICKABLE");
+			return message.drake("moderation/kick:NOT_KICKABLE", {
+				emoji: "error"
+			});
 		});
 
 		guildData.cases++;
@@ -486,13 +493,15 @@ module.exports = {
             reason
         });
 
-		await user.send(message.drakeWS("moderation/ban:BAN_DM", {
-			emoji: "ban",
-			username: user.username,
-			server: message.guild.name,
-			moderator: moderator.tag,
-			reason
-		})).catch(() => {});
+		await user.send({
+			content: message.drakeWS("moderation/ban:BAN_DM", {
+				emoji: "ban",
+				username: user.username,
+				server: message.guild.name,
+				moderator: moderator.tag,
+				reason
+			})
+		}).catch(() => {});
 
 		await message.guild.members.ban(user, { reason: logReason } ).then(() => {
 			guildData.cases++;
