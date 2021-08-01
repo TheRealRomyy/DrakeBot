@@ -102,10 +102,13 @@ Interaction.prototype.translate = function(key, args) {
 };
 
 /**
- * Convert time
+ * Class of time managing
+ * @static convertMS
+ * @static printDate
+ * @static printDateFrom
 */
 
-Message.prototype.time = class Time {
+class Time {
 
 	static convertMS(ms) {
 		const absoluteSeconds = Math.floor((ms / 1000) % 60);
@@ -163,64 +166,5 @@ Message.prototype.time = class Time {
 	};
 };
 
-/**
- * Convert time
-*/
-
-Interaction.prototype.time = class Time {
-
-	static convertMS(ms) {
-		const absoluteSeconds = Math.floor((ms / 1000) % 60);
-		const absoluteMinutes = Math.floor((ms / (1000 * 60)) % 60);
-		const absoluteHours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-		const absoluteDays = Math.floor(ms / (1000 * 60 * 60 * 24));
-		
-	const d = absoluteDays
-		? absoluteDays === 1
-			? Message.drakeWS("time:ONE_DAY")
-			: Message.drakeWS("time:DAYS", { amount: absoluteDays })
-		: null;
-	const h = absoluteHours
-		? absoluteHours === 1
-			? Message.drakeWS("time:ONE_HOUR")
-			: Message.drakeWS("time:HOURS", { amount: absoluteHours })
-		: null;
-	const m = absoluteMinutes
-		? absoluteMinutes === 1
-			? Message.drakeWS("time:ONE_MINUTE")
-			: Message.drakeWS("time:MINUTES", { amount: absoluteMinutes })
-		: null;
-	const s = absoluteSeconds
-		? absoluteSeconds === 1
-			? Message.drakeWS("time:ONE_SECOND")
-			: Message.drakeWS("time:SECONDS", { amount: absoluteSeconds })
-		: null;
-	const ams = ms
-	? ms === 1
-		? Message.drakeWS("time:ONE_MILISECOND")
-		: Message.drakeWS("time:MILISECONDS", { amount: ms })
-	: null;
-
-		const absoluteTime = [];
-		if (d) absoluteTime.push(d);
-		if (h) absoluteTime.push(h);
-		if (m) absoluteTime.push(m);
-		if (s) absoluteTime.push(s);
-		if (absoluteTime.length === 0) absoluteTime.push(ams);
-
-		return absoluteTime.join(", ");
-	};
-
-	static printDate(date, format, locale){
-		if(!locale) locale = "fr-FR"
-		if(!format) format = "Do MMMM YYYY";
-		return moment(new Date(date)).locale("fr").format(format);
-	};
-
-	static printDateFrom(date, format, locale){
-		if(!locale) locale = "fr-FR"
-		if(!format) format = "Do MMMM YYYY";
-		moment.locale("fr");
-		return moment.utc(date).startOf('hour').fromNow();
-	};
-};
+Message.prototype.time = Time;
+Interaction.prototype.time = Time;
