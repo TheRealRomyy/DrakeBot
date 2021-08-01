@@ -1,4 +1,6 @@
 const Command = require("../../structure/Commands");
+const { Formatters } = require("discord.js");
+
 class Eval extends Command {
     constructor (client) {
         super(client, {
@@ -25,12 +27,12 @@ class Eval extends Command {
         if(typeof output !== "string") output = require("util").inspect(output, { depth: 0 });
        
         
-        message.channel.send(output, {
-            code: "js"
+        message.channel.send({
+            content: Formatters.codeBlock(output)
         })}).catch((err) => {
             err = err.toString();
-            message.channel.send(err, {
-                code: "js"
+            message.channel.send({
+                content: err
             });
         });
     };

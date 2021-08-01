@@ -49,7 +49,9 @@ class MessageDelete {
             user: this.client.user.tag
         }));
 
-		return channel.send(embed);
+		return channel.send({
+            embeds: [embed]
+        });
     }
 };
 

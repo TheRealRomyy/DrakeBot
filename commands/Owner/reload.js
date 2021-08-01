@@ -24,8 +24,6 @@ class Reload extends Command {
 
         let client = this.client;
 
-        await message.delete().catch(() => {});
-
         if(args[0]) {
 
             if(args[0] === "languages") {
@@ -33,9 +31,9 @@ class Reload extends Command {
                 client.translations = await languages();
 
                 console.log(chalk.green(`Languages: ${chalk.bold("reloaded")}`));
-                return message.channel.send(client.emotes.succes + " **Languages reloaded !**").then(m => m.delete({
-                    timeout: 3000
-                }).catch(() => {}));
+                return message.channel.send({
+                    content: `${client.emotes.succes} **Languages reloaded !**`
+                });
             };
             
             if(args[0] === "commands") {
@@ -44,28 +42,28 @@ class Reload extends Command {
                     await client.loadCommand(cmd.settings.location, cmd.help.name);
                 });
 
-                return message.channel.send(client.emotes.succes + " **All commands reloaded !**").then(m => m.delete({
-                    timeout: 3000
-                }).catch(() => {}));
+                return message.channel.send({
+                    content: `${client.emotes.succes} **All commands reloaded !**`
+                });
             };
 
             const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
-            if(!cmd) return message.channel.send(client.emotes.error + " **La commande __" + args[0] + "__ n'existe pas !**").then(m => m.delete({
-                timeout: 3000
-            }).catch(() => {}));
+            if(!cmd) return message.channel.send({
+                content: `${client.emotes.error} **La commande __${args[0]}__ n'existe pas !**`
+            });
             
             await client.unloadCommand(cmd.settings.location, cmd.help.name);
             await client.loadCommand(cmd.settings.location, cmd.help.name);
     
-            return message.channel.send(client.emotes.succes + " **Command __" + cmd.help.name + "__ reloaded !**").then(m => m.delete({
-                timeout: 3000
-            }).catch(() => {}));
+            return message.channel.send({
+                content: `${client.emotes.succes} **Command __${cmd.help.name}__ reloaded !**`
+            });
 
         } else {
 
-            await message.channel.send(client.emotes.succes + " **Bot reload !**").then(m => m.delete({
-                timeout: 200
-            }).catch(() => {}));
+            await message.channel.send({
+                content: `${client.emotes.succes} **Bot reload !**` 
+            });
 
             client.emit("reconnecting");
 

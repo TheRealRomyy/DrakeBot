@@ -1,7 +1,5 @@
 const Command = require("../../structure/Commands.js");
 const MojangAPI = require('mojang-api');
-const minecraft = require('minecraft-api');
-const Pagination = require("discord-paginationembed");
 const { MessageEmbed } = require("discord.js");
 
 class Minecraft extends Command {
@@ -10,7 +8,7 @@ class Minecraft extends Command {
         super(client, {
             name: "minecraft",
             aliases: ["mc", "mc-account"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: [],
             userPerms: [],
@@ -29,13 +27,21 @@ class Minecraft extends Command {
             usage: data.guild.prefix + "minecraft <pseudo>"
         });
 
-        let uuid = await minecraft.uuidForName(pseudo);
+        let uuid = null;
+
+        MojangAPI.nameToUuid(pseudo, function(err, res) {
+            if (err) return message.drake("general/minecraft:NO_UUID_FOUND", {
+                emoji: "error"
+            });
+            uuid = res[0].id;
+        });
+
         const embeds = [];
         let count = 0;
         let totalCount = 0;
         let embedCount = 0;
 
-        if(uuid === undefined) return message.drake("general/minecraft:NO_UUID_FOUND", {
+        if(uuid === null) return message.drake("general/minecraft:NO_UUID_FOUND", {
             emoji: "error"
         });
 

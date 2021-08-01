@@ -1,5 +1,4 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Ban extends Command {
 
@@ -8,7 +7,7 @@ class Ban extends Command {
             name: "ban",
             aliases: [],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "BAN_MEMBERS" ],
             userPerms: [ "BAN_MEMBERS"],
             cooldown: 3,

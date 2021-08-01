@@ -68,7 +68,7 @@ module.exports = async (client) => {
             const guild = client.guilds.cache.get(user.guildid);
 
             if(!guild) return;
-            if(!guild.member(user.id)) return;
+            if(!guild.members.cache.get(user.id)) return;
 
             class Member {
                 id = user.id;

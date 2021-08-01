@@ -1,6 +1,5 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 const ms = require("ms");
 
 class AutoSanctions extends Command {
@@ -9,7 +8,7 @@ class AutoSanctions extends Command {
         super(client, {
             name: "auto-sanctions",
             aliases: ["autosanctions", "set-warns", "setwarns"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: [],
             userPerms: ["MANAGE_GUILD"],

@@ -1,5 +1,4 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class UnNickall extends Command {
 
@@ -8,7 +7,7 @@ class UnNickall extends Command {
             name: "un-nickall",
             aliases: [ "reset-nick-all", "reset-nickall" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "MANAGE_NICKNAMES", "CHANGE_NICKNAME" ],
             userPerms: [ "MANAGE_NICKNAMES" ],
             cooldown: 10,

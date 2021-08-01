@@ -6,7 +6,7 @@ class Help extends Command {
     constructor (client) {
         super(client, {
             name: "help",
-            aliases: [ "h", "aide", "a" ],
+            aliases: [ "aide", ],
             dirname: __dirname,
             enabled: true,
             botPerms: [ "EMBED_LINKS", "SEND_MESSAGES" ],

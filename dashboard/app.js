@@ -1,7 +1,6 @@
 const express = require("express");
 const router = require('./router');
 
-const cors = require('cors');
 const path = require("path");
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
@@ -13,7 +12,6 @@ module.exports.load = async(client) => {
 	const port = client.cfg.dashboard.port;
 
 	app.use(morgan('combined')); 
-	app.use(cors()); 
 	app.use(bodyParser.json()); 
 	app.use(bodyParser.urlencoded({
 			extended: true

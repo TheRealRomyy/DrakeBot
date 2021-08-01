@@ -1,6 +1,5 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class ReactionRoles extends Command {
 
@@ -8,7 +7,7 @@ class ReactionRoles extends Command {
         super(client, {
             name: "reaction-roles",
             aliases: ["react-roles", "reactions-roles", "rr", "reaction-role"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: ["MANAGE_MESSAGES"],
             userPerms: ["MANAGE_GUILD"],

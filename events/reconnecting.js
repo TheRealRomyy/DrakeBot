@@ -6,7 +6,9 @@ module.exports = class {
 
 	async run() {
 
-        this.client.channels.cache.get("793262294493560893").send("<:idle:750782527626543136> Bot is reconnecting...");
+        this.client.channels.cache.get("793262294493560893").send({
+			content: "<:idle:750782527626543136> Bot is reconnecting..."
+		});
 
 	};
 };

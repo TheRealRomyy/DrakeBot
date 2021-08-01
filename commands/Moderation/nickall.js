@@ -1,5 +1,4 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Nickall extends Command {
 

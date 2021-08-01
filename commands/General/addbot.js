@@ -13,6 +13,10 @@ class Addbot extends Command {
             userPerms: [],
             cooldown: 3,
             restriction: [],
+
+            slashCommandOptions: {
+                description: "Show some usefull link"
+            }
         });
     };
 
@@ -23,11 +27,29 @@ class Addbot extends Command {
             name: this.client.user.username
         }))
         .setColor("RANDOM")
-        .setDescription('\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot)')
+        .setDescription('\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](https://discord.com/api/oauth2/authorize?client_id=762965943529766912&permissions=8&redirect_uri=https%3A%2F%2Fdrakebot.xyz&scope=bot%20applications.commands)')
         .setFooter(this.client.cfg.footer)
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
+    };
+
+    async runInteraction(interaction, data) {
+
+        const embed = new MessageEmbed()
+        .setTitle(interaction.drakeWS("general/addbot:TITLE", {
+            name: this.client.user.username
+        }))
+        .setColor("RANDOM")
+        .setDescription('\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](https://discord.com/api/oauth2/authorize?client_id=762965943529766912&permissions=8&redirect_uri=https%3A%2F%2Fdrakebot.xyz&scope=bot%20applications.commands)')
+        .setFooter(this.client.cfg.footer)
+        .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
+
+        return interaction.reply({
+            embeds: [embed]
+        });
     };
 };
 

@@ -1,5 +1,4 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Nuke extends Command {
 
@@ -8,7 +7,7 @@ class Nuke extends Command {
             name: "nuke",
             aliases: [],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "MANAGE_CHANNELS", "MANAGE_MESSAGES" ],
             userPerms: [ "MANAGE_CHANNELS", "MANAGE_MESSAGES" ],
             cooldown: 5,

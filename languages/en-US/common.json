@@ -30,9 +30,14 @@
     "RANK": "Rank",
     "TIPS": "**Tips:**",
     "TEXT": "Text channel",
+    "GUILD_TEXT": "Text channel",
     "VOICE": "Voice channel",
+    "GUILD_VOICE": "Voice channel",
     "NEWS": "News channel",
     "STORE": "Store channel",
     "STAGE": "Stage channel",
+    "GUILD_NEWS": "News channel",
+    "GUILD_STORE": "Store channel",
+    "GUILD_STAGE": "Stage channel",
     "CATEGORY": "Category"
 }

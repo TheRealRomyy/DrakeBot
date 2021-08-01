@@ -38,7 +38,9 @@ class MessageUpdate {
         }))
         .setDescription(newMessage.drakeWS("misc:OLD_MSG") + "```" + oldMessage.content + "```\n" + newMessage.drakeWS("misc:NEW_MSG") + "```" + newMessage.content + "```")
 
-		return channel.send(embed);
+		return channel.send({
+            embeds: [embed]
+        });
     }
 };
 

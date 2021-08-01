@@ -17,26 +17,28 @@ class Ready {
       console.log(`================= \n${this.client.user.username} is ready ! (${this.client.user.id}) \nAt ${this.client.guilds.cache.size} guilds \n=================`);
 
       // Start the dashboard
-      if(client.cfg.dashboard.enabled) client.dashboard.load(client);
+      // if(client.cfg.dashboard.enabled) client.dashboard.load(client);
 
       // Load the "unmuter" file
-      checkUnmutes.init(client);
+      // checkUnmutes.init(client);
 
       // Load the "checkVoters" file
-      checkVoters.init(client);
+      // checkVoters.init(client);
 
       // Send stats on top.gg
-      client.functions.sendServerCount(this.client);
+      // client.functions.sendServerCount(this.client);
 
       // Load the cache
-      await loader(client);
+      // await loader(client);
       setTimeout(async function() {
         await console.log(`Database Cache: All users (${client.cache.users.size} users), members (${client.cache.members.size} members) and guilds (${client.cache.guilds.size} guilds) are in cache !`);
       }, 1500);
  
 
       // Send in the "status" channel a message.
-      this.client.channels.cache.get("793262294493560893").send("<:online:750782471423000647> Bot is ready !");
+      this.client.channels.cache.get("793262294493560893").send({
+        content:"<:online:750782471423000647> Bot is ready !"
+      });
 
       // Create all activites
       let activities = [
@@ -88,7 +90,6 @@ class Ready {
       }, null, true, "Europe/Paris");
         
       botActivities.start();
-      pikaploufColor.start();
 	  };
 };
 

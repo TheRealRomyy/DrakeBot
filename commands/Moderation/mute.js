@@ -1,5 +1,4 @@
 const Command = require("../../structure/Commands.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 const ms = require("ms");
 
 class Mute extends Command {
@@ -9,7 +8,7 @@ class Mute extends Command {
             name: "mute",
             aliases: [ "tempmute" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "MANAGE_MESSAGES", "MANAGE_CHANNELS", "MANAGE_ROLES" ],
             userPerms: [ "MANAGE_MESSAGES" ],
             cooldown: 3,

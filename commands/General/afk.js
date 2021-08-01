@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class Afk extends Command {
 
@@ -12,6 +13,18 @@ class Afk extends Command {
             userPerms: [],
             cooldown: 3,
             restriction: [],
+
+            slashCommandOptions: {
+                description: "Set an afk status",
+                options: [
+                    {
+                        name: "status",
+                        type: ApplicationCommandOptionTypes.STRING,
+                        required: true,
+                        description: "Your afk status",
+                    }
+                ]
+            }
         });
     };
 
@@ -27,6 +40,21 @@ class Afk extends Command {
         message.drake("general/afk:SUCCES", {
             emoji: "succes",
             reason
+        });
+
+        data.user.afk = reason;
+        data.user.save();
+    };
+
+    async runInteraction(interaction, data) {
+
+        let reason = interaction.options.getString("status");
+
+        interaction.reply({
+            content: interaction.drakeWS("general/afk:SUCCES", {
+                emoji: "succes",
+                reason
+            })
         });
 
         data.user.afk = reason;

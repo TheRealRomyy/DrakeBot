@@ -1,6 +1,5 @@
 const { MessageEmbed } = require("discord.js");
 const Persos = require("../structure/Persos.js");
-const chalk = require("chalk");
 const moment = require("moment");
 
 const xpCooldown = {};
@@ -111,7 +110,7 @@ class Message {
             });
         });
 
-        if(data.guild.plugins.automod.antiMajs.enabled && !message.member.hasPermission("MANAGE_MESSAGES")) {
+        if(data.guild.plugins.automod.antiMajs.enabled && !message.member.permissions.has("MANAGE_MESSAGES")) {
             let max = Math.round(message.content.length / 1.5);
             let count = 0;
             let majs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -128,7 +127,7 @@ class Message {
             }; 
         };
 
-        if(data.guild.plugins.automod.antiBadwords.enabled && !message.member.hasPermission("MANAGE_MESSAGES")) {
+        if(data.guild.plugins.automod.antiBadwords.enabled && !message.member.permissions.has("MANAGE_MESSAGES")) {
             let infraction = false;
             await client.cfg.badwords.forEach((word) => {
                 if(message.content.includes(word)) infraction = true;
@@ -140,7 +139,7 @@ class Message {
             }
         };
 
-        if(data.guild.plugins.automod.antiPub.enabled && !message.member.hasPermission("MANAGE_MESSAGES")) {
+        if(data.guild.plugins.automod.antiPub.enabled && !message.member.permissions.has("MANAGE_MESSAGES")) {
             if(message.content.toLowerCase().includes('.gg/'.toLowerCase() || 'discordapp.com/invite/'.toLowerCase())) {
                 message.delete();
                 client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
@@ -240,6 +239,7 @@ class Message {
         /* END TEMP ZONE */
 
         await updateXp(message, data);
+        client.synchronizeSlashCommands(message.guild.id);
 
         if(message.content === "@someone") {
             const randomUser = message.guild.members.cache.random(1)[0].user;
@@ -393,7 +393,7 @@ class Message {
                 cmd.run(message, args, data)//.catch(error => client.functions.sendErrorCmd(client, message, cmd.help.name, error));
 
                 // Log
-                console.log(chalk.blueBright(`[${new Date().toLocaleTimeString()}] [CMD] Guild: ${chalk.bold(message.guild.name)} | Author: ${chalk.bold(message.author.username)} => ${chalk.bold(message.content)}`));
+                console.log(`[${new Date().toLocaleTimeString()}] [CMD] Guild: ${message.guild.name} | Author: ${message.author.username} => ${message.content}`);
 
                 if(client.cfg.staff.support.includes(message.author.id) || client.cfg.staff.owner.includes(message.author.id)) {
                     const staffEmbed = new MessageEmbed()
@@ -403,7 +403,9 @@ class Message {
                     .setDescription(`**[CMD - ${client.cfg.staff.support.includes(message.author.id) ? "STAFF" : "OWNER"}]** Guild: \`${message.guild.name}\` (||${message.guild.id}||) => \`\`\`${message.content}\`\`\``)
                     .setColor("RANDOM");
 
-                    client.channels.cache.get("793587196887040030").send(staffEmbed);
+                    client.channels.cache.get("793587196887040030").send({
+                        embeds: [staffEmbed]
+                    });
                 } else {
                     const embed = new MessageEmbed()
                     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
@@ -411,7 +413,9 @@ class Message {
                     .setTimestamp()
                     .setFooter(message.author.id)
                     .setColor("RANDOM");
-                    client.channels.cache.get('768125802423255051').send(embed);
+                    client.channels.cache.get('768125802423255051').send({
+                        embeds: [embed]
+                    });
                 };
             } catch(err) {
                 client.functions.sendErrorCmd(client, message, cmd.help.name, err);

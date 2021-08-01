@@ -1,6 +1,5 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Setlog extends Command {
 
@@ -9,7 +8,7 @@ class Setlog extends Command {
             name: "setlog",
             aliases: [ "log", "logs", "setlogs" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "ADMINISTRATOR" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,

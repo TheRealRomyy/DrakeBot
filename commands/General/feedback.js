@@ -1,5 +1,5 @@
 const Command = require("../../structure/Commands");
-const { MessageEmbed, WebhookClient } = require("discord.js");
+const { MessageEmbed, WebhookClient, Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class Feedback extends Command {
 
@@ -13,6 +13,18 @@ class Feedback extends Command {
             userPerms: [],
             cooldown: 3,
             restriction: [],
+
+            slashCommandOptions: {
+                description: "Make a feedback about the bot",
+                options: [
+                    {
+                        name: "feedback",
+                        type: ApplicationCommandOptionTypes.STRING,
+                        required: true,
+                        description: "Whats your reviews about DrakeBot ?"
+                    }
+                ]
+            }
         });
     };
 
@@ -31,10 +43,33 @@ class Feedback extends Command {
         .setDescription(args.join(" "))
         .setTimestamp()
     
-        this.client.channels.cache.get('766782480882860064').send(embed);
+        this.client.channels.cache.get('766782480882860064').send({
+            embeds: [embed]
+        });
     
         return message.drake("general/feedback:SUCCES", {
             emoji: "succes"
+        });
+    };
+
+    async runInteraction(interaction, data) {
+    
+        const embed = new MessageEmbed()
+        .setTitle("<:feedback:766792063013617705> **FeedBack**")
+        .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
+        .setFooter(this.client.cfg.footer)
+        .setColor(this.client.cfg.color.yellow)
+        .setDescription(interaction.options.getString("feedback"))
+        .setTimestamp()
+    
+        this.client.channels.cache.get('766782480882860064').send({
+            embeds: [embed]
+        });
+    
+        interaction.reply({
+            content: interaction.drakeWS("general/feedback:SUCCES", {
+                emoji: "succes"
+            })
         });
     };
 };

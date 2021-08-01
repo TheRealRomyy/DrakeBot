@@ -1,6 +1,5 @@
 const Command = require("../../structure/Commands.js");
 const { MessageEmbed } = require("discord.js");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class BuildEmbed extends Command {
 
@@ -8,7 +7,7 @@ class BuildEmbed extends Command {
         super(client, {
             name: "build-embed",
             aliases: ["be"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: [ "MANAGE_CHANNELS", "MANAGE_MESSAGES" ],
             userPerms: [ "MANAGE_MESSAGES" ],

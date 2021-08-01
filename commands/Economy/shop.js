@@ -1,7 +1,6 @@
 const Command = require("../../structure/Commands");
 const { MessageEmbed } = require("discord.js");
 const ms = require("ms");
-const { MessageButton, MessageActionRow } = require("discord-buttons");
 
 class Shop extends Command {
 
@@ -10,7 +9,7 @@ class Shop extends Command {
             name: "shop",
             aliases: [ "store" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 5,

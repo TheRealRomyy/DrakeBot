@@ -38,5 +38,10 @@
     "NEWS": "Salon d'actualité",
     "STORE": "Salon magasin",
     "STAGE": "Salon radio",
+    "GUILD_TEXT": "Salon textuel",
+    "GUILD_VOICE": "Salon vocal",
+    "GUILD_NEWS": "Salon d'actualité",
+    "GUILD_STORE": "Salon magasin",
+    "GUILD_STAGE": "Salon radio",
     "CATEGORY": "Catégorie"
 }
