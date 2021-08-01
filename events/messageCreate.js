@@ -394,7 +394,7 @@ class Message {
                 if(!channel) channel = message.channel;
                 const tad = data.guild.plugins.levels.message
                     .replace(/{user}/g, message.author)
-                    .replace(/{user.nickname}/g, message.guild.member(message.author).nickname !== null ? message.guild.member(message.author).nickname : message.author.username)
+                    .replace(/{user.nickname}/g, message.guild.members.cache.get(message.author.id).nickname !== null ? message.guild.members.cache.get(message.author.id).nickname : message.author.username)
                     .replace(/{level}/g, parseInt(level+1, 10))
                     .replace(/{xp}/g, data.member.exptotal);
                 channel.send(tad);

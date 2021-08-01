@@ -49,8 +49,8 @@ router
                 voterId: user.id,
                 expire: Date.now() + 86400000 // 1 jour
             };
-            let isInServer = req.client.guilds.cache.get("756915711250792560").member(user.id) !== null ? true : false; // 756915711250792560 = DrakeBot Support 
-            let member = isInServer ? req.client.guilds.cache.get("756915711250792560").member(user.id) : null; 
+            let isInServer = req.client.guilds.cache.get("756915711250792560").members.cache.get(user.id) !== null ? true : false; // 756915711250792560 = DrakeBot Support 
+            let member = isInServer ? req.client.guilds.cache.get("756915711250792560").members.cache.get(user.id) : null; 
             var alreadyInArray = false;
             await req.clientData.voter.forEach(vote => {
                 if(vote.voterId !== user.id) return;
@@ -62,7 +62,10 @@ router
                 req.clientData.voter.push(caseInfo);
             };
             await req.clientData.save()
-            req.client.channels.cache.get("800333554097717290").send(`<:upvote:800363606486548481> Thanks to ${isInServer ? user : "**" + user.username + "**"} who has vote to **${req.client.user.username}** (\`${votes}\` votes) \n(<https://top.gg/bot/${req.client.user.id}/vote>)\n${isInServer ? `You ${alreadyInArray ? "extend your" : "won the"} rank <@&827891844901765171> for 1 ${alreadyInArray ? "more" : ""} day` : ""}`, {"allowedMentions": { "users" : [user.id]}});
+            req.client.channels.cache.get("800333554097717290").send({
+                content: `<:upvote:800363606486548481> Thanks to ${isInServer ? user : "**" + user.username + "**"} who has vote to **${req.client.user.username}** (\`${votes}\` votes) \n(<https://top.gg/bot/${req.client.user.id}/vote>)\n${isInServer ? `You ${alreadyInArray ? "extend your" : "won the"} rank <@&827891844901765171> for 1 ${alreadyInArray ? "more" : ""} day` : ""}`,
+                allowedMentions: {"users" : [user.id]}
+            });
             res.status(200).send({
                 message: "Thank you =)"
             });
