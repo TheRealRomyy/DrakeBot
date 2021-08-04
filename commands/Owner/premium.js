@@ -27,7 +27,9 @@ class Premium extends Command {
         });
 
         let guild = client.guilds.cache.get(args[1]);
-        if(!guild) return message.channel.send(client.emotes["error"] + " **Je ne trouve pas ce serveur !**");
+        if(!guild) return message.channel.send({
+            content: client.emotes["error"] + " **Je ne trouve pas ce serveur !**"
+        });
         let guildData = await client.db.findOrCreateGuild(guild);
 
         switch(args[0]) {
@@ -62,7 +64,9 @@ class Premium extends Command {
 
                 console.log(guildData)
 
-                message.channel.send(client.emotes["succes"] + " **" + guild.name + "** est maintenant premium pour: `" + message.time.convertMS(duration) + "` !");
+                message.channel.send({
+                    content: client.emotes["succes"] + " **" + guild.name + "** est maintenant premium pour: `" + message.time.convertMS(duration) + "` !"
+                });
                 break;
             case "remove":
                 if(!guildData.premium.premium) return message.channel.send(client.emotes["error"] + " **Ce serveur n'est pas premium !**");
@@ -77,10 +81,14 @@ class Premium extends Command {
 
                 await guildData.save();
 
-                message.channel.send(client.emotes["succes"] + " **" + guild.name + "** n'est plus premium !");
+                message.channel.send({
+                    content: client.emotes["succes"] + " **" + guild.name + "** n'est plus premium !"
+                });
                 break;
             default:
-                message.channel.send(client.emotes["error"] + " **Veuillez spécifier `add ou remove` !**");
+                message.channel.send({
+                    content: client.emotes["error"] + " **Veuillez spécifier `add` ou `remove` !**"
+                });
                 break;
         };
     };

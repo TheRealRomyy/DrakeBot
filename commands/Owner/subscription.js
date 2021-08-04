@@ -26,7 +26,9 @@ class Subscription extends Command {
         });
 
         let guild = client.guilds.cache.get(args[0]);
-        if(!guild) return message.channel.send(client.emotes["error"] + " **Je ne trouve pas ce serveur !**");
+        if(!guild) return message.channel.send({
+            content: client.emotes["error"] + " **Je ne trouve pas ce serveur !**"
+        });
 
         let guildData = await client.db.findOrCreateGuild(guild);
 
@@ -40,7 +42,9 @@ class Subscription extends Command {
             embed.addField(`${(((subscription.date + subscription.duration) < Date.now) || subscription.isEnabled == "no") ? "<:dnd:750782449168023612>" : "<:online:750782471423000647>"} __${subscription.label}__`, `User: **${client.users.cache.get(subscription.user).username}** \nDate: **${message.time.printDate(subscription.date)}** \nExpire: **${message.time.printDate(subscription.date + subscription.duration)}**`, true)
         });
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

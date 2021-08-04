@@ -38,7 +38,9 @@ class ServerList extends Command {
 			.setTitle(`Page: ${page}/${Math.ceil(this.client.guilds.cache.size/10)}`)
 			.setDescription(description);
 
-		const msg = await message.channel.send(embed);
+		const msg = await message.channel.send({
+			embeds: [embed]
+		});
         
 		await msg.react("⬅");
 		await msg.react("➡");
@@ -74,7 +76,9 @@ class ServerList extends Command {
 					.setDescription(description);
             
 				// Edit the message 
-				msg.edit(embed);
+				msg.edit({
+					embeds: [embed]
+				});
             
 			}
 
@@ -104,20 +108,20 @@ class ServerList extends Command {
 					.setDescription(description);
             
 				// Edit the message 
-				msg.edit(embed);
+				msg.edit({
+					embeds: [embed]
+				});
 
 			}
 
 			if(reaction._emoji.name === "❌"){
-				return msg.delete(); 
+				return msg.delete().catch(() => {}); 
 			}
 
 			// Remove the reaction when the user react to the message
 			await reaction.users.remove(message.author.id);
-
 		});
-	}
-
-}
+	};
+};
 
 module.exports = ServerList;

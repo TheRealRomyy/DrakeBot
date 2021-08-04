@@ -36,9 +36,13 @@ class Test extends Command {
 	
 			let spotifyData = await card.build()
 			const attachment = new MessageAttachment(spotifyData, `spotify-${user.id}.png`);
-			return message.channel.send(attachment);
+			return message.channel.send({
+				files: [attachment]
+			});
 		} else {
-			return message.channel.send(`${user} n'écoute pas spotify actuellement !`);
+			return message.channel.send({
+				content: `${user} n'écoute pas spotify actuellement !`
+			});
 		};
 	};
 };
