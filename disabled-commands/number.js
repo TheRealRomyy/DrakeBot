@@ -11,7 +11,11 @@ class GuessTheNumber extends Command {
             botPerms: [],
             userPerms: [],
             dirname: __dirname,
-            restriction: []
+            restriction: [],
+
+			slashCommandOptions: {
+				description: "Play a game of \"guess the number\""
+			}
         });
     };
 
@@ -33,7 +37,10 @@ class GuessTheNumber extends Command {
 		
 		const gameCreatedAt = Date.now();
 		
-		const collector = new MessageCollector(message.channel, m => !m.author.bot, { time: 480000 });
+		const collector = new MessageCollector(message.channel, {
+			filter: m => !m.author.bot,
+			time: 480000 
+		});
 		
 		client.numberGame[message.guild.id] = message.guild.id;
 		

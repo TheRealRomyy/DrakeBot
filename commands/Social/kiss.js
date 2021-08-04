@@ -40,7 +40,7 @@ class Kiss extends Command {
             kisser: message.author.username,
             emoji: "kiss"
         }));
-
+        
         return message.channel.send(embed);
     };
 };
