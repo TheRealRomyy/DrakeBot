@@ -12,7 +12,11 @@ class RanksLevel extends Command {
             botPerms: ["EMBED_LINKS"],
             userPerms: [],
             cooldown: 3,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "See the role rewards on this server"
+            }
         });
     };
 
@@ -21,13 +25,31 @@ class RanksLevel extends Command {
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
         .setColor("RANDOM")
-        .setDescription((data.guild.plugins.levels.rankRewards.length !== 0 ? 
-            data.guild.plugins.levels.rankRewards.map((r) => message.drakeWS("common:RANK") + ": <@&" + r.rank + "> | " + message.drakeWS("common:LEVEL") + ": **" + r.level + "**")  : 
+        .setDescription(`${(data.guild.plugins.levels.rankRewards.length !== 0 ? 
+            data.guild.plugins.levels.rankRewards.map((r) => message.drakeWS("common:RANK") + ": <@&" + r.rank + "> | " + message.drakeWS("common:LEVEL") + ": **" + r.level + "**").join("\n")  : 
                 message.drakeWS("level/ranks-level:NO_RANK", {
                     prefix: data.guild.prefix
-        })));
+        }))}`);
     
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
+    };
+
+    async runInteraction(interaction, data) {
+        const embed = new MessageEmbed()
+        .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
+        .setFooter(this.client.cfg.footer)
+        .setColor("RANDOM")
+        .setDescription(`${(data.guild.plugins.levels.rankRewards.length !== 0 ? 
+            data.guild.plugins.levels.rankRewards.map((r) => interaction.drakeWS("common:RANK") + ": <@&" + r.rank + "> | " + interaction.drakeWS("common:LEVEL") + ": **" + r.level + "**").join("\n")  : 
+                interaction.drakeWS("level/ranks-level:NO_RANK", {
+                    prefix: data.guild.prefix
+        }))}`);
+    
+        return interaction.reply({
+            embeds: [embed]
+        });
     };
 };
 

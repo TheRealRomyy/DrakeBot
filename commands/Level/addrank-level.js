@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class AddrankLevel extends Command {
 
@@ -11,7 +12,26 @@ class AddrankLevel extends Command {
             botPerms: [ "MANAGE_ROLES" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 3,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Add a role that will be given when users reach a specific level",
+                options: [
+                    {
+                        name: "level",
+                        type: ApplicationCommandOptionTypes.INTEGER,
+                        required: true,
+                        description: "At what level will the role be given ?"
+                    },
+
+                    {
+                        name: "rank",
+                        type: ApplicationCommandOptionTypes.ROLE,
+                        required: true,
+                        description: "What rank will be given ?"
+                    }
+                ]
+            }
         });
     };
 
@@ -44,6 +64,34 @@ class AddrankLevel extends Command {
             emoji: "succes",
             rank: rank,
             level: level.toString(),
+        });
+    };
+
+    async runInteraction(interaction, data) {
+    
+        const level = interaction.options.getInteger("level");
+        const rank = interaction.options.getRole("rank");
+
+        if(interaction.guild.members.cache.get(this.client.user.id).roles.highest.position <= rank.position) return interaction.reply({
+            content: interaction.drakeWS("level/addrank-level:TOO_LOW", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        }); 
+    
+        data.guild.plugins.levels.rankRewards.push({
+            level: level,
+            rank: rank.id
+        });
+    
+        await data.guild.save();
+    
+        interaction.reply({
+            content: interaction.drakeWS("level/addrank-level:SUCCES", {
+                emoji: "succes",
+                rank: rank,
+                level: level.toString(),
+            })
         });
     };
 };

@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class RemoverankLevel extends Command {
 
@@ -11,7 +12,19 @@ class RemoverankLevel extends Command {
             botPerms: ["EMBED_LINKS"],
             userPerms: ["MANAGE_GUILD"],
             cooldown: 5,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Remove a role reward level",
+                options: [
+                    {
+                        name: "level",
+                        type: ApplicationCommandOptionTypes.INTEGER,
+                        required: true,
+                        description: "On wich level ?"
+                    }
+                ]
+            }
         });  
     };
 
@@ -36,6 +49,29 @@ class RemoverankLevel extends Command {
         message.drake("level/removerank-level:SUCCES", {
             emoji: "succes",
             level: level,
+        });
+    };
+
+    async runInteraction(interaction, data) {
+    
+        const level = interaction.options.getInteger("level");
+    
+        if(!data.guild.plugins.levels.rankRewards.find((r) => r.level === level)) return interaction.reply({
+            content: interaction.drakeWS("level/removerank-level:NO_RANK", {
+                level: level,
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+    
+        data.guild.plugins.levels.rankRewards = data.guild.plugins.levels.rankRewards.filter((r) => r.level !== level);
+        await data.guild.save();
+    
+        interaction.reply({
+            content: interaction.drakeWS("level/removerank-level:SUCCES", {
+                emoji: "succes",
+                level: level,
+            })
         });
     };
 };

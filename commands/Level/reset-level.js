@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class ResetLevel extends Command {
 
@@ -11,117 +12,103 @@ class ResetLevel extends Command {
             botPerms: [],
             userPerms: ["MANAGE_GUILD"],
             cooldown: 5,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Reset the level of a member or of the entire guild",
+                options: [
+                    {
+                        name: "user",
+                        type: ApplicationCommandOptionTypes.USER,
+                        required: false,
+                        description: "What member will his exp reset ? (default is guild)"
+                    }
+                ]
+            }
         });
     };
 
     async run(message, args, data) {
-
-        let waitMsg = null;
-
-        const filter = (reaction, user) => {
-            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
-    
-        async function WaitForReaction(msg) {
-    
-            let reaction = null;
-    
-            await msg.awaitReactions(filter, { max: 1, time: 30000, errors: ['time'] }).then(collected => {
-                reaction = collected.first();
-            }).catch(collected => {
-                waitMsg.delete();
-                message.drake("misc:CANCEL", {
-                    emoji: "succes"
-                });
-                return message.delete();
-            });
-    
-            if(reaction == null) return;
-            return reaction.emoji.name;
-        };
     
         if(args[0]) {
     
-            const member = message.mention.members.first() || message.guild.member(this.client.users.cache.get(args[0]));
+            const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
             if(!member) return message.drake("errors:NOT_CORRECT", {
                 emoji: "error",
                 usage: data.guild.prefix + "reset-level (user)"
             });
     
-            waitMsg = await message.drake("level/reset-level:WANT?", {
-                emoji: "question",
-                toreset: member.user.username
+            const memberData = (member.id === message.author.id ? data.member : await this.client.db.findOrCreateMember(member, message.guild));
+
+            memberData.level = 0;
+            memberData.exp = 0;
+            memberData.exptotal = 0;
+            await memberData.save(memberData);
+
+            return message.drake("level/reset-level:SUCCES_MEMBER", {
+                emoji: "succes",
+                username: member.user.username
             });
-    
-            await waitMsg.react('👍');
-            await waitMsg.react('👎');
-    
-            const acceptOrDecline = await WaitForReaction(waitMsg);
-    
-            waitMsg.delete();
-    
-            if(acceptOrDecline == '👍') {
-    
-                const memberData = (member.id === message.author.id ? data.member : await this.client.db.findOrCreateMember(member, message.guild));
-    
-                memberData.level = 0;
-                memberData.exp = 0;
-                memberData.exptotal = 0;
-                await memberData.save();
-    
-                return message.drake("level/reset-level:SUCCES_MEMBER", {
-                    emoji: "succes",
-                    username: member.user.username
-                });
-    
-            } else {
-                message.drake("misc:CANCEL", {
-                    emoji: "succes"
-                });
-                return message.delete();
-            }
     
         } else {
     
-            waitMsg = await message.channel.send(message.drakeWS("level/reset-level:WANT?", {
-                emoji: "question",
-                toreset: "Guild: `" + message.guild.name + "`"
-            }));
+            const members = await this.client.db.fetchGuildMembers(message.guild.id);
+
+            await members.forEach(async (m) => {
+                const memberData = await this.client.db.findOrCreateMember(m, message.guild);
+                memberData.level = 0;
+                memberData.exp = 0;
+                memberData.exptotal = 0;
+                await memberData.save(memberData);
+            });
+
+
+            return message.drake("level/reset-level:SUCCES_GUILD", {
+                emoji: "succes",
+                guild: message.guild.name
+            });
+        };
+    };
+
+    async runInteraction(interaction, data) {
     
-            await waitMsg.react('👍');
-            await waitMsg.react('👎');
+        if(interaction.options.getUser("user")) {
     
-            const acceptOrDecline = await WaitForReaction(waitMsg);
-    
-            waitMsg.delete();
-    
-            if(acceptOrDecline == '👍') {
-    
-                const members = await this.client.db.fetchGuildMembers(message.guild.id);
-    
-                await members.forEach(async (m) => {
-                    const memberData = await this.client.db.findOrCreateMember(m, message.guild);
-                    memberData.level = 0;
-                    memberData.exp = 0;
-                    memberData.exptotal = 0;
-                    await memberData.save();
-                });
-    
-    
-                return message.drake("level/reset-level:SUCCES_GUILD", {
+            const user = interaction.options.getUser("user");
+            const memberData = (user.id === interaction.user.id ? data.member : await this.client.db.findOrCreateMember(user.id, interaction.guild));
+
+            memberData.level = 0;
+            memberData.exp = 0;
+            memberData.exptotal = 0;
+            await memberData.save(memberData);
+
+            return interaction.reply({
+                content: interaction.drakeWS("level/reset-level:SUCCES_MEMBER", {
                     emoji: "succes",
-                    guild: message.guild.name
-                });
+                    username: user.username
+                })
+            });
     
-            } else {
-                message.drake("misc:CANCEL", {
-                    emoji: "succes"
-                });
-                return message.delete();
-            }
+        } else {
     
-        }
+            const members = await this.client.db.fetchGuildMembers(interaction.guild.id);
+
+            await members.forEach(async (m) => {
+                const memberData = await this.client.db.findOrCreateMember(m, interaction.guild);
+                memberData.level = 0;
+                memberData.exp = 0;
+                memberData.exptotal = 0;
+                await memberData.save(memberData);
+            });
+
+
+            return interaction.reply({
+                content: interaction.drakeWS("level/reset-level:SUCCES_GUILD", {
+                    emoji: "succes",
+                    guild: interaction.guild.name
+                })
+            });
+        };
     };
 };
 
