@@ -41,7 +41,9 @@ class Hug extends Command {
             emoji: "hug"
         }));
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

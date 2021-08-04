@@ -41,7 +41,9 @@ class Cuddle extends Command {
             emoji: "cuddle"
         }));
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

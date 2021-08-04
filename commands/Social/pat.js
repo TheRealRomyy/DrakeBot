@@ -41,7 +41,9 @@ class Pat extends Command {
             emoji: "pat"
         }));
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

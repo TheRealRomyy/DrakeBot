@@ -41,7 +41,9 @@ class Kiss extends Command {
             emoji: "kiss"
         }));
         
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

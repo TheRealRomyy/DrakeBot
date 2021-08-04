@@ -41,7 +41,9 @@ class Feed extends Command {
             emoji: "feed"
         }));
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

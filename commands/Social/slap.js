@@ -41,7 +41,9 @@ class Slap extends Command {
             emoji: "slap"
         }));
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 

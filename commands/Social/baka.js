@@ -40,7 +40,9 @@ class Baka extends Command {
             emoji: "baka"
         }));
 
-        return message.channel.send(embed);
+        return message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 
