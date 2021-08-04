@@ -235,7 +235,7 @@ class Message {
             });
 
             // Check si la commande est activée
-            if(cmd.settings.enabled === false) return message.drake("errors:DISABLED", {
+            if(!cmd.settings.enabled) return message.drake("errors:DISABLED", {
                 emoji: "error"
             });
 
