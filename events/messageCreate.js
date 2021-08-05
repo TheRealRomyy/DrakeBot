@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const Persos = require("../structure/Persos.js");
 const moment = require("moment");
+const Time = require("../helpers/timeManager.js");
 
 const xpCooldown = {};
 const cmdCooldown = {};
@@ -27,6 +28,7 @@ class Message {
         };
 
         message.guild.data = data.guild;
+        message.__proto__.time = new Time(message);
         
 		if(message.content === `<@!${client.user.id}>` || message.content === `<@${client.user.id}>`) return message.drake("misc:HELLO", {
             user: message.author.username,

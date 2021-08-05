@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const moment = require("moment");
+const Time = require("../helpers/timeManager.js");
 const cmdCooldown = {};
 
 class InteractionCreate {
@@ -26,6 +26,7 @@ class InteractionCreate {
             };
 
             interaction.guild.data = data.guild;
+            interaction.__proto__.time = new Time(interaction);
 
             // Gets the command
             const cmd = this.client.cmds.get(interaction.commandName);
