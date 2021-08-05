@@ -80,7 +80,7 @@ class Reload extends Command {
                 content: `${client.emotes.succes} **Bot reload !**` 
             });
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 message.delete().catch(() => {});
                 reload.delete().catch(() => {});
 
