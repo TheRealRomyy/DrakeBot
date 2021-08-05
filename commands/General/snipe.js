@@ -29,7 +29,7 @@ class Snipe extends Command {
         .setFooter(this.client.cfg.footer)
         .setColor("#2f3136");
         
-        if(sniped == null || sniped == "undefined") {
+        if(sniped == null || sniped == "undefined"|| !this.client.users.cache.get(sniped.author)) {
             return message.drake("general/snipe:NO_TEXT", { 
                 emoji: "error"
             });
@@ -58,7 +58,7 @@ class Snipe extends Command {
         .setFooter(this.client.cfg.footer)
         .setColor("#2f3136");
         
-        if(sniped == null || sniped == "undefined") {
+        if(sniped == null || sniped == "undefined" || !this.client.users.cache.get(sniped.author)) {
             return interaction.reply({
                 content: interaction.drakeWS("general/snipe:NO_TEXT", { 
                     emoji: "error"
