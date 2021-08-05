@@ -288,7 +288,7 @@ module.exports = {
 				await guildData.save(guildData)
 			};
 
-			this.sendModLog("warn", member.user, client.channels.cache.get(guildData.plugins.logs.mod), message.author, guildData.cases, logReason ? reason + `\n(${message.content})`: reason);
+			this.sendModLog("warn", member.user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, logReason ? reason + `\n(${message.content})`: reason);
 		};
 
 		return this.sendSanctionMessage(message, "warn", member.user, reason)

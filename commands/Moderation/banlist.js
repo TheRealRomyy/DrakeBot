@@ -8,7 +8,7 @@ class Banlist extends Command {
             name: "banlist",
             aliases: [ "bans"],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "EMBED_LINKS", "BAN_MEMBERS" ],
             userPerms: [ "MANAGE_MESSAGES", "BAN_MEMBERS" ],
             cooldown: 5,

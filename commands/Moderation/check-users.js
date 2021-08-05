@@ -8,7 +8,7 @@ class CheckUsers extends Command {
             name: "check-users",
             aliases: [ "checkusers", "check-u", "cu", "check"],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "EMBED_LINKS" ],
             userPerms: [ "MANAGE_MESSAGES" ],
             cooldown: 5,

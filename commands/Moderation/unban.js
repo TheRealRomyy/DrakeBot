@@ -7,7 +7,7 @@ class Unban extends Command {
         super(client, {
             name: "unban",
             aliases: ["pardon"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: ["BAN_MEMBERS"],
             userPerms: ["BAN_MEMBERS"],

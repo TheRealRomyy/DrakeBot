@@ -7,7 +7,7 @@ class Slowmode extends Command {
         super(client, {
             name: "slowmode",
             aliases: ["slow-mode"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: ["MANAGE_CHANNELS"],
             userPerms: ["MANAGE_CHANNELS"],

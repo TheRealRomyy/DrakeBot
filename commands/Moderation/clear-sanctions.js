@@ -7,7 +7,7 @@ class ClearSanctions extends Command {
             name: "clear-sanctions",
             aliases: [],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [],
             userPerms: [ "KICK_MEMBERS" ],
             cooldown: 5,

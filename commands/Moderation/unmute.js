@@ -6,7 +6,7 @@ class Unmute extends Command {
         super(client, {
             name: "unmute",
             aliases: ["un-mute"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: ["MANAGE_ROLES"],
             userPerms: ["MANAGE_MESSAGES"],

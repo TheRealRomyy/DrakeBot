@@ -7,7 +7,7 @@ class Clear extends Command {
             name: "clear",
             aliases: [],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "MANAGE_MESSAGES", "MANAGE_CHANNELS" ],
             userPerms: [ "MANAGE_MESSAGES" ],
             cooldown: 3,
