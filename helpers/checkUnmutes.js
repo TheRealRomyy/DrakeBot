@@ -35,13 +35,7 @@ module.exports = {
 
 				const guildData = await client.db.findOrCreateGuild(guild);
 				guild.data = guildData;
-
-				if(member) guild.channels.cache.forEach((channel) => {
-					const permOverwrites = channel.permissionOverwrites.get(member.id);
-					if(permOverwrites) permOverwrites.delete();
-				});
 				
-
 				let muteRole = member.guild.roles.cache.find(r => r.name === 'Drake - Mute');
 
 				member.roles.remove(muteRole);

@@ -1,3 +1,4 @@
+const { MessageActionRow, MessageButton, Constants: { ApplicationCommandOptionTypes } } = require('discord.js');
 const Command = require("../../structure/Commands.js");
 const ms = require("ms");
 
@@ -8,52 +9,67 @@ class Mute extends Command {
             name: "mute",
             aliases: [ "tempmute" ],
             dirname: __dirname,
-            enabled: false,
+            enabled: true,
             botPerms: [ "MANAGE_MESSAGES", "MANAGE_CHANNELS", "MANAGE_ROLES" ],
             userPerms: [ "MANAGE_MESSAGES" ],
             cooldown: 3,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Mute an user",
+                options: [
+                    {
+                        name: "user",
+                        type: ApplicationCommandOptionTypes.USER,
+                        required: true,
+                        description: "Who will be muted ?"
+                    },
+                    {
+                        name: "time",
+                        type: ApplicationCommandOptionTypes.STRING,
+                        required: true,
+                        description: "For how longer ?"
+                    },
+                    {
+                        name: "reason",
+                        type: ApplicationCommandOptionTypes.STRING,
+                        required: false,
+                        description: "What did he did ?"
+                    }
+                ]
+            }
         });
     };
 
     async run(message, args, data) {
 
-        // Définir le client
         const client = this.client;
 
-        // Si y'a pas d'args 0
         if(!args[0] && !message.mentions.users.first()) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "ban <user> (reason)",
             emoji: "error"
         });
 
-        // Resolver le member
         const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
-        // Si ya pas de member
         if(!member) return message.drake("misc:MEMBER_NOT_FOUND", {
             emoji: "error"
         });
 
-        // Si le member c'est le mec qui a run la commande
         if(member.id === message.author.id) return message.drake("misc:YOURSELF", {
             emoji: "error"
         });
 
-        // Chopper la position du member & check si elle est pas supérieure a la tienne + si le member est pas l'owner
         const memberPosition = member.roles.highest.position;
         const moderationPosition = message.member.roles.highest.position;
         if(moderationPosition < memberPosition) return message.drake("misc:SUPERIOR", {
             emoji: "error"
         });
 
-        // Chopper le memberData dans la DB
         const memberData = await this.client.db.findOrCreateMember(member, message.guild);
 
-        // Récupérer le time avec l'args 1
         let time = args[1];
 
-        // Si y a pas de time
         if(!time || isNaN(ms(time))) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "mute <user> <time> (reason)",
             emoji: "error"
@@ -61,33 +77,31 @@ class Mute extends Command {
 
         time = ms(time);
 
-        // Chopper la raison avec le message en le découpant de 2
         let reason = args.slice(message.mentions.users.first() ? (args[0].includes(user.id) ? 1 : 0) : 1).join(" ").trim();
-
-        // Si ya pas la raison
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
-        // Envoyer un message de confirmation
-        let waitMsg = await message.channel.send(message.drakeWS("moderation/mute:CONFIRM", {
-            emoji: "question",
-            username: member.user.username,
-            time: message.time.convertMS(time),
-            reason: reason
-        }));
+        let msg = await message.channel.send({
+            content: message.drakeWS("moderation/mute:CONFIRM", {
+                emoji: "question",
+                username: member.user.username,
+                time: message.time.convertMS(time),
+                reason: reason
+            })
+        });
 
-        // Définir le filtre du collecteur
-        const filter = (button) => button.clicker.user.id === message.author.id;
+        const filter = (button) => button.user.id === message.author.id;
 
-        // Réagir au message
         let yesButton = new MessageButton()
-        .setStyle('green')
+        .setStyle('SUCCESS')
         .setLabel('Yes 👍')
-        .setID(`${message.guild.id}${message.author.id}${Date.now()}YES-MUTE`);
+        .setDisabled(false)
+        .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}YES-MUTE`);
 
         let noButton = new MessageButton()
-        .setStyle('red')
+        .setStyle('DANGER')
         .setLabel('No 👎')
-        .setID(`${message.guild.id}${message.author.id}${Date.now()}NO-MUTE`);
+        .setDisabled(false)
+        .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}NO-MUTE`);
 
         let group1 = new MessageActionRow().addComponents([ yesButton, noButton ]);
 
@@ -95,23 +109,121 @@ class Mute extends Command {
             components: [group1]
         }).catch(() => {});
 
-        // Définir le collecteur et ses réactions
-        await waitMsg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-            let button = collected.first();
+        const collector = msg.createMessageComponentCollector({ filter, max: 1, time: 60000, errors: ['time'] })
+        
+        collector.on("collect", async button => {
             if(!button) {
                 msg.delete().catch(() => {});
                 return message.delete().catch(() => {});
             };
-            if(button.id === yesButton.custom_id) { 
+            if(button.customId === yesButton.customId) { 
                 client.functions.mute(member, message, message.author, data.guild, reason, memberData, client, time);
                 message.delete().catch(() => {});
-                return waitMsg.delete().catch(() => {});
+                return msg.delete().catch(() => {});
             } else {
-                message.drake("common:CANCEL", {
-                    emoji: "succes"
+                const cancelMessage = await message.channel.send({
+                    content: message.drakeWS("common:CANCEL", { emoji: "succes"})
                 });
-                return waitMsg.delete().catch(() => {});
-            }
+                setTimeout(() => cancelMessage.delete().catch(() => {}), 3000);
+                msg.delete().catch(() => {});
+                return message.delete().catch(() => {});
+            };
+        });
+    };  
+
+    async runInteraction(interaction, data) {
+
+        const client = this.client;
+
+        const member = interaction.options.getUser("user") ? interaction.guild.members.cache.get(interaction.options.getUser("user").id) : null;
+
+        if(!member) return interaction.reply({
+            content: interaction.drakeWS("misc:MEMBER_NOT_FOUND", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        if(member.id === interaction.user.id) return interaction.reply({
+            content: interaction.drakeWS("misc:YOURSELF", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        const memberPosition = member.roles.highest.position;
+        const moderationPosition = interaction.guild.members.cache.get(interaction.user.id).roles.highest.position;
+        if(moderationPosition < memberPosition) return interaction.reply({
+            content: interaction.drakeWS("misc:SUPERIOR", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        const memberData = await this.client.db.findOrCreateMember(member, interaction.guild);
+
+        let time = interaction.options.getString("time");
+
+        if(isNaN(ms(time))) return interaction.reply({
+            content: interaction.drakeWS("errors:NOT_CORRECT", {
+                usage: data.guild.prefix + "mute <user> <time> (reason)",
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        time = ms(time);
+
+        let reason = interaction.options.getString("reason") ? interaction.options.getString("reason").replace("-f", "").trim() : null;
+        if(!reason) reason = interaction.drakeWS("misc:NO_REASON");
+
+        let msg = await interaction.reply({
+            content: interaction.drakeWS("moderation/mute:CONFIRM", {
+                emoji: "question",
+                username: member.user.username,
+                time: interaction.time.convertMS(time),
+                reason: reason
+            })
+        });
+
+        const filter = (button) => button.user.id === interaction.user.id;
+
+        let yesButton = new MessageButton()
+        .setStyle('SUCCESS')
+        .setLabel('Yes 👍')
+        .setDisabled(false)
+        .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}YES-MUTE`);
+
+        let noButton = new MessageButton()
+        .setStyle('DANGER')
+        .setLabel('No 👎')
+        .setDisabled(false)
+        .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}NO-MUTE`);
+
+        let group1 = new MessageActionRow().addComponents([ yesButton, noButton ]);
+
+        await interaction.editReply({
+            components: [group1]
+        }).catch(() => {});
+
+        const collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time: 60000, errors: ['time'] })
+        
+        collector.on("collect", async button => {
+            if(!button) {
+                await interaction.deleteReply();
+            };
+            if(button.customId === yesButton.customId) { 
+                client.functions.mute(member, interaction, interaction.user, data.guild, reason, memberData, client, time);
+                return await interaction.deleteReply();
+            } else {
+                await interaction.editReply({
+                    content: interaction.drakeWS("common:CANCEL", { emoji: "succes"}),
+                    components: []
+                });
+                setTimeout(async () => {
+                    await interaction.deleteReply();
+                }, 3000);
+            };
         });
     };  
 };

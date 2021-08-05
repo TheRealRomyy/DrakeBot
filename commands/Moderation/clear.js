@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require('discord.js');
 
 class Clear extends Command {
 
@@ -7,11 +8,29 @@ class Clear extends Command {
             name: "clear",
             aliases: [],
             dirname: __dirname,
-            enabled: false,
+            enabled: true,
             botPerms: [ "MANAGE_MESSAGES", "MANAGE_CHANNELS" ],
             userPerms: [ "MANAGE_MESSAGES" ],
             cooldown: 3,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Purge the channel",
+                options: [
+                    {
+                        name: "amount",
+                        type: ApplicationCommandOptionTypes.INTEGER,
+                        required: true,
+                        description: "How many messages do you want to delete ?"
+                    },
+                    {
+                        name: "user",
+                        type: ApplicationCommandOptionTypes.USER,
+                        required: false,
+                        description: "If you want to clear only message from a specific user"
+                    }
+                ]
+            }
         });
     };
 
@@ -32,8 +51,11 @@ class Clear extends Command {
 
         const user = message.mentions.users.first() || this.client.users.cache.get(args[1]) || this.client.users.cache.find(u => u.username === args[1]);
 
-        let messages = await message.channel.messages.fetch({ limit: 100 });
-        messages = messages.array();
+        let messages = await message.channel.messages.fetch({ 
+            limit: 100 
+        });
+
+        messages = Array.from(messages.values());
 
         if(user) messages = messages.filter((m) => m.author.id === user.id);
         if(messages.length > amount) messages.length = parseInt(amount, 10);
@@ -43,19 +65,71 @@ class Clear extends Command {
 
         message.channel.bulkDelete(messages, true);
 
-        if(user) await message.channel.send(message.drakeWS("moderation/clear:CLEARED_MEMBER", {
-            amount: --amount,
-            username: user.tag,
-            emoji: "clear"
-        })).then(m => m.delete({
-            timeout: 4000
-        }));
-        else await message.channel.send(message.drakeWS("moderation/clear:CLEARED", {
-            amount: --amount,
-            emoji: "clear"
-        })).then(m => m.delete({
-            timeout: 4000
-        }));
+        if(user) {
+            const clearMessage = await message.channel.send({
+                content: message.drakeWS("moderation/clear:CLEARED_MEMBER", {
+                    amount: --amount,
+                    username: user.tag,
+                    emoji: "clear"
+                })
+            });
+
+            setTimeout(() => clearMessage.delete().catch(() => {}), 3000);
+
+        } else {
+            const clearUserMessage = await message.channel.send({
+                content: message.drakeWS("moderation/clear:CLEARED", {
+                    amount: --amount,
+                    emoji: "clear"
+                })  
+            });
+
+            setTimeout(() => clearUserMessage.delete().catch(() => {}), 3000);
+        };
+    };
+
+    async runInteraction(interaction, data) {
+
+        let amount = interaction.options.getInteger("amount");
+        if(!amount || isNaN(amount) || parseInt(amount) < 1) return interaction.reply({
+            content: interaction.drakeWS("errors:NOT_CORRECT", {
+                emoji:	"error",
+                usage: data.guild.prefix + "clear <amount> (user)"
+            }),
+            ephemeral: true
+        });
+
+        const user = interaction.options.getUser("user");
+
+        let messages = await interaction.channel.messages.fetch({ 
+            limit: 100 
+        });
+
+        messages = Array.from(messages.values());
+
+        if(user) messages = messages.filter((m) => m.author.id === user.id);
+        if(messages.length > amount) messages.length = parseInt(amount, 10);
+
+        messages = messages.filter((m) => !m.pinned);
+        amount++;
+
+        interaction.channel.bulkDelete(messages, true);
+
+        if(user) await interaction.reply({
+            content: interaction.drakeWS("moderation/clear:CLEARED_MEMBER", {
+                amount: --amount,
+                username: user.tag,
+                emoji: "clear"
+            }),
+            ephemeral: true
+        });
+        else await interaction.reply({
+            content: interaction.drakeWS("moderation/clear:CLEARED", {
+                amount: --amount,
+                emoji: "clear"
+            }),
+            ephemeral: true
+        });
     };
 };
 
