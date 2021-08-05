@@ -7,7 +7,7 @@ class Setprefix extends Command {
 			name: "setprefix",
 			aliases: [ "set-prefix" ],
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			botPerms: [ "SEND_MESSAGES" ],
 			userPerms: [ "MANAGE_GUILD" ],
 			cooldown: 0,

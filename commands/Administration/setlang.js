@@ -7,7 +7,7 @@ class Setlang extends Command {
             name: "setlang",
             aliases: [ "set-lang", "lang", "language" ],
             dirname: __dirname,
-            enalbled: true,
+            enalbled: false,
             botPerms: [ "EMBED_LINKS", "SEND_MESSAGES" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 10,

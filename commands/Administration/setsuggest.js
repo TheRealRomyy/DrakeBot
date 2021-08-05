@@ -7,7 +7,7 @@ class Setsuggest extends Command {
             name: "setsuggest",
             aliases: [ "set-suggest" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "MANAGE_CHANNELS" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,

@@ -6,7 +6,7 @@ class Fortress extends Command {
         super(client, {
             name: "fortress",
             aliases: ["forteresse"],
-            enabled: true,
+            enabled: false,
             dirname: __dirname,
             botPerms: [ "ADMINISTRATOR" ],
             userPerms: [ "ADMINISTRATOR" ],

@@ -7,7 +7,7 @@ class Autorole extends Command {
             name: "autorole",
             aliases: [ "ar" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "ADMINISTRATOR" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,

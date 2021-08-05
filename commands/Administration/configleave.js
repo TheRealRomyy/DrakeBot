@@ -8,7 +8,7 @@ class ConfigLeave extends Command {
             name: "configleave",
             aliases: [],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [],
             userPerms: ["MANAGE_GUILD"],
             cooldown: 5,

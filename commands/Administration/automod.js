@@ -8,7 +8,7 @@ class Automod extends Command {
             name: "automod",
             aliases: [ "automod" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "ADMINISTRATOR" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,

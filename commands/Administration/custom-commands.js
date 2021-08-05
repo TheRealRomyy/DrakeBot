@@ -8,7 +8,7 @@ class CustomCommands extends Command {
             name: "custom-commands",
             aliases: [ "cc", "custom-commands", "custom" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,

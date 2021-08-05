@@ -7,7 +7,7 @@ class Setsymbol extends Command {
 			name: "setsymbol",
 			aliases: [ "set-symbol" ],
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			botPerms: [ "SEND_MESSAGES" ],
 			userPerms: [ "MANAGE_GUILD" ],
 			cooldown: 0,
