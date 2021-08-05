@@ -31,9 +31,14 @@ class Reload extends Command {
                 client.translations = await languages();
 
                 console.log(chalk.green(`Languages: ${chalk.bold("reloaded")}`));
-                return message.channel.send({
+                const languageMessage = await message.channel.send({
                     content: `${client.emotes.succes} **Languages reloaded !**`
                 });
+
+                setTimeout(() => {
+                    message.delete().catch(() => {});
+                    languageMessage.delete().catch(() => {});
+                }, 3000);
             };
             
             if(args[0] === "commands") {
@@ -42,9 +47,14 @@ class Reload extends Command {
                     await client.loadCommand(cmd.settings.location, cmd.help.name);
                 });
 
-                return message.channel.send({
+                const commandsMessage = await message.channel.send({
                     content: `${client.emotes.succes} **All commands reloaded !**`
                 });
+
+                setTimeout(() => {
+                    message.delete().catch(() => {});
+                    commandsMessage.delete().catch(() => {});
+                }, 3000);
             };
 
             const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
@@ -55,15 +65,25 @@ class Reload extends Command {
             await client.unloadCommand(cmd.settings.location, cmd.help.name);
             await client.loadCommand(cmd.settings.location, cmd.help.name);
     
-            return message.channel.send({
+            const commandMessage = await message.channel.send({
                 content: `${client.emotes.succes} **Command __${cmd.help.name}__ reloaded !**`
             });
 
+            setTimeout(() => {
+                message.delete().catch(() => {});
+                commandMessage.delete().catch(() => {});
+            }, 3000);
+
         } else {
 
-            await message.channel.send({
+            const reload = await message.channel.send({
                 content: `${client.emotes.succes} **Bot reload !**` 
             });
+
+            setTimeout(() => {
+                message.delete().catch(() => {});
+                reload.delete().catch(() => {});
+            }, 1000);
 
             client.emit("reconnecting");
 
