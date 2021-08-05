@@ -89,7 +89,7 @@ class Reload extends Command {
                 const { exec } = require("child_process");
     
                 await exec("pm2 restart DrakeBot");
-            }, 1000);
+            }, 500);
         };
     };
 };
