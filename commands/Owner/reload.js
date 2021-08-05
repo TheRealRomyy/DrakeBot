@@ -83,13 +83,13 @@ class Reload extends Command {
             setTimeout(() => {
                 message.delete().catch(() => {});
                 reload.delete().catch(() => {});
+
+                client.emit("reconnecting");
+
+                const { exec } = require("child_process");
+    
+                await exec("pm2 restart DrakeBot");
             }, 1000);
-
-            client.emit("reconnecting");
-
-            const { exec } = require("child_process");
-
-            await exec("pm2 restart DrakeBot");
         };
     };
 };
