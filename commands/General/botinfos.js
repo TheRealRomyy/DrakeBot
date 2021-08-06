@@ -65,10 +65,10 @@ class Botinfos extends Command {
         .addField(message.drakeWS("general/botinfos:PROCESSOR", { emoji: "computer"} ), `\`\`\`${os.cpus().map(i => `${i.model}`)[0]} (${cpuUsage}%)\`\`\``)
         .addField(message.drakeWS("general/botinfos:VERSIONS", { emoji: "page"} ), `\`\`\`Node.js: ${process.version} - Discord.js: v${version}\`\`\``)
         .addField(message.drakeWS("general/botinfos:PING", { emoji: "ping"} ), `\`\`\`${ping}ms\`\`\``)
-        .addField(message.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), message.drakeWS("general/botinfos:THANKS_ICONS", { icons8: "[icons8](https://icons8.com)" }) + "\n" + message.drakeWS("general/botinfos:THANKS_ANDROZ", { androz: "[Androz](https://discord.com/users/422820341791064085)" }) + "\n" + message.drakeWS("general/botinfos:THANKS_ETHAN", { ethan: "[Ethan](https://discord.com/users/654754795336237058)" }) + "\n" + message.drakeWS("general/botinfos:THANKS_ZALGO", { mystere: "[Mystère](https://discord.com/users/547514927019982864)", jabac: "[Jabac](https://discord.com/users/390937973010595842)" }) + "\n \n[Inviter](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot) • [Support](https://discord.gg/wyjNZSzXHZ)")
+        .addField(message.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), message.drakeWS("general/botinfos:THANKS") + `\n \n[Inviter](${client.cfg.inviteLink}) • [Support](https://discord.gg/wyjNZSzXHZ)`)
         .setColor("RANDOM")
 
-        msg.delete()
+        msg.delete().catch(() => {});
         message.channel.send({
             embeds: [embed]
         });
@@ -114,7 +114,7 @@ class Botinfos extends Command {
         .addField(interaction.drakeWS("general/botinfos:PROCESSOR", { emoji: "computer"} ), `\`\`\`${os.cpus().map(i => `${i.model}`)[0]} (${cpuUsage}%)\`\`\``)
         .addField(interaction.drakeWS("general/botinfos:VERSIONS", { emoji: "page"} ), `\`\`\`Node.js: ${process.version} - Discord.js: v${version}\`\`\``)
         .addField(interaction.drakeWS("general/botinfos:PING", { emoji: "ping"} ), `\`\`\`${ping}ms\`\`\``)
-        .addField(interaction.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), interaction.drakeWS("general/botinfos:THANKS") + "\n \n[Inviter](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot) • [Support](https://discord.gg/wyjNZSzXHZ)")
+        .addField(interaction.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), interaction.drakeWS("general/botinfos:THANKS") + `\n \n[Inviter](${client.cfg.inviteLink}) • [Support](https://discord.gg/wyjNZSzXHZ)`)
         .setColor("RANDOM")
 
         await interaction.editReply({

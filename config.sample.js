@@ -1,5 +1,6 @@
 module.exports = {
 	token: "TOK3N",
+	inviteLink: "INVITE LINK",
     prefix: "d!",
 	footer: "DrakeBot | 2021",
 	api: {

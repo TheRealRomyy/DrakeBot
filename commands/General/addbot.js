@@ -27,7 +27,7 @@ class Addbot extends Command {
             name: this.client.user.username
         }))
         .setColor("RANDOM")
-        .setDescription('\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](https://discord.com/api/oauth2/authorize?client_id=762965943529766912&permissions=8&redirect_uri=https%3A%2F%2Fdrakebot.xyz&scope=bot%20applications.commands)')
+        .setDescription(`\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](${this.client.cfg.inviteLink})`)
         .setFooter(this.client.cfg.footer)
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 
@@ -43,7 +43,7 @@ class Addbot extends Command {
             name: this.client.user.username
         }))
         .setColor("RANDOM")
-        .setDescription('\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](https://discord.com/api/oauth2/authorize?client_id=762965943529766912&permissions=8&redirect_uri=https%3A%2F%2Fdrakebot.xyz&scope=bot%20applications.commands)')
+        .setDescription(`\n ❯ [Support](https://discord.gg/mYDdTbx) \n \n ❯ [Invite](${this.client.cfg.inviteLink})`)
         .setFooter(this.client.cfg.footer)
         .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
 
