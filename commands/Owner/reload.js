@@ -40,10 +40,7 @@ class Reload extends Command {
                     languageMessage.delete().catch(() => {});
                 }, 3000);
 
-                return;
-            };
-            
-            if(args[0] === "commands") {
+            } else if(args[0] === "commands") {
                 client.cmds.forEach(async (cmd) => {
                     await client.unloadCommand(cmd.settings.location, cmd.help.name);
                     await client.loadCommand(cmd.settings.location, cmd.help.name);
@@ -58,25 +55,24 @@ class Reload extends Command {
                     commandsMessage.delete().catch(() => {});
                 }, 3000);
 
-                return;
-            };
-
-            const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
-            if(!cmd) return message.channel.send({
-                content: `${client.emotes.error} **La commande __${args[0]}__ n'existe pas !**`
-            });
-            
-            await client.unloadCommand(cmd.settings.location, cmd.help.name);
-            await client.loadCommand(cmd.settings.location, cmd.help.name);
+            } else {
+                const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
+                if(!cmd) return message.channel.send({
+                    content: `${client.emotes.error} **La commande __${args[0]}__ n'existe pas !**`
+                });
+                
+                await client.unloadCommand(cmd.settings.location, cmd.help.name);
+                await client.loadCommand(cmd.settings.location, cmd.help.name);
+        
+                const commandMessage = await message.channel.send({
+                    content: `${client.emotes.succes} **Command __${cmd.help.name}__ reloaded !**`
+                });
     
-            const commandMessage = await message.channel.send({
-                content: `${client.emotes.succes} **Command __${cmd.help.name}__ reloaded !**`
-            });
-
-            setTimeout(() => {
-                message.delete().catch(() => {});
-                commandMessage.delete().catch(() => {});
-            }, 3000);
+                setTimeout(() => {
+                    message.delete().catch(() => {});
+                    commandMessage.delete().catch(() => {});
+                }, 3000);
+            };
 
         } else {
 
