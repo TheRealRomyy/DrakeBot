@@ -15,7 +15,7 @@ class Kick extends Command {
             restriction: [],
             
             slashCommandOptions: {
-                description: "Kick an user",
+                description: "🚪 Kick an user",
                 options: [
                     {
                         name: "user",

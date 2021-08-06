@@ -16,7 +16,7 @@ class Mute extends Command {
             restriction: [],
 
             slashCommandOptions: {
-                description: "Mute an user",
+                description: "🔇 Mute an user",
                 options: [
                     {
                         name: "user",

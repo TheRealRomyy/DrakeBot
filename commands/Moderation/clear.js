@@ -15,7 +15,7 @@ class Clear extends Command {
             restriction: [],
 
             slashCommandOptions: {
-                description: "Purge the channel",
+                description: "🗑️ Purge the channel",
                 options: [
                     {
                         name: "amount",

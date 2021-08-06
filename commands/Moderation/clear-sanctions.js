@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class ClearSanctions extends Command {
 
@@ -7,11 +8,23 @@ class ClearSanctions extends Command {
             name: "clear-sanctions",
             aliases: [],
             dirname: __dirname,
-            enabled: false,
+            enabled: true,
             botPerms: [],
-            userPerms: [ "KICK_MEMBERS" ],
+            userPerms: [ "MANAGE_MESSAGES" ],
             cooldown: 5,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Clear all sanctions of an user",
+                options: [
+                    {
+                        name: "user",
+                        type: ApplicationCommandOptionTypes.USER,
+                        required: true,
+                        description: "Wich user ?"
+                    }
+                ]
+            }
         });
     };
 
@@ -32,6 +45,22 @@ class ClearSanctions extends Command {
 		return message.drake("moderation/clear-sanctions:SUCCES", {
             emoji: "succes",
 			username: member.user.tag
+		});
+    };
+
+    async runInteraction(interaction, data) {
+
+        const user = interaction.options.getUser("user");
+        const memberData = await this.client.db.findOrCreateMember(user.id, interaction.guild);
+        
+		memberData.sanctions = [];
+        await memberData.save();
+        
+		return interaction.reply({
+            content: interaction.drakeWS("moderation/clear-sanctions:SUCCES", {
+                emoji: "succes",
+                username: user.tag
+            })
 		});
     };
 };
