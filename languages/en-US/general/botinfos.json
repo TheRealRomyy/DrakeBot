@@ -10,10 +10,7 @@
     "VERSIONS": "• Versions",
     "PING": "• Latency",
     "CREDITS": "• Crédits",
-    "THANKS_ICONS": "Thanks to the greats icons of {{icons8}} !",
-    "THANKS_ANDROZ": "Thanks to the open source bot \"Atlanta\" made by the genious {{androz}} !",
-    "THANKS_ETHAN": "Thanks to the bright tips of {{ethan}} !",
-    "THANKS_ZALGO": "Thank to {{mystere}} and {{jabac}} for the inspiration by there bot Zalgo !",
+    "THANKS": "Thanks to the beautiful icons of [icons8](https://icons8.com) ! \nThanks to the open source bot \"Atlanta\" made by the genius [Androz](https://discord.com/users/422820341791064085) !\nThanks to [Mystère](https://discord.com/users/547514927019982864) for his very helpful help !\nThanks to [Féloche](https://discord.com/users/695944105464692796) for his shelp and his beautiful logo !",
     "DESCRIPTION": "Get some informations about the bot",
     "EXAMPLE": "botinfos",
     "USAGE": "botinfos"

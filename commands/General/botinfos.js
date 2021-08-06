@@ -35,9 +35,6 @@ class Botinfos extends Command {
         classCount = classCount.length.toString();
 
         let cpuUsage = null;
-        let osVersion = null;
-        let nodeV = null;
-
 
         const memory = await si.mem();
         const swapUsed = Math.floor(memory.swapused / 1024 / 1024);
@@ -52,8 +49,6 @@ class Botinfos extends Command {
         message.channel.sendTyping();
 
         await si.currentLoad().then(data => cpuUsage = Math.floor(data.currentload_user));
-        await si.osInfo().then(data => osVersion = data.distro);
-        await si.versions().then(data => nodeV = data.node);
 
         const uptime = message.time.convertMS(client.uptime);
 
@@ -68,7 +63,7 @@ class Botinfos extends Command {
         .addField(message.drakeWS("general/botinfos:COMMANDS", { emoji: "dev"} ), `\`\`\`${commandCount} ${message.drakeWS("common:COMMANDS")} - ${classCount} ${message.drakeWS("common:CATEGORIES")}\`\`\``)
         .addField(message.drakeWS("general/botinfos:RAM", { emoji: "ram"} ), `\`\`\`${realMemUsed} / ${totalMemory} Go (${memPercent}%)\`\`\``)
         .addField(message.drakeWS("general/botinfos:PROCESSOR", { emoji: "computer"} ), `\`\`\`${os.cpus().map(i => `${i.model}`)[0]} (${cpuUsage}%)\`\`\``)
-        .addField(message.drakeWS("general/botinfos:VERSIONS", { emoji: "page"} ), `\`\`\`Node.js: v${nodeV} - Discord.js: v${version}\`\`\``)
+        .addField(message.drakeWS("general/botinfos:VERSIONS", { emoji: "page"} ), `\`\`\`Node.js: v${process.version} - Discord.js: v${version}\`\`\``)
         .addField(message.drakeWS("general/botinfos:PING", { emoji: "ping"} ), `\`\`\`${ping}ms\`\`\``)
         .addField(message.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), message.drakeWS("general/botinfos:THANKS_ICONS", { icons8: "[icons8](https://icons8.com)" }) + "\n" + message.drakeWS("general/botinfos:THANKS_ANDROZ", { androz: "[Androz](https://discord.com/users/422820341791064085)" }) + "\n" + message.drakeWS("general/botinfos:THANKS_ETHAN", { ethan: "[Ethan](https://discord.com/users/654754795336237058)" }) + "\n" + message.drakeWS("general/botinfos:THANKS_ZALGO", { mystere: "[Mystère](https://discord.com/users/547514927019982864)", jabac: "[Jabac](https://discord.com/users/390937973010595842)" }) + "\n \n[Inviter](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot) • [Support](https://discord.gg/wyjNZSzXHZ)")
         .setColor("RANDOM")
@@ -81,6 +76,8 @@ class Botinfos extends Command {
 
     async runInteraction(interaction, data) {
 
+        await interaction.defer();
+
         const client = this.client;
 
         let ping = Math.round(client.ws.ping);
@@ -89,8 +86,6 @@ class Botinfos extends Command {
         classCount = classCount.length.toString();
 
         let cpuUsage = null;
-        let osVersion = null;
-        let nodeV = null;
 
         const memory = await si.mem();
         const swapUsed = Math.floor(memory.swapused / 1024 / 1024);
@@ -103,8 +98,6 @@ class Botinfos extends Command {
         let memPercent = Math.floor(realMemUsed / totalMemory * 100);
 
         await si.currentLoad().then(data => cpuUsage = Math.floor(data.currentload_user));
-        await si.osInfo().then(data => osVersion = data.distro);
-        await si.versions().then(data => nodeV = data.node);
 
         const uptime = interaction.time.convertMS(client.uptime);
 
@@ -119,12 +112,12 @@ class Botinfos extends Command {
         .addField(interaction.drakeWS("general/botinfos:COMMANDS", { emoji: "dev"} ), `\`\`\`${commandCount} ${interaction.drakeWS("common:COMMANDS")} - ${classCount} ${interaction.drakeWS("common:CATEGORIES")}\`\`\``)
         .addField(interaction.drakeWS("general/botinfos:RAM", { emoji: "ram"} ), `\`\`\`${realMemUsed} / ${totalMemory} Go (${memPercent}%)\`\`\``)
         .addField(interaction.drakeWS("general/botinfos:PROCESSOR", { emoji: "computer"} ), `\`\`\`${os.cpus().map(i => `${i.model}`)[0]} (${cpuUsage}%)\`\`\``)
-        .addField(interaction.drakeWS("general/botinfos:VERSIONS", { emoji: "page"} ), `\`\`\`Node.js: v${nodeV} - Discord.js: v${version}\`\`\``)
+        .addField(interaction.drakeWS("general/botinfos:VERSIONS", { emoji: "page"} ), `\`\`\`Node.js: v${process.version} - Discord.js: v${version}\`\`\``)
         .addField(interaction.drakeWS("general/botinfos:PING", { emoji: "ping"} ), `\`\`\`${ping}ms\`\`\``)
-        .addField(interaction.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), interaction.drakeWS("general/botinfos:THANKS_ICONS", { icons8: "[icons8](https://icons8.com)" }) + "\n" + interaction.drakeWS("general/botinfos:THANKS_ANDROZ", { androz: "[Androz](https://discord.com/users/422820341791064085)" }) + "\n" + interaction.drakeWS("general/botinfos:THANKS_ETHAN", { ethan: "[Ethan](https://discord.com/users/654754795336237058)" }) + "\n" + interaction.drakeWS("general/botinfos:THANKS_ZALGO", { mystere: "[Mystère](https://discord.com/users/547514927019982864)", jabac: "[Jabac](https://discord.com/users/390937973010595842)" }) + "\n \n[Inviter](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot) • [Support](https://discord.gg/wyjNZSzXHZ)")
+        .addField(interaction.drakeWS("general/botinfos:CREDITS", { emoji: "heart"} ), interaction.drakeWS("general/botinfos:THANKS") + "\n \n[Inviter](https://discord.com/oauth2/authorize?client_id=762965943529766912&permissions=8&scope=bot) • [Support](https://discord.gg/wyjNZSzXHZ)")
         .setColor("RANDOM")
 
-        interaction.reply({
+        await interaction.editReply({
             embeds: [embed]
         });
     };

@@ -10,10 +10,7 @@
     "VERSIONS": "• Versions",
     "PING": "• Latence",
     "CREDITS": "• Crédits",
-    "THANKS_ICONS": "Merci aux fantastiques icones de {{icons8}} !",
-    "THANKS_ANDROZ": "Merci au bot open source \"Atlanta\" fait par le génie {{androz}} !",
-    "THANKS_ETHAN": "Merci aux astucieux conseil de {{ethan}} !",
-    "THANKS_ZALGO": "Merci a {{mystere}} pour son aide très précieuse !",
+    "THANKS": "Merci aux fantastiques icones de [icons8](https://icons8.com) ! \nMerci au bot open source \"Atlanta\" fait par le génie [Androz](https://discord.com/users/422820341791064085) !\nMerci a [Mystère](https://discord.com/users/547514927019982864) pour son aide très précieuse !\nMerci a [Féloche](https://discord.com/users/695944105464692796) pour son soutient et son magnifique logo !",
     "DESCRIPTION": "Obtenir des informations sur le bot",
     "EXAMPLE": "botinfos",
     "USAGE": "botinfos"
