@@ -89,8 +89,6 @@ class Mute extends Command {
             })
         });
 
-        const filter = (button) => button.user.id === message.author.id;
-
         let yesButton = new MessageButton()
         .setStyle('SUCCESS')
         .setLabel('Yes 👍')
@@ -102,6 +100,11 @@ class Mute extends Command {
         .setLabel('No 👎')
         .setDisabled(false)
         .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}NO-MUTE`);
+
+        const filter = (button) => button.user.id === message.author.id && (
+            button.customId === yesButton.customId ||
+            button.customId === noButton.customId
+        );
 
         let group1 = new MessageActionRow().addComponents([ yesButton, noButton ]);
 

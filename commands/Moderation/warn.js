@@ -38,8 +38,6 @@ class Warn extends Command {
 
         let client = this.client;
 
-        const filter = (button) => button.user.id === message.author.id;
-
         if(!args[0] && !message.mentions.users.first()) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "warn <user> (reason)",
             emoji: "error"
@@ -89,6 +87,11 @@ class Warn extends Command {
         .setLabel('No 👎')
         .setDisabled(false)
         .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}NO-WARN`);
+
+        const filter = (button) => button.user.id === message.author.id && (
+            button.customId === yesButton.customId ||
+            button.customId === noButton.customId
+        );
 
         let group1 = new MessageActionRow().addComponents([ yesButton, noButton ]);
 
