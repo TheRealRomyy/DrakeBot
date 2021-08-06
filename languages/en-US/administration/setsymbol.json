@@ -2,5 +2,6 @@
     "DESCRIPTION": "Change the economy symbol",
     "USAGE": "setymbol <symbol>",
     "EXAMPLE": "setsymbol $",
-    "SUCCES": "**The economy symbol is now** `{{newSymbol}}` **!**"
+    "SUCCES": "**The economy symbol is now** `{{newSymbol}}` **!**",
+    "TOO_LONG": "Your prefix is too long (max 1 char)"
 }
