@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class Setprefix extends Command {
 
@@ -7,11 +8,23 @@ class Setprefix extends Command {
 			name: "setprefix",
 			aliases: [ "set-prefix" ],
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			botPerms: [ "SEND_MESSAGES" ],
 			userPerms: [ "MANAGE_GUILD" ],
 			cooldown: 0,
 			restriction: [],
+
+			slashCommandOptions: {
+				description: "Set DrakeBot's prefix on this server",
+				options: [
+					{
+						name: "prefix",
+						type: ApplicationCommandOptionTypes.STRING,
+						required: true,
+						description: "What's the new prefix ?"
+					}
+				]
+			}
 		});
 	};
 
@@ -30,6 +43,21 @@ class Setprefix extends Command {
         return message.drake("administration/setprefix:SUCCES", {
             emoji: "succes",
             newPrefix: prefix
+        });
+    };
+
+	async runInteraction(interaction, data) {
+
+        let prefix = interaction.options.getString("prefix");
+
+        data.guild.prefix = prefix;
+        await data.guild.save();
+
+        return interaction.reply({
+			content: interaction.drakeWS("administration/setprefix:SUCCES", {
+				emoji: "succes",
+				newPrefix: prefix
+			})
         });
     };
 };
