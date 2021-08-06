@@ -8,7 +8,7 @@ class Crime extends Command {
             name: "crime",
             aliases: [ "crim" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 0,

@@ -7,7 +7,7 @@ class Withdraw extends Command {
             name: "withdraw",
             aliases: [ "wd" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 3,

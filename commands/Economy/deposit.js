@@ -7,7 +7,7 @@ class Deposit extends Command {
             name: "deposit",
             aliases: [ "bank", "dep", "deep" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 3,

@@ -8,7 +8,7 @@ class Rob extends Command {
             name: "rob",
             aliases: [ "robery" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 0,

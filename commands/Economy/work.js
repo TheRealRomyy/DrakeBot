@@ -12,21 +12,14 @@ class Work extends Command {
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 0,
-            restriction: []
-        });
-    };
+            restriction: [],
 
-    async run(message, args, data) {
-
-        const client = this.client;
-
-        const isInCooldown = data.member.cooldowns.work;
-        if(isInCooldown && isInCooldown > Date.now()) return message.drake("economy/work:COOLDOWN", {
-            time: message.time.convertMS(isInCooldown - Date.now()),
-            emoji: "error"
+            slashCommandOptions: {
+                description: "Work in order to gain money"
+            }
         });
 
-        const jobs = [
+        this.jobs = [
             {
                 name: "Developper",
                 pay: "05|10",
@@ -98,7 +91,19 @@ class Work extends Command {
                 chanceStr: "6"
             }
         ];
+    };
 
+    async run(message, args, data) {
+
+        const client = this.client;
+
+        const isInCooldown = data.member.cooldowns.work;
+        if(isInCooldown && isInCooldown > Date.now()) return message.drake("economy/work:COOLDOWN", {
+            time: message.time.convertMS(isInCooldown - Date.now()),
+            emoji: "error"
+        });
+
+        const jobs = this.jobs;
 
         const number = client.functions.getRandomInt(0, 100);
         const arrayOutOfForEach = [];
@@ -146,7 +151,81 @@ class Work extends Command {
             chance: job.chanceStr
         }));
 
-        message.channel.send(embed);
+        message.channel.send({
+            embeds: [embed]
+        });
+
+        const toWait = Date.now() + 600000;
+
+        data.member.cooldowns.work = toWait;
+        data.member.money += win;
+        await data.member.save(data.member);
+    };
+
+    async runInteraction(interaction, data) {
+
+        const client = this.client;
+
+        const isInCooldown = data.member.cooldowns.work;
+        if(isInCooldown && isInCooldown > Date.now()) return interaction.reply({
+            content: interaction.drakeWS("economy/work:COOLDOWN", {
+                time: interaction.time.convertMS(isInCooldown - Date.now()),
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
+        const jobs = this.jobs;
+
+        const number = client.functions.getRandomInt(0, 100);
+        const arrayOutOfForEach = [];
+        let jobName = "";
+
+        jobs.forEach(job => {
+            const arrayInForEach = {
+                "Name": job.name,
+                "Array": []
+            };
+            const splitedChance = job.chance.split("|");
+            const min = splitedChance[0];
+            const max = splitedChance[1];
+            for (let i = 0; i < 100; i++) {
+                if(i >= min && i < max) arrayInForEach["Array"].push(i)
+            };
+            arrayOutOfForEach.push(arrayInForEach);
+        });
+
+        await arrayOutOfForEach.forEach(object => {
+            if(object["Array"].includes(number)) jobName = object["Name"];
+        });
+
+        const job = jobs.find(job => job.name === jobName);
+
+        const minToWin = job.pay.split("|")[0];
+        const maxToWin = job.pay.split("|")[1];
+
+        const win = client.functions.getRandomInt(parseInt(minToWin), parseInt(maxToWin));
+        jobName = interaction.drakeWS("economy/work:" + jobName.toUpperCase());
+
+        let color = "BLUE";
+        if(win > 20) color = "ORANGE";
+        if(win > 40) color = "YELLOW";
+        if(win > 100) color = "BLACK";
+
+        const embed = new MessageEmbed()
+        .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic:true }))
+        .setColor(color)
+        .setFooter(client.cfg.footer)
+        .setDescription(interaction.drakeWS("economy/work:WORK", {
+            pay: win,
+            job: jobName,
+            symbol: data.guild.symbol,
+            chance: job.chanceStr
+        }));
+
+        interaction.reply({
+            embeds: [embed]
+        });
 
         const toWait = Date.now() + 600000;
 

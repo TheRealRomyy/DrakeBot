@@ -8,7 +8,7 @@ class Fight extends Command {
             name: "fight",
             aliases: [ "combat" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "EMBED_LINKS" ],
             userPerms: [],
             cooldown: 5,

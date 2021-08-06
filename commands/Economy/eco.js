@@ -7,7 +7,7 @@ class Eco extends Command {
             name: "eco",
             aliases: [ "economy" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "SEND_MESSAGES", "EMBED_LINKS" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 0,

@@ -8,7 +8,7 @@ class LeaderboardMoney extends Command {
             name: "leaderboard-money",
             aliases: [ "lb-money", "top-money" ],
             dirname: __dirname,
-            enabled: true,
+            enabled: false,
             botPerms: [ "EMBED_LINKS", "SEND_MESSAGES" ],
             userPerms: [],
             cooldown: 5,
