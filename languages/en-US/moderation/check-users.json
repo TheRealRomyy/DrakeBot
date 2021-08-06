@@ -5,5 +5,6 @@
     "BLACKLIST": "Is blacklist on the bot",
     "DESCRIPTION": "Check if members has links in his status",
     "EXAMPLE": "check-users",
-    "USAGE": "check-users"
+    "USAGE": "check-users",
+    "NO_CRIME": "Any user have link in status"
 }

@@ -5,5 +5,6 @@
     "BLACKLIST": "Est blacklist sur le bot",
     "DESCRIPTION": "Verifier si des gens sur votre serveur ont des pubs en status",
     "EXAMPLE": "check-users",
-    "USAGE": "check-users"
+    "USAGE": "check-users",
+    "NO_CRIME": "Aucun utilisateur n'a de pub en status"
 }
