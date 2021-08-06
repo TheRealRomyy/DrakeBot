@@ -15,7 +15,7 @@ class Warn extends Command {
             restriction: [],
 
             slashCommandOptions: {
-                description: "Warn an user",
+                description: "Warn a member",
                 options: [
                     {
                         name: "user",

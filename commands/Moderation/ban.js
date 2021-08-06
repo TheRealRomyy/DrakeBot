@@ -15,7 +15,7 @@ class Ban extends Command {
             restriction: [],
 
             slashCommandOptions: {
-                description: "🔨 Ban an user",
+                description: "Ban a member",
                 options: [
                     {
                         name: "user",
