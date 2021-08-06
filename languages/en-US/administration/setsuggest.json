@@ -4,6 +4,7 @@
     "USAGE": "setsuggest <channel>",
     "SUCCES": "The suggest channel is now {{channel}} !",
     "DISABLED": "Suggestions **disabled**",
-    "VOICE": "**This channel is a voice channel**",
+    "ALREADY_DISABLED": "Suggestion channel is already disabled !",
+    "NOT_TEXT": "**This channel is not a text channel**",
     "CHANNEL_NOT_FOUND": "**I don't find this channel !**"
 }

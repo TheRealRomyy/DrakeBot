@@ -4,6 +4,7 @@
     "USAGE": "setsuggest <channel>",
     "SUCCES": "Les suggestions iront maintenant dans le salon {{channel}} !",
     "DISABLED": "Suggestions **désactivés**",
-    "VOICE": "**Ce salon est un salon vocal**",
+    "ALREADY_DISABLED": "Le salon de suggestion est déjà désactivé",
+    "NOT_TEXT": "**Ce salon n'est pas un salon textuel**",
     "CHANNEL_NOT_FOUND": "**Je ne trouve pas ce salon !**"
 }
