@@ -39,6 +39,8 @@ class Reload extends Command {
                     message.delete().catch(() => {});
                     languageMessage.delete().catch(() => {});
                 }, 3000);
+
+                return;
             };
             
             if(args[0] === "commands") {
@@ -55,6 +57,8 @@ class Reload extends Command {
                     message.delete().catch(() => {});
                     commandsMessage.delete().catch(() => {});
                 }, 3000);
+
+                return;
             };
 
             const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
