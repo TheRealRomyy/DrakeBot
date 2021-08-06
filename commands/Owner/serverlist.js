@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const ms = require("ms");
 
 class ServerList extends Command {
 
@@ -18,11 +19,16 @@ class ServerList extends Command {
 
 	async run (message, args, data) {
         
-		await message.delete();
+		await message.delete().catch(() => {});
 
+		// Variables for pages
 		let i0 = 0;
 		let i1 = 10;
 		let page = 1;
+
+		// Shortcuts
+		let totalServers = this.client.guilds.cache.size;
+		let totalPages = Math.round(totalServers / 10);
 
 		let description = 
         `Serveurs: ${this.client.guilds.cache.size}\n\n`+
@@ -38,88 +44,119 @@ class ServerList extends Command {
 			.setTitle(`Page: ${page}/${Math.ceil(this.client.guilds.cache.size/10)}`)
 			.setDescription(description);
 
+		let nextButton = new MessageButton()
+			.setStyle('PRIMARY')
+			.setLabel('Next ➡️')
+			.setDisabled(false)
+			.setCustomId(`${message.guild.id}${message.author.id}${Date.now()}NEXT-SERVERLIST`);
+	
+		let previousButton = new MessageButton()
+			.setStyle('PRIMARY')
+			.setLabel('Previous ⬅️')
+			.setDisabled(false)
+			.setCustomId(`${message.guild.id}${message.author.id}${Date.now()}PREVIOUS-SERVERLIST`);
+	
+		let group1 = new MessageActionRow().addComponents([ previousButton, nextButton ]);
+
 		const msg = await message.channel.send({
-			embeds: [embed]
+			embeds: [embed],
+			components: [group1]
 		});
-        
-		await msg.react("⬅");
-		await msg.react("➡");
-		await msg.react("❌");
 
-		const collector = msg.createReactionCollector((reaction, user) => user.id === message.author.id);
+		const filter = (button) => button.user.id === interaction.user.id && (
+			button.customId === nextButton.customId ||
+			button.customId === previousButton.customId
+		  );
 
-		collector.on("collect", async(reaction) => {
+		const collector = msg.createMessageComponentCollector({ 
+			filter, 
+			time: ms("10m"), 
+			errors: ['time'] 
+		});
 
-			if(reaction._emoji.name === "⬅") {
+		collector.on("collect", async button => {
 
-				// Updates variables
-				i0 = i0-10;
-				i1 = i1-10;
-				page = page-1;
-                
-				// if there is no guild to display, delete the message
-				if(i0 < 0){
-					return msg.delete();
-				}
-				if(!i0 || !i1){
-					return msg.delete();
-				}
-                
-				description = `Serveurs: ${this.client.guilds.cache.size}\n\n`+
-				this.client.guilds.cache.sort((a,b) => b.memberCount-a.memberCount).map((r) => r)
-					.map((r, i) => `**${i + 1}** - ${r.name} | **${r.memberCount} Membres**`)
+			await button.deferUpdate();
+
+			if(button.customId === previousButton.customId) {
+
+				// Security Check
+				if ((i0 - 10) + 1 < 0) return;
+
+				// Update variables
+				i0 -= 10;
+				i1 -= 10;
+				page--;
+
+				// Check of the variables
+				if (!i1) return;
+
+				description = `Serveurs: ${this.client.guilds.cache.size}\n\n` +
+				this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount)
+					.map(guild => guild)
+					.map((guild, i) => `**${i + 1}** - ${guild.name} | **${guild.memberCount} Membres**`)
 					.slice(i0, i1)
 					.join("\n");
 
 				// Update the embed with new informations
-				embed.setTitle(`Page: ${page}/${Math.round(this.client.guilds.cache.size/10)}`)
+				embed.setTitle(`Page: ${page}/${totalPages}`)
 					.setDescription(description);
             
 				// Edit the message 
 				msg.edit({
 					embeds: [embed]
-				});
-            
-			}
+				}).catch(() => {});;
+			};
 
-			if(reaction._emoji.name === "➡"){
+			if(button.customId === nextButton.customId) {
 
-				// Updates variables
-				i0 = i0+10;
-				i1 = i1+10;
-				page = page+1;
+				// Security Check
+				if ((i1 + 10) > totalServers + 10) return;
 
-				// if there is no guild to display, delete the message
-				if(i1 > this.client.guilds.cache.size + 10){
-					return msg.delete();
-				}
-				if(!i0 || !i1){
-					return msg.delete();
-				}
+				// Update variables
+				i0 += 10;
+				i1 += 10;
+				page++;
 
-				description = `Serveurs: ${this.client.guilds.cache.size}\n\n`+
-				this.client.guilds.cache.sort((a,b) => b.memberCount-a.memberCount).map((r) => r)
-					.map((r, i) => `**${i + 1}** - ${r.name} | **${r.memberCount} Membres**`)
+				// Check of the variables								
+				if (!i0 || !i1) return;
+
+				description = `Serveurs: ${this.client.guilds.cache.size}\n\n` +
+				this.client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount)
+					.map(guild => guild)	
+					.map((guild, i) => `**${i + 1}** - ${guild.name} | **${guild.memberCount} Membres**`)
 					.slice(i0, i1)
 					.join("\n");
 
 				// Update the embed with new informations
-				embed.setTitle(`Page: ${page}/${Math.round(this.client.guilds.cache.size/10)}`)
+				embed.setTitle(`Page: ${page}/${totalPages}`)
 					.setDescription(description);
             
 				// Edit the message 
 				msg.edit({
 					embeds: [embed]
-				});
+				}).catch(() => {});;
+			};
+		});
 
-			}
-
-			if(reaction._emoji.name === "❌"){
-				return msg.delete().catch(() => {}); 
-			}
-
-			// Remove the reaction when the user react to the message
-			await reaction.users.remove(message.author.id);
+		collector.on("end", async () => {
+			let nextButton = new MessageButton()
+			.setStyle('SECONDARY')
+			.setLabel('Next ➡️')
+			.setDisabled(true)
+			.setCustomId(`${message.guild.id}${message.author.id}${Date.now()}NEXT-SERVERLIST`);
+	  
+			let previousButton = new MessageButton()
+			.setStyle('SECONDARY')
+			.setLabel('Previous ⬅️')
+			.setDisabled(true)
+			.setCustomId(`${message.guild.id}${message.author.id}${Date.now()}NEXT-SERVERLIST`);
+	
+			let group1 = new MessageActionRow().addComponents([ previousButton, nextButton ]);
+	
+			msg.edit({
+			  components: [group1]
+			}).catch(() => {});;
 		});
 	};
 };
