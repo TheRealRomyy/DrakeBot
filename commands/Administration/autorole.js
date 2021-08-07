@@ -1,4 +1,5 @@
 const Command = require("../../structure/Commands.js");
+const { Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
 
 class Autorole extends Command {
 
@@ -7,17 +8,27 @@ class Autorole extends Command {
             name: "autorole",
             aliases: [ "ar" ],
             dirname: __dirname,
-            enabled: false,
+            enabled: true,
             botPerms: [ "ADMINISTRATOR" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Manage autorole (role that member receive on join)",
+                options: [
+                    {
+                        name: "role",
+                        type: ApplicationCommandOptionTypes.ROLE,
+                        required: false,
+                        description: "What's the role ? (default is disabled)"
+                    }
+                ]
+            }
         });
     };
 
     async run(message, args, data) {
-
-        let client = this.client;
 
         if(!data.guild.plugins.autorole) data.guild.plugins.autorole = {
             enabled: false,
@@ -57,10 +68,65 @@ class Autorole extends Command {
             
 			await data.guild.save();
             
-            return message.channel.send(message.drakeWS("administration/autorole:ENABLED", {
-                emoji: "succes",
+            return message.channel.send({
+                content: message.drakeWS("administration/autorole:ENABLED", {
+                    emoji: "succes",
+                    role: role.id
+                }),
+                allowedMentions: { "users" : []}
+            });
+        };
+    };
+
+    async runInteraction(interaction, data) {
+
+        if(!data.guild.plugins.autorole) data.guild.plugins.autorole = {
+            enabled: false,
+            role: null,
+        };
+
+        if(!interaction.options.getRole("role")) {
+
+            if(data.guild.plugins.autorole.enabled) {
+                data.guild.plugins.autorole = {
+                    enabled: false,
+                    role: null
+                };
+    
+                await data.guild.save();
+        
+                return interaction.reply({
+                    content: interaction.drakeWS("administration/autorole:DISABLED", {
+                        emoji: "succes"
+                    })
+                });
+            } else {
+                return interaction.reply({
+                    content: interaction.drakeWS("administration/autorole:ALREADY_DISABLED", {
+                        emoji: "error"
+                    }),
+                    ephemeral: true
+                });
+            }
+	
+		} else {
+
+            const role = interaction.options.getRole("role");
+
+            data.guild.plugins.autorole = {
+                enabled: true,
                 role: role.id
-            }), {"allowedMentions": { "users" : []}});
+            };
+            
+			await data.guild.save();
+            
+            return interaction.reply({
+                content: interaction.drakeWS("administration/autorole:ENABLED", {
+                    emoji: "succes",
+                    role: role.id
+                }),
+                allowedMentions: { "users" : []}
+            });
         };
     };
 };
