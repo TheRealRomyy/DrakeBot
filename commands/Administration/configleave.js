@@ -255,7 +255,8 @@ class ConfigLeave extends Command {
 
             // Send embed and delete instructions
             interaction.editReply({
-                embeds: [embed]
+                embeds: [embed],
+                content: null
             });
 
             // Update the data
