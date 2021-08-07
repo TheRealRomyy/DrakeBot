@@ -30,6 +30,7 @@ class Execute extends Command {
         if(message.content.includes("speedtest")) msg = await message.channel.send({
             content: this.client.emotes["waiting"]
         });
+        
         if(message.content.includes("reboot") || message.content.includes("pm2 stop all") || message.content.includes("pm2 stop DrakeBot")) this.client.emit("disconnect");
 
 	    await exec(content, async (error, data, getter) => {
