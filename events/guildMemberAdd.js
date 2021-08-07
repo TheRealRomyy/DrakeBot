@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const captchagen = require("captchagen");
 
 module.exports = class {
 

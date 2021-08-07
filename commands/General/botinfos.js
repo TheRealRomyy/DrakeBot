@@ -76,7 +76,7 @@ class Botinfos extends Command {
 
     async runInteraction(interaction, data) {
 
-        await interaction.defer();
+        await interaction.deferReply();
 
         const client = this.client;
 

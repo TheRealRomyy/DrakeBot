@@ -20,9 +20,7 @@ class Error {
         let embed = new MessageEmbed()
             .setFooter(client.cfg.footer)
             .setColor(client.cfg.color.red)
-            .setAuthor("New error detected:", client.user.displayAvatarURL({
-                dynamic: true
-            }))
+            .setAuthor("New error detected:", client.user ? client.user.displayAvatarURL({dynamic:true}) : null)
             .setDescription(`${error}`);
 
         webhook.send({

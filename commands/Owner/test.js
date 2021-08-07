@@ -1,6 +1,5 @@
 const Command = require("../../structure/Commands.js");
 const { MessageAttachment } = require("discord.js");
-const canvacord = require("canvacord");
 
 class Test extends Command {
 
@@ -9,7 +8,7 @@ class Test extends Command {
             name: "test",
             aliases: [],
 			dirname: __dirname,
-			enabled: true,
+			enabled: false,
 			botPers: [],
 			userPerms: [],
             cooldown: 3,
