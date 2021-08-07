@@ -133,8 +133,7 @@ class ConfigLevel extends Command {
             interaction.reply({
                 content: interaction.drakeWS("level/config-level:DISABLED", {
                     emoji: "succes"
-                }),
-                ephemeral: true
+                })
             });
  
             // Update the data
@@ -152,7 +151,7 @@ class ConfigLevel extends Command {
             };
             
             // Send the first instruction
-            let msg = await interaction.reply({
+            await interaction.reply({
                 content: interaction.drakeWS("level/config-level:INSTRUCTION_1", {
                     emoji: "write"
                 })
@@ -160,13 +159,21 @@ class ConfigLevel extends Command {
 
             // Get first response
             let collected = await interaction.channel.awaitMessages(opt).catch(() => {});
-            if(!collected || !collected.first()) return interaction.drake("common:CANCEL", {
-                emoji: "succes"
+            if(!collected || !collected.first()) return interaction.reply({
+                content: interaction.drakeWS("common:CANCEL", {
+                    emoji: "succes"
+                }),
+                ephemeral: true
             });
+
             const confMessage = collected.first().content;
-            if(confMessage === "cancel") return interaction.drake("common:CANCEL", {
-                emoji: "succes"
+            if(confMessage === "cancel") return interaction.reply({
+                content: interaction.drakeWS("common:CANCEL", {
+                    emoji: "succes"
+                }),
+                ephemeral: true
             });
+
             if(confMessage === data.guild.prefix + "config-level") return;
             collected.first().delete().catch(() => {});
 
@@ -179,19 +186,28 @@ class ConfigLevel extends Command {
 
             // Get second response
             collected = await interaction.channel.awaitMessages(opt).catch(() => {});
-            if(!collected || !collected.first()) return interaction.drake("common:CANCEL", {
-                emoji: "succes"
+            if(!collected || !collected.first()) return interaction.reply({
+                content: interaction.drakeWS("common:CANCEL", {
+                    emoji: "succes"
+                }),
+                ephemeral: true
             });
+
             const confChannel = collected.first();
-            if(confChannel.content === "cancel") return interaction.drake("common:CANCEL", {
-                emoji: "succes"
+            if(confChannel.content === "cancel") return interaction.reply({
+                content: interaction.drakeWS("common:CANCEL", {
+                    emoji: "succes"
+                }),
+                ephemeral: true
             });
+
             let channel = confChannel.mentions.channels.first() || interaction.guild.channels.cache.get(confChannel.content) || interaction.guild.channels.cache.find((ch) => ch.name === confChannel.content || `#${ch.name}` === confChannel.content);
             if(confChannel.content.toLowerCase() === "current") channel = "current";
             if(!channel || channel.type === "voice") return interaction.drake("level/config-level:CHANNEL_NOT_FOUND", {
                 channel: confChannel.content,
                 emoji: "error"
             });
+            
             collected.first().delete().catch(() => {});
 
             // Send succes message
