@@ -48,6 +48,6 @@ module.exports.load = async(client) => {
 	app.set("port", client.cfg.dashboard.port);
 
 	app.listen(port, ip, () => {
-		console.log(`Website: Running at https://${ip}:${port !== 80 ? port + "/" : "/"}`);
+		client.logger.log(`Website: Running at https://${ip}:${port !== 80 ? port + "/" : "/"}`);
 	});
 };

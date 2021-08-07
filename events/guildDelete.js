@@ -8,7 +8,6 @@ module.exports = class {
 
 	async run (guild) {
 
-        console.log("Just leaved " + guild.name);
         const guildOwner = this.client.users.cache.get(guild.ownerId);
 
         this.client.serverRemoves++;

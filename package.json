@@ -12,6 +12,7 @@
     "btoa": "^1.2.1",
     "canvacord": "^5.0.8",
     "captchagen": "^1.2.0",
+    "chalk": "^4.1.2",
     "child_process": "^1.0.2",
     "cron": "^1.8.2",
     "dblapi.js": "^2.4.1",

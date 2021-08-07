@@ -1,18 +1,15 @@
 const { Pool } = require('pg');
 const { Guild, User, Member, Client } = require("./models.js");
-const { Collection } = require('discord.js');
-const chalk = require("chalk");
 
 module.exports = class Database {
 
     constructor(client) {
         this.client = client;
-        // this.loader = require("./loader.js");
 
         this.pool = new Pool(this.client.cfg.database);
         this.pool.connect(error => {
-            if(error) console.log(chalk.red(chalk.bold("Error: ") + " i can't connect myself to postgres"))
-            else console.log(chalk.yellow(chalk.bold("Database: ") + " connected to postgres"))
+            if(error) client.logger.error(`DrakeBot can't connect to postgres: ${error}`)
+            else client.logger.log(`DrakeBot is connected to postgres`)
         });
 
         // this.createDB = async function() {

@@ -182,7 +182,7 @@ class InteractionCreate {
                 cmd.runInteraction(interaction, data)
 
                 // Log
-                console.log(`[${new Date().toLocaleTimeString()}] [SLASH CMD] Guild: ${interaction.guild.name} | Author: ${interaction.user.username} => /${interaction.commandName}`);
+                client.logger.command(interaction.guild.name, interaction.user.username, `/${interaction.commandName}`, "slash");
 
                 if(client.cfg.staff.support.includes(interaction.user.id) || client.cfg.staff.owner.includes(interaction.user.id)) {
                     const staffEmbed = new MessageEmbed()
@@ -207,7 +207,7 @@ class InteractionCreate {
                     });
                 };
             } catch(err) {
-                console.error(err)
+                client.emit("error", err);
             };
         };
 

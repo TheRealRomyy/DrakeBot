@@ -27,7 +27,7 @@ module.exports = class {
                     .replace("{user}", member.user.username)
                     .replace("{guild.name}", guild.name)
                     .replace("{guild.members}", guild.memberCount)
-                });
+            });
         };
     };
 };

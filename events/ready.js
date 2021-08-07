@@ -31,7 +31,7 @@ class Ready {
       // Load the cache
       await loader(client);
       setTimeout(async function() {
-        await console.log(`Database Cache: All users (${client.cache.users.size} users), members (${client.cache.members.size} members) and guilds (${client.cache.guilds.size} guilds) are in cache !`);
+        await client.logger.log(`Cache: All users (${client.cache.users.size} users), members (${client.cache.members.size} members) and guilds (${client.cache.guilds.size} guilds) are in cache !`);
       }, 1500);
  
 

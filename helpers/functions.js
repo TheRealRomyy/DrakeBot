@@ -577,8 +577,8 @@ module.exports = {
 
 		const json = await res.json();
 
-		if (!res.error) console.log("Top.gg: Stats successfully posted.");
-		else console.error("Top.gg: Stats cannot be posted. Error: " + json.error);
+		if (!res.error) client.logger.log("Top.gg: Stats successfully posted.");
+		else client.logger.error("Top.gg: Stats cannot be posted. Error: " + json.error);
 	},
 
 	/**

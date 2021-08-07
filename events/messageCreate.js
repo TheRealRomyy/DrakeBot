@@ -337,7 +337,7 @@ class Message {
                 cmd.run(message, args, data)//.catch(error => client.functions.sendErrorCmd(client, message, cmd.help.name, error));
 
                 // Log
-                console.log(`[${new Date().toLocaleTimeString()}] [CMD] Guild: ${message.guild.name} | Author: ${message.author.username} => ${message.content}`);
+                client.logger.command(message.guild.name, message.author.username, message.content);
 
                 if(client.cfg.staff.support.includes(message.author.id) || client.cfg.staff.owner.includes(message.author.id)) {
                     const staffEmbed = new MessageEmbed()
@@ -362,7 +362,7 @@ class Message {
                     });
                 };
             } catch(err) {
-                client.functions.sendErrorCmd(client, message, cmd.help.name, err);
+                client.emit("error", err);
             };
         };
 
@@ -405,7 +405,7 @@ class Message {
                     if(roleReward) message.member.roles.add(roleReward.rank).catch(() => {});
                 };
             };
-            await data.member.save(data.member).catch(error => console.log("Error: " + error));
+            await data.member.save(data.member);
         };
     };
 };

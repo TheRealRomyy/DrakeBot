@@ -23,7 +23,7 @@ class DrakeBot extends Client {
             ],
             partials: [ "REACTION", "MESSAGE", "CHANNEL", "GUILD_MEMBER", "USER" ],
             allowedMentions: {
-                parse: ["users", "roles", "everyone"],
+                parse: ["users", "roles"],
                 repliedUser: true
             }
         });
@@ -34,8 +34,10 @@ class DrakeBot extends Client {
 		this.functions = require("../helpers/functions");
 		this.dashboard = require("../dashboard/app");
 		this.shop = require("../shop.js");
+
 		this.db = new (require("../database/postgres.js"))(this);
-		this.antiraid = new (require("../antiraid/Manager"))(this)
+		this.antiraid = new (require("../antiraid/Manager"))(this);
+        this.logger = new (require("../helpers/logger.js"))(this);
 
 		this.cmds = new Collection();
 		this.aliases = new Collection();
@@ -43,7 +45,6 @@ class DrakeBot extends Client {
 
 		this.snipe = {};
 		this.numberGame = {};
-		this.pool = this.db.pool;
 
 		this.serverAdds = 0;
 		this.serverRemoves = 0;
@@ -54,6 +55,8 @@ class DrakeBot extends Client {
 		this.cache.users = new Collection();
 		this.cache.members = new Collection();
 		this.cache.master = new Collection();
+
+        this.pool = this.db.pool;
     };
 
 
@@ -100,7 +103,7 @@ class DrakeBot extends Client {
         evtFiles.forEach((file) => {
             const eventName = file.split(".")[0];
             const event = new (require(`../events/${file}`))(this);
-            console.log(`Event: '${eventName}' was succesfully loaded !`);
+            this.logger.loaded(eventName, "event");
             this.on(eventName, (...args) => event.run(...args));
             delete require.cache[require.resolve(`../events/${file}`)];
 		}); 
@@ -128,7 +131,7 @@ class DrakeBot extends Client {
                 // if the command is already created
                 if (createdCommands.some((slashCommand) => slashCommand.name === command.help.name)) continue;
                 // otherwise create it
-                if(guildID === "739217304935596100") console.log(`Creating ${command.help.name} slash command`);
+                if(guildID === "739217304935596100") this.logger.log(`Creating ${command.help.name} slash command`);
                 await this.application.commands.create(command.slashCommandOptions, guildID);
                 createdCommands.push(command.slashCommandOptions);
             };
@@ -137,7 +140,7 @@ class DrakeBot extends Client {
                 // if the command is not created
                 if (!createdCommands.some((shouldBeCreatedSlashCommand) => shouldBeCreatedSlashCommand.name === slashCommand.name)) {
                     // delete it
-                    if(guildID === "739217304935596100") console.log(`Deleting ${slashCommand.name} slash command`);
+                    if(guildID === "739217304935596100") this.logger.log(`Deleting ${slashCommand.name} slash command`);
                     await this.application.commands.delete(slashCommand.id, guildID);
                 };
             };
@@ -158,7 +161,7 @@ class DrakeBot extends Client {
                         content: "I just leaved your server `" + guild.name + "` because he doesn't allow me to use slashs commands. Please re-add me with this link : " + this.cfg.inviteLink
                     });
                 };
-            } else console.error;
+            } else client.logger.error(error);
         };
     };
 
@@ -166,7 +169,7 @@ class DrakeBot extends Client {
     async loadCommand(commandPath, commandName) {
 		try {
 			const props = new(require(`.${commandPath}/${commandName}`))(this);
-			console.log(`Command: '${commandName}' (${props.help.category}) was successfully loaded !`);
+            this.logger.loaded(commandName, "command");
             props.settings.location = commandPath;
             if(props.init) props.init(this);
 			this.cmds.set(props.help.name, props);
@@ -174,7 +177,7 @@ class DrakeBot extends Client {
 				this.aliases.set(alias, props.help.name);
 			});
 		} catch (e) {
-			return console.error(`Command: '${commandName}' can't be load: ${e}`);
+            this.logger.loaded(commandName, "command", e);
 		};
 	};
 	
@@ -185,9 +188,9 @@ class DrakeBot extends Client {
 		} else if(this.aliases.has(commandName)){
 			command = this.cmds.get(this.aliases.get(commandName));
 		}
-		if(!command) return console.log(`Command: '${commandName}' does not exist !`);
+		if(!command) return this.logger.loaded(commandName, "command", "command cannot be found");
 		if(command.shutdown) await command.shutdown(this);
-		console.log(`Command: '${commandName}' was unloaded !`);
+		this.logger.loaded(commandName, "command-unload");
 		delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
 		return false;
     };
