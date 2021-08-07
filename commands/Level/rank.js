@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
 const { MessageAttachment, Constants: { ApplicationCommandOptionTypes } } = require("discord.js");
+const canvacord = require("canvacord");
 
 class Rank extends Command {
 
@@ -8,7 +9,7 @@ class Rank extends Command {
             name: "rank",
             aliases: [ "xp", "level" ],
 			dirname: __dirname,
-			enabled: false,
+			enabled: true,
 			botPers: [],
 			userPerms: [],
             cooldown: 3,

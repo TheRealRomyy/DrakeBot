@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const captchagen = require("captchagen");
 
 module.exports = class {
 
@@ -122,7 +123,7 @@ module.exports = class {
 			let collected = await captchaChannel.awaitMessages(opt).catch(() => {})
 
 			if(!collected || !collected.first()) {
-				msg.delete();
+				msg.delete().catch(() => {});
 
 				await member.send({
 					content: member.guild.translate("moderation/kick:KICK_DM", {
@@ -146,7 +147,7 @@ module.exports = class {
 			
 			if(confMessage.toLowerCase() === captcha.text()) {
 
-				msg.delete();
+				msg.delete().catch(() => {});
 
 				member.roles.remove(captchaRole);
 
