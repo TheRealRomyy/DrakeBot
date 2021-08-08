@@ -11,6 +11,7 @@
     "NO_REASON": "Any reason provided...",
     "FORTRESS_ENABLED": "The fortress mod is enabled. Retry to join the server later.",
     "BAN_MSG": "was banned",
+    "SOFTBAN_MSG": "was softbanned",
     "WARN_MSG": "was warned",
     "MUTE_MSG": "was muted",
     "KICK_MSG": "was kicked",

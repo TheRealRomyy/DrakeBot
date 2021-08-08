@@ -11,6 +11,7 @@
     "NO_REASON": "Aucune raison spécifiée...",
     "FORTRESS_ENABLED": "Le mode forteresse est activé. Essayez de rejoindre plus tard ce serveur.",
     "BAN_MSG": "a bien été banni(e)",
+    "SOFTBAN_MSG": "a bien été softbanni(e)",
     "WARN_MSG": "a reçu un avertissement",
     "MUTE_MSG": "a bien été réduit(e) au silence",
     "KICK_MSG": "a bien été expulsé",

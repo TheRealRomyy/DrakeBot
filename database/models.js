@@ -17,24 +17,7 @@ exports.Guild = (guildID, client) => {
                 enabled: false,
                 role: null
             },
-            autosanctions: {
-                mute: {
-                    enabled: false,
-                    count: null,
-                    in: null,
-                    muteTime: null
-                },
-                ban: {
-                    enabled: false,
-                    count: null,
-                    in: null,
-                },
-                kick: {
-                    enabled: false,
-                    count: null,
-                    in: null,
-                }
-            },
+            autosanctions: [],
             automod: {
                 antiPub: {
                     enabled: false,
@@ -191,7 +174,10 @@ exports.Guild = (guildID, client) => {
                 sanction: "any",
                 muteTime: null
             },
-        }
+        },
+
+        // The sanction case
+        0
     ];
 };
 

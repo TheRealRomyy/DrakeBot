@@ -305,40 +305,40 @@ module.exports = {
 
 	async checkAutoSanctions(guildData, member, memberData, message, client) {
 
-		const autoSanctions = guildData.plugins.autosanctions;
+		const reason = "Auto Sanction";
 
-		let warnOnTimeMute = 0;
-		let warnOnTimeKick = 0;
-		let warnOnTimeMBan = 0;
+		const autoSanctions = guildData.autosanction;
+        if(autoSanctions.length === 0) return;
 
-		if(autoSanctions.mute.enabled) {
+        const userWarns = memberData.sanctions.filter(sanction => sanction.type === "warn");
 
-			memberData.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
-				if(sanction.date < (Date.now() + guildData.plugins.autosanctions.mute.in)) warnOnTimeMute++;
+        autoSanctions.forEach(sanction => {
+
+            let warnsInTime = 0;
+
+            userWarns.forEach(sanctionOfUser => {
+				if(sanctionOfUser.date < (Date.now() + sanction.time)) warnsInTime++;
 			});
 
-			if(warnOnTimeMute == autoSanctions.mute.count) this.mute(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client, ms(autoSanctions.mute.muteTime));
-		};
-
-		if(autoSanctions.kick.enabled) {
-
-			memberData.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
-				if(sanction.date < (Date.now() + guildData.plugins.autosanctions.kick.in)) warnOnTimeKick++;
-			});
-
-			if(warnOnTimeKick == autoSanctions.kick.count) this.kick(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
-		};
-
-		if(autoSanctions.ban.enabled) {
-
-			memberData.sanctions.filter(sanction => sanction.type === "warn").forEach(sanction => {
-				if(sanction.date < (Date.now() + guildData.plugins.autosanctions.ban.in)) warnOnTimeMBan++;
-			});
-
-			warnOnTimeMBan++;
-
-			if(warnOnTimeMBan == autoSanctions.ban.count) this.ban(member, message, client.user, guildData, message.drakeWS("moderation/warn:TOO_WARNS"), memberData, client);
-		};
+            if(warnsInTime === sanction.warns) {
+                switch(parseInt(sanction.sanction)) {
+                    case 1:
+						this.mute(member, message, client.user, guildData, reason, memberData, client, sanction.timeOfSanction)
+                        break;
+                    case 2:
+						this.kick(member, message, client.user, guildData, reason, memberData, client)
+                        break;
+                    case 3:
+						this.softban(member.user, message, client.user, guildData, reason, memberData, client)
+                        break;
+                    case 4:
+						this.ban(member.user, message, client.user, guildData, reason, memberData, client)
+                        break;
+                    default:
+                        throw new Error("Default case in switch"); // Pas d'idée de nom pour l'erreur
+                };
+            };
+        });
 	},
 
 	/**
@@ -533,6 +533,74 @@ module.exports = {
 			return this.sendSanctionMessage(message, "ban", user, reason)
 		}).catch((error) => {
 			this.sendErrorCmd(client, message, "ban", error);
+		});
+
+		await guildData.save(guildData)
+	},
+
+	/**
+	 *  Softban an user
+	 * @param { Object } member 
+	 * @param { Object } message 
+	 * @param { Object } moderator 
+	 * @param { Object } guildData 
+	 * @param { String } reason 
+	 * @param { Object } memberData 
+	 * @param { Object } client 
+	*/
+
+	async softban(user, message, moderator, guildData, reason, memberData, client) {
+		let logReason = message.drakeWS("moderation/ban:LOG", {
+            moderator: moderator.username,
+            reason
+        });
+
+		await user.send({
+			content: message.drakeWS("moderation/ban:BAN_DM", {
+				emoji: "ban",
+				username: user.username,
+				server: message.guild.name,
+				moderator: moderator.tag,
+				reason
+			})
+		}).catch(() => {});
+
+		await message.guild.members.ban(user, { reason: logReason } ).then(async () => {
+
+			await message.guild.bans.fetch().then(bans => {
+                let banUser = bans.find(b => b.user.id == m.user.id);
+                message.guild.members.unban(banUser.user, `${client.user.tag} | ` + reason);
+            });
+
+			guildData.cases++;
+			guildData.save(guildData);
+
+			const caseInfo = {
+				moderator: moderator.id,
+				date: Date.now(),
+				type: "ban",
+				case: guildData.cases,
+				reason: reason,
+			};
+			
+			if(memberData !== null) {
+				memberData.sanctions.push(caseInfo);
+				memberData.save(memberData);
+			} else {
+				console.error("Memberdata == null");
+			};
+
+			if(guildData.plugins.logs.mod) {
+				if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
+					guildData.plugins.logs.mod = false;
+				};
+
+				this.sendModLog("softban", user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
+			};
+			
+			return this.sendSanctionMessage(message, "softban", user, reason)
+		}).catch((error) => {
+			this.sendErrorCmd(client, message, "softban", error);
 		});
 
 		await guildData.save(guildData)
