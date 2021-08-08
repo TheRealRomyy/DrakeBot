@@ -165,7 +165,7 @@ class ConfigJoin extends Command {
 
             // Get first response
             let collected = await interaction.channel.awaitMessages(opt).catch(() => {});
-            if(!collected || !collected.first()) return interaction.reply({
+            if(!collected || !collected.first()) return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -173,7 +173,7 @@ class ConfigJoin extends Command {
             });
 
             const confMessage = collected.first().content;
-            if(confMessage === "cancel") return interaction.reply({
+            if(confMessage === "cancel") return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -192,7 +192,7 @@ class ConfigJoin extends Command {
 
             // Get second response
             collected = await interaction.channel.awaitMessages(opt).catch(() => {});
-            if(!collected || !collected.first()) return interaction.reply({
+            if(!collected || !collected.first()) return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -200,7 +200,7 @@ class ConfigJoin extends Command {
             });
 
             const confChannel = collected.first();
-            if(confChannel.content === "cancel") return interaction.reply({
+            if(confChannel.content === "cancel") return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -209,7 +209,7 @@ class ConfigJoin extends Command {
 
             let channel = confChannel.mentions.channels.first() || interaction.guild.channels.cache.get(confChannel.content) || interaction.guild.channels.cache.find((ch) => ch.name === confChannel.content || `#${ch.name}` === confChannel.content);
             if(confChannel.content.toLowerCase() === "current") channel = "current";
-            if(!channel || channel.type === "voice") return interaction.reply({
+            if(!channel || channel.type === "voice") return interaction.editReply({
                 content: interaction.drakeWS("administration/configjoin:CHANNEL_NOT_FOUND", {
                     channel: confChannel.content,
                     emoji: "error"

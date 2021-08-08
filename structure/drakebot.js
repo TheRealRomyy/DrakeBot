@@ -161,7 +161,7 @@ class DrakeBot extends Client {
                         content: "I just leaved your server `" + guild.name + "` because he doesn't allow me to use slashs commands. Please re-add me with this link : " + this.cfg.inviteLink
                     });
                 };
-            } else client.logger.error(error);
+            } else this.logger.error(error);
         };
     };
 

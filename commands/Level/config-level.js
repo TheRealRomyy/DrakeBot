@@ -159,7 +159,7 @@ class ConfigLevel extends Command {
 
             // Get first response
             let collected = await interaction.channel.awaitMessages(opt).catch(() => {});
-            if(!collected || !collected.first()) return interaction.reply({
+            if(!collected || !collected.first()) return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -167,7 +167,7 @@ class ConfigLevel extends Command {
             });
 
             const confMessage = collected.first().content;
-            if(confMessage === "cancel") return interaction.reply({
+            if(confMessage === "cancel") return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -186,7 +186,7 @@ class ConfigLevel extends Command {
 
             // Get second response
             collected = await interaction.channel.awaitMessages(opt).catch(() => {});
-            if(!collected || !collected.first()) return interaction.reply({
+            if(!collected || !collected.first()) return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),
@@ -194,7 +194,7 @@ class ConfigLevel extends Command {
             });
 
             const confChannel = collected.first();
-            if(confChannel.content === "cancel") return interaction.reply({
+            if(confChannel.content === "cancel") return interaction.editReply({
                 content: interaction.drakeWS("common:CANCEL", {
                     emoji: "succes"
                 }),

@@ -21,7 +21,8 @@ class Error {
             .setFooter(client.cfg.footer)
             .setColor(client.cfg.color.red)
             .setAuthor("New error detected:", client.user ? client.user.displayAvatarURL({dynamic:true}) : null)
-            .setDescription(`${error}`);
+            .setDescription(`${error}`)
+            .setFooter(`${error.source ? `${error.source}` : "Unknow file and line number"}`);
 
         webhook.send({
             embeds: [embed]
