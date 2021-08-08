@@ -30,7 +30,7 @@ class Reload extends Command {
                 const languages = require("../../helpers/lang");
                 client.translations = await languages();
 
-                console.log(chalk.green(`Languages: ${chalk.bold("reloaded")}`));
+                client.logger.log("Languages: reloaded");
                 const languageMessage = await message.channel.send({
                     content: `${client.emotes.succes} **Languages reloaded !**`
                 });
