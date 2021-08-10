@@ -63,10 +63,10 @@ class ServerList extends Command {
 			components: [group1]
 		});
 
-		const filter = (button) => button.user.id === interaction.user.id && (
+		const filter = (button) => button.user.id === message.author.id && (
 			button.customId === nextButton.customId ||
 			button.customId === previousButton.customId
-		  );
+		);
 
 		const collector = msg.createMessageComponentCollector({ 
 			filter, 
