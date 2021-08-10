@@ -1,12 +1,13 @@
 {
-    "DESCRIPTION": "Scanner un rôle ou votre serveur",
+    "DESCRIPTION": "Voir les membres d'un rôle",
     "EXAMPLE": "scan @Voters",
-    "USAGE": "scan (role)",
+    "USAGE": "scan <role>",
     "TOO_CHARS": "**Il y a trop de personnes dans ce rôle (`{{size}} membres`) !**",
     "SCAN_OF": "Scan de {{guild}}",
     "DESC_ROLE": "\n **Role :** {{role}} \nIl y a **{{membersInRole}} membres** dans le role \n \n❯ {{mapMembers}}",
     "ONLINE": "membres** en ligne",
     "OFFLINE": "membres** hors ligne",
     "DND": "membres** en ne pas déranger",
-    "IDLE": "membres** innactifs"
+    "IDLE": "membres** innactifs",
+    "ROLE_NOT_FOUND": "**Le rôle `{{role}}` n'existe pas !**"
 }
