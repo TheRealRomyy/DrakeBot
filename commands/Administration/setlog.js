@@ -251,6 +251,7 @@ class Setlog extends Command {
 
                         toggleButton(m, "enabled");
                         await updateEmbed(m);
+                        await data.guild.save();
                         break;
                     case messageButton.customId:
                         toggleButton(m, "disabled");
@@ -266,6 +267,7 @@ class Setlog extends Command {
 
                         toggleButton(m, "enabled");
                         await updateEmbed(m);
+                        await data.guild.save();
                         break;
                     default:
                         console.error("Default case in setlog.js");

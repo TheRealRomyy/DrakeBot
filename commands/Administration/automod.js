@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const ms = require("ms");
 
 class Automod extends Command {
 
@@ -8,28 +9,21 @@ class Automod extends Command {
             name: "automod",
             aliases: [ "automod" ],
             dirname: __dirname,
-            enabled: false,
+            enabled: true,
             botPerms: [ "ADMINISTRATOR" ],
             userPerms: [ "MANAGE_GUILD" ],
             cooldown: 5,
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Manage automod on your server"
+            }
         });
     };
 
     async run(message, args, data) {
 
         let client = this.client;
-        let msg = null;
-
-        const enabled = message.drakeWS("administration/automod:ENABLED");
-        const disabled = message.drakeWS("administration/automod:DISABLED");
-        
-        const opt = { max: 1, time: 50000, errors: [ "time" ] };
-        let filter = (reaction, user) => {
-            return ['1️⃣', '2️⃣', '3️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
-        };
-
-        //'⚙️'
 
         if(typeof(data.guild.plugins.automod.antiPub) != "object") data.guild.plugins.automod = {
             antiPub: {
@@ -51,28 +45,14 @@ class Automod extends Command {
             },
         };
 
-        async function WaitForReaction(msg) {
+        const enabled = message.drakeWS("administration/automod:ENABLED");
+        const disabled = message.drakeWS("administration/automod:DISABLED");
 
-            let reaction = null;
-    
-            await msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] }).then(collected => {
-                reaction = collected.first();
-                reaction.users.remove(message.author.id);
-            }).catch(collected => {
-                return cancel();
-            });
-    
-            if(reaction == null) return;
-            return reaction.emoji.name;
-        };
+        let isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+        let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+        let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
 
-        async function displayMain(msg) {
-
-            let isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
-            let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
-            let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
-
-            let embed = new MessageEmbed()
+        let embed = new MessageEmbed()
             .setTitle(message.drakeWS("administration/automod:TITLE"))
             .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
             .setFooter(client.cfg.footer)
@@ -80,141 +60,280 @@ class Automod extends Command {
             .setDescription(message.drakeWS("administration/automod:DESC"))
             .addField(message.drakeWS("administration/automod:ONE"), isAntipubEnabled ? enabled : disabled)
             .addField(message.drakeWS("administration/automod:TWO"), isAntiBadwordsEnabled ? enabled : disabled)
-            .addField(message.drakeWS("administration/automod:THREE"),isAntifullMajsEnabled ? enabled : disabled)
-    
-            return msg.edit(embed);
+            .addField(message.drakeWS("administration/automod:THREE"), isAntifullMajsEnabled ? enabled : disabled);
+        
+        let antipubButton = new MessageButton()
+            .setStyle("PRIMARY")
+            .setLabel('Antipub 🔗')
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}ANTIPUB`);
+
+        let antiBadwordButton = new MessageButton()
+            .setStyle("PRIMARY")
+            .setLabel('Anti badwords 🤬')
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}ANTIBADWORD`);
+
+        let antiFullmajButtin = new MessageButton()
+            .setStyle("PRIMARY")
+            .setLabel('Anti full maj 🔠')
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}ANTIFULLMAJ`);
+
+        let group = new MessageActionRow().addComponents([ antipubButton, antiBadwordButton, antiFullmajButtin ]);
+
+        message.reply({
+            embeds: [embed],
+            components: [group]
+        }).then(async m => {
+
+            const filter = (button) => button.user.id === message.author.id && (
+                button.customId === antipubButton.customId ||
+                button.customId === antiBadwordButton.customId ||
+                button.customId === antiFullmajButtin.customId
+            );
+
+            const collector = m.channel.createMessageComponentCollector({
+                filter,
+                time: ms("10m")
+            });
+
+            collector.on("collect", async b => {
+
+                await b.deferUpdate();
+
+                switch(b.customId) {
+                    case antipubButton.customId:
+
+                        isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+
+                        if(isAntipubEnabled) data.guild.plugins.automod.antiPub.enabled = false;
+                        else data.guild.plugins.automod.antiPub.enabled = true;
+
+                        await updateEmbed(m);
+                        await data.guild.save();
+                        break;
+                    case antiBadwordButton.customId:
+
+                        isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+
+                        if(isAntiBadwordsEnabled) data.guild.plugins.automod.antiBadwords.enabled = false;
+                        else data.guild.plugins.automod.antiBadwords.enabled = true;
+
+                        await updateEmbed(m);
+                        await data.guild.save();
+                        break;
+                    case antiFullmajButtin.customId:
+
+                        isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
+
+                        if(isAntifullMajsEnabled) data.guild.plugins.automod.antiMajs.enabled = false;
+                        else data.guild.plugins.automod.antiMajs.enabled = true;
+
+                        await updateEmbed(m);
+                        await data.guild.save();
+                        break;
+                    default:
+                        client.emit("error", "Default case in switch (automod.js)")
+                        return;
+                };
+            });
+
+            collector.on("end", async () => {
+                toggleButton(m, "disabled");
+            });
+        });
+
+        async function toggleButton(m, mode) {
+            antipubButton.setDisabled(mode === "disabled" ? true : false);
+            antiBadwordButton.setDisabled(mode === "disabled" ? true : false);
+            antiFullmajButtin.setDisabled(mode === "disabled" ? true : false);
+
+            let group2 = new MessageActionRow().addComponents([ antipubButton, antiBadwordButton, antiFullmajButtin ]);
+
+            m.edit({
+                components: [group2]
+            });
         };
 
-        async function updateEmbed(type) {
+        async function updateEmbed(msg) {
 
-            let isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
-            let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
-            let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
+            isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+            isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+            isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
 
-            let action = null;
+            let embed1 = new MessageEmbed()
+                .setTitle(message.drakeWS("administration/automod:TITLE"))
+                .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
+                .setFooter(client.cfg.footer)
+                .setColor(client.cfg.color.purple)
+                .setDescription(message.drakeWS("administration/automod:DESC"))
+                .addField(message.drakeWS("administration/automod:ONE"), isAntipubEnabled ? enabled : disabled)
+                .addField(message.drakeWS("administration/automod:TWO"), isAntiBadwordsEnabled ? enabled : disabled)
+                .addField(message.drakeWS("administration/automod:THREE"), isAntifullMajsEnabled ? enabled : disabled);            
 
-            if(type === "pub") {
-                isAntipubEnabled ? action = disabled : action = enabled;
-                !isAntipubEnabled ? action = enabled : action = disabled;
-                isAntipubEnabled ? data.guild.plugins.automod.antiPub.enabled = false : data.guild.plugins.automod.antiPub.enabled = true;
-            };
+            msg.edit({
+                components: msg.components,
+                embeds: [embed1]
+            });
+        };
+    };
 
-            if(type === "badwords") {
-                isAntiBadwordsEnabled ? action = disabled : action = enabled;
-                !isAntiBadwordsEnabled ? action = enabled : action = disabled;
-                isAntiBadwordsEnabled ? data.guild.plugins.automod.antiBadwords.enabled = false : data.guild.plugins.automod.antiBadwords.enabled = true;
-            };
+    async runInteraction(interaction, data) {
 
-            if(type === "majs") {
-                isAntifullMajsEnabled ? action = disabled : action = enabled;
-                !isAntifullMajsEnabled ? action = enabled : action = disabled;
-                isAntifullMajsEnabled ? data.guild.plugins.automod.antiMajs.enabled = false : data.guild.plugins.automod.antiMajs.enabled = true;
-            };
+        let client = this.client;
 
-            let embed = new MessageEmbed()
-            .setTitle(message.drakeWS("administration/automod:TITLE"))
-            .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
+        if(typeof(data.guild.plugins.automod.antiPub) != "object") data.guild.plugins.automod = {
+            antiPub: {
+                enabled: false,
+                discord: true,
+                links: true,
+                ignoredChannels: [],
+                ignoredRoles: []
+            },
+            antiBadwords: {
+                enabled: false,
+                ignoredChannels: [],
+                ignoredRoles: []
+            },
+            antiMajs: {
+                enabled: false,
+                ignoredChannels: [],
+                ignoredRoles: [],
+            },
+        };
+
+        const enabled = interaction.drakeWS("administration/automod:ENABLED");
+        const disabled = interaction.drakeWS("administration/automod:DISABLED");
+
+        let isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+        let isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+        let isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
+
+        let embed = new MessageEmbed()
+            .setTitle(interaction.drakeWS("administration/automod:TITLE"))
+            .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({dynamic:true}))
             .setFooter(client.cfg.footer)
             .setColor(client.cfg.color.purple)
-            .setDescription(message.drakeWS("administration/automod:DESC"))
-            .addField(message.drakeWS("administration/automod:ONE"), type === "pub" ? action : ( isAntipubEnabled ? enabled : disabled))
-            .addField(message.drakeWS("administration/automod:TWO"), type === "badwords" ? action : ( isAntiBadwordsEnabled ? enabled : disabled))
-            .addField(message.drakeWS("administration/automod:THREE"), type === "majs" ? action : ( isAntifullMajsEnabled ? enabled : disabled));
+            .setDescription(interaction.drakeWS("administration/automod:DESC"))
+            .addField(interaction.drakeWS("administration/automod:ONE"), isAntipubEnabled ? enabled : disabled)
+            .addField(interaction.drakeWS("administration/automod:TWO"), isAntiBadwordsEnabled ? enabled : disabled)
+            .addField(interaction.drakeWS("administration/automod:THREE"), isAntifullMajsEnabled ? enabled : disabled);
+        
+        let antipubButton = new MessageButton()
+            .setStyle("PRIMARY")
+            .setLabel('Antipub 🔗')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}ANTIPUB`);
 
-            await data.guild.save();
-            return msg.edit(embed);
+        let antiBadwordButton = new MessageButton()
+            .setStyle("PRIMARY")
+            .setLabel('Anti badwords 🤬')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}ANTIBADWORD`);
+
+        let antiFullmajButtin = new MessageButton()
+            .setStyle("PRIMARY")
+            .setLabel('Anti full maj 🔠')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}ANTIFULLMAJ`);
+
+        let group = new MessageActionRow().addComponents([ antipubButton, antiBadwordButton, antiFullmajButtin ]);
+
+        interaction.reply({
+            embeds: [embed],
+            components: [group]
+        }).then(async m => {
+
+            const filter = (button) => button.user.id === interaction.user.id && (
+                button.customId === antipubButton.customId ||
+                button.customId === antiBadwordButton.customId ||
+                button.customId === antiFullmajButtin.customId
+            );
+
+            const collector = interaction.channel.createMessageComponentCollector({
+                filter,
+                time: ms("10m")
+            });
+
+            collector.on("collect", async b => {
+
+                await b.deferUpdate();
+
+                switch(b.customId) {
+                    case antipubButton.customId:
+
+                        isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+
+                        if(isAntipubEnabled) data.guild.plugins.automod.antiPub.enabled = false;
+                        else data.guild.plugins.automod.antiPub.enabled = true;
+
+                        await updateEmbed(m);
+                        await data.guild.save();
+                        break;
+                    case antiBadwordButton.customId:
+
+                        isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+
+                        if(isAntiBadwordsEnabled) data.guild.plugins.automod.antiBadwords.enabled = false;
+                        else data.guild.plugins.automod.antiBadwords.enabled = true;
+
+                        await updateEmbed(m);
+                        await data.guild.save();
+                        break;
+                    case antiFullmajButtin.customId:
+
+                        isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
+
+                        if(isAntifullMajsEnabled) data.guild.plugins.automod.antiMajs.enabled = false;
+                        else data.guild.plugins.automod.antiMajs.enabled = true;
+
+                        await updateEmbed(m);
+                        await data.guild.save();
+                        break;
+                    default:
+                        client.emit("error", "Default case in switch (automod.js)")
+                        return;
+                };
+            });
+
+            collector.on("end", async () => {
+                toggleButton(m, "disabled");
+            });
+        });
+
+        async function toggleButton(m, mode) {
+            antipubButton.setDisabled(mode === "disabled" ? true : false);
+            antiBadwordButton.setDisabled(mode === "disabled" ? true : false);
+            antiFullmajButtin.setDisabled(mode === "disabled" ? true : false);
+
+            let group2 = new MessageActionRow().addComponents([ antipubButton, antiBadwordButton, antiFullmajButtin ]);
+
+            interaction.editReply({
+                components: [group2]
+            });
         };
 
-        async function wait(first) {
+        async function updateEmbed() {
 
-            let embed = new MessageEmbed()
-            .setTitle(message.drakeWS("administration/automod:TITLE"))
-            .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
-            .setFooter(client.cfg.footer)
-            .setColor(client.cfg.color.purple)
-            .setDescription(message.drakeWS("misc:PLEASE_WAIT", {
-                emoji: "waiting"
-            }));
-    
-            if(first) return message.channel.send(embed);
-            return msg.edit(embed);
-        }
+            isAntipubEnabled = data.guild.plugins.automod.antiPub.enabled;
+            isAntiBadwordsEnabled = data.guild.plugins.automod.antiBadwords.enabled;
+            isAntifullMajsEnabled = data.guild.plugins.automod.antiMajs.enabled;
 
-        async function start(first) {
-    
-            if(first) msg = await wait(true);
-            if(first == false) msg = await wait(false);
-    
-            await msg.react('1️⃣');
-            await msg.react('2️⃣');
-            await msg.react('3️⃣');
-            // await msg.react('⚙️');
-    
-            msg = await displayMain(msg);
-    
-            const r = await WaitForReaction(msg);
-            if(first) return r;
-            await switchCTV(r);
-    
-        }
-    
-        async function after() {
-            const r = await WaitForReaction(msg);
-            await switchCTV(r);
+            let embed1 = new MessageEmbed()
+                .setTitle(interaction.drakeWS("administration/automod:TITLE"))
+                .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({dynamic:true}))
+                .setFooter(client.cfg.footer)
+                .setColor(client.cfg.color.purple)
+                .setDescription(interaction.drakeWS("administration/automod:DESC"))
+                .addField(interaction.drakeWS("administration/automod:ONE"), isAntipubEnabled ? enabled : disabled)
+                .addField(interaction.drakeWS("administration/automod:TWO"), isAntiBadwordsEnabled ? enabled : disabled)
+                .addField(interaction.drakeWS("administration/automod:THREE"), isAntifullMajsEnabled ? enabled : disabled);            
+
+            await interaction.editReply({
+                embeds: [embed1]
+            });
         };
-
-        // async function gear() {
-        //     let count = 0;
-        //     let enabledPlugins = [];
-
-        //     data.guild.plugins.automod.forEach(plugin => {
-        //         if(!plugin.enabled) return;
-        //     });
-
-        //     let embed = new MessageEmbed()
-        //     .setTitle(message.drakeWS("administration/automod:TITLE_CONFIG"))
-        //     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic:true}))
-        //     .setFooter(client.cfg.footer)
-        //     .setColor(client.cfg.color.blue)
-        //     .setDescription(message.drakeWS("administration/automod:DESC_CONFIG"))
-        //     enabledPlugins.forEach(plugin => {
-        //         count++;
-        //         embed.addField(`:${client.functions.numberLetterConverter("ntl", count)}: ${message.drakeWS("administration/automod:" + client.functions.convertNumber(count).toUpperCase())}`)
-        //     });
-
-        //     return msg.edit(embed);
-        // };  
-    
-        async function switchCTV(ctv) {
-            switch(ctv) {
-                
-                case '1️⃣':
-                    await updateEmbed("pub");
-                    await after();
-                    break;
-                case '2️⃣':
-                    await updateEmbed("badwords");
-                    await after();
-                    break;
-                case '3️⃣':
-                    await updateEmbed("majs");
-                    await after();
-                    break;
-                // case '⚙️':
-                //     await gear();
-                //     break;
-                default:
-                    return;
-            }
-        }
-    
-        async function cancel() {
-            msg.delete();
-            message.delete();
-        }
-    
-        const ctv = await start(true);
-        await switchCTV(ctv);
     };
 };
 
