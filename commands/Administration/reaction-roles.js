@@ -1,5 +1,6 @@
 const Command = require("../../structure/Commands.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const ms = require("ms");
 
 class ReactionRoles extends Command {
 
@@ -7,572 +8,783 @@ class ReactionRoles extends Command {
         super(client, {
             name: "reaction-roles",
             aliases: ["react-roles", "reactions-roles", "rr", "reaction-role"],
-            enabled: false,
+            enabled: true,
             dirname: __dirname,
             botPerms: ["MANAGE_MESSAGES"],
             userPerms: ["MANAGE_GUILD"],
-            restriction: []
+            restriction: [],
+
+            slashCommandOptions: {
+                description: "Manage reaction roles on your server"
+            }
         });
     };
 
     async run(message, args, data) {
 
         const client = this.client;
-        const localButtonsID = {};
 
-        let msg = null;
-        let IDofReact = null;
-
-        let ChannelR = null;
-        let messageIDR = null;
-        let reactionR = null;
-        let roleR = null;
-
-
-        let filter = (button) => button.clicker.user.id === message.author.id;
-        const opt = { max: 1, time: 50000, errors: [ "time" ] };
-
-        async function cancel() {
-            msg.delete().catch(() => {});
-            message.delete().catch(() => {});
-        };
-
-        async function waitForButton() {
-
-            let button = null;
-
-            await msg.awaitButtons(filter, { max: 1, time: 60000, errors: ['time'] })
-            .then(collected => {
-                button = collected.first();
-                if(!button) return cancel();
-                button.reply.defer();
-            });
-
-            await changeButtonStatus("non-dispo");
-
-            if(button == null) return;
-            return button;
-        };
-
-        async function displayMain(msg, returnEmbed) {
-
-            const embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
             .setColor("BLUE")
             .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS"))
-            .setFooter(client.cfg.footer)
+            .setFooter(client.cfg.footer);
 
-            if(returnEmbed) return embed;
-            else return msg.edit({
-                embed: embed
-            });
-        };
-
-        async function addReactionRole() {
-
-            filter = (m) => m.author.id === message.author.id;
-
-            const embed = new MessageEmbed()
-            .setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
-                step: "1"
-            }))
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
-            .setFooter(client.cfg.footer)
-            .setColor(client.cfg.color.blue)
-            .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_1", {
-                emoji: "channel"
-            }));
-
-            // Début Channel
-            msg.edit({
-                embed: embed
-            });
-
-            let collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-            if(!collected || !collected.first()) return cancel();
-
-            let confChannel = collected.first();
-
-            let confMessage = collected.first().content;
-
-            if(confMessage == "cancel") {
-                await msg.reactions.removeAll()
-                await collected.first().delete();
-                return await start(false);
-            };
-
-            ChannelR = confChannel.mentions.channels.first() || message.guild.channels.cache.get(confChannel.content) || message.guild.channels.cache.find((ch) => ch.name === confChannel.content || `#${ch.name}` === confChannel.content);
-
-            if(!ChannelR) {
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-
-                message.channel.send(message.drakeWS("administration/reaction-roles:CHANNEL_NOT_FOUND", {
-                    emoji: "error",
-                    channel: confMessage
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                await msg.reactions.removeAll()
-                return await start(false);
-            };
-
-            collected.first().delete().catch(() => {});
-            // Fin channel
-
-
-
-            // Début Message ID
-            embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
-                step: "2"
-            }))
-            .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_2", {
-                emoji: "id",
-            }));
-
-
-
-            msg.edit({
-                embed: embed
-            });
-
-            collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-
-            if(!collected || !collected.first()) return cancel();
-            
-            confMessage = collected.first().content;
-
-            if(confMessage == "cancel") {
-                await msg.reactions.removeAll()
-                await collected.first().delete();
-                return await start(false);
-            };
-
-            if(isNaN(confMessage)) {
-
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-
-                message.channel.send(message.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", {
-                    emoji: "error",
-                    message: confMessage
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                await msg.reactions.removeAll()
-                return await start(false);
-            };
-
-            messageIDR = await client.channels.cache.get(ChannelR.id).messages.fetch(confMessage).catch(() => {});
-
-            if(!messageIDR) {
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-
-                message.channel.send(message.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", {
-                    emoji: "error",
-                    message: confMessage
-
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                await msg.reactions.removeAll()
-                return await start(false);
-            };
-
-            collected.first().delete().catch(() => {});
-            // Fin Message ID
-
-
-
-            // Début Emoji
-            embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
-                step: "3"
-            }))
-            .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_3", {
-                emoji: "smile",
-            }));
-
-            msg.edit({
-                embed: embed
-            });
-
-            collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-            if(!collected || !collected.first()) return cancel();
-
-            confMessage = collected.first().content;
-
-            if(confMessage == "cancel") {
-                await msg.reactions.removeAll()
-                await collected.first().delete();
-                return await start(false);
-            };
-
-            await message.react(confMessage).catch(() => {
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-                
-                message.channel.send(message.drakeWS("administration/reaction-roles:EMOJI_NOT_FOUND", {
-                    emoji: "error",
-                    reaction: confMessage
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                return start(false);
-            });
-
-            message.reactions.removeAll();
-            reactionR = confMessage;
-
-            collected.first().delete().catch(() => {});
-            // Fin Emoji
-
-
-
-            // Début role
-            embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
-                step: "4"
-            }))
-            .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_4", {
-                emoji: "roleList"
-            }));
-
-            msg.edit({
-                embed: embed
-            }).catch(() => {});
-
-            collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-
-            if(!collected || !collected.first()) return cancel();
-
-            confMessage = collected.first().content;
-
-            if(confMessage == "cancel") {
-                await msg.reactions.removeAll()
-                await collected.first().delete();
-                return await start(false);
-            };
-
-            roleR = message.guild.roles.cache.get(confMessage) || collected.first().mentions.roles.first();
-
-            if(!roleR) {
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-
-                message.channel.send(message.drakeWS("administration/reaction-roles:ROLE_NOT_FOUND", {
-                    emoji: "error",
-                    role: confMessage
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                await msg.reactions.removeAll()
-                return await start(false);
-            };
-
-            if(roleR.position >= message.guild.member(client.user).roles.highest.position) {
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-
-                message.channel.send(message.drakeWS("administration/reaction-roles:ROLE_TO_HIGHT", {
-                    emoji: "error",
-                    role: roleR.name
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                await msg.reactions.removeAll()
-                return await start(false);
-            };
-
-
-
-            collected.first().delete().catch(() => {});
-            // Fin rôle
-
-            // Début finit
-            const newEmbed = new MessageEmbed()
-            .setTitle(client.emotes["succes"])
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
-            .setFooter(client.cfg.footer)
-            .setColor(client.cfg.color.blue)
-            .setDescription(message.drakeWS("administration/reaction-roles:FINISH_ADD", {
-                channel: ChannelR.id,
-                messageID: messageIDR,
-                reaction: reactionR,
-                role: roleR.id,
-            }));
-
-            msg.edit({
-                embed: newEmbed
-            });
-
-            // Fin finit
-            messageIDR.react(reactionR);
-            
-            data.guild.reactioncount++;
-            data.guild.reactionroles.push({
-                channel: ChannelR.id,
-                message: messageIDR.id,
-                reaction: reactionR,
-                role: roleR.id,
-                count: data.guild.reactioncount
-            });
-
-            filter = (button) => button.clicker.user.id === message.author.id;
-
-            await data.guild.save();
-            await afterHelp(newEmbed);
-        }
-
-        async function listReactionRole() {
-
-            const embed = new MessageEmbed()
-            .setTitle(message.drakeWS("administration/reaction-roles:LIST_REACTION"))
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
-            .setFooter(client.cfg.footer)
-            .setColor(client.cfg.color.orange)
-            .setDescription((data.guild.reactionroles.length !== 0 ? 
-                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+message.guild+"/"+rr.channel+"/"+rr.message+") " + message.drakeWS("administration/reaction-roles:REACTION") +  ": ``" + rr.reaction + "`` **|** " + message.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">") : 
-                    message.drakeWS("administration/reaction-roles:NO_REACTION_ROLES", {
-                        prefix: data.guild.prefix
-            })));
-
-            await msg.edit({
-                embed: embed
-            });
-
-            afterHelp(embed);
-        };
-
-        async function removeReactionRole() {
-
-            filter = (m) => m.author.id === message.author.id;
-
-            const embed = new MessageEmbed()
-            .setTitle(message.drakeWS("administration/reaction-roles:REMOVE_REACTION"))
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
-            .setFooter(client.cfg.footer)
-            .setColor(client.cfg.color.purple)
-            .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_REMOVE", {
-                emoji: "clear"
-            }));
-
-            // Début Suppression
-            await msg.edit({
-                embed: embed
-            });
-
-            let collected = await message.channel.awaitMessages(filter, opt).catch(() => {});
-            if(!collected || !collected.first()) return cancel();
-            
-            let confMessage = collected.first().content;
-
-            if(confMessage == "cancel") {
-                await msg.reactions.removeAll()
-                await collected.first().delete();
-                return await start(false);
-            };
-
-            IDofReact = confMessage;
-
-            if(!IDofReact || isNaN(IDofReact) || !data.guild.reactionroles.filter((rr) => rr.id === parseInt(IDofReact))) {
-
-                collected.first().delete({
-                    timeout: 5000
-                }).catch(() => {});
-
-                message.channel.send(message.drakeWS("administration/reaction-roles:ID_NOT_EXIST", {
-                    emoji: "error",
-                    id: confMessage
-                })).then(m => m.delete({
-                    timeout: 5000
-                }).catch(() => {}));
-
-                await msg.reactions.removeAll()
-                return await start(false);
-            };
-
-            collected.first().delete();
-
-            const newEmbed = new MessageEmbed()
-            .setTitle(client.emotes["succes"])
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
-            .setFooter(client.cfg.footer)
-            .setColor(client.cfg.color.purple)
-            .setDescription(message.drakeWS("administration/reaction-roles:FINISH_REMOVE", {
-                id: confMessage
-            }));
-
-            await msg.edit({
-                embed: newEmbed
-            });
-
-            filter = (button) => button.clicker.user.id === message.author.id;
-
-            data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
-
-            await data.guild.save();
-            afterHelp(newEmbed);	
-        };
-
-        async function wait(first) {
-
-            const embed = new MessageEmbed()
-            .setAuthor(message.author.username, message.author.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
-            .setColor(client.cfg.color.blue)
-            .setTitle(message.drakeWS("administration/reaction-roles:TITLE"))
-            .setFooter(client.cfg.footer)
-            .setDescription(message.drakeWS("misc:PLEASE_WAIT", {
-                emoji: "waiting"
-            }));
-
-            if(first) return message.channel.send(embed);
-            return msg.edit({
-                embed: embed
-            });
-        };
-
-        async function changeButtonStatus(status) {
-
-            let makeButtonAvailable = Boolean(status === "dispo");
-
-            let addButton = new MessageButton()
-            .setStyle(makeButtonAvailable ? 'green' : 'gray')
+        let addButton = new MessageButton()
+            .setStyle('SUCCESS')
             .setLabel('Add ➕')
-            .setID(localButtonsID["addButton"]);
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}ADD`);
 
-            let listButton = new MessageButton()
-            .setStyle(makeButtonAvailable ? 'blurple' : 'gray')
+        let listButton = new MessageButton()
+            .setStyle('PRIMARY')
             .setLabel('List 📜')
-            .setID(localButtonsID["listButton"]);
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}LIST`);
 
-            let removeButton = new MessageButton()
-            .setStyle(makeButtonAvailable ? 'red' : 'gray')
+        let removeButton = new MessageButton()
+            .setStyle('DANGER')
             .setLabel('Remove ➖')
-            .setID(localButtonsID["removeButton"]);
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}REMOVE`);
 
-            let closeButton = new MessageButton()
-            .setStyle(makeButtonAvailable ? 'red' : 'gray')
-            .setLabel('Close ❌')
-            .setID(localButtonsID["closeButton"]);
+        const group = new MessageActionRow().addComponents([ addButton, listButton, removeButton ]);
 
-            if(!makeButtonAvailable) {
-                addButton.setDisabled(true);
-                listButton.setDisabled(true);
-                removeButton.setDisabled(true);
-                closeButton.setDisabled(true);
+        message.reply({
+            embeds: [embed],
+            components: [group]
+        }).then(async m => {
+
+            const filter = (button) => button.user.id === message.author.id == (
+                button.customId === addButton.customId ||
+                button.customId === listButton.customId ||
+                button.customId === removeButton.customId
+            );
+
+            const opt = { 
+                filter: (m) => m.author.id === message.author.id,
+                max: 1, 
+                time: 50000, 
+                errors: [ "time" ] 
             };
 
-            let group1 = new MessageActionRow().addComponents([ addButton, listButton, removeButton, closeButton ]);
+            const collector = m.createMessageComponentCollector({
+                filter,
+                time: ms('10m')
+            });
 
-            await msg.edit({
-                components: [group1],
-                embed: msg.embeds[0]
-            }).catch(() => {});
+            collector.on("collect", async b => {
 
+                await b.deferUpdate();
+
+                switch(b.customId) {
+                    case addButton.customId:
+                        const embed1 = new MessageEmbed()
+                            .setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                                step: "1"
+                            }))
+                            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.blue)
+                            .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_1", {
+                                emoji: "channel"
+                            }));
+            
+                        // Début Channel
+                        m.edit({
+                            embeds: [embed1],
+                            components: []
+                        });
+            
+                        let collected = await message.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        let confChannel = collected.first();
+                        let confMessage = collected.first().content;
+            
+                        if(confMessage == "cancel") return badInput(confChannel, message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error", }));
+            
+                        const ChannelR = confChannel.mentions.channels.first() || message.guild.channels.cache.get(confChannel.content) || message.guild.channels.cache.find((ch) => ch.name === confChannel.content || `#${ch.name}` === confChannel.content);
+                        if(!ChannelR) return badInput(confChannel, message.drakeWS("administration/reaction-roles:CHANNEL_NOT_FOUND", { emoji: "error", channel: confMessage }));
+            
+                        collected.first().delete().catch(() => {});
+                        // Fin channel
+            
+            
+            
+                        // Début Message ID
+                        embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                            step: "2"
+                        }))
+                        .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_2", {
+                            emoji: "id",
+                        }));
+            
+                        m.edit({
+                            embeds: [embed]
+                        });
+            
+                        collected = await message.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+                        
+                        confMessage = collected.first().content;
+                        if(confMessage == "cancel") return badInput(collected.first(), message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        if(isNaN(confMessage)) return badInput(collected.first(), message.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", { emoji: "error", message: confMessage }));
+            
+                        const messageIDR = await client.channels.cache.get(ChannelR.id).messages.fetch(confMessage);
+                        if(!messageIDR) return badInput(collected.first(), message.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", { emoji: "error", message: confMessage }));
+            
+                        collected.first().delete().catch(() => {});
+                        // Fin Message ID
+            
+            
+            
+                        // Début Emoji
+                        embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                            step: "3"
+                        }))
+                        .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_3", {
+                            emoji: "smile",
+                        }));
+            
+                        m.edit({
+                            embeds: [embed]
+                        });
+            
+                        collected = await message.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        confMessage = collected.first().content;
+                        if(confMessage == "cancel") return badInput(collected.first(), message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+                        
+                        await message.react(confMessage).catch(() => {
+                            collected.first().delete().catch(() => {});
+                            return badInput(null, message.drakeWS("administration/reaction-roles:EMOJI_NOT_FOUND", { emoji: "error", emoji: confMessage}));
+                        });
+            
+                        const reactionR = confMessage;
+            
+                        collected.first().delete().catch(() => {});
+                        // Fin Emoji
+            
+            
+            
+                        // Début role
+                        embed.setTitle(message.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                            step: "4"
+                        }))
+                        .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_4", {
+                            emoji: "roleList"
+                        }));
+            
+                        m.edit({
+                            embeds: [embed]
+                        }).catch(() => {});
+            
+                        collected = await message.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        confMessage = collected.first().content;
+                        if(confMessage == "cancel") return badInput(collected.first(), message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        const roleR = message.guild.roles.cache.get(confMessage) || collected.first().mentions.roles.first();
+            
+                        if(!roleR) return badInput(collected.first(), message.drakeWS("administration/reaction-roles:ROLE_NOT_FOUND", { emoji: "error", role: confMessage }));
+                        if(roleR.position >= message.guild.members.cache.get(client.user.id).roles.highest.position) return badInput(collected.first(), message.drakeWS("administration/reaction-roles:ROLE_TO_HIGHT", { emoji: "error", role: roleR}));
+
+                        collected.first().delete().catch(() => {});
+            
+                        // Fin rôle
+            
+                        // Début finit
+                        const newEmbed = new MessageEmbed()
+                            .setTitle(client.emotes["succes"])
+                            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.blue)
+                            .setDescription(message.drakeWS("administration/reaction-roles:FINISH_ADD", {
+                                channel: ChannelR.id,
+                                messageID: messageIDR,
+                                reaction: reactionR,
+                                role: roleR.id,
+                            }));
+            
+                        // Fin finit
+                        messageIDR.react(reactionR);
+                        
+                        data.guild.reactioncount++;
+                        data.guild.reactionroles.push({
+                            channel: ChannelR.id,
+                            message: messageIDR.id,
+                            reaction: reactionR,
+                            role: roleR.id,
+                            count: data.guild.reactioncount
+                        });
+            
+                        await data.guild.save();
+                        await afterHelp(m, newEmbed, [addButton, removeButton, listButton]);
+                        break;
+                    case listButton.customId:
+
+                        const embed5 = new MessageEmbed()
+                            .setTitle(message.drakeWS("administration/reaction-roles:LIST_REACTION"))
+                            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.orange)
+                            .setDescription(`${(data.guild.reactionroles.length !== 0 ? 
+                                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+message.guild+"/"+rr.channel+"/"+rr.message+") " + message.drakeWS("administration/reaction-roles:REACTION") +  ": ``" + rr.reaction + "`` **|** " + message.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">") : 
+                                    message.drakeWS("administration/reaction-roles:NO_REACTION_ROLES", {
+                                        prefix: data.guild.prefix
+                            }))}`);
+
+                        await afterHelp(m, embed5, [addButton, removeButton, listButton]);
+                        break;
+                    case removeButton.customId:
+                        const embed6 = new MessageEmbed()
+                        .setTitle(message.drakeWS("administration/reaction-roles:REMOVE_REACTION"))
+                        .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+                        .setFooter(client.cfg.footer)
+                        .setColor(client.cfg.color.purple)
+                        .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS_REMOVE", {
+                            emoji: "clear"
+                        }));
+        
+                        // Début Suppression
+                        await m.edit({
+                            embeds: [embed6]
+                        });
+            
+                        let collected1 = await message.channel.awaitMessages(opt);
+                        if(!collected1 || !collected1.first()) return badInput(null, message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+                        
+                        let confMessage1 = collected1.first().content;
+                        if(confMessage1 == "cancel") return badInput(collected1.first(), message.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        const IDofReact = confMessage1;
+            
+                        if(!IDofReact || isNaN(IDofReact) || !data.guild.reactionroles.filter((rr) => rr.id === parseInt(IDofReact))) return badInput(collected1.first(), message.drakeWS("administration/reaction-roles:ID_NOT_EXIST", { 
+                            emoji: "error",
+                            id: confMessage1
+                        }));
+            
+                        collected1.first().delete().catch(() => {});
+            
+                        const newEmbed1 = new MessageEmbed()
+                            .setTitle(client.emotes["succes"])
+                            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.purple)
+                            .setDescription(message.drakeWS("administration/reaction-roles:FINISH_REMOVE", {
+                                id: confMessage1
+                            }));
+            
+                        data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
+            
+                        await data.guild.save();
+                        await afterHelp(m, newEmbed1, [addButton, removeButton, listButton]);
+                        break;
+                    default:
+                        client.emit("error", "Default case in reaction-roles.js");
+                        break;
+                };
+            });
+
+            collector.on("end", async () => {
+                const addButton1 = new MessageButton()
+                    .setStyle('SUCCESS')
+                    .setLabel('Add ➕')
+                    .setDisabled(true)
+                    .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}ADD`);
+
+                const listButton1 = new MessageButton()
+                    .setStyle('PRIMARY')
+                    .setLabel('List 📜')
+                    .setDisabled(true)
+                    .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}LIST`);
+
+                const removeButton1 = new MessageButton()
+                    .setStyle('DANGER')
+                    .setLabel('Remove ➖')
+                    .setDisabled(true)
+                    .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}REMOVE`);
+
+                const group1 = new MessageActionRow().addComponents([ addButton1, listButton1, removeButton1 ]);
+
+                await m.edit({
+                    components: [group1],
+                    embeds: [embed],
+                    content: null
+                });
+            });
+
+        });
+
+        async function badInput(question, reason) {
+            const errorEmbed = new MessageEmbed()
+                .setColor("#D54052")
+                .setDescription(`${reason}`);
+
+            let errorMessage = await message.channel.send({
+                embeds: [errorEmbed]
+            });
+
+            setTimeout(() => errorMessage.delete().catch(() => {}), 5000);
+            if(question) question.delete().catch(() => {});
         };
 
-        async function start(first) {
-
-            filter = (button) => button.clicker.user.id === message.author.id;
-
-            msg = await wait(first);
-
-            let addButton = new MessageButton()
-            .setStyle('green')
-            .setLabel('Add ➕')
-            .setID(`${message.guild.id}${message.author.id}${Date.now()}ADD`);
-
-            let listButton = new MessageButton()
-            .setStyle('blurple')
-            .setLabel('List 📜')
-            .setID(`${message.guild.id}${message.author.id}${Date.now()}LIST`);
-
-            let removeButton = new MessageButton()
-            .setStyle('red')
-            .setLabel('Remove ➖')
-            .setID(`${message.guild.id}${message.author.id}${Date.now()}REMOVE`);
-
-            let closeButton = new MessageButton()
-            .setStyle('red')
-            .setLabel('Close ❌')
-            .setID(`${message.guild.id}${message.author.id}${Date.now()}CLOSE`);
-
-            localButtonsID["addButton"] = addButton.custom_id;
-            localButtonsID["listButton"] = listButton.custom_id;
-            localButtonsID["removeButton"] = removeButton.custom_id;
-            localButtonsID["closeButton"] = closeButton.custom_id;
-
-            const embed = await displayMain(msg, true);
-
-            let group1 = new MessageActionRow().addComponents([ addButton, listButton, removeButton, closeButton ]);
-
-            await msg.edit({
-                components: [group1],
-                embed: embed
-            }).catch(() => {});
-
-            const ThingToDo = await waitForButton();
-            if(first) return ThingToDo;
-            await switchCTV(ThingToDo);
-        };
-
-        async function afterHelp(previousEmbed) {
+        async function afterHelp(m, embed, buttons) {
 
             let returnButton = new MessageButton()
-            .setStyle('blurple')
+            .setStyle('PRIMARY')
             .setLabel('Return ↩️')
-            .setID(`${message.guild.id}${message.author.id}${Date.now()}RETURNHOME`);
+            .setDisabled(false)
+            .setCustomId(`${message.guild.id}${message.author.id}${Date.now()}RETURNHOME`);
 
             let group1 = new MessageActionRow().addComponents([ returnButton ]);
 
-            msg = await msg.edit({
+            await m.edit({
                 components: [group1],
-                embed: previousEmbed
-            }).catch(() => {});
+                embeds: [embed]
+            });
 
-            const retunHome = await waitForButton();
-            if(retunHome.id === returnButton.custom_id) {
-                await start(false);
-            };
-        };
+            const filter = (button) => button.user.id === message.author.id;
 
-        async function switchCTV(ctv) {
-            if(!ctv) return;
-            switch(ctv.id) {
+            const collector = m.createMessageComponentCollector({
+                filter,
+                time: ms('10m'),
+                max: 1
+            });
 
-                case localButtonsID["addButton"]:
-                    msg = await addReactionRole();
-                    break;
-                case localButtonsID["listButton"]:
-                    msg = await listReactionRole();
-                    break;
-                case localButtonsID["removeButton"]:
-                    msg = await removeReactionRole();
-                    break;
-                case localButtonsID["closeButton"]:
-                    message.drake("common:CANCEL", {
-                        emoji: "succes"
+            collector.on("collect", async b => {
+                await b.deferUpdate();
+
+                if(b.customId === returnButton.customId) {
+                    const embed1 = new MessageEmbed()
+                        .setAuthor(message.author.username, message.author.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
+                        .setColor("BLUE")
+                        .setDescription(message.drakeWS("administration/reaction-roles:INSTRUCTIONS"))
+                        .setFooter(client.cfg.footer);
+        
+                    let addButton2 = new MessageButton()
+                        .setStyle('SUCCESS')
+                        .setLabel('Add ➕')
+                        .setDisabled(false)
+                        .setCustomId(buttons[0].customId);
+            
+                    let listButton2 = new MessageButton()
+                        .setStyle('PRIMARY')
+                        .setLabel('List 📜')
+                        .setDisabled(false)
+                        .setCustomId(buttons[2].customId);
+            
+                    let removeButton2 = new MessageButton()
+                        .setStyle('DANGER')
+                        .setLabel('Remove ➖')
+                        .setDisabled(false)
+                        .setCustomId(buttons[1].customId);
+            
+                    group1 = new MessageActionRow().addComponents([ addButton2, listButton2, removeButton2 ]);
+
+                    await m.edit({
+                        components: [group1],
+                        embeds: [embed1]
                     });
-                    return cancel();
-                default:
-                    return;
+                } else return;
+            });
+
+            collector.on("end", () => {
+                return;
+            });
+        };
+    };
+
+    async runInteraction(interaction, data) {
+
+        const client = this.client;
+
+        const embed = new MessageEmbed()
+            .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
+            .setColor("BLUE")
+            .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS"))
+            .setFooter(client.cfg.footer);
+
+        let addButton = new MessageButton()
+            .setStyle('SUCCESS')
+            .setLabel('Add ➕')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}ADD`);
+
+        let listButton = new MessageButton()
+            .setStyle('PRIMARY')
+            .setLabel('List 📜')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}LIST`);
+
+        let removeButton = new MessageButton()
+            .setStyle('DANGER')
+            .setLabel('Remove ➖')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}REMOVE`);
+
+        const group = new MessageActionRow().addComponents([ addButton, listButton, removeButton ]);
+
+        interaction.reply({
+            embeds: [embed],
+            components: [group]
+        }).then(async m => {
+
+            const filter = (button) => button.user.id === interaction.user.id == (
+                button.customId === addButton.customId ||
+                button.customId === listButton.customId ||
+                button.customId === removeButton.customId
+            );
+
+            const opt = { 
+                filter: (m) => m.author.id === interaction.user.id,
+                max: 1, 
+                time: 50000, 
+                errors: [ "time" ] 
             };
+
+            const collector = interaction.channel.createMessageComponentCollector({
+                filter,
+                time: ms('10m')
+            });
+
+            collector.on("collect", async b => {
+
+                await b.deferUpdate();
+
+                switch(b.customId) {
+                    case addButton.customId:
+                        const embed1 = new MessageEmbed()
+                            .setTitle(interaction.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                                step: "1"
+                            }))
+                            .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.blue)
+                            .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_1", {
+                                emoji: "channel"
+                            }));
+            
+                        // Début Channel
+                        interaction.editReply({
+                            embeds: [embed1],
+                            components: []
+                        });
+            
+                        let collected = await interaction.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        let confChannel = collected.first();
+                        let confMessage = collected.first().content;
+            
+                        if(confMessage == "cancel") return badInput(confChannel, interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error", }));
+            
+                        const ChannelR = confChannel.mentions.channels.first() || interaction.guild.channels.cache.get(confChannel.content) || interaction.guild.channels.cache.find((ch) => ch.name === confChannel.content || `#${ch.name}` === confChannel.content);
+                        if(!ChannelR) return badInput(confChannel, interaction.drakeWS("administration/reaction-roles:CHANNEL_NOT_FOUND", { emoji: "error", channel: confMessage }));
+            
+                        collected.first().delete().catch(() => {});
+                        // Fin channel
+            
+            
+            
+                        // Début Message ID
+                        embed.setTitle(interaction.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                            step: "2"
+                        }))
+                        .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_2", {
+                            emoji: "id",
+                        }));
+            
+                        interaction.editReply({
+                            embeds: [embed],
+                            components: []
+                        });
+            
+                        collected = await interaction.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+                        
+                        confMessage = collected.first().content;
+                        if(confMessage == "cancel") return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        if(isNaN(confMessage)) return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", { emoji: "error", message: confMessage }));
+            
+                        const messageIDR = await client.channels.cache.get(ChannelR.id).messages.fetch(confMessage);
+                        if(!messageIDR) return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:MESSAGE_NOT_FOUND", { emoji: "error", message: confMessage }));
+            
+                        collected.first().delete().catch(() => {});
+                        // Fin Message ID
+            
+            
+            
+                        // Début Emoji
+                        embed.setTitle(interaction.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                            step: "3"
+                        }))
+                        .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_3", {
+                            emoji: "smile",
+                        }));
+            
+                        interaction.editReply({
+                            embeds: [embed],
+                            components: []
+                        });
+            
+                        collected = await interaction.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        confMessage = collected.first().content;
+                        if(confMessage == "cancel") return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+
+                        const testMessage = await interaction.channel.send({
+                            content: "Test !"
+                        });
+                        
+                        await testMessage.react(confMessage).catch(() => {
+                            testMessage.delete().catch(() => {});
+                            collected.first().delete().catch(() => {});
+                            return badInput(null, interaction.drakeWS("administration/reaction-roles:EMOJI_NOT_FOUND", { emoji: "error", emoji: confMessage}));
+                        });
+            
+                        const reactionR = confMessage;
+            
+                        testMessage.delete().catch(() => {});
+                        collected.first().delete().catch(() => {});
+                        // Fin Emoji
+            
+            
+            
+                        // Début role
+                        embed.setTitle(interaction.drakeWS("administration/reaction-roles:ADD_REACTION", {
+                            step: "4"
+                        }))
+                        .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS_ADD_4", {
+                            emoji: "roleList"
+                        }));
+            
+                        interaction.editReply({
+                            embeds: [embed],
+                            components: []
+                        }).catch(() => {});
+            
+                        collected = await interaction.channel.awaitMessages(opt);
+                        if(!collected || !collected.first()) return badInput(null, interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        confMessage = collected.first().content;
+                        if(confMessage == "cancel") return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        const roleR = interaction.guild.roles.cache.get(confMessage) || collected.first().mentions.roles.first();
+            
+                        if(!roleR) return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:ROLE_NOT_FOUND", { emoji: "error", role: confMessage }));
+                        if(roleR.position >= interaction.guild.members.cache.get(client.user.id).roles.highest.position) return badInput(collected.first(), interaction.drakeWS("administration/reaction-roles:ROLE_TO_HIGHT", { emoji: "error", role: roleR}));
+
+                        collected.first().delete().catch(() => {});
+            
+                        // Fin rôle
+            
+                        // Début finit
+                        const newEmbed = new MessageEmbed()
+                            .setTitle(client.emotes["succes"])
+                            .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.blue)
+                            .setDescription(interaction.drakeWS("administration/reaction-roles:FINISH_ADD", {
+                                channel: ChannelR.id,
+                                messageID: messageIDR,
+                                reaction: reactionR,
+                                role: roleR.id,
+                            }));
+            
+                        // Fin finit
+                        messageIDR.react(reactionR);
+                        
+                        data.guild.reactioncount++;
+                        data.guild.reactionroles.push({
+                            channel: ChannelR.id,
+                            message: messageIDR.id,
+                            reaction: reactionR,
+                            role: roleR.id,
+                            count: data.guild.reactioncount
+                        });
+            
+                        await data.guild.save();
+                        await afterHelp(m, newEmbed, [addButton, removeButton, listButton]);
+                        break;
+                    case listButton.customId:
+
+                        const embed5 = new MessageEmbed()
+                            .setTitle(interaction.drakeWS("administration/reaction-roles:LIST_REACTION"))
+                            .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.orange)
+                            .setDescription(`${(data.guild.reactionroles.length !== 0 ? 
+                                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+interaction.guild+"/"+rr.channel+"/"+rr.interaction+") " + interaction.drakeWS("administration/reaction-roles:REACTION") +  ": `" + rr.reaction + "` **|** " + interaction.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">") : 
+                                    interaction.drakeWS("administration/reaction-roles:NO_REACTION_ROLES", {
+                                        prefix: data.guild.prefix
+                            }))}`);
+
+                        await afterHelp(m, embed5, [addButton, removeButton, listButton]);
+                        break;
+                    case removeButton.customId:
+                        const embed6 = new MessageEmbed()
+                        .setTitle(interaction.drakeWS("administration/reaction-roles:REMOVE_REACTION"))
+                        .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic:true }))
+                        .setFooter(client.cfg.footer)
+                        .setColor(client.cfg.color.purple)
+                        .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS_REMOVE", {
+                            emoji: "clear"
+                        }));
+        
+                        // Début Suppression
+                        await interaction.editReply({
+                            embeds: [embed6]
+                        });
+            
+                        let collected1 = await interaction.channel.awaitMessages(opt);
+                        if(!collected1 || !collected1.first()) return badInput(null, interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+                        
+                        let confMessage1 = collected1.first().content;
+                        if(confMessage1 == "cancel") return badInput(collected1.first(), interaction.drakeWS("administration/reaction-roles:NOT_VALID", { emoji: "error" }));
+            
+                        const IDofReact = confMessage1;
+            
+                        if(!IDofReact || isNaN(IDofReact) || !data.guild.reactionroles.filter((rr) => rr.id === parseInt(IDofReact))) return badInput(collected1.first(), interaction.drakeWS("administration/reaction-roles:ID_NOT_EXIST", { 
+                            emoji: "error",
+                            id: confMessage1
+                        }));
+            
+                        collected1.first().delete().catch(() => {});
+            
+                        const newEmbed1 = new MessageEmbed()
+                            .setTitle(client.emotes["succes"])
+                            .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic:true }))
+                            .setFooter(client.cfg.footer)
+                            .setColor(client.cfg.color.purple)
+                            .setDescription(interaction.drakeWS("administration/reaction-roles:FINISH_REMOVE", {
+                                id: confMessage1
+                            }));
+            
+                        data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
+            
+                        await data.guild.save();
+                        await afterHelp(m, newEmbed1, [addButton, removeButton, listButton]);
+                        break;
+                    default:
+                        client.emit("error", "Default case in reaction-roles.js");
+                        break;
+                };
+            });
+
+            collector.on("end", async () => {
+                const addButton1 = new MessageButton()
+                    .setStyle('SUCCESS')
+                    .setLabel('Add ➕')
+                    .setDisabled(true)
+                    .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}ADD`);
+
+                const listButton1 = new MessageButton()
+                    .setStyle('PRIMARY')
+                    .setLabel('List 📜')
+                    .setDisabled(true)
+                    .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}LIST`);
+
+                const removeButton1 = new MessageButton()
+                    .setStyle('DANGER')
+                    .setLabel('Remove ➖')
+                    .setDisabled(true)
+                    .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}REMOVE`);
+
+                const group1 = new MessageActionRow().addComponents([ addButton1, listButton1, removeButton1 ]);
+
+                await interaction.editReply({
+                    components: [group1],
+                    embeds: [embed],
+                    content: null
+                });
+            });
+
+        });
+
+        async function badInput(question, reason) {
+            const errorEmbed = new MessageEmbed()
+                .setColor("#D54052")
+                .setDescription(`${reason}`);
+
+            let errorMessage = await interaction.channel.send({
+                embeds: [errorEmbed]
+            });
+
+            setTimeout(() => errorMessage.delete().catch(() => {}), 5000);
+            if(question) question.delete().catch(() => {});
         };
 
-        const ctv = await start(true);
-        await switchCTV(ctv);
+        async function afterHelp(m, embed, buttons) {
+
+            let returnButton = new MessageButton()
+            .setStyle('PRIMARY')
+            .setLabel('Return ↩️')
+            .setDisabled(false)
+            .setCustomId(`${interaction.guild.id}${interaction.user.id}${Date.now()}RETURNHOME`);
+
+            let group1 = new MessageActionRow().addComponents([ returnButton ]);
+
+            await interaction.editReply({
+                components: [group1],
+                embeds: [embed]
+            });
+
+            const filter = (button) => button.user.id === interaction.user.id;
+
+            const collector = interaction.channel.createMessageComponentCollector({
+                filter,
+                time: ms('10m'),
+                max: 1
+            });
+
+            collector.on("collect", async b => {
+                await b.deferUpdate();
+
+                if(b.customId === returnButton.customId) {
+                    const embed1 = new MessageEmbed()
+                        .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({format: 'png', dynamic: true, size: 1024}))
+                        .setColor("BLUE")
+                        .setDescription(interaction.drakeWS("administration/reaction-roles:INSTRUCTIONS"))
+                        .setFooter(client.cfg.footer);
+        
+                    let addButton2 = new MessageButton()
+                        .setStyle('SUCCESS')
+                        .setLabel('Add ➕')
+                        .setDisabled(false)
+                        .setCustomId(buttons[0].customId);
+            
+                    let listButton2 = new MessageButton()
+                        .setStyle('PRIMARY')
+                        .setLabel('List 📜')
+                        .setDisabled(false)
+                        .setCustomId(buttons[2].customId);
+            
+                    let removeButton2 = new MessageButton()
+                        .setStyle('DANGER')
+                        .setLabel('Remove ➖')
+                        .setDisabled(false)
+                        .setCustomId(buttons[1].customId);
+            
+                    group1 = new MessageActionRow().addComponents([ addButton2, listButton2, removeButton2 ]);
+
+                    await interaction.editReply({
+                        components: [group1],
+                        embeds: [embed1]
+                    });
+                } else return;
+            });
+
+            collector.on("end", () => {
+                return;
+            });
+        };
     };
 };
 
