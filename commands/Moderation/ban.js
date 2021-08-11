@@ -53,7 +53,7 @@ class Ban extends Command {
             emoji: "error"
         });
 
-        let reason = args.slice(message.mentions.users.first() ? (args[0].includes(user.id) ? 1 : 0) : 1).join(" ").replace("-f", "").trim();
+        let reason = args.slice(message.mentions.users.first() ? (args[0] ? (args[0].includes(user.id) ? 1 : 0) : 0) : 1).join(" ").replace("-f", "").trim();
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
         const member = message.guild.members.cache.get(user.id);
