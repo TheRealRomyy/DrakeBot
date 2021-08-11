@@ -37,8 +37,7 @@ class Userinfo extends Command {
 
         let badges = [];
         const animatedAvatar = user.avatarURL({ dynamic: true })
-
-        const userData = await this.client.db.findOrCreateUser(user);
+        let presence = null;
         
         // J'ai enlevé les descriptions parce que useless
         // let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
@@ -50,11 +49,11 @@ class Userinfo extends Command {
 
         if(animatedAvatar !== user.avatarURL()) badges.push(client.emotes.badges["NITRO"]);
 
-        if(member) user.presence = member.presence;
+        if(member) presence = member.presence;
 
-        const st = user.presence ? user.presence.status : null;
+        const st = presence ? presence.status : null;
 
-        let clientStatus = user.presence ? user.presence.clientStatus : null;
+        let clientStatus = presence ? presence.clientStatus : null;
         let plateformes = [];
 
         if(st && st !== "offline" && !user.bot) {
@@ -122,8 +121,7 @@ class Userinfo extends Command {
 
         let badges = [];
         const animatedAvatar = user.avatarURL({ dynamic: true })
-
-        const userData = await this.client.db.findOrCreateUser(user);
+        let presence = null;
         
         // J'ai enlevé les descriptions parce que useless
         // let desc = userData.desc ? (userData.desc !== null ? userData.desc : message.drakeWS("general/userinfo:NO_DESC")) : message.drakeWS("general/userinfo:NO_DESC"); 
@@ -135,11 +133,11 @@ class Userinfo extends Command {
 
         if(animatedAvatar !== user.avatarURL()) badges.push(client.emotes.badges["NITRO"]);
 
-        if(member) user.presence = member.presence;
+        if(member) presence = member.presence;
 
-        const st = user.presence ? user.presence.status : null;
+        const st = presence ? presence.status : null;
 
-        let clientStatus = user.presence ? user.presence.clientStatus : null;
+        let clientStatus = presence ? presence.clientStatus : null;
         let plateformes = [];
 
         if(st && st !== "offline" && !user.bot) {
@@ -148,7 +146,6 @@ class Userinfo extends Command {
             if (clientStatus && clientStatus.web) plateformes.push("`🌐`");
         };
 
-        if(plateformes.length === 0 && !user.bot) plateformes.push("`🤷‍♂️`");
         if(plateformes.length === 0 && user.bot) plateformes.push("`🤖`")
 
         /* Show custom status : 
