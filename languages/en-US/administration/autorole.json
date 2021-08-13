@@ -4,6 +4,6 @@
     "EXAMPLE": "autorole @Members",
     "DISABLED": "**Autorole disabled !**",
     "ALREADY_DISABLED": "Autorole already disabled !",
-    "ENABLED": "**New member was now given the role <@&{{role}}> !**",
+    "ENABLED": "**New members will automatically be assigned the role <@&{{role}}> !**",
     "ROLE_NOT_FOUND": "The role __{{role}}__ doesn't exist !"
 }

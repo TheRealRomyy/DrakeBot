@@ -12,7 +12,7 @@
     "NO_DESC": "Any description",
     "NO_DESC_AUTHOR": "You has not set description. (``{{prefix}}setbio <bio>``)",
     "STATUT": "• Status",
-    "STATUS_DND": "Do not distrub",
+    "STATUS_DND": "Do not disturb",
     "STATUS_ONLINE": "Online",
     "STATUS_OFFLINE": "Offline",
     "STATUS_IDLE": "Idle",
