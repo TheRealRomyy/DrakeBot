@@ -16,6 +16,9 @@ module.exports = class {
 		const guildData = await this.client.db.findOrCreateGuild(guild);
 		member.guild.data = guildData;
 
+		if(!guildData.plugins.autorole || !Array.isArray(guildData.plugins.autorole)) guildData.plugins.autorole = [];
+		if(!guildData.autoroles) guildData.autoroles = 0;
+
 		// Get le data du member
 		const memberData = await this.client.db.findOrCreateMember(member, guild);
 		
@@ -34,8 +37,10 @@ module.exports = class {
 		};
 
 		// Check l'autorole
-		if(guildData.plugins.autorole.enabled && !guildData.plugins.captcha.enabled && !member.user.bot) {
-			member.roles.add(guildData.plugins.autorole.role).catch(() => {});
+		if(guildData.plugins.autorole.length !== 0 && !guildData.plugins.captcha.enabled && !member.user.bot) {
+			guildData.plugins.autorole.forEach(role => {
+				member.roles.add(role.role);
+			});
 		};
 
 		// Check le captcha
@@ -161,9 +166,11 @@ module.exports = class {
 					embeds: [succesEmbed]
 				});
 
-				// Autorole
-				if(guildData.plugins.autorole.enabled) {
-					member.roles.add(guildData.plugins.autorole.role).catch(() => {});
+				// Autorole system
+				if(guildData.plugins.autorole.length !== 0) {
+					guildData.plugins.autorole.forEach(role => {
+						member.roles.add(role.role);
+					});
 				};
 
 				// Welcome system

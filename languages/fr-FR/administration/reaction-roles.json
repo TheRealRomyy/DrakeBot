@@ -3,7 +3,7 @@
     "EXAMPLE": "reaction-roles",
     "USAGE": "reaction-roles",
     "TITLE": "Menu réaction-rôles",
-    "INSTRUCTIONS": "**Cliquez sur une réaction pour faire l'action corréspondante** \n \n➕ ➜ Créer un réaction-rôle \n📜 ➜ Voir la liste des réaction-rôles \n➖ ➜ Supprimer un réaction-rôle \n \n❌ ➜ Fermer ce menu",
+    "INSTRUCTIONS": "**Cliquez sur un bouton pour faire l'action correspondante** \n \n➕ ➜ Créer un réaction-rôle \n📜 ➜ Voir la liste des réaction-rôles \n➖ ➜ Supprimer un réaction-rôle \n \n❌ ➜ Fermer ce menu",
     "ADD_REACTION": "Création de réaction-rôle ({{step}}/4)",
     "INSTRUCTIONS_ADD_1": "**Veuillez entrer le salon dans lequel le réaction-role va opérer** \n \nVous pouvez entrer `cancel` pour annuler",
     "CHANNEL_NOT_FOUND": "**Le salon `{{channel}}` n'existe pas !**",

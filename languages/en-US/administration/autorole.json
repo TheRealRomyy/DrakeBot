@@ -1,9 +1,19 @@
 {
     "DESCRIPTION": "Enable the autorole",
-    "USAGE": "autorole <role>",
-    "EXAMPLE": "autorole @Members",
+    "USAGE": "autorole",
+    "ADD_AUTOROLE": "Autorole creation",
+    "REMOVE_AUTOROLE": "Delete an autorole",
+    "EXAMPLE": "autorole",
+    "INSTRUCTIONS_REMOVE": "**Please send the num of the autorole you want to delete** \n \nYou can type `cancel` to avort",
+    "INSTRUCTIONS": "**Click on a button to do an action** \n \n➕ ➜ Create an autorole \n📜 ➜ See all autoroles \n➖ ➜ Delete an autorole",
     "DISABLED": "**Autorole disabled !**",
+    "INSTRUCTIONS_ADD": "**Please send the role wich will be given** \n \nYou can type `cancel` to avort",
     "ALREADY_DISABLED": "Autorole already disabled !",
+    "LIST_REACTION": "Here the list of the autoroles",
+    "FINISH_REMOVE": "**The autorole #`{{id}}` has been be deleted !**",
+    "ID_NOT_EXIST": "**There are no autorole with the num: #`{{id}}` !**",
+    "FINISH_ADD": "**The role <@&{{role}}> will be given when members will join this server !**",
     "ENABLED": "**New members will automatically be assigned the role <@&{{role}}> !**",
-    "ROLE_NOT_FOUND": "The role __{{role}}__ doesn't exist !"
+    "ROLE_NOT_FOUND": "The role __{{role}}__ doesn't exist !",
+    "NO_AUTOROLES": "**The are not autoroles** \n \nTo create one : `{{prefix}}autorole` then click on `➕` and follow instructions !"
 }

@@ -13,10 +13,7 @@ exports.Guild = (guildID, client) => {
                 captchaLog: null,
                 role: null
             },
-            autorole: {
-                enabled: false,
-                role: null
-            },
+            autorole: [],
             autosanctions: [],
             automod: {
                 antiPub: {
@@ -177,7 +174,10 @@ exports.Guild = (guildID, client) => {
         },
 
         // The sanction case
-        0
+        0,
+
+        // The autorole count
+        0,
     ];
 };
 
