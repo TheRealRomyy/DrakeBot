@@ -14,17 +14,24 @@ class DrakeBot extends Client {
             intents: [
                 Intents.FLAGS.GUILDS,
                 Intents.FLAGS.GUILD_MEMBERS,
+                // Intents.FLAGS.GUILD_BANS, // GUILD_BAN_ADD, GUILD_BAN_REMOVE
+                // Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, // GUILD_EMOJIS_UPDATE, GUILD_STICKERS_UPDATE
+                // Intents.FLAGS.GUILD_INTEGRATIONS, // GUILD_INTEGRATIONS_UPDATE, INTEGRATION_CREATE, INTEGRATION_DELETE, INTEGRATION_UPDATE
+                // Intents.FLAGS.GUILD_WEBHOOKS, // WEBHOOKDS_UPDATE
+                // Intents.FLAGS.GUILD_INVITES, // INVITE_CREATE, INVITE_DELETE
+                Intents.FLAGS.GUILD_VOICE_STATES,
+                // Intents.FLAGS.GUILD_PRESENCES, // PRESENCE_UPDATE
                 Intents.FLAGS.GUILD_MESSAGES,
                 Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+                // Intents.FLAGS.GUILD_MESSAGE_TYPING, // TYPING_START
+                Intents.FLAGS.DIRECT_MESSAGE,
                 Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-                Intents.FLAGS.GUILD_INVITES,
-                Intents.FLAGS.DIRECT_MESSAGES,
-                Intents.FLAGS.GUILD_PRESENCES
+                // Intents.FLAGS.DIRECT_MESSAGE_TYPING // TYPING_START
             ],
             partials: [ "REACTION", "MESSAGE", "CHANNEL", "GUILD_MEMBER", "USER" ],
             allowedMentions: {
                 parse: ["users", "roles"],
-                repliedUser: true
+                repliedUser: false
             }
         });
 
