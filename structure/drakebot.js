@@ -24,7 +24,7 @@ class DrakeBot extends Client {
                 Intents.FLAGS.GUILD_MESSAGES,
                 Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
                 // Intents.FLAGS.GUILD_MESSAGE_TYPING, // TYPING_START
-                Intents.FLAGS.DIRECT_MESSAGE,
+                Intents.FLAGS.DIRECT_MESSAGES,
                 Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
                 // Intents.FLAGS.DIRECT_MESSAGE_TYPING // TYPING_START
             ],
