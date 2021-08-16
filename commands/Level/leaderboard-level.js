@@ -24,6 +24,7 @@ class LeaderboardLevel extends Command {
 
         let client = this.client;
         const full = Boolean(args[0] === "full");
+        let string = "";
 
         let countVar = 1;
         let expCount = [];
@@ -46,11 +47,12 @@ class LeaderboardLevel extends Command {
         members = members.filter(mem => count[mem.id] !== "ghost");
         members = members.filter(mem => !isNaN(client.users.cache.get(mem.id)));
 
-        const membersLeaderboard = members.map((m) => 
-            (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + ( full ? ` (**${expCount[m.id]} exp**)` : "")
-        ).join("\n \n");
+        members.forEach(async m => {
+            const user = client.users.cache.get(m.id) ? client.users.cache.get(m.id) : await client.users.fetch(m.id);
+            string += (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + user.username + "** ● " + message.drakeWS("common:LEVEL") + ": **" + m.level + "**" + ( full ? ` (**${expCount[m.id]} exp**)` : "") + "\n \n"
+        })
 
-        if(membersLeaderboard == "") return message.drake("level/leaderboard-level:NO_MEMBERS", {
+        if(string == "") return message.drake("level/leaderboard-level:NO_MEMBERS", {
             emoji: "error"
         });
 
@@ -59,7 +61,7 @@ class LeaderboardLevel extends Command {
         .setFooter(this.client.cfg.footer)
         .setThumbnail(message.guild.iconURL({ dynamic:true }))
         .setColor(this.client.cfg.color.yellow)
-        .setDescription(`${membersLeaderboard}`)
+        .setDescription(`${string}`)
         .setTitle(message.drakeWS("level/leaderboard-level:TITLE", {
             guildName: message.guild.name
         }));
@@ -81,6 +83,7 @@ class LeaderboardLevel extends Command {
 
         let client = this.client;
         const full = false;
+        let string = "";
 
         let countVar = 1;
         let expCount = [];
@@ -103,11 +106,12 @@ class LeaderboardLevel extends Command {
         members = members.filter(mem => count[mem.id] !== "ghost");
         members = members.filter(mem => !isNaN(client.users.cache.get(mem.id)));
 
-        const membersLeaderboard = members.map((m) => 
-            (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + client.users.cache.get(m.id).username + "** ● " + interaction.drakeWS("common:LEVEL") + ": **" + m.level + "**" + ( full ? ` (**${expCount[m.id]} exp**)` : "")
-        ).join("\n \n");
+        members.forEach(async m => {
+            const user = client.users.cache.get(m.id) ? client.users.cache.get(m.id) : await client.users.fetch(m.id);
+            (isNaN(isCountInPodium(count[m.id])) ? isCountInPodium(count[m.id]) : count[m.id] + ")") + " **" + user.username + "** ● " + interaction.drakeWS("common:LEVEL") + ": **" + m.level + "**" + ( full ? ` (**${expCount[m.id]} exp**)` : "") + "\n \n"
+        });
 
-        if(membersLeaderboard == "") return interaction.reply({
+        if(string == "") return interaction.reply({
             content: interaction.drakeWS("level/leaderboard-level:NO_MEMBERS", {
                 emoji: "error"
             }),
@@ -119,7 +123,7 @@ class LeaderboardLevel extends Command {
         .setFooter(this.client.cfg.footer)
         .setThumbnail(interaction.guild.iconURL({ dynamic:true }))
         .setColor(this.client.cfg.color.yellow)
-        .setDescription(`${membersLeaderboard}`)
+        .setDescription(`${string}`)
         .setTitle(interaction.drakeWS("level/leaderboard-level:TITLE", {
             guildName: interaction.guild.name
         }));

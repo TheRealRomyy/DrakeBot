@@ -23,6 +23,7 @@ class LeaderboardMoney extends Command {
     async run(message, args, data) {
 
         let client = this.client;
+        let string = "";
 
         let countVar = 1;
         let moneyCount = [];
@@ -44,11 +45,12 @@ class LeaderboardMoney extends Command {
 
         members = members.filter(mem => count[mem.id] !== "ghost");
 
-        const membersLeaderboard = members.map((m) => 
-            "" + count[m.id] + ") **" + client.users.cache.get(m.id).username + "** ● " + message.drakeWS("common:MONEY") + ": **" + (m.money + m.banksold) + data.guild.symbol + "**"
-        ).join("\n \n");
+        members.forEach(async m => {
+            const user = client.users.cache.get(m.id) ? client.users.cache.get(m.id) : await client.users.fetch(m.id);
+            string += "" + count[m.id] + ") **" + user.username + "** ● " + message.drakeWS("common:MONEY") + ": **" + (m.money + m.banksold) + data.guild.symbol + "** \n \n"
+        });
 
-        if(membersLeaderboard == "") return message.drake("economy/leaderboard-money:NO_MEMBERS", {
+        if(string == "") return message.drake("economy/leaderboard-money:NO_MEMBERS", {
             emoji: "error"
         });
 
@@ -57,7 +59,7 @@ class LeaderboardMoney extends Command {
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.yellow)
         .setThumbnail(message.guild.iconURL({ dynamic:true }))
-        .setDescription(`${membersLeaderboard}`)
+        .setDescription(`${string}`)
         .setTitle(message.guild.translate("economy/leaderboard-money:TITLE", {
             guildName: message.guild.name
         }));
@@ -70,6 +72,7 @@ class LeaderboardMoney extends Command {
     async runInteraction(interaction, data) {
 
         let client = this.client;
+        let string = "";
 
         let countVar = 1;
         let moneyCount = [];
@@ -91,11 +94,12 @@ class LeaderboardMoney extends Command {
 
         members = members.filter(mem => count[mem.id] !== "ghost");
 
-        const membersLeaderboard = members.map((m) => 
-            "" + count[m.id] + ") **" + client.users.cache.get(m.id).username + "** ● " + interaction.drakeWS("common:MONEY") + ": **" + (m.money + m.banksold) + data.guild.symbol + "**"
-        ).join("\n \n");
+        members.forEach(async m => {
+            const user = client.users.cache.get(m.id) ? client.users.cache.get(m.id) : await client.users.fetch(m.id);
+            string += "" + count[m.id] + ") **" + user.username + "** ● " + interaction.drakeWS("common:MONEY") + ": **" + (m.money + m.banksold) + data.guild.symbol + "** \n \n"
+        });
 
-        if(membersLeaderboard == "") return interaction.reply({
+        if(string == "") return interaction.reply({
             content: interaction.drakeWS("economy/leaderboard-money:NO_MEMBERS", {
                 emoji: "error"
             }),
@@ -107,7 +111,7 @@ class LeaderboardMoney extends Command {
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.yellow)
         .setThumbnail(interaction.guild.iconURL({ dynamic:true }))
-        .setDescription(`${membersLeaderboard}`)
+        .setDescription(`${string}`)
         .setTitle(interaction.guild.translate("economy/leaderboard-money:TITLE", {
             guildName: interaction.guild.name
         }));

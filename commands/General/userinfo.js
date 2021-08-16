@@ -32,7 +32,7 @@ class Userinfo extends Command {
 
         let client = this.client;
 
-        const user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author;
+        const user = message.mentions.users.first() || (client.users.cache.get(args[0]) ? client.users.cache.get(args[0]) : await client.users.fetch(args[0])) || message.author;
         const member = await message.guild.members.fetch(user).catch(() => {});
 
         let badges = [];
@@ -94,7 +94,7 @@ class Userinfo extends Command {
             embed.addField(message.drakeWS("general/userinfo:JOIN", {
                 emoji: "calendar2"
             }), `${this.client.functions.printDateFrom(member.joinedAt)}`, true)
-            .addField(this.client.emotes.status[st] + message.drakeWS("general/userinfo:STATUT"), message.drakeWS("general/userinfo:STATUS_" + st.toUpperCase()), true)
+            .addField(this.client.emotes.status[(st ? st : "offline")] + message.drakeWS("general/userinfo:STATUT"), message.drakeWS("general/userinfo:STATUS_" + (st ? st.toUpperCase() : "OFFLINE")), true)
             // .addField(message.drakeWS("general/userinfo:GAME", {
             //     emoji: "play"
             // }), (user.presence.activity ? user.presence.activity.name : message.drakeWS("general/userinfo:NO_GAME")), true)
@@ -178,7 +178,7 @@ class Userinfo extends Command {
             embed.addField(interaction.drakeWS("general/userinfo:JOIN", {
                 emoji: "calendar2"
             }), `${this.client.functions.printDateFrom(member.joinedAt)}`, true)
-            .addField(this.client.emotes.status[st] + interaction.drakeWS("general/userinfo:STATUT"), interaction.drakeWS("general/userinfo:STATUS_" + st.toUpperCase()), true)
+            .addField(this.client.emotes.status[(st ? st : "offline")] + interaction.drakeWS("general/userinfo:STATUT"), interaction.drakeWS("general/userinfo:STATUS_" + (st ? st.toUpperCase() : "OFFLINE")), true)
             // .addField(interaction.drakeWS("general/userinfo:GAME", {
             //     emoji: "play"
             // }), (user.presence.activity ? user.presence.activity.name : interaction.drakeWS("general/userinfo:NO_GAME")), true)

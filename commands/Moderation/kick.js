@@ -43,7 +43,7 @@ class Kick extends Command {
             emoji: "error"
         });
         
-        const member = message.mentions.members.first() || message.guild.members.cache.get(client.users.cache.get(args[0]));
+        const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
         if(!member) return message.drake("misc:MEMBER_NOT_FOUND", {
             emoji: "error"

@@ -30,7 +30,9 @@ class Usernames extends Command {
 
     async run(message, args, data) {
 
-        let user = message.mentions.users.first() || this.client.users.cache.get(args[0]) || message.author;
+        const client = this.client;
+
+        let user = message.mentions.users.first() || (client.users.cache.get(args[0]) ? client.users.cache.get(args[0]) : await client.users.fetch(args[0])) || message.author;
 
         const userData = (message.author === user) ? data.user : await this.client.db.findOrCreateUser(user); 
 
@@ -66,7 +68,7 @@ class Usernames extends Command {
 
     async runInteraction(interaction, data) {
 
-        let user = interaction.options.getString("user") || interaction.user;
+        let user = interaction.options.getUser("user") || interaction.user;
 
         const userData = (interaction.user === user) ? data.user : await this.client.db.findOrCreateUser(user); 
 

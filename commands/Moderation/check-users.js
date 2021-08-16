@@ -22,7 +22,10 @@ class CheckUsers extends Command {
 
     async run(message, args, data) {
 
+        const client = this.client;
+
         let badUsers = [];
+        let string = "";
 
         let embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
@@ -45,11 +48,16 @@ class CheckUsers extends Command {
             };
         });
 
+        badUsers.forEach(async u => {
+            const user = client.users.cache.get(u.user) ? client.users.cache.get(u.user) : await client.users.fetch(u.user)
+            string += "**" + user.tag + "** : " + message.drakeWS("moderation/check-users:" + u.crime)
+        });
+
         embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.orange)
-        .setDescription(badUsers.length !== 0 ? badUsers.map(u => "**" + this.client.users.cache.get(u.user).tag + "** : " + message.drakeWS("moderation/check-users:" + u.crime)) : message.drakeWS("moderation/check-users:NO_CRIME"));
+        .setDescription(`${badUsers.length !== 0 ? string : message.drakeWS("moderation/check-users:NO_CRIME")}`);
 
         await msg.edit({
             embeds: [embed]
@@ -58,7 +66,10 @@ class CheckUsers extends Command {
 
     async runInteraction(interaction, data) {
 
+        const client = this.client;
+
         let badUsers = [];
+        let string = "";
 
         let embed = new MessageEmbed()
         .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
@@ -81,11 +92,16 @@ class CheckUsers extends Command {
             };
         });
 
+        badUsers.forEach(async u => {
+            const user = client.users.cache.get(u.user) ? client.users.cache.get(u.user) : await client.users.fetch(u.user)
+            string += "**" + user.tag + "** : " + interaction.drakeWS("moderation/check-users:" + u.crime)
+        });
+
         embed = new MessageEmbed()
         .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.orange)
-        .setDescription(badUsers.length !== 0 ? badUsers.map(u => "**" + this.client.users.cache.get(u.user).tag + "** : " + interaction.drakeWS("moderation/check-users:" + u.crime)) : interaction.drakeWS("moderation/check-users:NO_CRIME"));
+        .setDescription(`${badUsers.length !== 0 ? string : interaction.drakeWS("moderation/check-users:NO_CRIME")}`);
 
         await interaction.editReply({
             embeds: [embed]

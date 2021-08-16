@@ -21,18 +21,22 @@ router
     })
     .get('/web', async function (req, res) {
         if(req.headers.authorization === "Bearer mouchou") {
+
+            const rome = await req.client.users.fetch(req.client.cfg.staff.owner[0]);
+            const ever = await req.client.users.fetch(req.client.cfg.staff.support[0])
+
             res.json({
                 serverCount: req.client.guilds.cache.size,
                 userCount: req.client.users.cache.size,
                 owner: {
-                    id: req.client.cfg.staff.owner[0],
-                    name: req.client.users.cache.get(req.client.cfg.staff.owner[0]).username,
-                    avatar: req.client.users.cache.get(req.client.cfg.staff.owner[0]).displayAvatarURL({dynamic:true})
+                    id: rome.id,
+                    name: rome.username,
+                    avatar: rome.displayAvatarURL({dynamic:true})
                 },
                 support: [{
-                    id: req.client.cfg.staff.support[0],
-                    name: req.client.users.cache.get(req.client.cfg.staff.support[0]).username,
-                    avatar: req.client.users.cache.get(req.client.cfg.staff.support[0]).displayAvatarURL({dynamic:true})
+                    id: ever.id,
+                    name: ever.username,
+                    avatar: ever.displayAvatarURL({dynamic:true})
                 }]
             });
         } else {

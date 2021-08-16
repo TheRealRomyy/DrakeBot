@@ -35,6 +35,7 @@ class Unban extends Command {
 
     async run(message, args, data) {
 
+        const client = this.client;
         let stop = false;
 
         if(!args[0]) return message.drake("errors:NOT_CORRECT", {
@@ -42,7 +43,7 @@ class Unban extends Command {
             emoji: "error"
         });
 
-        let user = message.mentions.users.first() || this.client.users.cache.get(args[0]);
+        let user = message.mentions.users.first() || (client.users.cache.get(args[0]) ? client.users.cache.get(args[0]) : await client.users.fetch(args[0]));
         if(!user) return message.drake("moderation/unban:NOT_BAN", {
             user: user ? user.username : message.drakeWS("common:THIS_PEOPLE"),
             emoji: "error"

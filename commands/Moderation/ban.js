@@ -43,7 +43,7 @@ class Ban extends Command {
             emoji: "error"
         });
         
-        const user = message.mentions.users.first() || client.users.cache.get(args[0]);
+        const user = message.mentions.users.first() || (client.users.cache.get(args[0]) ? client.users.cache.get(args[0]) : await client.users.fetch(args[0]));
 
         if(!user) return message.drake("misc:USER_NOT_FOUND", {
             emoji: "error"
