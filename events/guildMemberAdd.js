@@ -43,6 +43,20 @@ module.exports = class {
 			});
 		};
 
+		// Check le système de bienvenue
+		if(guildData.plugins.welcome.enabled) {
+			let channel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
+
+			channel.send({
+				content: guildData.plugins.welcome.message
+					.replace("{user}", member.user)
+					.replace("{user.nickname}", member.user.username)
+					.replace("{inviter}", "Unknow")
+					.replace("{guild.name}", guild.name)
+					.replace("{guild.members}", guild.memberCount)
+			});
+		};
+
 		// Check le captcha
 		if(guildData.plugins.captcha.enabled) {
 
@@ -172,20 +186,6 @@ module.exports = class {
 						member.roles.add(role.role);
 					});
 				};
-
-				// Welcome system
-				if(guildData.plugins.welcome.enabled) {
-					let welcomeChannel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
-
-					welcomeChannel.send({
-						content: guildData.plugins.welcome.message
-							.replace("{user}", member.user)
-							.replace("{user.nickname}", member.user.username)
-							.replace("{inviter}", "Unknow")
-							.replace("{guild.name}", guild.name)
-							.replace("{guild.members}", guild.memberCount)
-					});
-				};
 			} else {
 
 				msg.delete();
@@ -206,20 +206,6 @@ module.exports = class {
 					embeds: [failEmbed]
 				});
 			};
-		};
-
-		// Check le système de bienvenue
-		if(guildData.plugins.welcome.enabled && !guildData.plugins.captcha.enabled) {
-			let channel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
-
-			channel.send({
-				content: guildData.plugins.welcome.message
-					.replace("{user}", member.user)
-					.replace("{user.nickname}", member.user.username)
-					.replace("{inviter}", "Unknow")
-					.replace("{guild.name}", guild.name)
-					.replace("{guild.members}", guild.memberCount)
-			});
 		};
 
 		if(!guildData.plugins.welcomeDM) guildData.plugins.welcomeDM = null;
