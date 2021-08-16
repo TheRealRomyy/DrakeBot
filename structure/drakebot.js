@@ -110,7 +110,7 @@ class DrakeBot extends Client {
         evtFiles.forEach((file) => {
             const eventName = file.split(".")[0];
             const event = new (require(`../events/${file}`))(this);
-            this.logger.loaded(eventName, "event");
+            this.logger.log(`Event '${eventName}' successfully loaded`);
             this.on(eventName, (...args) => event.run(...args));
             delete require.cache[require.resolve(`../events/${file}`)];
 		}); 
@@ -176,7 +176,7 @@ class DrakeBot extends Client {
     async loadCommand(commandPath, commandName) {
 		try {
 			const props = new(require(`.${commandPath}/${commandName}`))(this);
-            this.logger.loaded(commandName, "command");
+            this.logger.log(`Command '${commandName}' successfully loaded`);
             props.settings.location = commandPath;
             if(props.init) props.init(this);
 			this.cmds.set(props.help.name, props);
@@ -184,7 +184,7 @@ class DrakeBot extends Client {
 				this.aliases.set(alias, props.help.name);
 			});
 		} catch (e) {
-            this.logger.loaded(commandName, "command", e);
+            this.logger.error(`Command '${commandName}' encoutred an issues: ${e}`);
 		};
 	};
 	
@@ -195,9 +195,8 @@ class DrakeBot extends Client {
 		} else if(this.aliases.has(commandName)){
 			command = this.cmds.get(this.aliases.get(commandName));
 		}
-		if(!command) return this.logger.loaded(commandName, "command", "command cannot be found");
+		if(!command) return this.logger.error(`Command '${commandName}' cannot be found !`);
 		if(command.shutdown) await command.shutdown(this);
-		this.logger.loaded(commandName, "command-unload");
 		delete require.cache[require.resolve(`.${commandPath}${path.sep}${commandName}.js`)];
 		return false;
     };
