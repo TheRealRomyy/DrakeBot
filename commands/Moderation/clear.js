@@ -51,7 +51,7 @@ class Clear extends Command {
 
         await message.delete().catch(() => {});
 
-        const user = message.mentions.users.first() || (client.users.cache.get(args[1]) ? client.users.cache.get(args[1]) : await client.users.fetch(args[1])) || client.users.cache.find(u => u.username === args[1]);
+        const user = message.mentions.users.first() || (args[0] ? (client.users.cache.get(args[1]) ? client.users.cache.get(args[1]) : await client.users.fetch(args[1])) : null ) || client.users.cache.find(u => u.username === args[1]);
 
         let messages = await message.channel.messages.fetch({ 
             limit: 100 
