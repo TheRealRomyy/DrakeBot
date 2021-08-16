@@ -13,8 +13,8 @@ class VoiceStateUpdate {
         let type = null;
 
         // Connection & leave
-        if(oldState.channelID !== null && newState.channelID === null) type = "leave";
-        if(oldState.channelID === null && newState.channelID !== null) type = "connection";
+        if(oldState.channelId !== null && newState.channelId === null) type = "leave";
+        if(oldState.channelId === null && newState.channelId !== null) type = "connection";
         // Server & Self mute & deaf
         if(!oldState.serverDeaf && newState.serverDeaf) type = "serverDeaf";
         if(!oldState.serverMute && newState.serverMute) type = "serverMute";
@@ -36,7 +36,7 @@ class VoiceStateUpdate {
                 .setTitle("📤 Log - Vocal")
                 .setColor(this.client.cfg.color.red)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> s'est déconnecté du salon vocal `" + this.client.channels.cache.get(oldState.channelID).name + "`")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> s'est déconnecté du salon vocal `" + this.client.channels.cache.get(oldState.channelId).name + "`")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed]
@@ -47,7 +47,7 @@ class VoiceStateUpdate {
                 .setTitle("📥 Log - Vocal")
                 .setColor(this.client.cfg.color.green)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> s'est connecté au salon vocal `" + this.client.channels.cache.get(newState.channelID).name + "`")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> s'est connecté au salon vocal `" + this.client.channels.cache.get(newState.channelId).name + "`")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed1]
@@ -59,7 +59,7 @@ class VoiceStateUpdate {
                 .setTitle("<:casque_off:817159014605389885> Log - Vocal")
                 .setColor(this.client.cfg.color.orange)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son casque coupé par le serveur (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son casque coupé par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed2]
@@ -70,7 +70,7 @@ class VoiceStateUpdate {
                 .setTitle("<:micro_off:817159014768836608> Log - Vocal")
                 .setColor(this.client.cfg.color.orange)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son micro coupé par le serveur (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son micro coupé par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed3]
@@ -81,7 +81,7 @@ class VoiceStateUpdate {
                 .setTitle("<:casque_off:817159014605389885> Log - Vocal")
                 .setColor(this.client.cfg.color.purple)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son casque (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son casque (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed4]
@@ -92,7 +92,7 @@ class VoiceStateUpdate {
                 .setTitle("<:micro_off:817159014768836608> Log - Vocal")
                 .setColor(this.client.cfg.color.purple)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son micro (dans `" + this.client.channels.cache.get(newState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son micro (dans `" + this.client.channels.cache.get(newState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed5]
@@ -104,7 +104,7 @@ class VoiceStateUpdate {
                 .setTitle("<:casque:817159014772506704> Log - Vocal")
                 .setColor(this.client.cfg.color.yellow)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son casque remis par le serveur (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son casque remis par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed6]
@@ -115,7 +115,7 @@ class VoiceStateUpdate {
                 .setTitle("<:micro:817159014399737897> Log - Vocal")
                 .setColor(this.client.cfg.color.yellow)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son micro remis par le serveur (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son micro remis par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed7]
@@ -126,7 +126,7 @@ class VoiceStateUpdate {
                 .setTitle("<:casque:817159014772506704> Log - Vocal")
                 .setColor(this.client.cfg.color.blue)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a réactivé son casque (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a réactivé son casque (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed8]
@@ -137,7 +137,7 @@ class VoiceStateUpdate {
                 .setTitle("<:micro:817159014399737897> Log - Vocal")
                 .setColor(this.client.cfg.color.blue)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a réactivé son micro. (dans `" + this.client.channels.cache.get(newState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a réactivé son micro. (dans `" + this.client.channels.cache.get(newState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed9]
@@ -148,7 +148,7 @@ class VoiceStateUpdate {
                 .setTitle("<:stream:817159014541688833> Log - Vocal")
                 .setColor(this.client.cfg.color.yellow)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a démarré un live dans `" + this.client.channels.cache.get(oldState.channelID).name + "`")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a démarré un live dans `" + this.client.channels.cache.get(oldState.channelId).name + "`")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed10]
@@ -159,7 +159,7 @@ class VoiceStateUpdate {
                 .setTitle("<:stream:817159014541688833> Log - Vocal")
                 .setColor(this.client.cfg.color.red)
                 .setFooter(this.client.cfg.footer)
-                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a arrêté son live (dans `" + this.client.channels.cache.get(oldState.channelID).name + "`)")
+                .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a arrêté son live (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
                 this.client.channels.cache.get("764947280162848790").send({
                     embeds: [embed11]
