@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Reset the money of a member or of the entire guild",
+    "SUCCES_MEMBER": "**{{username}}**'s money has been reseted !",
+    "EXAMPLE": "reset-money @Fan",
+    "USAGE": "reset-money (user)",
+    "SUCCES_GUILD": "All members's money of __{{guild}}__ has been cleared !",
+    "WANT?": "Do you want to clear all money of **{{toreset}}** ?"
+}

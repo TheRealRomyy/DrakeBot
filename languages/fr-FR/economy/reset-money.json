@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Réinitialiser l'argent de quelqu'un ou du serveur tout entier",
+    "SUCCES_MEMBER": "L'argent de **{{username}}** a bien été réinitialisée !",
+    "EXAMPLE": "reset-money @Fan",
+    "USAGE": "reset-money (user)",
+    "SUCCES_GUILD": "L'argent de tous les membres de  __{{guild}}__ a été réinitialisée !",
+    "WANT?": "Voulez vous supprimer l'argent de **{{toreset}}** ?"
+}
