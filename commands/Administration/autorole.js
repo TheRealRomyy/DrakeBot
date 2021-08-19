@@ -506,7 +506,7 @@ class Autorole extends Command {
                     components: [group1],
                     embeds: [embed],
                     content: null
-                });
+                }).catch(() => {});
             });
 
             async function badInput(question, reason) {
