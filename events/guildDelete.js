@@ -8,7 +8,7 @@ module.exports = class {
 
 	async run (guild) {
 
-        const guildOwner = this.client.users.cache.get(guild.ownerId);
+        const guildOwner = await this.client.users.fetch(guild.ownerId);
 
         this.client.serverRemoves++;
 

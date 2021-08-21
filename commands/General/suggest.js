@@ -33,7 +33,7 @@ class Suggest extends Command {
         let suggestion = args.join(" ");
         let channel = message.guild.channels.cache.get(data.guild.plugins.suggestions);
 
-        if(channel == undefined) return message.drake("general/suggest:DISABLED", {
+        if(!channel) return message.drake("general/suggest:DISABLED", {
             emoji: "error",
             toRun: data.guild.prefix + "setsuggest <channel>"
         });
@@ -53,7 +53,7 @@ class Suggest extends Command {
 
         let msg = await channel.send({
             embeds: [embed]
-        });
+        }).catch(() => {});
 
         message.drake("general/suggest:SUCCES", {
             emoji: "succes"
