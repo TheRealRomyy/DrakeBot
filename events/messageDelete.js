@@ -35,6 +35,7 @@ class MessageDelete {
         };
 
         let channel = this.client.channels.cache.get(guildData.plugins.logs.messages);
+        if(!channel) return;
 
         const embed = new MessageEmbed()
 		.setTitle(`${this.client.emotes.log["delete"]} ・ ${message.drakeWS("misc:LOG_MSG_TITLE")}`)
