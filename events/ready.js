@@ -41,10 +41,10 @@ class Ready {
       });
 
       // Create all activites
-      let activities = [
+      let possibleActivities = [
         `${this.client.guilds.cache.size} guilds | ✨`,
         `💻 • v${this.client.cfg.version}`,
-        `${this.client.users.cache.size} users | 👤`,
+        //`${this.client.users.cache.size} users | 👤`,
         `📚 • ${this.client.cmds.size} commandes`,
         `🌐 • ${this.client.cfg.dashboard.name}`,
         `📃 • ${this.client.cfg.prefix}help`
@@ -52,42 +52,17 @@ class Ready {
 
       // Load a scheduler who update status every 20 seconds
 		  const botActivities = new CronJob("0/20 * * * * *", async () => {
-        const activityname = activities[Math.floor(Math.random() * activities.length)];
+        const activityname = possibleActivities[Math.floor(Math.random() * possibleActivities.length)];
         
         client.user.setPresence({
-          activity: {
+          status: "online",
+          activities: [{
             name: activityname,
             type: "WATCHING"
-        }});
+          }]
+        });
 
       }, null, true, "Europe/Paris");
-
-      // const pikaploufColor = new CronJob("*/10   * * * *", async () => { // Every 10 minutes
-
-      //   const colors = [
-      //     `#001f3f`,
-      //     `#0074D9`,
-      //     `#7FDBFF`,
-      //     `#39CCCC`,
-      //     `#3D9970`,
-      //     `#2ECC40`,
-      //     `#01FF70`,
-      //     `#FFDC00`,
-      //     `#FF851B`,
-      //     `#FF4136`,
-      //     `#85144b`,
-      //     `#F012BE`,
-      //     `#B10DC9`,
-      //     `#111111`,
-      //     `#AAAAAA`,
-      //     `#DDDDDD`,
-      //   ];
-
-      //   const color = colors[Math.floor(Math.random() * colors.length)];
-
-      //   this.client.guilds.cache.get("843933749434646568").roles.cache.get("843936630981001246").setColor(color);
-
-      // }, null, true, "Europe/Paris");
         
       botActivities.start();
 	  };
