@@ -51,7 +51,9 @@ class Permissions extends Command {
         .setAuthor(message.author.username, message.author.displayAvatarURL( { dynamic: true }))
         .setFooter(this.client.cfg.footer)
 
-        message.channel.send(embed);
+        message.channel.send({
+            embeds: [embed]
+        });
     };
 };
 
