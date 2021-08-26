@@ -86,7 +86,7 @@ class Unmute extends Command {
     async runInteraction(interaction, data) {
 
         let member = interaction.options.getUser("user") ? interaction.guild.members.cache.get(interaction.options.getUser("user").id) : null;
-        let reason = interaction.options.getString("reason") ? interaction.options.getString("reason") : message.drakeWS("misc:NO_REASON");
+        let reason = interaction.options.getString("reason") ? interaction.options.getString("reason") : interaction.drakeWS("misc:NO_REASON");
 
         if(!member) return interaction.reply({
             content: interaction.drakeWS("errors:NOT_CORRECT", {
