@@ -23,7 +23,8 @@ router
         if(req.headers.authorization === "Bearer mouchou") {
 
             const rome = await req.client.users.fetch(req.client.cfg.staff.owner[0]);
-            const ever = await req.client.users.fetch(req.client.cfg.staff.support[0])
+            const ever = await req.client.users.fetch(req.client.cfg.staff.support[0]);
+            const max = await req.client.users.fetch(req.client.cfg.staff.support[1]);
 
             res.json({
                 serverCount: req.client.guilds.cache.size,
@@ -31,13 +32,29 @@ router
                 owner: {
                     id: rome.id,
                     name: rome.username,
-                    avatar: rome.displayAvatarURL({dynamic:true})
+                    avatar: rome.displayAvatarURL({
+                        dynamic: true,
+                        size: 256
+                    })
                 },
-                support: [{
-                    id: ever.id,
-                    name: ever.username,
-                    avatar: ever.displayAvatarURL({dynamic:true})
-                }]
+                support: [
+                    {
+                        id: ever.id,
+                        name: ever.username,
+                        avatar: ever.displayAvatarURL({
+                            dynamic: true,
+                            size: 256
+                        })
+                    },
+                    {
+                        id: max.id,
+                        name: max.username,
+                        avatar: max.displayAvatarURL({
+                            dynamic: true,
+                            size: 256
+                        })
+                    }
+                ]
             });
         } else {
             res.status(403, "Invalid Authorization");
