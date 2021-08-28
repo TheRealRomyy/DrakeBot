@@ -39,7 +39,7 @@ class Premium extends Command {
                     usage: data.guild.prefix + "premium add <id> <user> <label> (duration)"
                 });
 
-                let user = message.mentions.users.first() || client.users.cache.get(args[2]);
+                let user = message.mentions.users.first() || await client.users.fetch(args[2]);
                 let label = args[3];
                 let duration = args[4] ? ms(args[4]) : ms("1y");
 
@@ -61,8 +61,6 @@ class Premium extends Command {
                 guildData.premium.subs.push(caseInfo);
 
                 await guildData.save();
-
-                console.log(guildData)
 
                 message.channel.send({
                     content: client.emotes["succes"] + " **" + guild.name + "** est maintenant premium pour: `" + message.time.convertMS(duration) + "` !"
