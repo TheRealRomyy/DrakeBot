@@ -32,7 +32,7 @@ class Userinfo extends Command {
 
         let client = this.client;
 
-        const user = message.mentions.users.first() || (client.users.cache.get(args[0]) ? client.users.cache.get(args[0]) : await client.users.fetch(args[0])) || message.author;
+        const user = message.mentions.users.first() || (args[0] ? await client.users.fetch(args[0]) : message.author) || message.author;
         const member = await message.guild.members.fetch(user).catch(() => {});
 
         let badges = [];
