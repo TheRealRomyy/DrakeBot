@@ -55,7 +55,7 @@ class Serverinfo extends Command {
         }), guild.memberCount + " " + message.drakeWS("general/serverinfo:MEMBERS"), true)
         .addField(message.drakeWS("general/serverinfo:BOOSTS", {
             emoji: "serverBoost"
-        }), guild.premiumSubscriptionCount + " " + message.drakeWS("general/serverinfo:BOOSTS") + " | " + (guild.premiumTier == "NONE" ? "0" : guild.premiumTier) + " " + message.drakeWS("general/serverinfo:LEVEL"), true)
+        }), guild.premiumSubscriptionCount + " " + message.drakeWS("general/serverinfo:BOOSTS") + " | " + message.drakeWS("general/serverinfo:LEVEL") + " " + (guild.premiumTier == "NONE" ? "0" : guild.premiumTier), true)
         .addField(message.drakeWS("general/serverinfo:EMOJIS", {
             emoji: "smile"
         }), `${guild.emojis.cache.size}`, true)
@@ -104,7 +104,7 @@ class Serverinfo extends Command {
         }), guild.memberCount + " " + interaction.drakeWS("general/serverinfo:MEMBERS"), true)
         .addField(interaction.drakeWS("general/serverinfo:BOOSTS", {
             emoji: "serverBoost"
-        }), guild.premiumSubscriptionCount + " " + interaction.drakeWS("general/serverinfo:BOOSTS") + " | " + (guild.premiumTier == "NONE" ? "0" : guild.premiumTier) + " " + interaction.drakeWS("general/serverinfo:LEVEL"), true)
+        }), guild.premiumSubscriptionCount + " " + interaction.drakeWS("general/serverinfo:BOOSTS") + " | " + interaction.drakeWS("general/serverinfo:LEVEL") + " " + (guild.premiumTier == "NONE" ? "0" : guild.premiumTier), true)
         .addField(interaction.drakeWS("general/serverinfo:EMOJIS", {
             emoji: "smile"
         }), `${guild.emojis.cache.size}`, true)
