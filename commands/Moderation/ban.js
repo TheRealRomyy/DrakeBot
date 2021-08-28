@@ -118,7 +118,6 @@ class Ban extends Command {
             };
             if(button.customId === yesButton.customId) { 
                 client.functions.ban(user, message, message.author, data.guild, reason, memberData, client);
-                message.delete().catch(() => {});
                 return msg.delete().catch(() => {});
             } else {
                 const cancelMessage = await message.channel.send({

@@ -26,8 +26,6 @@ class Banlist extends Command {
       const client = this.client;
       const filter = (button) => button.user.id === message.author.id;
 
-      await message.delete().catch(() => {});
-
       // Variables of pages
       let i0 = 0;
       let i1 = 5;
