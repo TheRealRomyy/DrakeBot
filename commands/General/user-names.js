@@ -32,7 +32,7 @@ class Usernames extends Command {
 
         const client = this.client;
 
-        let user = message.mentions.users.first() || (client.users.cache.get(args[0]) ? client.users.cache.get(args[0]) : await client.users.fetch(args[0])) || message.author;
+        let user = message.mentions.users.first() || (args[0] ? await client.users.fetch(args[0]) : message.author) || message.author;
 
         const userData = (message.author === user) ? data.user : await this.client.db.findOrCreateUser(user); 
 
