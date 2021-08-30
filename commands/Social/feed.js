@@ -23,7 +23,7 @@ class Feed extends Command {
 
         let user = this.client.user;
 
-        if(args[0]) user = message.mentions.users.first() || (args[0] ? await this.client.users.fetch(args[0]) : null);
+        if(args[0]) user = message.mentions.users.first() || (args[0] && args[0] !== "random" ? await this.client.users.fetch(args[0]) : null);
         if(!user) user = this.client.user;
 
         if(args[0] === "random") user = message.guild.members.cache.random(5).filter(member => member.user.id !== message.author.id)[0].user;
