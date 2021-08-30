@@ -29,5 +29,6 @@
     "ROLE_NOT_FOUND": "**This role doesn't exist !**",
     "FULLMAJ": "TOO CAPITALS LETTERS in message",
     "BADWORDS": "Message includes a badword",
-    "PUB": "Message includes an ad"
+    "PUB": "Message includes an ad",
+    "ERROR": "Uh ! You just found an error on the `{{cmd}}` command ! Go to the support ({{support}}) and create a ticket in order to alert the staff ! \n \n**Error code:** `{{token}}`"
 }

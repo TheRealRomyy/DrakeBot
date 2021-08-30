@@ -29,5 +29,6 @@
     "ROLE_NOT_FOUND": "**Ce rôle n'existe pas !**",
     "FULLMAJ": "Message avec trop de majuscules",
     "BADWORDS": "Message grossier ou contenant une insulte",
-    "PUB": "Message contenant de la publicité"
+    "PUB": "Message contenant de la publicité",
+    "ERROR": "Oh ! Tu viens de trouver une erreur sur la commande `{{cmd}}` va vite sur le support ({{support}}) et créer un ticket pour en informer le staff ! \n \n**Code d'erreur:** `{{token}}`"
 }

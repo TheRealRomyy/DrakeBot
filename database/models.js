@@ -255,6 +255,8 @@ exports.Client = clientID => {
             users: []
         },
         // The array of the voters
-        []
+        [],
+        // The object with all errors
+        {}
     ];
 };

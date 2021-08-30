@@ -107,11 +107,11 @@ module.exports = class Database {
     };
 
     async findOrCreateClient(){
-        if(this.client.cache.master.get("762965943529766912")) return this.client.cache.master.get("762965943529766912")
+        if(this.client.cache.master.get("762965943529766912")) return this.client.cache.master.get("762965943529766912");
         let dbData = await this.pool.query(`SELECT * FROM master WHERE id='762965943529766912'`);
 
         if(dbData.rows.length === 0) {
-            await this.pool.query('INSERT INTO master (id, count, blacklist, voter) values ($1, $2, $3, $4)', Client("762965943529766912"));
+            await this.pool.query('INSERT INTO master (id, count, blacklist, voter, errors) values ($1, $2, $3, $4, $5)', Client("762965943529766912"));
             dbData = await this.pool.query(`SELECT * FROM master WHERE id=$1`, ["762965943529766912"]);
         };
 

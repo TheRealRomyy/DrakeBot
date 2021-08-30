@@ -6,11 +6,15 @@ class Error {
         this.client = client;
     };
 
-    async run(error) {
+    async run(error, from, tokenParam) {
 
         const client = this.client;
+        const clientData = await client.db.findOrCreateClient();
 
-        client.logger.error(error);
+        const token = tokenParam ? tokenParam.toString() : client.functions.generateToken(32);
+
+        clientData["errors"][token.toString()] = (from ? `[${from.toUpperCase()}] ` : "") + error.toString();
+        clientData.save(clientData);
 
         const webhook = new WebhookClient({
             id: "873575156818247680", 
@@ -22,7 +26,7 @@ class Error {
             .setColor(client.cfg.color.red)
             .setAuthor("New error detected:", client.user ? client.user.displayAvatarURL({dynamic:true}) : null)
             .setDescription(`${error}`)
-            .setFooter(`${error.source ? `${error.source}` : "Unknow file and line number"}`);
+            .setFooter(`${token}`);
 
         webhook.send({
             embeds: [embed]

@@ -364,7 +364,16 @@ class Message {
                     });
                 };
             } catch(err) {
-                client.emit("error", err);
+
+                const token = client.functions.generateToken(32);
+
+                message.drake("misc:ERROR", {
+                    cmd: commandName,
+                    token,
+                    support: "https://discord.gg/Z7XyHzYmr7"
+                });
+
+                client.emit("error", err, "cmd", token);
             };
         };
 

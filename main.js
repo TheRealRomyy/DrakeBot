@@ -6,6 +6,6 @@ client.init();
 client.login(client.cfg.token);
 
 process.on("unhandledRejection", (err) => {
-    if(err.code === "50001") console.error
-    else client.emit("error", err);
+    const token = client.functions.generateToken(32);
+    client.emit("error", err, "unhandled rejection", token);
 });

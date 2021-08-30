@@ -50,6 +50,25 @@ module.exports = {
 	},
 
 	/**
+	 * Generate a random token 
+	 * @param { Number } length 
+	 * @return token
+	*/
+
+	generateToken(length){
+		const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
+		const token = [];  
+
+		for (var i = 0; i < length; i++) {
+			const index = (Math.random() * (characters.length - 1)).toFixed(0);
+
+			token[i] = characters[index];
+		}
+
+		return token.join("");
+	},
+
+	/**
 	 * Send an error
 	 * @param { Object } client 
 	 * @param { String } message 
