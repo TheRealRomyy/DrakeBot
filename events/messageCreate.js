@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js");
+const { Guild } = require("../database/models.js");
+const AutomodManager = require ("../antiraid/AutomodManager.js");
 const Persos = require("../structure/Persos.js");
-const moment = require("moment");
 const Time = require("../helpers/timeManager.js");
 
 const xpCooldown = {};
@@ -54,42 +55,6 @@ class Message {
             });
         });
 
-        if(data.guild.plugins.automod.antiMajs.enabled && !message.member.permissions.has("MANAGE_MESSAGES")) {
-            let max = Math.round(message.content.length / 1.5);
-            let count = 0;
-            let majs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    
-            for(let i = message.content.length; i >- 1; i--) {
-                if(majs.indexOf(message.content[i]) !== -1) {
-                   count++;
-                };
-            };
-    
-            if(count >= max) {
-                message.delete();
-                client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:FULLMAJ"), data.member, client);
-            }; 
-        };
-
-        if(data.guild.plugins.automod.antiBadwords.enabled && !message.member.permissions.has("MANAGE_MESSAGES")) {
-            let infraction = false;
-            await client.cfg.badwords.forEach((word) => {
-                if(message.content.includes(word)) infraction = true;
-            });
-
-            if(infraction == true) {
-                message.delete();
-                client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:BADWORDS"), data.member, client);
-            }
-        };
-
-        if(data.guild.plugins.automod.antiPub.enabled && !message.member.permissions.has("MANAGE_MESSAGES")) {
-            if(message.content.toLowerCase().includes('.gg/'.toLowerCase() || 'discordapp.com/invite/'.toLowerCase())) {
-                message.delete();
-                client.functions.warn(message.member, message, client.user, data.guild, message.drakeWS("misc:PUB"), data.member, client);
-            };
-        };
-
         /* TEMP ZONE */
 
         if(data.member.exptotal === null) data.member.exptotal = 0;
@@ -98,92 +63,11 @@ class Message {
         if(!data.guild.plugins.autosanctions || !Array.isArray(data.guild.plugins.autosanctions)) data.guild.plugins.autosanctions = [];
         if(!data.guild.sanctioncase) data.guild.sanctioncase = 0;
 
-        if(data.guild.antiraid === null) data.guild.antiraid = {
-            channelCreate: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            channelDelete: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            emojiCreate: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            emojiDelete: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            roleCreate: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            roleDelete: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            webHookUpdate: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            guildBanAdd: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            guildMemberRemove: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any"
-            },
-            antispam: {
-                enabled: false,
-                ignoredRoles: [],
-                ignoredChannels: [],
-                limit: 3,
-                time: 5000,
-                sanction: "any",
-                muteTime: null
-            },
-        };
+        if(data.guild.antiraid === null) data.guild.antiraid = Guild[13];
 
         /* END TEMP ZONE */
 
+        await new AutomodManager(client, message, data).check();
         await updateXp(message, data);
         client.synchronizeSlashCommands(message.guild.id);
 
@@ -191,17 +75,39 @@ class Message {
             const randomUser = message.guild.members.cache.random(1)[0].user;
 
             const someoneEmbed = new MessageEmbed()
-            .setFooter("ID: " + randomUser.id)
-            .setColor(client.cfg.color.blue)
-            .setAuthor(randomUser.tag, randomUser.displayAvatarURL({dynamic:true}))
+                .setFooter("ID: " + randomUser.id)
+                .setColor(client.cfg.color.blue)
+                .setAuthor(randomUser.tag, randomUser.displayAvatarURL({dynamic:true}));
             
-            message.channel.send(someoneEmbed)
+            message.reply({
+                embeds: [someoneEmbed]
+            })
         };
 
         if(message.content.includes("d!nath") || message.content.includes("d!bastien") || message.content.includes("d!thomas") || message.content.includes("d!oxam") || message.content.includes("d!antonin")) {
             const Perso = new Persos(client, message);
             return await Perso.run();
         };
+
+        if(message.channel.id === data.guild.plugins.suggestions && !message.content.includes("--comment")) {            
+            const embed = new MessageEmbed()
+                .setTitle(message.drakeWS("general/suggest:TITLE"))
+                .setColor("ORANGE")
+                .setThumbnail("https://cdn.discordapp.com/attachments/759728705730773022/767132300290031676/light.png")
+                .setDescription(message.content)
+                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic:true }))
+                .setFooter(this.client.cfg.footer);
+
+            let msg = await message.channel.send({
+                embeds: [embed]
+            });
+
+            await message.delete().catch(() => {});
+    
+            await msg.react('✅');
+            await msg.react('➖');
+            await msg.react('❌');
+        }
 
         const prefix = await client.functions.getPrefix(message, data);
         if(!prefix || message.content === prefix) return;
