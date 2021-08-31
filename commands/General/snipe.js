@@ -10,7 +10,7 @@ class Snipe extends Command {
             enabled: true,
             dirname: __dirname,
             botPerms: [],
-            userPerms: [],
+            userPerms: [ "MANAGE_MESSAGES" ],
             restriction: [],
 
             slashCommandOptions: {
