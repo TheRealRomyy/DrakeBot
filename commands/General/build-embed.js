@@ -77,7 +77,10 @@ class BuildEmbed extends Command {
             }))
             .setFooter(client.cfg.footer)
 
-            return msg.edit({
+            if(!msg) return msg = await message.channel.send({
+                embeds: [embed]
+            });
+            else return msg = await msg.edit({
                 embeds: [embed]
             });
         };

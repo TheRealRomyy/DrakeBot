@@ -42,14 +42,14 @@ class Setlang extends Command {
 
         const language = this.client.cfg.lang.find((l) => l.name === args[0] || l.aliases.includes(args[0]));
 
-        if(language.name === data.guild.language) return message.drake("administration/setlang:ALREADY", {
-            emoji: "error"
-        });
-
-		if(!args[0] || !language) return message.drake("errors:NOT_CORRECT", {
+        if(!args[0] || !language) return message.drake("errors:NOT_CORRECT", {
             usage: data.guild.prefix + "setlang <fr/en>",
             emoji: "error"
 		});
+
+        if(language.name === data.guild.language) return message.drake("administration/setlang:ALREADY", {
+            emoji: "error"
+        });
 
         if(language.name === "en-US") message.channel.send({
             content: "**:flag_gb: The language is now english !**"

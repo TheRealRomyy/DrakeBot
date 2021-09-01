@@ -14,6 +14,7 @@ module.exports = class {
 
         const del = new MessageEmbed()
         .setTitle("<:remove:766787477175533591> **Server Removed**")
+        .setDescription(this.client.guilds.cache.size + "/300")
         .setThumbnail(guild.iconURL({ dynamic: true}))
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.red)

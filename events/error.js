@@ -21,6 +21,9 @@ class Error {
             token: "cY2sCYeRQ0h7KW9xL_R_KakvkrXkaK2e9EMu9SYO9EE2Ey-fkIbp7EoIJgfv0OqKXAfp"
         });
 
+        console.log(error)
+        console.log(error.code)
+
         let embed = new MessageEmbed()
             .setFooter(client.cfg.footer)
             .setColor(client.cfg.color.red)

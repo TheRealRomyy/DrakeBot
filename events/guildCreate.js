@@ -17,7 +17,7 @@ module.exports = class {
 
         const create = new MessageEmbed()
         .setTitle("<:add:766787439535718412> **Server Added**")
-        .setDescription(this.client.guilds.cache.size + "/100")
+        .setDescription(this.client.guilds.cache.size + "/300")
         .setThumbnail(guild.iconURL({ dynamic: true}))
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.green)
