@@ -8,6 +8,8 @@ class Error {
 
     async run(error, from, tokenParam) {
 
+        if(error.code == 10008) return;
+
         const client = this.client;
         const clientData = await client.db.findOrCreateClient();
 
@@ -20,9 +22,6 @@ class Error {
             id: "873575156818247680", 
             token: "cY2sCYeRQ0h7KW9xL_R_KakvkrXkaK2e9EMu9SYO9EE2Ey-fkIbp7EoIJgfv0OqKXAfp"
         });
-
-        console.log(error)
-        console.log(error.code)
 
         let embed = new MessageEmbed()
             .setFooter(client.cfg.footer)
