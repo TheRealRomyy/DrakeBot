@@ -14,7 +14,7 @@ class Unban extends Command {
             restriction: [],
 
             slashCommandOptions: {
-                description: "Unban an user",
+                description: "Unban an user from the server.",
                 options: [
                     {
                         name: "user",
@@ -27,6 +27,12 @@ class Unban extends Command {
                         type: ApplicationCommandOptionTypes.STRING,
                         required: false,
                         description: "For which reason ?"
+                    },
+                    {
+                        name: "message",
+                        type: ApplicationCommandOptionTypes.BOOLEAN,
+                        required: false,
+                        description: "Notify the user from his unban or not ?"
                     }
                 ]
             }
@@ -108,10 +114,10 @@ class Unban extends Command {
 
         let user = interaction.options.getUser("user")
 
-        let reason = interaction.options.getString("reason").replace("--message", "");
+        let reason = interaction.options.getString("reason");
         if(!reason || reason.trim() == "--message") reason = interaction.drakeWS("misc:NO_REASON");
 
-        let sendMessage = interaction.content.includes("--message");
+        let sendMessage = interaction.options.getBoolean("message");
         let logReason = `${interaction.user.username} | ${reason}`;
 
         await interaction.guild.bans.fetch()
