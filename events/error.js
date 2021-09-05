@@ -9,8 +9,8 @@ class Error {
     async run(error, from, tokenParam) {
 
         if(error.code == 10008) return;
-        console.log(error.code)
-        console.log(error.code == 10008)
+        console.error(error.code)
+        console.error(error.code == 10008)
 
         const client = this.client;
         const clientData = await client.db.findOrCreateClient();
