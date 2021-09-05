@@ -31,5 +31,12 @@
     "MANAGE_WEBHOOKS": "Manage webhooks", 
     "MANAGE_EMOJIS": "Manage emojis",
     "BOT_OWNER": "Bot owner",
-    "BOT_MODERATOR": "Bot moderator"
+    "BOT_MODERATOR": "Bot moderator",
+    "MANAGE_EMOJIS_AND_STICKERS": "Manage emojis and stickers",
+    "USE_APPLICATION_COMMANDS": "Use slash commands",
+    "REQUEST_TO_SPEAK": "Request to speak",
+    "MANAGE_THREADS": "Manage threads",
+    "USE_PUBLIC_THREADS": "Use public threads",
+    "USE_PRIVATE_THREADS": "Use private threads",
+    "USE_EXTERNAL_STICKERS": "Use external stickers"
 }
