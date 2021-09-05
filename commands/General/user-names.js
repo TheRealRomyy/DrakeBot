@@ -31,8 +31,13 @@ class Usernames extends Command {
     async run(message, args, data) {
 
         const client = this.client;
+        let user = null;
 
-        let user = message.mentions.users.first() || (args[0] ? await client.users.fetch(args[0]) : message.author) || message.author;
+        try {
+            user = message.mentions.users.first() || (args[0] ? await client.users.fetch(args[0]) : message.author) || message.author;
+        } catch(error) {
+            user = message.author;
+        }
 
         const userData = (message.author === user) ? data.user : await this.client.db.findOrCreateUser(user); 
 
