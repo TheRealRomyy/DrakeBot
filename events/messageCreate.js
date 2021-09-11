@@ -62,6 +62,11 @@ class Message {
         if(data.guild.reactioncount === null) data.guild.reactioncount = 0;
         if(!data.guild.plugins.autosanctions || !Array.isArray(data.guild.plugins.autosanctions)) data.guild.plugins.autosanctions = [];
         if(!data.guild.sanctioncase) data.guild.sanctioncase = 0;
+        if(!data.member.ban) data.member.ban = {
+            banned: false,
+            case: null,
+            endDate: null
+        };
 
         if(data.guild.antiraid === null) data.guild.antiraid = Guild[13];
 

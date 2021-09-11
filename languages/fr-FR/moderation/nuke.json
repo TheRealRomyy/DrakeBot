@@ -3,5 +3,6 @@
     "EXAMPLE": "nuke",
     "USAGE": "nuke",
     "CONFIRM": "**Etes vous sur de vouloir nuke ce salon ? Cette action est irréversible !**",
-    "SUCCES": "**Ce salon a été nuke par <@{{author}}> !**"
+    "SUCCES": "**Ce salon a été nuke par <@{{author}}> !**",
+    "COMMUNITY": "**Ce salon est un salon communautaire donc il ne peut être détruit !**"
 }

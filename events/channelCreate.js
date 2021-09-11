@@ -27,6 +27,15 @@ class ChannelCreate {
                 SEND_MESSAGE: false,
             }).catch((err) => {});
         };
+
+        // Mettre a jour le channel pour le role des mutes
+		let muteRole = channel.guild.roles.cache.find(r => r.name === 'Drake - Mute');
+        if(muteRole) channel.permissionOverwrites.edit(muteRole, {
+            SEND_MESSAGES: false,
+            ADD_REACTIONS: false,
+            CONNECT: false,
+            SPEAK: false
+        });
 	};
 };
 

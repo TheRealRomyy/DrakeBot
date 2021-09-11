@@ -46,7 +46,7 @@ class Mute extends Command {
         const client = this.client;
 
         if(!args[0] && !message.mentions.users.first()) return message.drake("errors:NOT_CORRECT", {
-            usage: data.guild.prefix + "ban <user> (reason)",
+            usage: data.guild.prefix + "mute <user> <time> (reason)",
             emoji: "error"
         });
 
@@ -77,7 +77,7 @@ class Mute extends Command {
 
         time = ms(time);
 
-        let reason = args.slice(message.mentions.users.first() ? (args[0].includes(user.id) ? 1 : 0) : 1).join(" ").trim();
+        let reason = args.slice(message.mentions.users.first() ? (args[0].includes(member.user.id) ? 2 : 1) : 2).join(" ").trim();
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
         let msg = await message.channel.send({

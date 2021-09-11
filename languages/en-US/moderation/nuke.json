@@ -3,5 +3,6 @@
     "EXAMPLE": "nuke",
     "USAGE": "nuke",
     "CONFIRM": "**Are you sure to nuke this channel ?**",
-    "SUCCES": "**This channel was nuke by <@{{author}}> !**"
+    "SUCCES": "**This channel was nuke by <@{{author}}> !**",
+    "COMMUNITY": "**This channel is a community channel so he can't be deleted !**"
 }

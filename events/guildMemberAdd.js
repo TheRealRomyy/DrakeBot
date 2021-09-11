@@ -46,6 +46,7 @@ module.exports = class {
 		// Check le système de bienvenue
 		if(guildData.plugins.welcome.enabled) {
 			let channel = this.client.channels.cache.get(guildData.plugins.welcome.channel);
+			if(!channel) return;
 
 			channel.send({
 				content: guildData.plugins.welcome.message

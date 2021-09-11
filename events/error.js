@@ -8,9 +8,8 @@ class Error {
 
     async run(error, from, tokenParam) {
 
-        if(error.code == 10008) return;
-        console.error(error.code)
-        console.error(error.code == 10008)
+        if(error.code == 10008) return; // Unknow message
+        if(error.code == 50001) return; // Missing access
 
         const client = this.client;
         const clientData = await client.db.findOrCreateClient();

@@ -22,18 +22,25 @@ class Nuke extends Command {
 
     async run(message, args, data) {
 
+        if(message.guild.publicUpdatesChannelId === message.channel.id) return message.drake("moderation/nuke:COMMUNITY", {
+            emoji: "error"
+        });
+
         async function nuke() {
             const position = message.channel.position;
             const newChannel = await message.channel.clone();
             await message.channel.delete();
             newChannel.setPosition(position);
 
-            return newChannel.send({
+            const nukeMessage = await newChannel.send({
                 content: message.drakeWS("moderation/nuke:SUCCES", {
                     emoji: "nuke",
                     author: message.author
                 })
             });
+
+            setTimeout(() => nukeMessage.delete().catch(() => {}), 3000);
+            return;
         };
 
         let msg = await message.channel.send({
@@ -87,18 +94,28 @@ class Nuke extends Command {
 
     async runInteraction(interaction, data) {
 
+        if(interaction.guild.publicUpdatesChannelId === interaction.channel.id) return interaction.reply({
+            content: interaction.drakeWS("moderation/nuke:COMMUNITY", {
+                emoji: "error"
+            }),
+            ephemeral: true
+        });
+
         async function nuke() {
             const position = interaction.channel.position;
             const newChannel = await interaction.channel.clone();
             await interaction.channel.delete();
             newChannel.setPosition(position);
 
-            return newChannel.send({
+            const nukeMessage = await newChannel.send({
                 content: interaction.drakeWS("moderation/nuke:SUCCES", {
                     emoji: "nuke",
                     author: interaction.user
                 })
             });
+
+            setTimeout(() => nukeMessage.delete().catch(() => {}), 3000);
+            return;
         };
 
         await interaction.reply({
