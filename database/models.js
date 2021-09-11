@@ -219,7 +219,14 @@ exports.Member = (userID, guildID) => {
         },
 
         // The total exp of the member
-        0
+        0,
+
+        // The ban state of the member
+        {
+            banned: false,
+            case: null,
+            endDate: null
+        },
     ];
 };
 

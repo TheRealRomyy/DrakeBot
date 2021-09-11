@@ -146,7 +146,7 @@ module.exports = class Database {
         let dbData = await this.pool.query(`SELECT * FROM members WHERE id='${user.id}' AND guildid='${guild.id}'`);
 
         if (dbData.rows.length === 0) {
-            await this.pool.query('INSERT INTO members (id, guildid, money, banksold, exp, level, inventory, cooldowns, sanctions, mute, exptotal) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', Member(user.id, guild.id));
+            await this.pool.query('INSERT INTO members (id, guildid, money, banksold, exp, level, inventory, cooldowns, sanctions, mute, exptotal, ban) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)', Member(user.id, guild.id));
             dbData = await this.pool.query(`SELECT * FROM members WHERE id='${user.id}' AND guildid='${guild.id}'`);
         };
 

@@ -1,4 +1,4 @@
-const checkUnmutes = require("../helpers/checkUnmutes.js");
+const checkAutoSanctions = require("../helpers/checkAutoSanctions.js");
 const checkVoters = require("../helpers/checkVoters.js");
 const loader = require("../database/loader.js");
 
@@ -19,8 +19,9 @@ class Ready {
       // Start the dashboard
       if(client.cfg.dashboard.enabled) client.dashboard.load(client);
 
-      // Load the "unmuter" file
-      checkUnmutes.init(client);
+      // Load the "autoSanctions" file
+      checkAutoSanctions.checkUnbans(client);
+      checkAutoSanctions.checkUnmutes(client);
 
       // Load the "checkVoters" file
       checkVoters.init(client);

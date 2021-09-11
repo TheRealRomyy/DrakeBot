@@ -387,12 +387,14 @@ module.exports = {
 				await channel.permissionOverwrites.edit(muteRole, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false,
-					CONNECT: false
+					CONNECT: false,
+					SPEAK: false
 				});
 			});
 		};
 
 		await member.roles.add(muteRole);
+		if(member.voiceChannel) await member.voice.setMute(true);
 
 		member.send({
 			content: message.drakeWS("moderation/mute:MUTE_DM", {
