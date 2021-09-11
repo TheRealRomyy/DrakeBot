@@ -74,9 +74,9 @@ class Serverinfo extends Command {
         const guild = interaction.guild;
         const guildOwner = this.client.users.cache.get(guild.ownerId);
 
-        const voiceChannelCount = interaction.guild.channels.cache.filter(c => c.type === 'voice').size;
-        const textChannelCount = interaction.guild.channels.cache.filter(c => c.type === 'text').size;
-        const categoryChannels = interaction.guild.channels.cache.filter(c => c.type === 'category').size;
+        const voiceChannelCount = interaction.guild.channels.cache.filter(c => c.type === 'GUILD_VOICE').size;
+        const textChannelCount = interaction.guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').size;
+        const categoryChannels = interaction.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size;
         const roleList = (interaction.guild.roles.cache.size < 25 ? interaction.guild.roles.cache.filter(r => r.name !== '#everyone').map(role => role).join(', ') : interaction.drakeWS("general/serverinfo:TOO"));
 
         const embed = new MessageEmbed()
