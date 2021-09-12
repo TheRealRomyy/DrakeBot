@@ -222,7 +222,7 @@ class ReactionRoles extends Command {
                             count: data.guild.reactioncount
                         });
             
-                        await data.guild.save();
+                        await data.guild.save(data.guild);
                         await afterHelp(m, newEmbed, [addButton, removeButton, listButton]);
                         break;
                     case listButton.customId:
@@ -233,7 +233,7 @@ class ReactionRoles extends Command {
                             .setFooter(client.cfg.footer)
                             .setColor(client.cfg.color.orange)
                             .setDescription(`${(data.guild.reactionroles.length !== 0 ? 
-                                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+message.guild+"/"+rr.channel+"/"+rr.message+") " + message.drakeWS("administration/reaction-roles:REACTION") +  ": ``" + rr.reaction + "`` **|** " + message.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">") : 
+                                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+message.guild+"/"+rr.channel+"/"+rr.message+") " + message.drakeWS("administration/reaction-roles:REACTION") +  ": ``" + rr.reaction + "`` **|** " + message.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">").join("\n") : 
                                     message.drakeWS("administration/reaction-roles:NO_REACTION_ROLES", {
                                         prefix: data.guild.prefix
                             }))}`);
@@ -281,7 +281,7 @@ class ReactionRoles extends Command {
             
                         data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
             
-                        await data.guild.save();
+                        await data.guild.save(data.guild);
                         await afterHelp(m, newEmbed1, [addButton, removeButton, listButton]);
                         break;
                     default:
@@ -610,7 +610,7 @@ class ReactionRoles extends Command {
                             count: data.guild.reactioncount
                         });
             
-                        await data.guild.save();
+                        await data.guild.save(data.guild);
                         await afterHelp(m, newEmbed, [addButton, removeButton, listButton]);
                         break;
                     case listButton.customId:
@@ -621,7 +621,7 @@ class ReactionRoles extends Command {
                             .setFooter(client.cfg.footer)
                             .setColor(client.cfg.color.orange)
                             .setDescription(`${(data.guild.reactionroles.length !== 0 ? 
-                                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+interaction.guild+"/"+rr.channel+"/"+rr.interaction+") " + interaction.drakeWS("administration/reaction-roles:REACTION") +  ": `" + rr.reaction + "` **|** " + interaction.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">") : 
+                                data.guild.reactionroles.map((rr) => "**ID:** " + rr.count + "\n[Message](https://discord.com/channels/"+interaction.guild+"/"+rr.channel+"/"+rr.interaction+") " + interaction.drakeWS("administration/reaction-roles:REACTION") +  ": `" + rr.reaction + "` **|** " + interaction.drakeWS("administration/reaction-roles:ROLE") + ": <@&" + rr.role + ">").join("\n") : 
                                     interaction.drakeWS("administration/reaction-roles:NO_REACTION_ROLES", {
                                         prefix: data.guild.prefix
                             }))}`);
@@ -669,7 +669,7 @@ class ReactionRoles extends Command {
             
                         data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
             
-                        await data.guild.save();
+                        await data.guild.save(data.guild);
                         await afterHelp(m, newEmbed1, [addButton, removeButton, listButton]);
                         break;
                     default:
