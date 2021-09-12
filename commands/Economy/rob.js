@@ -58,9 +58,8 @@ class Rob extends Command {
         let numberStr = number.toString();
 
         const memberData = await this.client.db.findOrCreateMember(member, message.guild);
-        let robEmplacement = "money";
 
-        if(memberData.banksold === 0 && memberData.money === 0) return message.drake("economy/rob:NOT_MONEY", {
+        if(memberData.money === 0) return message.drake("economy/rob:NOT_MONEY", {
             emoji: "error",
             username: member.user.username,
             symbol: data.guild.symbol
@@ -82,13 +81,6 @@ class Rob extends Command {
             numberStr = number.toString();
         };
 
-        if(memberData.money === 0) {
-            robEmplacement = "bank";
-            const anotherNumber = this.client.functions.getRandomInt(50, 70);
-            number = anotherNumber;
-            numberStr = anotherNumber.toString();
-        };
-
         const robMsg = message.drakeWS("economy/rob:ROB", {
             symbol: data.guild.symbol,
             amount: numberStr,
@@ -108,7 +100,8 @@ class Rob extends Command {
         toWait = Date.now() + 120000;
         data.member.cooldowns.rob = toWait;
         data.member.money += number;
-        robEmplacement === "money" ? memberData.money -= number : memberData.banksold -= number;
+        memberData.money -= number;
+
         await data.member.save(data.member);
         await memberData.save(memberData);
     };
@@ -155,9 +148,8 @@ class Rob extends Command {
         let numberStr = number.toString();
 
         const memberData = await this.client.db.findOrCreateMember(member.id, interaction.guild);
-        let robEmplacement = "money";
 
-        if(memberData.banksold === 0 && memberData.money === 0) return interaction.reply({
+        if(memberData.money === 0) return interaction.reply({
             content: interaction.drakeWS("economy/rob:NOT_MONEY", {
                 emoji: "error",
                 username: member.user.username,
@@ -186,13 +178,6 @@ class Rob extends Command {
             numberStr = number.toString();
         };
 
-        if(memberData.money === 0) {
-            robEmplacement = "bank";
-            const anotherNumber = this.client.functions.getRandomInt(50, 70);
-            number = anotherNumber;
-            numberStr = anotherNumber.toString();
-        };
-
         const robMsg = interaction.drakeWS("economy/rob:ROB", {
             symbol: data.guild.symbol,
             amount: numberStr,
@@ -212,7 +197,7 @@ class Rob extends Command {
         toWait = Date.now() + 120000;
         data.member.cooldowns.rob = toWait;
         data.member.money += number;
-        robEmplacement === "money" ? memberData.money -= number : memberData.banksold -= number;
+        memberData.money -= number;
         
         await data.member.save(data.member);
         await memberData.save(memberData);
