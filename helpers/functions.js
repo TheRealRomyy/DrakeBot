@@ -329,6 +329,7 @@ module.exports = {
 		const reason = "Auto Sanction";
 
 		const autoSanctions = guildData.plugins.autosanction;
+		if(!autoSanctions) autoSanctions = [];
         if(autoSanctions.length === 0) return;
 
         const userWarns = memberData.sanctions.filter(sanction => sanction.type === "warn");

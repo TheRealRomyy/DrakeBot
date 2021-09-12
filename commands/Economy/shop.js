@@ -306,6 +306,9 @@ class Shop extends Command {
         };
 
         async function toggleButton(m, mode) {
+
+            if(!m) return;
+
             buyButton.setDisabled(mode === "disabled" ? true : false)
             infoButton.setDisabled(mode === "disabled" ? true : false)
 
