@@ -180,7 +180,7 @@ class Mute extends Command {
         let reason = interaction.options.getString("reason") ? interaction.options.getString("reason").replace("-f", "").trim() : null;
         if(!reason) reason = interaction.drakeWS("misc:NO_REASON");
 
-        let msg = await interaction.reply({
+        await interaction.reply({
             content: interaction.drakeWS("moderation/mute:CONFIRM", {
                 emoji: "question",
                 username: member.user.username,

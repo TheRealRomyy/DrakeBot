@@ -81,7 +81,7 @@ class Ban extends Command {
         let msg = await message.channel.send({
             content: message.drakeWS("moderation/ban:CONFIRM", {
                 emoji: "question",
-                user: user.tag,
+                user: user.username,
                 reason: reason
             })
         });
@@ -173,7 +173,7 @@ class Ban extends Command {
         await interaction.reply({
             content: interaction.drakeWS("moderation/ban:CONFIRM", {
                 emoji: "question",
-                user: user.tag,
+                user: user.username,
                 reason: reason
             })
         });

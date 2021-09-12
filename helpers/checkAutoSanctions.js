@@ -14,20 +14,12 @@ module.exports.checkUnbans = async function checkUnbans(client) {
 
 	setInterval(async () => {
 		Array.from(client.bannedUsers.values()).filter((m) => m.ban.endDate <= Date.now()).forEach(async (memberData) => {
-			const guild = client.guilds.cache.get(memberData.guildid);
+			const guild = await client.guilds.fetch(memberData.guildid);
 			if(!guild) return;
 
 			let dataMember = await client.db.findOrCreateMember(memberData.id, guild);
 
-			const member = guild.members.cache.get(memberData.id) || await guild.members.fetch(memberData.id).catch(() => {
-				dataMember.ban = {
-					banned: false,
-					endDate: null,
-					case: null
-				};
-				dataMember.save(dataMember);
-				return null;
-			});
+			const user = await client.users.fetch(memberData.id);
 
 			const guildData = await client.db.findOrCreateGuild(guild);
 			guild.data = guildData;
@@ -35,22 +27,24 @@ module.exports.checkUnbans = async function checkUnbans(client) {
 			await guild.bans.fetch()
 			.then(bans => {
 				if(bans.size == 0) return;
-				let banUser = bans.find(b => b.user.id == member.user.id);
+				let banUser = bans.find(b => b.user.id === user.id);
 
 				if(!banUser) {
 					client.bannedUsers.delete(`${memberData.id}${memberData.guildid}`);
 					return;
 				};
-				message.guild.members.unban(banUser.user, guild.translate("common:TIMEOUT"));
+
+				guild.members.unban(banUser.user, guild.translate("common:TIMEOUT"));
 			});
 
 			const reason = guild.translate("common:TIMEOUT");
-			member.send({
+			user.send({
 				content: guild.translate("moderation/unban:UNBAN_DM", {
 					emoji: "unban",
-					username: member.user.username,
-					server: member.guild.name,
+					user: user.username,
+					server: guild.name,
 					reason: reason,
+					moderator: client.user.username
 				})
 			}).catch(() => {});;
 
@@ -66,7 +60,7 @@ module.exports.checkUnbans = async function checkUnbans(client) {
 					await guildData.save()
 				};
 	
-				client.functions.sendModLog("unban", member.user, client.channels.cache.get(guildData.plugins.logs.mod), client.user, guildData.cases, reason);
+				client.functions.sendModLog("unban", user, client.channels.cache.get(guildData.plugins.logs.mod), client.user, guildData.cases, reason);
 			};
 
 			client.bannedUsers.delete(`${memberData.id}${memberData.guildid}`);

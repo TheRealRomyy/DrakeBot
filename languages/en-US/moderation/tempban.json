@@ -1,0 +1,8 @@
+{
+    "DESCRIPTION": "Tempban a member",
+    "USAGE": "tempban <user> <time> (reason)",
+    "EXAMPLE": "tempban @Ethan 2h Spam",
+    "TEMPBAN_DM": "Hi **{{username}}**, \nYou have been banned from `{{server}}` by `{{moderator}}` for: `{{time}}` | Reason : {{reason}}",
+    "TEMPBAN": "**{{username}}** has been banned for `{{time}}`",
+    "CONFIRM": "**Do you want to ban `{{user}}` for: `{{time}}`| Reason: `{{reason}}` ?**"
+}

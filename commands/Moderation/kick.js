@@ -65,7 +65,7 @@ class Kick extends Command {
 
         const memberData = await client.db.findOrCreateMember(member, message.guild);
 
-        const reason = args.slice(message.mentions.users.first() ? (args[0].includes(user.id) ? 1 : 0) : 1).join(" ").trim();
+        const reason = args.slice(message.mentions.users.first() ? (args[0].includes(member.user.id) ? 1 : 0) : 1).join(" ").trim();
         if(!reason) reason = message.drakeWS("misc:NO_REASON");
 
         let msg = await message.channel.send({

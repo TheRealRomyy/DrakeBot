@@ -1,5 +1,5 @@
 {
-    "KICK_DM": "Hello **{{username}}**, \nYou were banned from `{{server}}` by `{{moderator}}` | Reason : {{reason}}",
+    "KICK_DM": "Hello **{{username}}**, \nYou were banned from `{{server}}` by `{{moderator}}` for `{{time}}` | Reason : {{reason}}",
     "KICK": "{{username}} was banned",
     "NOT_KICKABLE": "**I can't ban this member !**",
     "LOG": "Ban by : {{moderator}} | Reason : {{reason}}",

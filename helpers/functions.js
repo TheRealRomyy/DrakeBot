@@ -163,13 +163,13 @@ module.exports = {
 	 * @param { Number } duration 
 	*/
 
-	sendSanctionMessage(message, type, user, reason, duration) {
+	sendSanctionMessage(message, type, user, reason, duration=null) {
 		const embed = new MessageEmbed()
 		.setAuthor(user.tag + " " + message.drakeWS(`misc:${type.toUpperCase()}_MSG`), user.displayAvatarURL({ dynamic: true }))
 		.setFooter(cfg.footer)
 		.setColor(type.includes("un") ? cfg.color.green : (type == "warn" ? cfg.color.orange : (type == "ban" ? cfg.color.red : (type == "mute" ? cfg.color.purple : cfg.color.blue)))) // Franchement dégeulasse mais flemme
 		if(reason) embed.setDescription(emojis[type] + ` \`Reason:\` ${reason} ${duration ? `\n\`Duration:\` ${duration}` : ""}`)
-		if(type === "mute" && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(emojis[type] + ` \`Duration:\` ${duration}`)
+		if((type === "mute" || type === "ban") && (!reason && reason === message.drakeWS("misc:NO_REASON"))) embed.setDescription(emojis[type] + ` \`Duration:\` ${duration}`)
 
 		message.channel.send({
 			embeds: [embed]
@@ -187,6 +187,8 @@ module.exports = {
 	*/
 
 	sendModLog(type, user, channel, moderator, cases, reason, duration) {
+
+		if(!channel) return;
 
 		const embed = new MessageEmbed()
 		.setTitle(`${emojis[type]} ${this.pretify(type)}${cases && cases !== null ? " #" + cases : ""}`)
@@ -326,7 +328,7 @@ module.exports = {
 
 		const reason = "Auto Sanction";
 
-		const autoSanctions = guildData.autosanction;
+		const autoSanctions = guildData.plugins.autosanction;
         if(autoSanctions.length === 0) return;
 
         const userWarns = memberData.sanctions.filter(sanction => sanction.type === "warn");
@@ -508,7 +510,7 @@ module.exports = {
 	 * @param { Object } client 
 	*/
 
-	async ban(user, message, moderator, guildData, reason, memberData, client) {
+	async ban(user, message, moderator, guildData, reason, memberData, client, time=null) {
 		let logReason = message.drakeWS("moderation/ban:LOG", {
             moderator: moderator.username,
             reason
@@ -520,7 +522,8 @@ module.exports = {
 				username: user.username,
 				server: message.guild.name,
 				moderator: moderator.tag,
-				reason
+				reason,
+				time: time ? message.time.convertMS(time) : message.drakeWS("common:UNLIMITED")
 			})
 		}).catch(() => {});
 
@@ -537,8 +540,11 @@ module.exports = {
 			};
 			
 			if(memberData !== null) {
+				memberData.ban.banned = true;
+				memberData.ban.endDate = Date.now() + time;
+				memberData.ban.case = guildData.cases;
+
 				memberData.sanctions.push(caseInfo);
-				memberData.save(memberData);
 			} else {
 				console.error("Memberdata == null");
 			};
@@ -548,15 +554,18 @@ module.exports = {
 					guildData.plugins.logs.mod = false;
 				};
 
-				this.sendModLog("ban", user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason);
+				this.sendModLog("ban", user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, message.time.convertMS(time));
 			};
 			
-			return this.sendSanctionMessage(message, "ban", user, reason)
+			this.sendSanctionMessage(message, "ban", user, reason, message.time.convertMS(time))
 		}).catch((error) => {
 			this.sendErrorCmd(client, message, "ban", error);
 		});
 
-		await guildData.save(guildData)
+		await client.bannedUsers.set(`${user.id}${message.guild.id}`, memberData);
+		
+		await memberData.save(memberData);
+		await guildData.save(guildData);
 	},
 
 	/**
