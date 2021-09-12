@@ -1,0 +1,22 @@
+{
+    "DESCRIPTION": "Manage role that you win with money",
+    "EXAMPLE": "role-money",
+    "USAGE": "role-money",
+    "INSTRUCTIONS": "**Click on a button to do an action** \n \n➕ ➜ Make a role-money \n📜 ➜ See the list of all role-moneys \n➖ ➜ Delete all role-money \n \n❌ ➜ Close this menu",
+    "ADD_ROLEMONEY": "Creation of role-money ({{step}}/2)",
+    "LIST_ROLEMONEY": "List of role-money",
+    "REMOVE_REACTION": "Delete a role-money",
+    "NOT_VALID": "Cancelled",
+    "ROLE": "Role",
+    "COST": "Cost",
+    "INVALID_NUMBER": "**Number invalid ! He has to be beetween `0` and `1 000 000` !**",
+    "INSTRUCTIONS_ADD_1": "**Please specify the amount of money that people need for that role.** \n \nYou can type `cancel` to cancel.",
+    "INSTRUCTIONS_ADD_2": "**Please specify the role that people can buy with {{cost}}{{symbol}}** \n \nYou can type `cancel` to cancel.",
+    "INSTRUCTIONS_REMOVE": "**Please specify the id of the money-role you want to delete** \n \nYou can type `cancel` to cancel.",
+    "ROLE_NOT_FOUND": "**The role `{{role}}` doesn't exist !**",
+    "ROLE_TO_HIGHT": "**The role `{{role}}` is higher than the higher role of the bot !**",
+    "FINISH_ADD": "**The role <@&{{role}}> can now be buy with `{{cost}}{{symbol}}` !**",
+    "NO_ROLEMONEY": "**There aren't any role-money setup.** \n \nTo create one: `{{prefix}}role-money` then click on `➕` and follow instructions !",
+    "ID_NOT_EXIST": "**There aren't role-money with id: `{{id}}` !**",
+    "FINISH_REMOVE": "**The role-money `{{id}}` has been deleted !**"
+}

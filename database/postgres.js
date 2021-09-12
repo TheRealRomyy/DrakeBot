@@ -46,7 +46,7 @@ module.exports = class Database {
         let dbData = await this.pool.query(`SELECT * FROM guilds WHERE id='${guild.id}'`);
 
         if(dbData.rows.length === 0){
-            await this.pool.query('INSERT INTO guilds (id, names, plugins, prefix, language, symbol, cases, companys, customcommands, premium, fortress, reactionroles, reactioncount, antiraid, sanctioncase, autoroles) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)', Guild(guild.id, this.client));
+            await this.pool.query('INSERT INTO guilds (id, names, plugins, prefix, language, symbol, cases, companys, customcommands, premium, fortress, reactionroles, reactioncount, antiraid, sanctioncase, autoroles, rolemoneycount, rolemoney) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)', Guild(guild.id, this.client));
             dbData = await this.pool.query(`SELECT * FROM guilds WHERE id=$1`, [guild.id]);		
         };
 

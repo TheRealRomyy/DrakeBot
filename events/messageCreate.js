@@ -60,6 +60,8 @@ class Message {
         if(data.member.exptotal === null) data.member.exptotal = 0;
         if(data.guild.reactionroles === null) data.guild.reactionroles = new Array();
         if(data.guild.reactioncount === null) data.guild.reactioncount = 0;
+        if(!data.guild.rolemoneycount) data.guild.rolemoneycount = 0;
+        if(!data.guild.rolemoney) data.guild.rolemoney = [];
         if(!data.guild.plugins.autosanctions || !Array.isArray(data.guild.plugins.autosanctions)) data.guild.plugins.autosanctions = [];
         if(!data.guild.sanctioncase) data.guild.sanctioncase = 0;
         if(!data.member.ban) data.member.ban = {

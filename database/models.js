@@ -178,6 +178,12 @@ exports.Guild = (guildID, client) => {
 
         // The autorole count
         0,
+
+        // The rolemoney count,
+        0,
+
+        // The rolemoney array
+        []
     ];
 };
 
