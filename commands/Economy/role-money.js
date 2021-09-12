@@ -213,7 +213,7 @@ class RoleMoney extends Command {
                                 id: confMessage1
                             }));
             
-                        data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
+                        data.guild.rolemoney = data.guild.rolemoney.filter((rr) => rr.count !== parseInt(IDofReact));
             
                         await data.guild.save(data.guild);
                         await afterHelp(m, newEmbed1, [addButton, removeButton, listButton]);
@@ -525,7 +525,7 @@ class RoleMoney extends Command {
                                 id: confMessage1
                             }));
             
-                        data.guild.reactionroles = data.guild.reactionroles.filter((rr) => rr.count !== parseInt(IDofReact));
+                        data.guild.rolemoney = data.guild.rolemoney.filter((rr) => rr.count !== parseInt(IDofReact));
             
                         await data.guild.save(data.guild);
                         await afterHelp(m, newEmbed1, [addButton, removeButton, listButton]);
