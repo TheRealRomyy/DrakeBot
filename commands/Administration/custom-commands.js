@@ -148,7 +148,7 @@ class CustomCommands extends Command {
                 break;
             case "remove":
                 // Name of the command
-                const msage = await message.channel.send({
+                const msge = await message.channel.send({
                     content: message.drakeWS("administration/custom-commands:MENU_DELETE", {
                         emoji: "write"
                     })

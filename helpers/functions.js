@@ -328,7 +328,7 @@ module.exports = {
 
 		const reason = "Auto Sanction";
 
-		const autoSanctions = guildData.plugins.autosanction;
+		let autoSanctions = guildData.plugins.autosanction;
 		if(!autoSanctions) autoSanctions = [];
         if(autoSanctions.length === 0) return;
 

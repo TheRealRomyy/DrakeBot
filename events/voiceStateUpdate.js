@@ -38,7 +38,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> s'est déconnecté du salon vocal `" + this.client.channels.cache.get(oldState.channelId).name + "`")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed]
                 });
                 break;
@@ -49,7 +49,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> s'est connecté au salon vocal `" + this.client.channels.cache.get(newState.channelId).name + "`")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed1]
                 });
                 break;
@@ -61,7 +61,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son casque coupé par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed2]
                 });
                 break;
@@ -72,7 +72,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son micro coupé par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed3]
                 });
                 break;
@@ -83,7 +83,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son casque (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed4]
                 });
                 break;
@@ -94,7 +94,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a désactivé son micro (dans `" + this.client.channels.cache.get(newState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed5]
                 });
                 break;
@@ -106,7 +106,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son casque remis par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed6]
                 });
                 break;
@@ -117,7 +117,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a eu son micro remis par le serveur (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed7]
                 });
                 break;
@@ -128,7 +128,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a réactivé son casque (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed8]
                 });
                 break;
@@ -139,7 +139,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a réactivé son micro. (dans `" + this.client.channels.cache.get(newState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed9]
                 });
                 break;
@@ -150,7 +150,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a démarré un live dans `" + this.client.channels.cache.get(oldState.channelId).name + "`")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed10]
                 });
                 break;
@@ -161,7 +161,7 @@ class VoiceStateUpdate {
                 .setFooter(this.client.cfg.footer)
                 .setDescription("<@" + this.client.users.cache.get(newState.id) + "> a arrêté son live (dans `" + this.client.channels.cache.get(oldState.channelId).name + "`)")
 
-                this.client.channels.cache.get("764947280162848790").send({
+                this.client.channels.cache.get("884860986190856252").send({
                     embeds: [embed11]
                 });
                 break;

@@ -125,7 +125,7 @@ class Message {
         
         if(!cmd) {
 			const customCommand = data.guild.customcommands.find((c) => c.name === commandName);
-			if(customCommand){
+			if(customCommand && customCommand.response != ""){
                 //Check si l'user est blacklist
                 if(data.client.blacklist.users.includes(message.author.id)) return message.drake("errors:USER_BLACKLIST", {
                     emoji: "error"
@@ -135,7 +135,9 @@ class Message {
                     emoji: "error"
                 });  
 
-				return message.channel.send(customCommand.response);
+				return message.channel.send({
+                    content: customCommand.response
+                });
             };
 		} else {
 

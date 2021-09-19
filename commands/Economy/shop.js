@@ -305,16 +305,16 @@ class Shop extends Command {
             });
         };
 
-        async function toggleButton(m, mode) {
+        async function toggleButton(msg, mode) {
 
-            if(!m) return;
+            if(!msg) return;
 
             buyButton.setDisabled(mode === "disabled" ? true : false)
             infoButton.setDisabled(mode === "disabled" ? true : false)
 
             let group2 = new MessageActionRow().addComponents([ buyButton, infoButton ]);
 
-            m.edit({
+            msg.edit({
                 components: [group2],
                 embeds: [embed]
             });
