@@ -65,7 +65,7 @@ class CustomCommands extends Command {
                     .setFooter(this.client.cfg.footer)
                     .setColor(this.client.cfg.color.orange)
                     .setDescription(`${(data.guild.customcommands.length !== 0 ? 
-                        data.guild.customcommands.map((c) => "``" + data.guild.prefix + c.name + "``: **" + c.response + "**") : 
+                        data.guild.customcommands.map((c) => "`" + data.guild.prefix + c.name + "` => **" + c.response + "**").join("\n") : 
                         message.drakeWS("administration/custom-commands:NO_COMMANDS", { 
                                 prefix: data.guild.prefix
                         }))}`);
@@ -229,7 +229,7 @@ class CustomCommands extends Command {
                     .setFooter(this.client.cfg.footer)
                     .setColor(this.client.cfg.color.orange)
                     .setDescription(`${(data.guild.customcommands.length !== 0 ? 
-                        data.guild.customcommands.map((c) => "``" + data.guild.prefix + c.name + "``: **" + c.response + "**") : 
+                        data.guild.customcommands.map((c) => "`" + data.guild.prefix + c.name + "` => **" + c.response + "**").join("\n") : 
                         interaction.drakeWS("administration/custom-commands:NO_COMMANDS", { 
                                 prefix: data.guild.prefix
                         }))}`);

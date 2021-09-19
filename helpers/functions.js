@@ -71,7 +71,7 @@ module.exports = {
 	/**
 	 * Send an error
 	 * @param { Object } client 
-	 * @param { String } message 
+	 * @param { Object } message 
 	 * @param { String } cmd 
 	 * @param { String } error 
 	*/
@@ -91,7 +91,7 @@ module.exports = {
         .setDescription(message.drakeWS("errors:OWNER_SEND:desc", {
             error
         }))
-        .setAuthor(message.author.username, message.author.displayAvatarURL( { dynamic: true }))
+        .setAuthor(message.author ? message.author.username : "Unknow user", message.author ? message.author.displayAvatarURL( { dynamic: true }) : null)
         .setColor(client.cfg.color.red)
 
         devDM.send({
@@ -186,7 +186,7 @@ module.exports = {
 	 * @param { Number } duration 
 	*/
 
-	sendModLog(type, user, channel, moderator, cases, reason, duration) {
+	sendModLog(type, user, channel, moderator, cases, reason, duration=null) {
 
 		if(!channel) return;
 
@@ -540,25 +540,22 @@ module.exports = {
 				reason: reason,
 			};
 			
-			if(memberData !== null) {
-				memberData.ban.banned = true;
-				memberData.ban.endDate = Date.now() + time;
-				memberData.ban.case = guildData.cases;
+			memberData.ban.banned = true;
+			time !== null ? memberData.ban.endDate = Date.now() + time : memberData.ban.endDate = "def";
+			memberData.ban.case = guildData.cases;
 
-				memberData.sanctions.push(caseInfo);
-			} else {
-				console.error("Memberdata == null");
-			};
+			memberData.sanctions.push(caseInfo);
+
 
 			if(guildData.plugins.logs.mod) {
 				if(!client.channels.cache.get(guildData.plugins.logs.mod)) {
 					guildData.plugins.logs.mod = false;
 				};
 
-				this.sendModLog("ban", user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, message.time.convertMS(time));
+				this.sendModLog("ban", user, client.channels.cache.get(guildData.plugins.logs.mod), moderator, guildData.cases, reason, time ? message.time.convertMS(time) : null);
 			};
 			
-			this.sendSanctionMessage(message, "ban", user, reason, message.time.convertMS(time))
+			this.sendSanctionMessage(message, "ban", user, reason, time ? message.time.convertMS(time) : null)
 		}).catch((error) => {
 			this.sendErrorCmd(client, message, "ban", error);
 		});

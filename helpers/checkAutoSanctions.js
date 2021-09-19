@@ -13,7 +13,7 @@ module.exports.checkUnbans = async function checkUnbans(client) {
 	});
 
 	setInterval(async () => {
-		Array.from(client.bannedUsers.values()).filter((m) => m.ban.endDate <= Date.now()).forEach(async (memberData) => {
+		Array.from(client.bannedUsers.values()).filter((m) => typeof m.ban.endDate != String).filter((m) => m.ban.endDate <= Date.now()).forEach(async (memberData) => {
 			const guild = await client.guilds.fetch(memberData.guildid);
 			if(!guild) return;
 
