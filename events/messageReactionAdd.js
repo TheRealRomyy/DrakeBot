@@ -24,9 +24,9 @@ class MessageReactionAdd {
         let channel = message.channel
         if(!channel) return;
 
-        let member  = message.guild.members.cache.get(user.id)
-        if(member.partial) await member.fetch()
+        let member = await message.guild.members.fetch(user.id);
         if(!member) return;
+        if(member.partial) await member.fetch();
 
         let guildData = await client.db.findOrCreateGuild(message.guild);
 
