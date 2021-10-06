@@ -1,5 +1,4 @@
 const Command = require("../../structure/Commands.js");
-const chalk = require("chalk");
 const fs = require("fs");
 const util = require("util");
 
@@ -55,6 +54,29 @@ class Reload extends Command {
                     commandsMessage.delete().catch(() => {});
                 }, 3000);
 
+            } else if(args[0] === "events") {
+
+                for (const [eventName, eventFunction] of Object.entries(client._events)) {
+                    client.off(eventName, eventFunction);
+                };
+                  
+                const evtFiles = await readdir("./events/");
+                evtFiles.forEach((file) => {
+                    const eventName = file.split(".")[0];
+                    const event = new (require(`../../events/${file}`))(client);
+                    client.logger.log(`Event '${eventName}' successfully loaded`);
+                    client.on(eventName, (...args) => event.run(...args));
+                    delete require.cache[require.resolve(`../../events/${file}`)];
+                }); 
+
+                const eventMessages = await message.channel.send({
+                    content: `${client.emotes.succes} **All events reloaded !**`
+                });
+
+                setTimeout(() => {
+                    message.delete().catch(() => {});
+                    eventMessages.delete().catch(() => {});
+                }, 3000);
             } else {
                 const cmd = client.cmds.get(args[0]) || client.cmds.get(client.aliases.get(args[0]));
                 if(!cmd) return message.channel.send({
