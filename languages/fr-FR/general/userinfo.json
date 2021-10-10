@@ -11,7 +11,7 @@
     "MR": "Et encore plus...",
     "NO_DESC": "Aucune description",
     "NO_DESC_AUTHOR": "Vous n'avez pas définis de bio. (``{{prefix}}setbio <bio>``)",
-    "STATUT": "• Statut",
+    "STATUT": "• Status",
     "STATUS_DND": "Ne pas déranger",
     "STATUS_ONLINE": "En ligne",
     "STATUS_OFFLINE": "Hors-ligne",
