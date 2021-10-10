@@ -3,5 +3,5 @@
     "USAGE": "setymbol <symbol>",
     "EXAMPLE": "setsymbol $",
     "SUCCES": "**Le symbole d'économie sur ce serveur est maitenant** ``{{newSymbol}}`` **!**",
-    "TOO_LONG": "Votre prefix est trop long (maximum 1 caractere)"
+    "TOO_LONG": "Votre symbole est trop long (maximum 1 caractere)"
 }
