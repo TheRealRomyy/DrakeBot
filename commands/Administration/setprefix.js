@@ -37,6 +37,10 @@ class Setprefix extends Command {
             usage: data.guild.prefix + "setprefix <prefix>"
         });
 
+		if(prefix.length > 3) return message.drake("administration/setprefix:PREFIX_TOO_LONG", {
+			emoji: "error"
+		});
+
         data.guild.prefix = prefix;
         await data.guild.save();
 
@@ -49,6 +53,13 @@ class Setprefix extends Command {
 	async runInteraction(interaction, data) {
 
         let prefix = interaction.options.getString("prefix");
+
+		if(prefix.length > 3) return interaction.reply({
+			content: interaction.drakeWS("administration/setprefix:PREFIX_TOO_LONG", {
+				emoji: "error"
+			}),
+			ephemeral: true
+		});
 
         data.guild.prefix = prefix;
         await data.guild.save();

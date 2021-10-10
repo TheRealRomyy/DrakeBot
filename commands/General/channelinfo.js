@@ -42,7 +42,7 @@ class ChannelInfo extends Command {
         }))
         .setFooter(this.client.cfg.footer)
         .setColor("RANDOM")
-        .addField(this.client.emotes.channelsType[channel.type] + " Type", message.drakeWS("common:" + channel.type.toUpperCase()), true)
+        .addField(this.client.emotes.channelsType[channel.type.toLowerCase()] + " Type", message.drakeWS("common:" + channel.type.toUpperCase()), true)
         .addField(this.client.emotes["nfsw"] + " NFSW", channel.nfsw ? message.drakeWS("common:YES") : message.drakeWS("common:NO"), true)
         .addField(this.client.emotes["medal"] + " Position", "#" + channel.rawPosition, true)
         .setThumbnail(channel.guild.iconURL({ dynamic: true }))

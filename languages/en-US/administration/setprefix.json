@@ -2,5 +2,6 @@
     "DESCRIPTION": "Change the prefix of DrakeBot in your serveur",
     "USAGE": "setprefix <prefix>",
     "EXAMPLE": "setprefix ?",
-    "SUCCES": "**The prefix of DrakeBot is now** `{{newPrefix}}` **!**"
+    "SUCCES": "**The prefix of DrakeBot is now** `{{newPrefix}}` **!**",
+    "PREFIX_TOO_LONG": "**This prefix is too long !**"
 }

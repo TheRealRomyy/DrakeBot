@@ -2,5 +2,6 @@
     "DESCRIPTION": "Définir le préfix du bot sur ce serveur",
     "USAGE": "setprefix <prefix>",
     "EXAMPLE": "setprefix ?",
-    "SUCCES": "**Le préfixe du bot sur ce serveur est maitenant** ``{{newPrefix}}`` **!**"
+    "SUCCES": "**Le préfixe du bot sur ce serveur est maitenant** ``{{newPrefix}}`` **!**",
+    "PREFIX_TOO_LONG": "**Ce prefix est trop long !**"
 }
