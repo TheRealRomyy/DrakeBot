@@ -2,7 +2,7 @@
     "DESCRIPTION": "Gérer les rôles que vous gagnez avec de l'argent",
     "EXAMPLE": "role-money",
     "USAGE": "role-money",
-    "INSTRUCTIONS": "**Cliquez sur un bouton pour faire l'action correspondante** \n \n➕ ➜ Créer un role-money \n📜 ➜ Voir la liste des role-moneys \n➖ ➜ Supprimer un role-money \n \n❌ ➜ Fermer ce menu",
+    "INSTRUCTIONS": "**Cliquez sur un bouton pour faire l'action correspondante** \n \n➕ ➜ Créer un role-money \n📜 ➜ Voir la liste des role-moneys \n➖ ➜ Supprimer un role-money",
     "ADD_ROLEMONEY": "Création de role-menu ({{step}}/2)",
     "LIST_ROLEMONEY": "Voici la liste des role-money",
     "REMOVE_REACTION": "Supprimer un role-money",

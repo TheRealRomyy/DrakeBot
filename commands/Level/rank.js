@@ -31,6 +31,10 @@ class Rank extends Command {
 
 	async run (message, args, data) {
 
+        if(!data.guild.plugins.levels.enabled) return message.drake("misc:LEVEL_DISABLED", {
+            emoji: "errors"
+        });
+
         const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member;
         const user = member.user;
 
@@ -139,6 +143,12 @@ class Rank extends Command {
     };
 
     async runInteraction (interaction, data) {
+
+        if(!data.guild.plugins.levels.enabled) return interaction.reply({
+            content: interaction.drakeWS("misc:LEVEL_DISABLED", {
+                emoji: "errors"
+            })
+        });
 
         const member = interaction.options.getUser("member") ? interaction.guild.members.cache.get(interaction.options.getUser("member").id) : interaction.guild.members.cache.get(interaction.user.id);
         const user = member.user;

@@ -4,5 +4,6 @@
     "EXAMPLE": "deposit 100",
     "NOT_ENOUGHT": "Vous n'avez pas assez d'argent !",
     "SUCCES": "Vous avez bien déposé **{{amount}}{{symbol}}** a la banque !",
-    "MAX_AMOUNT": "Vous pouvez avoir maximum **10 000{{symbol}}** en banque !"
+    "MAX_AMOUNT": "Vous pouvez avoir maximum **10 000{{symbol}}** en banque !",
+    "TOO_LOW_AMOUNT": "Veuillez déposer plus de **1{{symbol}}** !"
 }

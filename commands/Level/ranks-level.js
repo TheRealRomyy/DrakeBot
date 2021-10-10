@@ -21,6 +21,11 @@ class RanksLevel extends Command {
     };
 
     async run(message, args, data) {
+
+        if(!data.guild.plugins.levels.enabled) return message.drake("misc:LEVEL_DISABLED", {
+            emoji: "errors"
+        });
+
         const embed = new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)
@@ -37,6 +42,13 @@ class RanksLevel extends Command {
     };
 
     async runInteraction(interaction, data) {
+
+        if(!data.guild.plugins.levels.enabled) return interaction.reply({
+            content: interaction.drakeWS("misc:LEVEL_DISABLED", {
+                emoji: "errors"
+            })
+        });
+        
         const embed = new MessageEmbed()
         .setAuthor(interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true }))
         .setFooter(this.client.cfg.footer)

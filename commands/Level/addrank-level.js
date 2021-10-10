@@ -37,6 +37,10 @@ class AddrankLevel extends Command {
 
     async run(message, args, data) {
 
+        if(!data.guild.plugins.levels.enabled) return message.drake("misc:LEVEL_DISABLED", {
+            emoji: "errors"
+        });
+
         if(!args[0] || !args[1] || isNaN(args[0])) return message.drake("errors:NOT_CORRECT", {
             emoji: "error",
             usage: data.guild.prefix + "addrank-level <level> <rank>"
@@ -68,6 +72,12 @@ class AddrankLevel extends Command {
     };
 
     async runInteraction(interaction, data) {
+
+        if(!data.guild.plugins.levels.enabled) return interaction.reply({
+            content: interaction.drakeWS("misc:LEVEL_DISABLED", {
+                emoji: "errors"
+            })
+        });
     
         const level = interaction.options.getInteger("level");
         const rank = interaction.options.getRole("rank");

@@ -62,7 +62,7 @@ class Eco extends Command {
         });
 
         const type = args[0];
-        const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        const member = message.mentions.members.first() || await message.guild.members.fetch(args[0]);
         let amount = null;
 
         if(!member) return message.drake("errors:NOT_CORRECT", {

@@ -87,7 +87,7 @@ class Slowmode extends Command {
 
         return message.drake("moderation/slowmode:SUCCES", {
             emoji: "succes",
-            time: time !== 0 ? message.time.convertMS(time * 1000) : 0,
+            time: time != 0 ? message.time.convertMS(time * 1000) : "0",
             channel: "<#" + channel.id + ">"
         });
     };

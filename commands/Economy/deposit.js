@@ -68,6 +68,11 @@ class Deposit extends Command {
         let amount = parseInt(args[0]);
         let amountStr = amount.toString();
 
+        if(amount < 1) return message.drake("economy/deposit:TOO_LOW_AMOUNT", {
+            emoji: "error",
+            symbol: data.guild.symbol
+        });
+
         if(amount > data.member.money) return message.drake("economy/deposit:NOT_ENOUGHT", {
             emoji: "error"
         });

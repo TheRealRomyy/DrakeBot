@@ -113,7 +113,7 @@ class InteractionCreate {
                 } else if(neededPerms.length == 1){
                     return interaction.reply({
                         content: interaction.drakeWS("errors:PERMISSION", {
-                            perms: "```" + neededPerms[0] + "```",
+                            perm: "```" + neededPerms[0] + "```",
                             emoji: "error"
                         }),
                         ephemeral: true

@@ -22,6 +22,10 @@ class LeaderboardLevel extends Command {
 
     async run(message, args, data) {
 
+        if(!data.guild.plugins.levels.enabled) return message.drake("misc:LEVEL_DISABLED", {
+            emoji: "errors"
+        });
+
         let client = this.client;
         const full = Boolean(args[0] === "full");
         let string = "";
@@ -80,6 +84,12 @@ class LeaderboardLevel extends Command {
     };
 
     async runInteraction(interaction, data) {
+
+        if(!data.guild.plugins.levels.enabled) return interaction.reply({
+            content: interaction.drakeWS("misc:LEVEL_DISABLED", {
+                emoji: "errors"
+            })
+        });
 
         let client = this.client;
         const full = false;

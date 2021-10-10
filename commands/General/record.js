@@ -54,7 +54,7 @@ class Record extends Command {
 
     async runInteraction(interaction, data) {
 
-        let user = interaction.options.getString("user") || interaction.user;
+        let user = interaction.options.getUser("user") || interaction.user;
         let userData = user.id !== interaction.user.id ? await this.client.db.findOrCreateUser(user) : data.user;
 
         if(!Array.isArray(userData.record)) {
