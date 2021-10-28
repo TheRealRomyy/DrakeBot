@@ -6,18 +6,12 @@ class Error {
         this.client = client;
     };
 
-    async run(error, from, tokenParam) {
+    async run(error) {
 
         if(error.code == 10008) return; // Unknow message
         if(error.code == 50001) return; // Missing access
 
         const client = this.client;
-        const clientData = await client.db.findOrCreateClient();
-
-        const token = tokenParam ? tokenParam.toString() : client.functions.generateToken(32);
-
-        clientData["errors"][token.toString()] = (from ? `[${from.toUpperCase()}] ` : "") + error.toString();
-        clientData.save(clientData);
 
         const webhook = new WebhookClient({
             id: "873575156818247680", 
@@ -28,8 +22,7 @@ class Error {
             .setFooter(client.cfg.footer)
             .setColor(client.cfg.color.red)
             .setAuthor("New error detected:", client.user ? client.user.displayAvatarURL({dynamic:true}) : null)
-            .setDescription(`${error} (${error.code ? error.code : ""})`)
-            .setFooter(`${token}`);
+            .setDescription(`${error} (${error.code ? error.code : ""})`);
 
         webhook.send({
             embeds: [embed]

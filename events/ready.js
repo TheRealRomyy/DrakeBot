@@ -34,12 +34,6 @@ class Ready {
       setTimeout(async function() {
         await client.logger.log(`Cache: All users (${client.cache.users.size} users), members (${client.cache.members.size} members) and guilds (${client.cache.guilds.size} guilds) are in cache !`);
       }, 1500);
- 
-
-      // Send in the "status" channel a message.
-      this.client.channels.cache.get("793262294493560893").send({
-        content:"<:online:750782471423000647> Bot is ready !"
-      });
 
       // Create all activites
       let possibleActivities = [

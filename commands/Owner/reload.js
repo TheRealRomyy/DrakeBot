@@ -94,6 +94,8 @@ class Reload extends Command {
 
                         client.off(args[0], client._events[args[0]]);
                         client.on(args[0], (...args) => event.run(...args));
+
+                        client.logger.log(`Event '${args[0]}' successfully loaded`);
                     }
                     
                     const specificReloadMessage = await message.channel.send({
@@ -116,8 +118,6 @@ class Reload extends Command {
             setTimeout(async () => {
                 message.delete().catch(() => {});
                 reload.delete().catch(() => {});
-
-                client.emit("reconnecting");
 
                 const { exec } = require("child_process");
     
