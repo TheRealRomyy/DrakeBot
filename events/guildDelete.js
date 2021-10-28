@@ -19,7 +19,7 @@ module.exports = class {
         .setFooter(this.client.cfg.footer)
         .setColor(this.client.cfg.color.red)
         .setTimestamp()
-        .addField(":memo: • Name", guild.name, false)
+        .addField(":memo: • Name", `${guild.name}`, false)
         .addField("<:id:750780969270771893> • ID", `${guild.id}`, false)
         .addField("<:owner:763412335569797141> • Owner", guildOwner ? (guildOwner.username + " (||" + guild.ownerId + "||)") : "Unknow", false)
         .addField("<:member:750717695653183588> • Members", `${guild.memberCount}`, false)

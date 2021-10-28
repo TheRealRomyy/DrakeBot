@@ -53,6 +53,7 @@ class DrakeBot extends Client {
 
 		this.snipe = {};
 		this.numberGame = {};
+        this.lastError = Date.now();
 
 		this.serverAdds = 0;
 		this.serverRemoves = 0;

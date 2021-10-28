@@ -13,6 +13,8 @@ class Error {
 
         const client = this.client;
 
+        if((client.lastError + 2 * 1000) > Date.now()) return;
+
         const webhook = new WebhookClient({
             id: "873575156818247680", 
             token: "cY2sCYeRQ0h7KW9xL_R_KakvkrXkaK2e9EMu9SYO9EE2Ey-fkIbp7EoIJgfv0OqKXAfp"
@@ -27,6 +29,8 @@ class Error {
         webhook.send({
             embeds: [embed]
         });
+
+        client.lastError = Date.now();
     };
 };
 
