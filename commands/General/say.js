@@ -78,7 +78,7 @@ class Say extends Command {
             avatarURL: interaction.user.displayAvatarURL({ dynamic:true }),
         });
 
-        await interaction.defer();
+        await interaction.deferReply();
         await interaction.deleteReply();
     };
 };
