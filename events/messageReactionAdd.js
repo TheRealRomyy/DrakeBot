@@ -17,8 +17,8 @@ class MessageReactionAdd {
         if(!emoji) return;
         let emojiName = emoji.name;
 
-        if(user.partial) await user.fetch()
-        if(message.partial) await message.fetch()
+        if(user.partial) await user.fetch().catch(() => {})
+        if(message.partial) await message.fetch().catch(() => {})
         if(!message) return;
 
         let channel = message.channel

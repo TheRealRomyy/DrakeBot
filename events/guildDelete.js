@@ -8,7 +8,7 @@ module.exports = class {
 
 	async run (guild) {
 
-        const guildOwner = await this.client.users.fetch(guild.ownerId);
+        const guildOwner = await this.client.users.fetch(guild.ownerId).catch(() => {});
 
         this.client.serverRemoves++;
 
@@ -21,7 +21,7 @@ module.exports = class {
         .setTimestamp()
         .addField(":memo: • Name", guild.name, false)
         .addField("<:id:750780969270771893> • ID", `${guild.id}`, false)
-        .addField("<:owner:763412335569797141> • Owner", guildOwner.username + " (||" + guild.ownerId + "||)", false)
+        .addField("<:owner:763412335569797141> • Owner", guildOwner ? (guildOwner.username + " (||" + guild.ownerId + "||)") : "Unknow", false)
         .addField("<:member:750717695653183588> • Members", `${guild.memberCount}`, false)
 
         const channel = this.client.channels.cache.get("766782516908392498");
