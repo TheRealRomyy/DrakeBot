@@ -22,6 +22,7 @@ module.exports = class {
         // Check le goodbye plugin
         if(guildData.plugins.leave.enabled) {
             let channel = this.client.channels.cache.get(guildData.plugins.leave.channel);
+            if(!channel) return;
             channel.send({
                 content: guildData.plugins.leave.message
                     .replace("{user}", member.user.username)
