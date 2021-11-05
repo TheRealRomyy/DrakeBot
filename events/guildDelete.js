@@ -10,6 +10,8 @@ module.exports = class {
 
         const guildOwner = await this.client.users.fetch(guild.ownerId).catch(() => {});
 
+        if(guild.name == undefined && guild.memberCount == undefined) return;
+
         this.client.serverRemoves++;
 
         const del = new MessageEmbed()
