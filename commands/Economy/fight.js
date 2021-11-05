@@ -60,7 +60,7 @@ class Fight extends Command {
 
         // Calculer les domages et points de vies du joueur
         let damage = weapon !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === weapon)).damage : 5) : 5;
-        let lp = (armor !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (((data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance) ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance : 5) : 5) : 5) + 60;
+        let lp = (armor !== message.drakeWS("common:HAND") ? (data.member.inventory != "" ? (((data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor))?.resistance) ? (data.member.inventory.find((i) => (lang.moment === "fr" ? i.namefr : i.nameen) === armor)).resistance : 5) : 5) : 5) + 60;
 
         // Envoyer le message annoncant l'ennemi & ses pv
         log = message.drakeWS("economy/fight:MOB", {
