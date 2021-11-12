@@ -31,5 +31,6 @@
     "BADWORDS": "Message grossier ou contenant une insulte",
     "PUB": "Message contenant de la publicité",
     "ERROR": "Oh Oh ! Tu viens de trouver une erreur sur la commande `{{cmd}}` va vite sur le support ({{support}}) et créer un ticket pour en informer le staff !`",
-    "LEVEL_DISABLED": "Vous ne pouvez pas éxécuter cette commande car le plugin de **Level** est désactivé."
+    "LEVEL_DISABLED": "Vous ne pouvez pas éxécuter cette commande car le plugin de **Level** est désactivé.",
+    "DEPRECATED_COMMANDS": "**Attention !** Les commandes \"normales\" (utilisant le prefix `d!`) ne seront plus utilisables a compté du <t:{{time}}> !"
 }

@@ -31,5 +31,6 @@
     "BADWORDS": "Message includes a badword",
     "PUB": "Message includes an ad",
     "ERROR": "Uh Oh ! You just found an error on the `{{cmd}}` command ! Go to the support ({{support}}) and create a ticket in order to alert the staff !",
-    "LEVEL_DISABLED": "You can't execute this command because the **Level** category is disabled."
+    "LEVEL_DISABLED": "You can't execute this command because the **Level** category is disabled.",
+    "DEPRECATED_COMMANDS": "**Warning !** \"classic\" commands (with the `d!` prefix) will be disabled the <t:{{time}}> !"
 }
