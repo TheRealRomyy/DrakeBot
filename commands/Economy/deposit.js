@@ -140,6 +140,14 @@ class Deposit extends Command {
         let amount = parseInt(interaction.options.getString("amount"));
         let amountStr = amount.toString();
 
+        if(amount < 1) return interaction.reply({
+            content: interaction.drakeWS("economy/deposit:TOO_LOW_AMOUNT", {
+                emoji: "error",
+                symbol: data.guild.symbol
+            }),
+            ephemeral: true
+        });
+
         if(amount > data.member.money) return interaction.reply({
             content: interaction.drakeWS("economy/deposit:NOT_ENOUGHT", {
                 emoji: "error"

@@ -178,6 +178,8 @@ class Fight extends Command {
 
     async runInteraction(interaction, data) {
 
+        await interaction.deferReply();
+
         // Récupérer le client du constructeur
         let client = this.client;
 
@@ -186,7 +188,7 @@ class Fight extends Command {
         let isEnd = false;
 
         // Check le cooldown
-        if(data.member.cooldowns.fight && data.member.cooldowns.fight > Date.now()) return interaction.reply({
+        if(data.member.cooldowns.fight && data.member.cooldowns.fight > Date.now()) return interaction.editReply({
             content: interaction.drakeWS("economy/fight:COOLDOWN", {
                 time: interaction.time.convertMS(data.member.cooldowns.fight - Date.now()),
                 emoji: "error"
@@ -230,7 +232,7 @@ class Fight extends Command {
             emoji: "waiting"
         });
 
-        await interaction.reply({
+        await interaction.edit({
             content: waitMsg
         });
 
