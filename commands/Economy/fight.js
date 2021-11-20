@@ -232,7 +232,7 @@ class Fight extends Command {
             emoji: "waiting"
         });
 
-        await interaction.edit({
+        await interaction.editReply({
             content: waitMsg
         });
 
