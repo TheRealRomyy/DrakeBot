@@ -141,10 +141,12 @@ class Message {
             };
 		} else {
 
-            message.drake("misc:DEPRECATED_COMMANDS", {
-                emoji: "warn",
-                time: "1638313200"
-            })
+            if(!client.cfg.staff.owner.includes(message.author.id)) return;
+
+            // message.drake("misc:DEPRECATED_COMMANDS", {
+            //     emoji: "warn",
+            //     time: "1638313200"
+            // })
 
             // if(cmd.help.category === "Economy" && !client.cfg.staff.support.includes(message.author.id) && !client.cfg.staff.owner.includes(message.author.id)) return message.channel.send(`${client.emotes.status.idle} **L'économie est actuellement en maintenance !** \n \nRejoignez le support (https://discord.gg/mYDdTbx) pour savoir quand elle sera redisponible !`);
 

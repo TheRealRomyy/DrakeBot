@@ -45,8 +45,8 @@ class Help extends Command {
                 allowedMentions: { "users": []}
             });
 
-            const usage = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") !== "USAGE" ? data.guild.prefix + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") : "`No usage provided`";
-            const example = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") !== "EXAMPLE" ? data.guild.prefix + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") : "`No example provided`";
+            const usage = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") !== "USAGE" ? "/" + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") : "`No usage provided`";
+            const example = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") !== "EXAMPLE" ? "/" + message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") : "`No example provided`";
             const description = message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":DESCRIPTION") !== "DESCRIPTION" ? message.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":DESCRIPTION") : "`No description provided`";
             const aliases = cmd.help.aliases != "" ? (cmd.help.aliases.lenght === 1 ? "``" + cmd.help.aliases[0] + "``" : cmd.help.aliases.map(a => "`" + a + "`").join(", ")) : message.drakeWS("common:ANY");
             let perms = cmd.settings.userPerms != "" ? (cmd.settings.userPerms.lenght === 1 ? "``" + message.drakeWS(`discord_errors:${cmd.settings.userPerms[0]}`) : cmd.settings.userPerms.map(a => "`" + message.drakeWS(`discord_errors:${a}`) + "`").join(", ")) : message.drakeWS("common:ANY(E)");
@@ -102,19 +102,17 @@ class Help extends Command {
             
             categories.sort().forEach((cat) => {
                 const tCommands = commands.filter((cmd) => cmd.help.category === cat);
-                embed.addField(client.emotes.categories[cat.toLowerCase()]+"  "+cat+" - ("+tCommands.size+")", tCommands.map((cmd) => "`" + data.guild.prefix + cmd.help.name + "`").join(", "));
+                embed.addField(client.emotes.categories[cat.toLowerCase()]+"  "+cat+" - ("+tCommands.size+")", tCommands.map((cmd) => "`/" + cmd.help.name + "`").join(", "));
             });
         
             embed.setDescription(message.drakeWS("general/help:commandsCount", {
                 commandCount: fcount
-            }) + "\n" + message.drakeWS("general/help:prefix", {
-                prefix: data.guild.prefix
             }) + "\n" + message.drakeWS("general/help:members", {
                 members: message.guild.memberCount
             })+ "\n" + message.drakeWS("general/help:commandHelp", {
-                prefix: data.guild.prefix
+                prefix: "/"
             })+ "\n" + message.drakeWS("general/help:commandHelpExample", {
-                prefix: data.guild.prefix
+                prefix: "/"
             }))
         
             return message.channel.send({
@@ -141,8 +139,8 @@ class Help extends Command {
                 ephemeral: true
             });
 
-            const usage = interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") !== "USAGE" ? data.guild.prefix + interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") : "`No usage provided`";
-            const example = interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") !== "EXAMPLE" ? data.guild.prefix + interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") : "`No example provided`";
+            const usage = interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") !== "USAGE" ? "/" + interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":USAGE") : "`No usage provided`";
+            const example = interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") !== "EXAMPLE" ? "/" + interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":EXAMPLE") : "`No example provided`";
             const description = interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":DESCRIPTION") !== "DESCRIPTION" ? interaction.drakeWS(cmd.help.category.toLowerCase() + "/" + cmd.help.name + ":DESCRIPTION") : "`No description provided`";
             const aliases = cmd.help.aliases != "" ? (cmd.help.aliases.lenght === 1 ? "``" + cmd.help.aliases[0] + "``" : cmd.help.aliases.map(a => "`" + a + "`").join(", ")) : interaction.drakeWS("common:ANY");
             let perms = cmd.settings.userPerms != "" ? (cmd.settings.userPerms.lenght === 1 ? "``" + interaction.drakeWS(`discord_errors:${cmd.settings.userPerms[0]}`) : cmd.settings.userPerms.map(a => "`" + interaction.drakeWS(`discord_errors:${a}`) + "`").join(", ")) : interaction.drakeWS("common:ANY(E)");
@@ -198,19 +196,17 @@ class Help extends Command {
             
             categories.sort().forEach((cat) => {
                 const tCommands = commands.filter((cmd) => cmd.help.category === cat);
-                embed.addField(client.emotes.categories[cat.toLowerCase()]+"  "+cat+" - ("+tCommands.size+")", tCommands.map((cmd) => "`" + data.guild.prefix + cmd.help.name + "`").join(", "));
+                embed.addField(client.emotes.categories[cat.toLowerCase()]+"  "+cat+" - ("+tCommands.size+")", tCommands.map((cmd) => "`/" + cmd.help.name + "`").join(", "));
             });
         
             embed.setDescription(interaction.drakeWS("general/help:commandsCount", {
                 commandCount: fcount
-            }) + "\n" + interaction.drakeWS("general/help:prefix", {
-                prefix: data.guild.prefix
             }) + "\n" + interaction.drakeWS("general/help:members", {
                 members: interaction.guild.memberCount
             })+ "\n" + interaction.drakeWS("general/help:commandHelp", {
-                prefix: data.guild.prefix
+                prefix: "/"
             })+ "\n" + interaction.drakeWS("general/help:commandHelpExample", {
-                prefix: data.guild.prefix
+                prefix: "/"
             }))
         
             return interaction.reply({
